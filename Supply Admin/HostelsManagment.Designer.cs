@@ -30,12 +30,12 @@
         {
             this.BTN_Add_Hostels = new System.Windows.Forms.Button();
             this.DG_View_HostelsManage = new System.Windows.Forms.DataGridView();
-            this.TL_Waiting = new System.Windows.Forms.Label();
             this.DGView_IDHostels = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.DGView_NameHostel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DGView_FlatsHostel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DGView_SupplyHostel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BTN_Update = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DG_View_HostelsManage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,22 +62,13 @@
             this.DGView_FlatsHostel,
             this.DGView_SupplyHostel,
             this.COL_Address});
-            this.DG_View_HostelsManage.Location = new System.Drawing.Point(13, 99);
+            this.DG_View_HostelsManage.Location = new System.Drawing.Point(13, 48);
             this.DG_View_HostelsManage.Name = "DG_View_HostelsManage";
             this.DG_View_HostelsManage.ReadOnly = true;
             this.DG_View_HostelsManage.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.DG_View_HostelsManage.RowTemplate.Height = 24;
-            this.DG_View_HostelsManage.Size = new System.Drawing.Size(938, 423);
+            this.DG_View_HostelsManage.Size = new System.Drawing.Size(938, 474);
             this.DG_View_HostelsManage.TabIndex = 1;
-            // 
-            // TL_Waiting
-            // 
-            this.TL_Waiting.AutoSize = true;
-            this.TL_Waiting.Location = new System.Drawing.Point(13, 62);
-            this.TL_Waiting.Name = "TL_Waiting";
-            this.TL_Waiting.Size = new System.Drawing.Size(223, 17);
-            this.TL_Waiting.TabIndex = 2;
-            this.TL_Waiting.Text = "Данные загружаются! Ожидайте";
             // 
             // DGView_IDHostels
             // 
@@ -133,12 +124,22 @@
             this.COL_Address.ReadOnly = true;
             this.COL_Address.Width = 125;
             // 
+            // BTN_Update
+            // 
+            this.BTN_Update.Location = new System.Drawing.Point(13, 12);
+            this.BTN_Update.Name = "BTN_Update";
+            this.BTN_Update.Size = new System.Drawing.Size(183, 30);
+            this.BTN_Update.TabIndex = 2;
+            this.BTN_Update.Text = "Обновить таблицу";
+            this.BTN_Update.UseVisualStyleBackColor = true;
+            this.BTN_Update.Click += new System.EventHandler(this.BTN_Update_Click);
+            // 
             // HostelsManagment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(963, 571);
-            this.Controls.Add(this.TL_Waiting);
+            this.Controls.Add(this.BTN_Update);
             this.Controls.Add(this.DG_View_HostelsManage);
             this.Controls.Add(this.BTN_Add_Hostels);
             this.Name = "HostelsManagment";
@@ -147,7 +148,6 @@
             this.Shown += new System.EventHandler(this.HostelsManagment_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.DG_View_HostelsManage)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -155,11 +155,11 @@
 
         private System.Windows.Forms.Button BTN_Add_Hostels;
         private System.Windows.Forms.DataGridView DG_View_HostelsManage;
-        private System.Windows.Forms.Label TL_Waiting;
         private System.Windows.Forms.DataGridViewCheckBoxColumn DGView_IDHostels;
         private System.Windows.Forms.DataGridViewTextBoxColumn DGView_NameHostel;
         private System.Windows.Forms.DataGridViewTextBoxColumn DGView_FlatsHostel;
         private System.Windows.Forms.DataGridViewTextBoxColumn DGView_SupplyHostel;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Address;
+        private System.Windows.Forms.Button BTN_Update;
     }
 }

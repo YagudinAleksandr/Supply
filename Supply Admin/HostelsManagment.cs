@@ -21,7 +21,7 @@ namespace Supply_Admin
         public HostelsManagment()
         {
             InitializeComponent();
-            TL_Waiting.Visible = false;
+            
             try
             {
                 db = new SupplyDbContext();
@@ -127,7 +127,8 @@ namespace Supply_Admin
                     int rowNumber = DG_View_HostelsManage.Rows.Add();
                     DG_View_HostelsManage.Rows[rowNumber].Cells[DGView_IDHostels.Name].Value = hostel.Id;
                     DG_View_HostelsManage.Rows[rowNumber].Cells[DGView_NameHostel.Name].Value = hostel.Name;
-                    DG_View_HostelsManage.Rows[rowNumber].Cells[DGView_FlatsHostel.Name].Value = hostel.Flats.Count();
+                    int flats = db.Flats.Where(x => x.HostelsId == hostel.Id).Count();
+                    DG_View_HostelsManage.Rows[rowNumber].Cells[DGView_FlatsHostel.Name].Value = flats;
                     DG_View_HostelsManage.Rows[rowNumber].Cells[DGView_SupplyHostel.Name].Value = hostel.SupplyManager;
                     DG_View_HostelsManage.Rows[rowNumber].Cells[COL_Address.Name].Value = hostel.Address;
                 }
@@ -136,6 +137,11 @@ namespace Supply_Admin
             {
                 MessageBox.Show("В базе данных нет сведений!");
             }
+        }
+
+        private void BTN_Update_Click(object sender, EventArgs e)
+        {
+            DataGridViewInformation();
         }
     }
 }

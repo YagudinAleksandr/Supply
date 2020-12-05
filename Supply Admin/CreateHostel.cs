@@ -25,7 +25,9 @@ namespace Supply_Admin
         {
             Hostels hostel = new Hostels { Name = Convert.ToInt32(TB_Name.Text), Address = RTB_Address.Text, SupplyManager = TB_Supply.Text };
             _db.Hostels.Add(hostel);
-            int hostelId = _db.SaveChanges();
+            _db.SaveChanges();
+
+            int hostelId = hostel.Id;
 
             for (int i = 0; i < Convert.ToInt32(TB_Flats.Text); i++)
             {
