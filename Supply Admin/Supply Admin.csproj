@@ -124,6 +124,12 @@
     <Compile Include="RoomsManagment.Designer.cs">
       <DependentUpon>RoomsManagment.cs</DependentUpon>
     </Compile>
+    <Compile Include="SupplyManagers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplyManagers.Designer.cs">
+      <DependentUpon>SupplyManagers.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="CreateHostel.resx">
       <DependentUpon>CreateHostel.cs</DependentUpon>
     </EmbeddedResource>
@@ -159,6 +165,9 @@
     </Compile>
     <EmbeddedResource Include="RoomsManagment.resx">
       <DependentUpon>RoomsManagment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupplyManagers.resx">
+      <DependentUpon>SupplyManagers.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
