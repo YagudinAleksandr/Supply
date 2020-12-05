@@ -32,8 +32,6 @@
             this.TB_Name = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.TB_Flats = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.TB_Supply = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.RTB_Address = new System.Windows.Forms.RichTextBox();
             this.BTN_Save = new System.Windows.Forms.Button();
@@ -71,26 +69,10 @@
             this.TB_Flats.Size = new System.Drawing.Size(65, 22);
             this.TB_Flats.TabIndex = 3;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(16, 53);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(180, 17);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Заведующий общежитием";
-            // 
-            // TB_Supply
-            // 
-            this.TB_Supply.Location = new System.Drawing.Point(202, 53);
-            this.TB_Supply.Name = "TB_Supply";
-            this.TB_Supply.Size = new System.Drawing.Size(389, 22);
-            this.TB_Supply.TabIndex = 5;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(16, 93);
+            this.label4.Location = new System.Drawing.Point(16, 50);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(48, 17);
             this.label4.TabIndex = 6;
@@ -98,7 +80,7 @@
             // 
             // RTB_Address
             // 
-            this.RTB_Address.Location = new System.Drawing.Point(19, 126);
+            this.RTB_Address.Location = new System.Drawing.Point(16, 81);
             this.RTB_Address.Name = "RTB_Address";
             this.RTB_Address.Size = new System.Drawing.Size(572, 96);
             this.RTB_Address.TabIndex = 7;
@@ -122,8 +104,6 @@
             this.Controls.Add(this.BTN_Save);
             this.Controls.Add(this.RTB_Address);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.TB_Supply);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.TB_Flats);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.TB_Name);
@@ -142,8 +122,6 @@
         private System.Windows.Forms.TextBox TB_Name;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox TB_Flats;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox TB_Supply;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RichTextBox RTB_Address;
         private System.Windows.Forms.Button BTN_Save;

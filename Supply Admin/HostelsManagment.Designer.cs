@@ -30,12 +30,12 @@
         {
             this.BTN_Add_Hostels = new System.Windows.Forms.Button();
             this.DG_View_HostelsManage = new System.Windows.Forms.DataGridView();
+            this.BTN_Update = new System.Windows.Forms.Button();
             this.DGView_IDHostels = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.DGView_NameHostel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DGView_FlatsHostel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DGView_SupplyHostel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BTN_Update = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DG_View_HostelsManage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -69,6 +69,16 @@
             this.DG_View_HostelsManage.RowTemplate.Height = 24;
             this.DG_View_HostelsManage.Size = new System.Drawing.Size(938, 474);
             this.DG_View_HostelsManage.TabIndex = 1;
+            // 
+            // BTN_Update
+            // 
+            this.BTN_Update.Location = new System.Drawing.Point(13, 12);
+            this.BTN_Update.Name = "BTN_Update";
+            this.BTN_Update.Size = new System.Drawing.Size(183, 30);
+            this.BTN_Update.TabIndex = 2;
+            this.BTN_Update.Text = "Обновить таблицу";
+            this.BTN_Update.UseVisualStyleBackColor = true;
+            this.BTN_Update.Click += new System.EventHandler(this.BTN_Update_Click);
             // 
             // DGView_IDHostels
             // 
@@ -122,17 +132,7 @@
             this.COL_Address.MinimumWidth = 6;
             this.COL_Address.Name = "COL_Address";
             this.COL_Address.ReadOnly = true;
-            this.COL_Address.Width = 125;
-            // 
-            // BTN_Update
-            // 
-            this.BTN_Update.Location = new System.Drawing.Point(13, 12);
-            this.BTN_Update.Name = "BTN_Update";
-            this.BTN_Update.Size = new System.Drawing.Size(183, 30);
-            this.BTN_Update.TabIndex = 2;
-            this.BTN_Update.Text = "Обновить таблицу";
-            this.BTN_Update.UseVisualStyleBackColor = true;
-            this.BTN_Update.Click += new System.EventHandler(this.BTN_Update_Click);
+            this.COL_Address.Width = 400;
             // 
             // HostelsManagment
             // 
@@ -155,11 +155,11 @@
 
         private System.Windows.Forms.Button BTN_Add_Hostels;
         private System.Windows.Forms.DataGridView DG_View_HostelsManage;
+        private System.Windows.Forms.Button BTN_Update;
         private System.Windows.Forms.DataGridViewCheckBoxColumn DGView_IDHostels;
         private System.Windows.Forms.DataGridViewTextBoxColumn DGView_NameHostel;
         private System.Windows.Forms.DataGridViewTextBoxColumn DGView_FlatsHostel;
         private System.Windows.Forms.DataGridViewTextBoxColumn DGView_SupplyHostel;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Address;
-        private System.Windows.Forms.Button BTN_Update;
     }
 }

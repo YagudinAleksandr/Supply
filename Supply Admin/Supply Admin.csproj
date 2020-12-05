@@ -106,9 +106,9 @@
     <Compile Include="MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202012051557486_First.cs" />
-    <Compile Include="Migrations\202012051557486_First.designer.cs">
-      <DependentUpon>202012051557486_First.cs</DependentUpon>
+    <Compile Include="Migrations\202012052111354_First.cs" />
+    <Compile Include="Migrations\202012052111354_First.designer.cs">
+      <DependentUpon>202012052111354_First.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Flat.cs" />
@@ -116,6 +116,7 @@
     <Compile Include="Models\Human.cs" />
     <Compile Include="Models\Rate.cs" />
     <Compile Include="Models\Rooms.cs" />
+    <Compile Include="Models\Supply.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoomsManagment.cs">
@@ -151,8 +152,8 @@
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012051557486_First.resx">
-      <DependentUpon>202012051557486_First.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202012052111354_First.resx">
+      <DependentUpon>202012052111354_First.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

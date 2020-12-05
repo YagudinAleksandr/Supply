@@ -23,7 +23,7 @@ namespace Supply_Admin
 
         private void BTN_Save_Click(object sender, EventArgs e)
         {
-            Hostels hostel = new Hostels { Name = Convert.ToInt32(TB_Name.Text), Address = RTB_Address.Text, SupplyManager = TB_Supply.Text };
+            Hostels hostel = new Hostels { Name = Convert.ToInt32(TB_Name.Text), Address = RTB_Address.Text};
             _db.Hostels.Add(hostel);
             _db.SaveChanges();
 

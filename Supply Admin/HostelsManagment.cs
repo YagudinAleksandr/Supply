@@ -129,7 +129,12 @@ namespace Supply_Admin
                     DG_View_HostelsManage.Rows[rowNumber].Cells[DGView_NameHostel.Name].Value = hostel.Name;
                     int flats = db.Flats.Where(x => x.HostelsId == hostel.Id).Count();
                     DG_View_HostelsManage.Rows[rowNumber].Cells[DGView_FlatsHostel.Name].Value = flats;
-                    DG_View_HostelsManage.Rows[rowNumber].Cells[DGView_SupplyHostel.Name].Value = hostel.SupplyManager;
+                    string name="";
+                    foreach(var supplies in db.Supplies.Where(x=>x.HostelsId == hostel.Id).ToList())
+                    {
+                        name += supplies.Name + ", ";
+                    }
+                    DG_View_HostelsManage.Rows[rowNumber].Cells[DGView_SupplyHostel.Name].Value = name;
                     DG_View_HostelsManage.Rows[rowNumber].Cells[COL_Address.Name].Value = hostel.Address;
                 }
             }
