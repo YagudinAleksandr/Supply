@@ -100,6 +100,12 @@
     <Compile Include="LoadingForm.Designer.cs">
       <DependentUpon>LoadingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainMenu.Designer.cs">
+      <DependentUpon>MainMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202012051557486_First.cs" />
     <Compile Include="Migrations\202012051557486_First.designer.cs">
       <DependentUpon>202012051557486_First.cs</DependentUpon>
@@ -135,6 +141,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LoadingForm.resx">
       <DependentUpon>LoadingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainMenu.resx">
+      <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012051557486_First.resx">
       <DependentUpon>202012051557486_First.cs</DependentUpon>
