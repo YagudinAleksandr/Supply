@@ -62,8 +62,8 @@ namespace Supply_Admin
             //hide this form
 
             
-            MainWindow mw = new MainWindow(_db);
-            mw.Show();
+            MainMenu mm = new MainMenu(_db);
+            mm.Show();
             this.Hide();
         }
     }

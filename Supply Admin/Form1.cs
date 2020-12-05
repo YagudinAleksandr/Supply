@@ -100,12 +100,6 @@ namespace Supply_Admin
         }
 
 
-        private void RoomSettings_Click(object sender, EventArgs e)
-        {
-            RoomsManagment roomsManagment = new RoomsManagment();
-            roomsManagment.Show();
-        }
-
         private void DG_View_Peoples_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             string value = DG_View_Peoples.Rows[e.RowIndex].Cells[0].Value.ToString();
@@ -115,6 +109,12 @@ namespace Supply_Admin
         private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MainMenu mm = new MainMenu(db);
+            mm.Show();
         }
     }
 }

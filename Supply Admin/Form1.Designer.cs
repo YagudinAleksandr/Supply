@@ -36,7 +36,6 @@
             this.CloseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HostelsSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.RoomSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.DG_View_Peoples = new System.Windows.Forms.DataGridView();
             this.COL_NumberOfOrder = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Surename = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,6 +51,7 @@
             this.COL_Benefit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BTN_Create_Human = new System.Windows.Forms.Button();
             this.BTN_UpdateTable = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DG_View_Peoples)).BeginInit();
             this.SuspendLayout();
@@ -107,8 +107,7 @@
             // настройкиToolStripMenuItem
             // 
             this.настройкиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.HostelsSettings,
-            this.RoomSettings});
+            this.HostelsSettings});
             this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
             this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(98, 24);
             this.настройкиToolStripMenuItem.Text = "Настройки";
@@ -119,13 +118,6 @@
             this.HostelsSettings.Size = new System.Drawing.Size(262, 26);
             this.HostelsSettings.Text = "Настройки общежитиий";
             this.HostelsSettings.Click += new System.EventHandler(this.HostelsSettings_Click);
-            // 
-            // RoomSettings
-            // 
-            this.RoomSettings.Name = "RoomSettings";
-            this.RoomSettings.Size = new System.Drawing.Size(262, 26);
-            this.RoomSettings.Text = "Настройки комнат";
-            this.RoomSettings.Click += new System.EventHandler(this.RoomSettings_Click);
             // 
             // DG_View_Peoples
             // 
@@ -275,11 +267,22 @@
             this.BTN_UpdateTable.UseVisualStyleBackColor = true;
             this.BTN_UpdateTable.Click += new System.EventHandler(this.BTN_UpdateTable_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(199, 36);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1526, 616);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.BTN_UpdateTable);
             this.Controls.Add(this.BTN_Create_Human);
             this.Controls.Add(this.DG_View_Peoples);
@@ -309,7 +312,6 @@
         private System.Windows.Forms.ToolStripMenuItem CloseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem настройкиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem HostelsSettings;
-        private System.Windows.Forms.ToolStripMenuItem RoomSettings;
         private System.Windows.Forms.DataGridView DG_View_Peoples;
         private System.Windows.Forms.Button BTN_Create_Human;
         private System.Windows.Forms.Button BTN_UpdateTable;
@@ -325,6 +327,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_EndOrder;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_ToTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Benefit;
+        private System.Windows.Forms.Button button1;
     }
 }
 

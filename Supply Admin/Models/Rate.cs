@@ -14,6 +14,13 @@ namespace Supply_Admin.Models
         public string Type { get; set; }//Тип
         public double Price { get; set; }//Цена
         public int Taks { get; set; }//НДС
+        public double? TaksProcent { get; set; }//Процент НДС
+
+
+        public int? RentId { get; set; }//Тип арендатора
+        public Rent Rent { get; set; }//Типы аренды
+
+
         public int? HostelId { get; set; }//ID общежития
         public Hostels Hostels { get; set; }//Общежития
     }

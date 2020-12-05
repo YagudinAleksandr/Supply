@@ -26,12 +26,23 @@ namespace Supply_Admin
 
             for (int i = 0; i < hostels.Count(); i++)
             {
-                linkedLabels[i] = new LinkLabel() { Location = new Point(7, 31 * (i + 1)), Text = "Общежитие № " + hostels[i].Name, Name = "HostelID" + hostels[i].Id.ToString() };
+                linkedLabels[i] = new LinkLabel() { Location = new Point(7, 31 * (i + 1)), Text = "Общежитие № " + hostels[i].Name, Name = "HostelID" + hostels[i].Id.ToString(), Tag = hostels[i].Id};
+                linkedLabels[i].LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(linkLabel1_LinkClicked);
             }
 
             GB_Hostels.Controls.AddRange(linkedLabels);
         }
-
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            LinkLabel linkLabel = (LinkLabel)sender;
+            int id = Convert.ToInt32(linkLabel.Tag);
+            
+            
+            HostelInformation hostelInformation = new HostelInformation(_db,id);
+            hostelInformation.Show();
+            
+            
+        }
         private void MainMenu_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
@@ -45,7 +56,10 @@ namespace Supply_Admin
 
         private void LL_SupplyManagers_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-
+            SupplyManagers supplyManagers = new SupplyManagers(_db);
+            supplyManagers.Show();
         }
+
+       
     }
 }

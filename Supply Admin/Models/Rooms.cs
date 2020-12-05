@@ -13,8 +13,10 @@ namespace Supply_Admin.Models
         public int Places { get; set; }
         public string Type { get; set; }
 
-        public int? HostelId { get; set; }
-        public Hostels Hostel { get; set; }
+
+
+        public int? FlatId { get; set; }
+        public Flat Flat { get; set; }
 
         public ICollection<Human> Humen { get; set; }
         public Rooms()

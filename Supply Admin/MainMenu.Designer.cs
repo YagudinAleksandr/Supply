@@ -35,20 +35,20 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.Menu_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.LL_Rates = new System.Windows.Forms.LinkLabel();
-            this.LL_Objects = new System.Windows.Forms.LinkLabel();
-            this.LL_Categories = new System.Windows.Forms.LinkLabel();
-            this.LL_Marks = new System.Windows.Forms.LinkLabel();
-            this.LL_Hostels = new System.Windows.Forms.LinkLabel();
             this.LL_SupplyManagers = new System.Windows.Forms.LinkLabel();
+            this.LL_Hostels = new System.Windows.Forms.LinkLabel();
+            this.LL_Marks = new System.Windows.Forms.LinkLabel();
+            this.LL_Categories = new System.Windows.Forms.LinkLabel();
+            this.LL_Objects = new System.Windows.Forms.LinkLabel();
+            this.LL_Rates = new System.Windows.Forms.LinkLabel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // GB_Hostels
             // 
-            this.GB_Hostels.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.GB_Hostels.Location = new System.Drawing.Point(1294, 46);
+            this.GB_Hostels.Location = new System.Drawing.Point(12, 46);
             this.GB_Hostels.Name = "GB_Hostels";
             this.GB_Hostels.Size = new System.Drawing.Size(163, 233);
             this.GB_Hostels.TabIndex = 0;
@@ -85,48 +85,62 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(221, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(164, 6);
             // 
             // Menu_Settings
             // 
             this.Menu_Settings.Name = "Menu_Settings";
-            this.Menu_Settings.Size = new System.Drawing.Size(224, 26);
+            this.Menu_Settings.Size = new System.Drawing.Size(167, 26);
             this.Menu_Settings.Text = "Настройки";
             // 
             // panel1
             // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.panel1.Controls.Add(this.LL_SupplyManagers);
             this.panel1.Controls.Add(this.LL_Hostels);
             this.panel1.Controls.Add(this.LL_Marks);
             this.panel1.Controls.Add(this.LL_Categories);
             this.panel1.Controls.Add(this.LL_Objects);
             this.panel1.Controls.Add(this.LL_Rates);
-            this.panel1.Location = new System.Drawing.Point(13, 46);
+            this.panel1.Location = new System.Drawing.Point(12, 402);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(258, 662);
+            this.panel1.Size = new System.Drawing.Size(258, 306);
             this.panel1.TabIndex = 3;
             // 
-            // LL_Rates
+            // LL_SupplyManagers
             // 
-            this.LL_Rates.AutoSize = true;
-            this.LL_Rates.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LL_Rates.Location = new System.Drawing.Point(3, 15);
-            this.LL_Rates.Name = "LL_Rates";
-            this.LL_Rates.Size = new System.Drawing.Size(140, 23);
-            this.LL_Rates.TabIndex = 0;
-            this.LL_Rates.TabStop = true;
-            this.LL_Rates.Text = "Типы тарифов";
+            this.LL_SupplyManagers.AutoSize = true;
+            this.LL_SupplyManagers.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.LL_SupplyManagers.Location = new System.Drawing.Point(3, 182);
+            this.LL_SupplyManagers.Name = "LL_SupplyManagers";
+            this.LL_SupplyManagers.Size = new System.Drawing.Size(236, 23);
+            this.LL_SupplyManagers.TabIndex = 5;
+            this.LL_SupplyManagers.TabStop = true;
+            this.LL_SupplyManagers.Text = "Заведующие общежитий";
+            this.LL_SupplyManagers.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LL_SupplyManagers_LinkClicked);
             // 
-            // LL_Objects
+            // LL_Hostels
             // 
-            this.LL_Objects.AutoSize = true;
-            this.LL_Objects.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LL_Objects.Location = new System.Drawing.Point(3, 50);
-            this.LL_Objects.Name = "LL_Objects";
-            this.LL_Objects.Size = new System.Drawing.Size(92, 23);
-            this.LL_Objects.TabIndex = 1;
-            this.LL_Objects.TabStop = true;
-            this.LL_Objects.Text = "Объекты";
+            this.LL_Hostels.AutoSize = true;
+            this.LL_Hostels.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.LL_Hostels.Location = new System.Drawing.Point(3, 150);
+            this.LL_Hostels.Name = "LL_Hostels";
+            this.LL_Hostels.Size = new System.Drawing.Size(249, 23);
+            this.LL_Hostels.TabIndex = 4;
+            this.LL_Hostels.TabStop = true;
+            this.LL_Hostels.Text = "Управление общежитиями";
+            this.LL_Hostels.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LL_Hostels_LinkClicked);
+            // 
+            // LL_Marks
+            // 
+            this.LL_Marks.AutoSize = true;
+            this.LL_Marks.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.LL_Marks.Location = new System.Drawing.Point(3, 256);
+            this.LL_Marks.Name = "LL_Marks";
+            this.LL_Marks.Size = new System.Drawing.Size(169, 23);
+            this.LL_Marks.TabIndex = 3;
+            this.LL_Marks.TabStop = true;
+            this.LL_Marks.Text = "Реквизиты НИМИ";
             // 
             // LL_Categories
             // 
@@ -139,46 +153,45 @@
             this.LL_Categories.TabStop = true;
             this.LL_Categories.Text = "Категории проживающих";
             // 
-            // LL_Marks
+            // LL_Objects
             // 
-            this.LL_Marks.AutoSize = true;
-            this.LL_Marks.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LL_Marks.Location = new System.Drawing.Point(3, 584);
-            this.LL_Marks.Name = "LL_Marks";
-            this.LL_Marks.Size = new System.Drawing.Size(169, 23);
-            this.LL_Marks.TabIndex = 3;
-            this.LL_Marks.TabStop = true;
-            this.LL_Marks.Text = "Реквизиты НИМИ";
+            this.LL_Objects.AutoSize = true;
+            this.LL_Objects.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.LL_Objects.Location = new System.Drawing.Point(3, 50);
+            this.LL_Objects.Name = "LL_Objects";
+            this.LL_Objects.Size = new System.Drawing.Size(92, 23);
+            this.LL_Objects.TabIndex = 1;
+            this.LL_Objects.TabStop = true;
+            this.LL_Objects.Text = "Объекты";
             // 
-            // LL_Hostels
+            // LL_Rates
             // 
-            this.LL_Hostels.AutoSize = true;
-            this.LL_Hostels.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LL_Hostels.Location = new System.Drawing.Point(3, 330);
-            this.LL_Hostels.Name = "LL_Hostels";
-            this.LL_Hostels.Size = new System.Drawing.Size(249, 23);
-            this.LL_Hostels.TabIndex = 4;
-            this.LL_Hostels.TabStop = true;
-            this.LL_Hostels.Text = "Управление общежитиями";
-            this.LL_Hostels.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LL_Hostels_LinkClicked);
+            this.LL_Rates.AutoSize = true;
+            this.LL_Rates.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.LL_Rates.Location = new System.Drawing.Point(3, 15);
+            this.LL_Rates.Name = "LL_Rates";
+            this.LL_Rates.Size = new System.Drawing.Size(140, 23);
+            this.LL_Rates.TabIndex = 0;
+            this.LL_Rates.TabStop = true;
+            this.LL_Rates.Text = "Типы тарифов";
             // 
-            // LL_SupplyManagers
+            // groupBox1
             // 
-            this.LL_SupplyManagers.AutoSize = true;
-            this.LL_SupplyManagers.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LL_SupplyManagers.Location = new System.Drawing.Point(3, 365);
-            this.LL_SupplyManagers.Name = "LL_SupplyManagers";
-            this.LL_SupplyManagers.Size = new System.Drawing.Size(236, 23);
-            this.LL_SupplyManagers.TabIndex = 5;
-            this.LL_SupplyManagers.TabStop = true;
-            this.LL_SupplyManagers.Text = "Заведующие общежитий";
-            this.LL_SupplyManagers.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LL_SupplyManagers_LinkClicked);
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Location = new System.Drawing.Point(1123, 46);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(334, 662);
+            this.groupBox1.TabIndex = 4;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Договора";
             // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1469, 720);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.GB_Hostels);
             this.Controls.Add(this.menuStrip1);
@@ -213,5 +226,6 @@
         private System.Windows.Forms.LinkLabel LL_Marks;
         private System.Windows.Forms.LinkLabel LL_Hostels;
         private System.Windows.Forms.LinkLabel LL_SupplyManagers;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
