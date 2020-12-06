@@ -63,8 +63,8 @@ namespace Supply_Admin
 
                     var room = db.Rooms.Where(x => x.Id == human.RoomId).FirstOrDefault();
                     DG_View_Peoples.Rows[rowNumber].Cells[COL_Room.Name].Value = room.Name;
-                    var hostel = db.Hostels.Where(x => x.Id == room.HostelId).FirstOrDefault();
-                    DG_View_Peoples.Rows[rowNumber].Cells[COL_Hostel.Name].Value = hostel.Name;
+                    //var hostel = db.Hostels.Where(x => x.Id == room.HostelId).FirstOrDefault();
+                    //DG_View_Peoples.Rows[rowNumber].Cells[COL_Hostel.Name].Value = hostel.Name;
                     DG_View_Peoples.Rows[rowNumber].Cells[COL_StartOrder.Name].Value = human.OrderStart;
                     DG_View_Peoples.Rows[rowNumber].Cells[COL_EndOrder.Name].Value = human.OrderEnd;
                     DG_View_Peoples.Rows[rowNumber].Cells[COL_ToTime.Name].Value = human.ToTime;

@@ -60,6 +60,22 @@ namespace Supply_Admin
             supplyManagers.Show();
         }
 
-       
+        private void LL_Categories_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            RentMenegers rentMenegers = new RentMenegers(_db);
+            rentMenegers.Show();
+        }
+
+        private void LL_Rates_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            RatesManager ratesManager = new RatesManager(_db);
+            ratesManager.Show();
+        }
+
+        private void LL_Rooms_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            RoomsManager roomsManager = new RoomsManager(_db);
+            roomsManager.Show();
+        }
     }
 }

@@ -72,7 +72,7 @@ namespace Supply_Admin
                     app.Selection.Find.ClearFormatting();
                     app.Selection.Find.Replacement.ClearFormatting();
                     
-
+                    /*
                     //Поиск и замена полей в шаблоне на данные
                     try
                     {
@@ -92,7 +92,7 @@ namespace Supply_Admin
                         MessageBox.Show("Нет полей для замены в шаблоне!");
                         return;
                     }
-                    
+                    */
 
                     //Сохранение договоров
                     object saveAsFile = (object)"C:\\Users\\Aleksandr\\Desktop\\Report\\Договор№" + human.Id.ToString() + ".doc";

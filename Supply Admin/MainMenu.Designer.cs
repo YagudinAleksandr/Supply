@@ -35,6 +35,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.Menu_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.LL_Rooms = new System.Windows.Forms.LinkLabel();
             this.LL_SupplyManagers = new System.Windows.Forms.LinkLabel();
             this.LL_Hostels = new System.Windows.Forms.LinkLabel();
             this.LL_Marks = new System.Windows.Forms.LinkLabel();
@@ -96,22 +97,35 @@
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.panel1.Controls.Add(this.LL_Rooms);
             this.panel1.Controls.Add(this.LL_SupplyManagers);
             this.panel1.Controls.Add(this.LL_Hostels);
             this.panel1.Controls.Add(this.LL_Marks);
             this.panel1.Controls.Add(this.LL_Categories);
             this.panel1.Controls.Add(this.LL_Objects);
             this.panel1.Controls.Add(this.LL_Rates);
-            this.panel1.Location = new System.Drawing.Point(12, 402);
+            this.panel1.Location = new System.Drawing.Point(12, 331);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(258, 306);
+            this.panel1.Size = new System.Drawing.Size(272, 377);
             this.panel1.TabIndex = 3;
+            // 
+            // LL_Rooms
+            // 
+            this.LL_Rooms.AutoSize = true;
+            this.LL_Rooms.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.LL_Rooms.Location = new System.Drawing.Point(5, 79);
+            this.LL_Rooms.Name = "LL_Rooms";
+            this.LL_Rooms.Size = new System.Drawing.Size(99, 25);
+            this.LL_Rooms.TabIndex = 6;
+            this.LL_Rooms.TabStop = true;
+            this.LL_Rooms.Text = "Комнаты";
+            this.LL_Rooms.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LL_Rooms_LinkClicked);
             // 
             // LL_SupplyManagers
             // 
             this.LL_SupplyManagers.AutoSize = true;
             this.LL_SupplyManagers.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LL_SupplyManagers.Location = new System.Drawing.Point(3, 182);
+            this.LL_SupplyManagers.Location = new System.Drawing.Point(6, 45);
             this.LL_SupplyManagers.Name = "LL_SupplyManagers";
             this.LL_SupplyManagers.Size = new System.Drawing.Size(236, 23);
             this.LL_SupplyManagers.TabIndex = 5;
@@ -123,7 +137,7 @@
             // 
             this.LL_Hostels.AutoSize = true;
             this.LL_Hostels.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LL_Hostels.Location = new System.Drawing.Point(3, 150);
+            this.LL_Hostels.Location = new System.Drawing.Point(6, 13);
             this.LL_Hostels.Name = "LL_Hostels";
             this.LL_Hostels.Size = new System.Drawing.Size(249, 23);
             this.LL_Hostels.TabIndex = 4;
@@ -135,7 +149,7 @@
             // 
             this.LL_Marks.AutoSize = true;
             this.LL_Marks.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LL_Marks.Location = new System.Drawing.Point(3, 256);
+            this.LL_Marks.Location = new System.Drawing.Point(3, 335);
             this.LL_Marks.Name = "LL_Marks";
             this.LL_Marks.Size = new System.Drawing.Size(169, 23);
             this.LL_Marks.TabIndex = 3;
@@ -146,18 +160,19 @@
             // 
             this.LL_Categories.AutoSize = true;
             this.LL_Categories.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LL_Categories.Location = new System.Drawing.Point(3, 87);
+            this.LL_Categories.Location = new System.Drawing.Point(6, 142);
             this.LL_Categories.Name = "LL_Categories";
             this.LL_Categories.Size = new System.Drawing.Size(235, 23);
             this.LL_Categories.TabIndex = 2;
             this.LL_Categories.TabStop = true;
             this.LL_Categories.Text = "Категории проживающих";
+            this.LL_Categories.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LL_Categories_LinkClicked);
             // 
             // LL_Objects
             // 
             this.LL_Objects.AutoSize = true;
             this.LL_Objects.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LL_Objects.Location = new System.Drawing.Point(3, 50);
+            this.LL_Objects.Location = new System.Drawing.Point(6, 215);
             this.LL_Objects.Name = "LL_Objects";
             this.LL_Objects.Size = new System.Drawing.Size(92, 23);
             this.LL_Objects.TabIndex = 1;
@@ -168,12 +183,13 @@
             // 
             this.LL_Rates.AutoSize = true;
             this.LL_Rates.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LL_Rates.Location = new System.Drawing.Point(3, 15);
+            this.LL_Rates.Location = new System.Drawing.Point(6, 179);
             this.LL_Rates.Name = "LL_Rates";
             this.LL_Rates.Size = new System.Drawing.Size(140, 23);
             this.LL_Rates.TabIndex = 0;
             this.LL_Rates.TabStop = true;
             this.LL_Rates.Text = "Типы тарифов";
+            this.LL_Rates.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LL_Rates_LinkClicked);
             // 
             // groupBox1
             // 
@@ -227,5 +243,6 @@
         private System.Windows.Forms.LinkLabel LL_Hostels;
         private System.Windows.Forms.LinkLabel LL_SupplyManagers;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.LinkLabel LL_Rooms;
     }
 }

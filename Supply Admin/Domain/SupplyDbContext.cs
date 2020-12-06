@@ -22,5 +22,6 @@ namespace Supply_Admin.Domain
         public DbSet<Human> Humen { get; set; }
         public DbSet<Rate> Rates { get; set; }
         public DbSet<Flat> Flats { get; set; }
+        public DbSet<Garage> Garages { get; set; }
     }
 }

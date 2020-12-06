@@ -35,11 +35,11 @@ namespace Supply_Admin
         }
 
         private void CB_HostelNumber_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        {/*
             var rooms = _db.Rooms.Where(x => x.HostelId == (int)CB_HostelNumber.SelectedValue).ToList();
             CB_RoomNumber.DataSource = rooms;
             CB_RoomNumber.DisplayMember = "Name";
-            CB_RoomNumber.ValueMember = "Id";
+            CB_RoomNumber.ValueMember = "Id";*/
         }
         private void CB_RoomNumber_SelectedIndexChanged(object sender, EventArgs e)
         {
