@@ -33,7 +33,7 @@
             this.BTN_Update = new System.Windows.Forms.Button();
             this.DGView_IDHostels = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.DGView_NameHostel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DGView_FlatsHostel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DGV_CountEnterance = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DGView_SupplyHostel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DG_View_HostelsManage)).BeginInit();
@@ -59,7 +59,7 @@
             this.DG_View_HostelsManage.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.DGView_IDHostels,
             this.DGView_NameHostel,
-            this.DGView_FlatsHostel,
+            this.DGV_CountEnterance,
             this.DGView_SupplyHostel,
             this.COL_Address});
             this.DG_View_HostelsManage.Location = new System.Drawing.Point(13, 48);
@@ -102,17 +102,14 @@
             this.DGView_NameHostel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.DGView_NameHostel.Width = 78;
             // 
-            // DGView_FlatsHostel
+            // DGV_CountEnterance
             // 
-            this.DGView_FlatsHostel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.DGView_FlatsHostel.Frozen = true;
-            this.DGView_FlatsHostel.HeaderText = "Кол-во этажей";
-            this.DGView_FlatsHostel.MinimumWidth = 6;
-            this.DGView_FlatsHostel.Name = "DGView_FlatsHostel";
-            this.DGView_FlatsHostel.ReadOnly = true;
-            this.DGView_FlatsHostel.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGView_FlatsHostel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.DGView_FlatsHostel.Width = 99;
+            this.DGV_CountEnterance.Frozen = true;
+            this.DGV_CountEnterance.HeaderText = "Количество подъездов";
+            this.DGV_CountEnterance.MinimumWidth = 6;
+            this.DGV_CountEnterance.Name = "DGV_CountEnterance";
+            this.DGV_CountEnterance.ReadOnly = true;
+            this.DGV_CountEnterance.Width = 125;
             // 
             // DGView_SupplyHostel
             // 
@@ -158,7 +155,7 @@
         private System.Windows.Forms.Button BTN_Update;
         private System.Windows.Forms.DataGridViewCheckBoxColumn DGView_IDHostels;
         private System.Windows.Forms.DataGridViewTextBoxColumn DGView_NameHostel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DGView_FlatsHostel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DGV_CountEnterance;
         private System.Windows.Forms.DataGridViewTextBoxColumn DGView_SupplyHostel;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Address;
     }

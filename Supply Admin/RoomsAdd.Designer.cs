@@ -39,6 +39,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.CB_Flats = new System.Windows.Forms.ComboBox();
             this.BTN_Save = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.CB_Enterance = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -70,8 +72,10 @@
             // 
             this.CB_Type.FormattingEnabled = true;
             this.CB_Type.Items.AddRange(new object[] {
-            "Жилая",
-            "Не жилая"});
+            "стандартный",
+            "улучшенный",
+            "улучшенный+",
+            "уют"});
             this.CB_Type.Location = new System.Drawing.Point(52, 65);
             this.CB_Type.Name = "CB_Type";
             this.CB_Type.Size = new System.Drawing.Size(121, 24);
@@ -105,7 +109,7 @@
             // CB_Hostels
             // 
             this.CB_Hostels.FormattingEnabled = true;
-            this.CB_Hostels.Location = new System.Drawing.Point(109, 132);
+            this.CB_Hostels.Location = new System.Drawing.Point(106, 131);
             this.CB_Hostels.Name = "CB_Hostels";
             this.CB_Hostels.Size = new System.Drawing.Size(121, 24);
             this.CB_Hostels.TabIndex = 7;
@@ -114,7 +118,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(247, 135);
+            this.label5.Location = new System.Drawing.Point(414, 133);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(41, 17);
             this.label5.TabIndex = 8;
@@ -123,9 +127,9 @@
             // CB_Flats
             // 
             this.CB_Flats.FormattingEnabled = true;
-            this.CB_Flats.Location = new System.Drawing.Point(298, 132);
+            this.CB_Flats.Location = new System.Drawing.Point(460, 129);
             this.CB_Flats.Name = "CB_Flats";
-            this.CB_Flats.Size = new System.Drawing.Size(121, 24);
+            this.CB_Flats.Size = new System.Drawing.Size(76, 24);
             this.CB_Flats.TabIndex = 9;
             // 
             // BTN_Save
@@ -138,11 +142,31 @@
             this.BTN_Save.UseVisualStyleBackColor = true;
             this.BTN_Save.Click += new System.EventHandler(this.BTN_Save_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(237, 133);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(66, 17);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Подъезд";
+            // 
+            // CB_Enterance
+            // 
+            this.CB_Enterance.FormattingEnabled = true;
+            this.CB_Enterance.Location = new System.Drawing.Point(308, 130);
+            this.CB_Enterance.Name = "CB_Enterance";
+            this.CB_Enterance.Size = new System.Drawing.Size(98, 24);
+            this.CB_Enterance.TabIndex = 12;
+            this.CB_Enterance.SelectedIndexChanged += new System.EventHandler(this.CB_Enterance_SelectedIndexChanged);
+            // 
             // RoomsAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(434, 237);
+            this.ClientSize = new System.Drawing.Size(608, 237);
+            this.Controls.Add(this.CB_Enterance);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.BTN_Save);
             this.Controls.Add(this.CB_Flats);
             this.Controls.Add(this.label5);
@@ -174,5 +198,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox CB_Flats;
         private System.Windows.Forms.Button BTN_Save;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox CB_Enterance;
     }
 }

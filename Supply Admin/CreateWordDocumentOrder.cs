@@ -25,6 +25,7 @@ namespace Supply_Admin
 
         private void BTN_Create_Click(object sender, EventArgs e)
         {
+            /*
             //Обращение к БД
             IQueryable<Human> humens = _db.Humen;
 
@@ -92,7 +93,7 @@ namespace Supply_Admin
                         MessageBox.Show("Нет полей для замены в шаблоне!");
                         return;
                     }
-                    */
+                    
 
                     //Сохранение договоров
                     object saveAsFile = (object)"C:\\Users\\Aleksandr\\Desktop\\Report\\Договор№" + human.Id.ToString() + ".doc";
@@ -119,7 +120,7 @@ namespace Supply_Admin
             else
             {
                 MessageBox.Show("Не найдено совпадений в базе данных!");
-            }
+            }*/
         }
     }
 }

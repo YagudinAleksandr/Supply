@@ -27,12 +27,28 @@ namespace Supply_Admin
 
         private void CB_Hostels_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var flats = _db.Flats.Where(x => x.HostelsId == (int)CB_Hostels.SelectedValue).ToList();
-            CB_Flats.DataSource = flats;
-            CB_Flats.DisplayMember = "Name";
-            CB_Flats.ValueMember = "Id";
+            var enterances = _db.Enterances.Where(x => x.HostelsId == (int)CB_Hostels.SelectedValue).ToList();
+            CB_Enterance.DataSource = enterances;
+            CB_Enterance.DisplayMember = "Name";
+            CB_Enterance.ValueMember = "Id";
         }
-
+        private void CB_Enterance_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            try
+            {
+                int Id = (int)CB_Enterance.SelectedValue;
+                var flats = _db.Flats.Where(x => x.EnteranceId == Id).ToList();
+                CB_Flats.DataSource = flats;
+                CB_Flats.DisplayMember = "Name";
+                CB_Flats.ValueMember = "Id";
+            }
+            catch
+            {
+                return;
+            }
+            
+        }
         private void BTN_Save_Click(object sender, EventArgs e)
         {
             try
@@ -54,5 +70,7 @@ namespace Supply_Admin
                 MessageBox.Show("Ошибка при добавление данных");
             }
         }
+
+        
     }
 }

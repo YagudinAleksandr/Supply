@@ -24,7 +24,7 @@ namespace Supply_Admin.Models
         public string Citizenship { get; set; }//Гражданство
 
 
-        
+        /*
         public string EducationType { get; set; }//Форма обучения
 
         public string ToTime { get; set; }//Заключается на время...
@@ -40,7 +40,7 @@ namespace Supply_Admin.Models
 
 
         public int Status { get; set; } //Статус документа
-
+        */
         public int? RoomId { get; set; }
         public Rooms Room { get; set; }
 

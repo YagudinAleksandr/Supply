@@ -23,5 +23,6 @@ namespace Supply_Admin.Domain
         public DbSet<Rate> Rates { get; set; }
         public DbSet<Flat> Flats { get; set; }
         public DbSet<Garage> Garages { get; set; }
+        public DbSet<Enterance> Enterances { get; set; }
     }
 }

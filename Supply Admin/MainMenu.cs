@@ -77,5 +77,10 @@ namespace Supply_Admin
             RoomsManager roomsManager = new RoomsManager(_db);
             roomsManager.Show();
         }
+
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

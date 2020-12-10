@@ -116,7 +116,7 @@ namespace Supply_Admin
         private void DataGridViewInformation()
         {
             DG_View_HostelsManage.Rows.Clear();
-
+            
             try
             {
                 var hostels = db.Hostels.ToList();
@@ -127,8 +127,9 @@ namespace Supply_Admin
                     int rowNumber = DG_View_HostelsManage.Rows.Add();
                     DG_View_HostelsManage.Rows[rowNumber].Cells[DGView_IDHostels.Name].Value = hostel.Id;
                     DG_View_HostelsManage.Rows[rowNumber].Cells[DGView_NameHostel.Name].Value = hostel.Name;
-                    int flats = db.Flats.Where(x => x.HostelsId == hostel.Id).Count();
-                    DG_View_HostelsManage.Rows[rowNumber].Cells[DGView_FlatsHostel.Name].Value = flats;
+                    int enterances = db.Enterances.Where(x => x.HostelsId == hostel.Id).Count();
+                    DG_View_HostelsManage.Rows[rowNumber].Cells[DGV_CountEnterance.Name].Value = enterances;
+                    
                     string name="";
                     foreach(var supplies in db.Supplies.Where(x=>x.HostelsId == hostel.Id).ToList())
                     {
@@ -142,6 +143,7 @@ namespace Supply_Admin
             {
                 MessageBox.Show("В базе данных нет сведений!");
             }
+            
         }
 
         private void BTN_Update_Click(object sender, EventArgs e)

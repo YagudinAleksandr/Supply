@@ -35,16 +35,22 @@ namespace Supply_Admin
 
                 foreach (var room in rooms)
                 {
+                    
                     int rowNumber = DGV_Rooms.Rows.Add();
                     DGV_Rooms.Rows[rowNumber].Cells[COL_Id.Name].Value = room.Id;
                     DGV_Rooms.Rows[rowNumber].Cells[COL_Name.Name].Value = room.Name;
                     DGV_Rooms.Rows[rowNumber].Cells[COL_Places.Name].Value = room.Places;
                     DGV_Rooms.Rows[rowNumber].Cells[COL_Type.Name].Value = room.Type;
+
                     
+
                     var flat = _db.Flats.Where(x => x.Id == room.FlatId).FirstOrDefault();
                     DGV_Rooms.Rows[rowNumber].Cells[COL_FlatId.Name].Value = flat.Name;
-                    var hostel = _db.Hostels.Where(x => x.Id == flat.HostelsId).FirstOrDefault();
+                    var enterance = _db.Enterances.Where(x => x.Id == flat.EnteranceId).FirstOrDefault();
+                    DGV_Rooms.Rows[rowNumber].Cells[COL_Enterance.Name].Value = enterance.Name;
+                    var hostel = _db.Hostels.Where(x => x.Id == enterance.HostelsId).FirstOrDefault();
                     DGV_Rooms.Rows[rowNumber].Cells[COL_HostelId.Name].Value = hostel.Name;
+                    
                 }
             }
             catch

@@ -23,24 +23,44 @@ namespace Supply_Admin
 
         private void BTN_Save_Click(object sender, EventArgs e)
         {
-            Hostels hostel = new Hostels { Name = Convert.ToInt32(TB_Name.Text), Address = RTB_Address.Text};
-            _db.Hostels.Add(hostel);
-            _db.SaveChanges();
-
-            int hostelId = hostel.Id;
-
-            for (int i = 0; i < Convert.ToInt32(TB_Flats.Text); i++)
+            try
             {
-                Flat flat = new Flat();
-
-                flat.Name = i + 1;
-                flat.HostelsId = hostelId;
-
-                _db.Flats.Add(flat);
+                Hostels hostel = new Hostels { Name = Convert.ToInt32(TB_Name.Text), Address = RTB_Address.Text };
+                _db.Hostels.Add(hostel);
                 _db.SaveChanges();
-            }
 
-            MessageBox.Show("Общежитие добавлено успешно!");
+                int hostelId = hostel.Id;
+
+                for (int i = 0; i < Convert.ToInt32(TB_Enterances.Text); i++)
+                {
+                    Enterance enterance = new Enterance();
+
+                    enterance.Name = i + 1;
+                    enterance.HostelsId = hostelId;
+
+                    _db.Enterances.Add(enterance);
+                    _db.SaveChanges();
+
+                    int enteranceId = enterance.Id;
+
+                    for (int j = 0; j < Convert.ToInt32(TB_Flats.Text); j++)
+                    {
+                        Flat flat = new Flat();
+
+                        flat.Name = j + 1;
+                        flat.EnteranceId = enteranceId;
+
+                        _db.Flats.Add(flat);
+                        _db.SaveChanges();
+                    }
+                }
+
+                MessageBox.Show("Общежитие добавлено успешно!");
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка!");
+            }
 
             Close();
         }

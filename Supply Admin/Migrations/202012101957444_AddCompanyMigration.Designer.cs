@@ -7,13 +7,13 @@ namespace Supply_Admin.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class FirstMigration : IMigrationMetadata
+    public sealed partial class AddCompanyMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(FirstMigration));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddCompanyMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "202012062130369_FirstMigration"; }
+            get { return "202012101957444_AddCompanyMigration"; }
         }
         
         string IMigrationMetadata.Source

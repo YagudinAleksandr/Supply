@@ -16,7 +16,6 @@ namespace Supply_Admin
         private SupplyDbContext _db;
         private int _hostelId;
         ContextMenu menu;
-        TreeNode[] roomsNode;
         //TreeNode[] peopleNode;
 
         public HostelInformation(SupplyDbContext db, int hostelId)
@@ -24,42 +23,51 @@ namespace Supply_Admin
             InitializeComponent();
             _hostelId = hostelId;
             _db = db;
-
-            
         }
 
         private void HostelInformation_Shown(object sender, EventArgs e)
         {
+            
             var hostel = _db.Hostels.Where(x => x.Id == _hostelId).FirstOrDefault();
             TreeNode hostelNode = new TreeNode($"Общежитие № {hostel.Name}");
 
-            var flats = _db.Flats.Where(x => x.HostelsId == hostel.Id).ToList();
-            TreeNode[] flatsNode = new TreeNode[flats.Count()];
-
+            var enterances = _db.Enterances.Where(x => x.HostelsId == hostel.Id).ToList();
+            TreeNode[] enterancesNode = new TreeNode[enterances.Count()];
             
-            for (int i = 0; i < flats.Count(); i++) 
+            for(int k =0; k<enterances.Count();k++)
             {
-                flatsNode[i] = new TreeNode();
-                flatsNode[i].Text = $"Этаж № {flats[i].Name}";
-                flatsNode[i].Tag = flats[i].Id;
-                int f = flats[i].Id;
-               
-                var rooms = _db.Rooms.Where(p => p.FlatId == f).ToList();
-                roomsNode = new TreeNode[rooms.Count()];
-                for (int j = 0; j < rooms.Count(); j++)
+                enterancesNode[k] = new TreeNode();
+                enterancesNode[k].Text = $"Подъезд № {enterances[k].Name}";
+                int enteranceId = enterances[k].Id;
+
+                var flats = _db.Flats.Where(x => x.EnteranceId == enteranceId).ToList();
+                TreeNode[] flatsNode = new TreeNode[flats.Count()];
+
+                for (int i = 0; i < flats.Count(); i++)
                 {
-                    roomsNode[j] = new TreeNode();
-                    roomsNode[j].Text = rooms[j].Name.ToString();
-                    roomsNode[j].Tag = rooms[j].Id;
-                    menu = new ContextMenu(){MenuItems = {new MenuItem("Добавить жильца", AddHumanHandler)}};
+                    flatsNode[i] = new TreeNode();
+                    flatsNode[i].Text = $"Этаж № {flats[i].Name}";
+                    flatsNode[i].Tag = flats[i].Id;
+                    int f = flats[i].Id;
 
-                    roomsNode[j].ContextMenu = menu;
+                    var rooms = _db.Rooms.Where(p => p.FlatId == f).ToList();
+                    TreeNode[] roomsNode = new TreeNode[rooms.Count()];
+                    for (int j = 0; j < rooms.Count(); j++)
+                    {
+                        roomsNode[j] = new TreeNode();
+                        roomsNode[j].Text = rooms[j].Name.ToString();
+                        roomsNode[j].Tag = rooms[j].Id;
+                        menu = new ContextMenu() { MenuItems = { new MenuItem("Добавить жильца", AddHumanHandler) } };
+
+                        roomsNode[j].ContextMenu = menu;
+                    }
+
+                    flatsNode[i].Nodes.AddRange(roomsNode);
                 }
-
-                flatsNode[i].Nodes.AddRange(roomsNode);
+                enterancesNode[k].Nodes.AddRange(flatsNode);
             }
 
-            hostelNode.Nodes.AddRange(flatsNode);
+            hostelNode.Nodes.AddRange(enterancesNode);
             
 
             TV_Hostels.Nodes.Add(hostelNode);
@@ -70,11 +78,11 @@ namespace Supply_Admin
         }
         private void AddHumanHandler(object sender, EventArgs e)
         {
-            
-            
             if (TV_Hostels.SelectedNode != null)
             {
-                MessageBox.Show(TV_Hostels.SelectedNode.Tag.ToString());
+                int room_id = Convert.ToInt32(TV_Hostels.SelectedNode.Tag.ToString());
+                HumanCreate humanCreate = new HumanCreate(_db, room_id);
+                humanCreate.ShowDialog();
             }
             
         }

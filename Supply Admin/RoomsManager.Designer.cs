@@ -34,6 +34,7 @@
             this.COL_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_HostelId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.COL_Enterance = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_FlatId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Places = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Rooms)).BeginInit();
@@ -60,6 +61,7 @@
             this.COL_Name,
             this.COL_Type,
             this.COL_HostelId,
+            this.COL_Enterance,
             this.COL_FlatId,
             this.COL_Places});
             this.DGV_Rooms.Location = new System.Drawing.Point(13, 68);
@@ -101,6 +103,13 @@
             this.COL_HostelId.ReadOnly = true;
             this.COL_HostelId.Width = 125;
             // 
+            // COL_Enterance
+            // 
+            this.COL_Enterance.HeaderText = "Подъезд";
+            this.COL_Enterance.MinimumWidth = 6;
+            this.COL_Enterance.Name = "COL_Enterance";
+            this.COL_Enterance.Width = 125;
+            // 
             // COL_FlatId
             // 
             this.COL_FlatId.HeaderText = "Этаж";
@@ -140,6 +149,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Name;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Type;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_HostelId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn COL_Enterance;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_FlatId;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Places;
     }

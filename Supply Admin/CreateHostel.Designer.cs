@@ -35,6 +35,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.RTB_Address = new System.Windows.Forms.RichTextBox();
             this.BTN_Save = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.TB_Enterances = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -72,7 +74,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(16, 50);
+            this.label4.Location = new System.Drawing.Point(16, 94);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(48, 17);
             this.label4.TabIndex = 6;
@@ -80,7 +82,7 @@
             // 
             // RTB_Address
             // 
-            this.RTB_Address.Location = new System.Drawing.Point(16, 81);
+            this.RTB_Address.Location = new System.Drawing.Point(16, 122);
             this.RTB_Address.Name = "RTB_Address";
             this.RTB_Address.Size = new System.Drawing.Size(572, 96);
             this.RTB_Address.TabIndex = 7;
@@ -96,11 +98,29 @@
             this.BTN_Save.UseVisualStyleBackColor = true;
             this.BTN_Save.Click += new System.EventHandler(this.BTN_Save_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(16, 53);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(161, 17);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Количество подъездов";
+            // 
+            // TB_Enterances
+            // 
+            this.TB_Enterances.Location = new System.Drawing.Point(184, 53);
+            this.TB_Enterances.Name = "TB_Enterances";
+            this.TB_Enterances.Size = new System.Drawing.Size(100, 22);
+            this.TB_Enterances.TabIndex = 10;
+            // 
             // CreateHostel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(608, 293);
+            this.Controls.Add(this.TB_Enterances);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.BTN_Save);
             this.Controls.Add(this.RTB_Address);
             this.Controls.Add(this.label4);
@@ -125,5 +145,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RichTextBox RTB_Address;
         private System.Windows.Forms.Button BTN_Save;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox TB_Enterances;
     }
 }
