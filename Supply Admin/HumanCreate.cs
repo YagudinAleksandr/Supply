@@ -16,7 +16,7 @@ namespace Supply_Admin
     {
         SupplyDbContext _db;
         private static int _roomId;
-        
+
         public HumanCreate(SupplyDbContext db, int roomId)
         {
             InitializeComponent();

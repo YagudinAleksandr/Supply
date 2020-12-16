@@ -116,6 +116,7 @@
     <Compile Include="Models\Garage.cs" />
     <Compile Include="Models\Hostels.cs" />
     <Compile Include="Models\Human.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Rate.cs" />
     <Compile Include="Models\Rent.cs" />
     <Compile Include="Models\Rooms.cs" />
