@@ -34,11 +34,11 @@ namespace Supply_Admin
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.TB_SecondName = new System.Windows.Forms.TextBox();
+            this.TB_Name = new System.Windows.Forms.TextBox();
+            this.TB_Patronymic = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
+            this.TB_Phone = new System.Windows.Forms.MaskedTextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -61,6 +61,26 @@ namespace Supply_Admin
             this.maskedTextBox3 = new System.Windows.Forms.MaskedTextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.maskedTextBox4 = new System.Windows.Forms.MaskedTextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.maskedTextBox5 = new System.Windows.Forms.MaskedTextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.maskedTextBox6 = new System.Windows.Forms.MaskedTextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.maskedTextBox7 = new System.Windows.Forms.MaskedTextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.maskedTextBox8 = new System.Windows.Forms.MaskedTextBox();
+            this.BTN_Save = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // LB_Room
@@ -86,7 +106,7 @@ namespace Supply_Admin
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 90);
+            this.label1.Location = new System.Drawing.Point(13, 89);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(70, 17);
             this.label1.TabIndex = 2;
@@ -110,26 +130,26 @@ namespace Supply_Admin
             this.label3.TabIndex = 4;
             this.label3.Text = "Отчество";
             // 
-            // textBox1
+            // TB_SecondName
             // 
-            this.textBox1.Location = new System.Drawing.Point(90, 87);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(265, 22);
-            this.textBox1.TabIndex = 5;
+            this.TB_SecondName.Location = new System.Drawing.Point(90, 87);
+            this.TB_SecondName.Name = "TB_SecondName";
+            this.TB_SecondName.Size = new System.Drawing.Size(265, 22);
+            this.TB_SecondName.TabIndex = 5;
             // 
-            // textBox2
+            // TB_Name
             // 
-            this.textBox2.Location = new System.Drawing.Point(413, 87);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(265, 22);
-            this.textBox2.TabIndex = 6;
+            this.TB_Name.Location = new System.Drawing.Point(413, 87);
+            this.TB_Name.Name = "TB_Name";
+            this.TB_Name.Size = new System.Drawing.Size(265, 22);
+            this.TB_Name.TabIndex = 6;
             // 
-            // textBox3
+            // TB_Patronymic
             // 
-            this.textBox3.Location = new System.Drawing.Point(772, 87);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(265, 22);
-            this.textBox3.TabIndex = 7;
+            this.TB_Patronymic.Location = new System.Drawing.Point(772, 87);
+            this.TB_Patronymic.Name = "TB_Patronymic";
+            this.TB_Patronymic.Size = new System.Drawing.Size(265, 22);
+            this.TB_Patronymic.TabIndex = 7;
             // 
             // label4
             // 
@@ -140,13 +160,13 @@ namespace Supply_Admin
             this.label4.TabIndex = 8;
             this.label4.Text = "Телефон";
             // 
-            // maskedTextBox1
+            // TB_Phone
             // 
-            this.maskedTextBox1.Location = new System.Drawing.Point(1119, 87);
-            this.maskedTextBox1.Mask = "+7(999) 000-0000";
-            this.maskedTextBox1.Name = "maskedTextBox1";
-            this.maskedTextBox1.Size = new System.Drawing.Size(154, 22);
-            this.maskedTextBox1.TabIndex = 9;
+            this.TB_Phone.Location = new System.Drawing.Point(1119, 87);
+            this.TB_Phone.Mask = "+7(999) 000-0000";
+            this.TB_Phone.Name = "TB_Phone";
+            this.TB_Phone.Size = new System.Drawing.Size(154, 22);
+            this.TB_Phone.TabIndex = 9;
             // 
             // label5
             // 
@@ -337,11 +357,207 @@ namespace Supply_Admin
             this.maskedTextBox4.TabIndex = 31;
             this.maskedTextBox4.ValidatingType = typeof(System.DateTime);
             // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(19, 404);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(121, 17);
+            this.label17.TabIndex = 32;
+            this.label17.Text = "Форма обучения";
+            // 
+            // comboBox3
+            // 
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Location = new System.Drawing.Point(188, 404);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(167, 24);
+            this.comboBox3.TabIndex = 33;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label18.Location = new System.Drawing.Point(631, 438);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(91, 29);
+            this.label18.TabIndex = 34;
+            this.label18.Text = "Льгота";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(22, 473);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(115, 17);
+            this.label19.TabIndex = 35;
+            this.label19.Text = "Наличие льготы";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(144, 476);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(18, 17);
+            this.checkBox1.TabIndex = 36;
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(22, 512);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(103, 17);
+            this.label20.TabIndex = 37;
+            this.label20.Text = "Доверенность";
+            // 
+            // textBox8
+            // 
+            this.textBox8.Location = new System.Drawing.Point(132, 512);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(100, 22);
+            this.textBox8.TabIndex = 38;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(239, 514);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(23, 17);
+            this.label21.TabIndex = 39;
+            this.label21.Text = "от";
+            // 
+            // maskedTextBox5
+            // 
+            this.maskedTextBox5.Location = new System.Drawing.Point(269, 512);
+            this.maskedTextBox5.Mask = "00/00/0000";
+            this.maskedTextBox5.Name = "maskedTextBox5";
+            this.maskedTextBox5.Size = new System.Drawing.Size(100, 22);
+            this.maskedTextBox5.TabIndex = 40;
+            this.maskedTextBox5.ValidatingType = typeof(System.DateTime);
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(22, 555);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(126, 17);
+            this.label22.TabIndex = 41;
+            this.label22.Text = "Категория льготы";
+            // 
+            // comboBox4
+            // 
+            this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.Location = new System.Drawing.Point(157, 552);
+            this.comboBox4.Name = "comboBox4";
+            this.comboBox4.Size = new System.Drawing.Size(121, 24);
+            this.comboBox4.TabIndex = 42;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(502, 512);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(154, 17);
+            this.label23.TabIndex = 43;
+            this.label23.Text = "Основание: приказ от";
+            // 
+            // maskedTextBox6
+            // 
+            this.maskedTextBox6.Location = new System.Drawing.Point(663, 512);
+            this.maskedTextBox6.Mask = "00/00/0000";
+            this.maskedTextBox6.Name = "maskedTextBox6";
+            this.maskedTextBox6.Size = new System.Drawing.Size(100, 22);
+            this.maskedTextBox6.TabIndex = 44;
+            this.maskedTextBox6.ValidatingType = typeof(System.DateTime);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(772, 514);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(22, 17);
+            this.label24.TabIndex = 45;
+            this.label24.Text = "№";
+            // 
+            // textBox9
+            // 
+            this.textBox9.Location = new System.Drawing.Point(801, 512);
+            this.textBox9.Name = "textBox9";
+            this.textBox9.Size = new System.Drawing.Size(100, 22);
+            this.textBox9.TabIndex = 46;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(503, 552);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(173, 17);
+            this.label25.TabIndex = 47;
+            this.label25.Text = "Срок действия льготы с: ";
+            // 
+            // maskedTextBox7
+            // 
+            this.maskedTextBox7.Location = new System.Drawing.Point(677, 551);
+            this.maskedTextBox7.Mask = "00/00/0000";
+            this.maskedTextBox7.Name = "maskedTextBox7";
+            this.maskedTextBox7.Size = new System.Drawing.Size(100, 22);
+            this.maskedTextBox7.TabIndex = 48;
+            this.maskedTextBox7.ValidatingType = typeof(System.DateTime);
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(785, 553);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(28, 17);
+            this.label26.TabIndex = 49;
+            this.label26.Text = "по:";
+            // 
+            // maskedTextBox8
+            // 
+            this.maskedTextBox8.Location = new System.Drawing.Point(817, 551);
+            this.maskedTextBox8.Mask = "00/00/0000";
+            this.maskedTextBox8.Name = "maskedTextBox8";
+            this.maskedTextBox8.Size = new System.Drawing.Size(100, 22);
+            this.maskedTextBox8.TabIndex = 50;
+            this.maskedTextBox8.ValidatingType = typeof(System.DateTime);
+            // 
+            // BTN_Save
+            // 
+            this.BTN_Save.Location = new System.Drawing.Point(1017, 639);
+            this.BTN_Save.Name = "BTN_Save";
+            this.BTN_Save.Size = new System.Drawing.Size(256, 37);
+            this.BTN_Save.TabIndex = 51;
+            this.BTN_Save.Text = "Сохранить";
+            this.BTN_Save.UseVisualStyleBackColor = true;
+            this.BTN_Save.Click += new System.EventHandler(this.BTN_SaveHuman_Click);
+            // 
             // HumanCreate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1285, 763);
+            this.Controls.Add(this.BTN_Save);
+            this.Controls.Add(this.maskedTextBox8);
+            this.Controls.Add(this.label26);
+            this.Controls.Add(this.maskedTextBox7);
+            this.Controls.Add(this.label25);
+            this.Controls.Add(this.textBox9);
+            this.Controls.Add(this.label24);
+            this.Controls.Add(this.maskedTextBox6);
+            this.Controls.Add(this.label23);
+            this.Controls.Add(this.comboBox4);
+            this.Controls.Add(this.label22);
+            this.Controls.Add(this.maskedTextBox5);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this.textBox8);
+            this.Controls.Add(this.label20);
+            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.label17);
             this.Controls.Add(this.maskedTextBox4);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.maskedTextBox3);
@@ -364,11 +580,11 @@ namespace Supply_Admin
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.maskedTextBox1);
+            this.Controls.Add(this.TB_Phone);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.TB_Patronymic);
+            this.Controls.Add(this.TB_Name);
+            this.Controls.Add(this.TB_SecondName);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -390,11 +606,11 @@ namespace Supply_Admin
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox TB_SecondName;
+        private System.Windows.Forms.TextBox TB_Name;
+        private System.Windows.Forms.TextBox TB_Patronymic;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox1;
+        private System.Windows.Forms.MaskedTextBox TB_Phone;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
@@ -417,5 +633,25 @@ namespace Supply_Admin
         private System.Windows.Forms.MaskedTextBox maskedTextBox3;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.MaskedTextBox maskedTextBox4;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.MaskedTextBox maskedTextBox5;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.MaskedTextBox maskedTextBox6;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.MaskedTextBox maskedTextBox7;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.MaskedTextBox maskedTextBox8;
+        private System.Windows.Forms.Button BTN_Save;
     }
 }
