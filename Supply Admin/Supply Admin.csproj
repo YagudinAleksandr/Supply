@@ -106,11 +106,12 @@
     <Compile Include="MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202012101957444_AddCompanyMigration.cs" />
-    <Compile Include="Migrations\202012101957444_AddCompanyMigration.designer.cs">
-      <DependentUpon>202012101957444_AddCompanyMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202012171508152_AddCompanyMigration.cs" />
+    <Compile Include="Migrations\202012171508152_AddCompanyMigration.designer.cs">
+      <DependentUpon>202012171508152_AddCompanyMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Benefit.cs" />
     <Compile Include="Models\Enterance.cs" />
     <Compile Include="Models\Flat.cs" />
     <Compile Include="Models\Garage.cs" />
@@ -180,8 +181,8 @@
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012101957444_AddCompanyMigration.resx">
-      <DependentUpon>202012101957444_AddCompanyMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202012171508152_AddCompanyMigration.resx">
+      <DependentUpon>202012171508152_AddCompanyMigration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

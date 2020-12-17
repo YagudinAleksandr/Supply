@@ -44,43 +44,45 @@ namespace Supply_Admin
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.CB_DocType = new System.Windows.Forms.ComboBox();
+            this.TB_DocSeries = new System.Windows.Forms.TextBox();
+            this.TB_DocNumber = new System.Windows.Forms.TextBox();
+            this.TB_Citizenship = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.TB_Given = new System.Windows.Forms.RichTextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.maskedTextBox2 = new System.Windows.Forms.MaskedTextBox();
+            this.TB_GivenDate = new System.Windows.Forms.MaskedTextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.TB_DocOrgNumb = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.CB_Period = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.maskedTextBox3 = new System.Windows.Forms.MaskedTextBox();
+            this.TB_OrderStart = new System.Windows.Forms.MaskedTextBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.maskedTextBox4 = new System.Windows.Forms.MaskedTextBox();
+            this.TB_OrderEnd = new System.Windows.Forms.MaskedTextBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.CB_EducationType = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.CB_Benifit = new System.Windows.Forms.CheckBox();
             this.label20 = new System.Windows.Forms.Label();
-            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.TB_Proxy = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.maskedTextBox5 = new System.Windows.Forms.MaskedTextBox();
+            this.TB_ProxyDate = new System.Windows.Forms.MaskedTextBox();
             this.label22 = new System.Windows.Forms.Label();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.CB_BenifitCat = new System.Windows.Forms.ComboBox();
             this.label23 = new System.Windows.Forms.Label();
-            this.maskedTextBox6 = new System.Windows.Forms.MaskedTextBox();
+            this.TB_DecreeDate = new System.Windows.Forms.MaskedTextBox();
             this.label24 = new System.Windows.Forms.Label();
-            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.TB_Decree = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
-            this.maskedTextBox7 = new System.Windows.Forms.MaskedTextBox();
+            this.TB_BenifitStart = new System.Windows.Forms.MaskedTextBox();
             this.label26 = new System.Windows.Forms.Label();
-            this.maskedTextBox8 = new System.Windows.Forms.MaskedTextBox();
+            this.TB_BenifitEnd = new System.Windows.Forms.MaskedTextBox();
             this.BTN_Save = new System.Windows.Forms.Button();
+            this.label27 = new System.Windows.Forms.Label();
+            this.TB_Registration = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // LB_Room
@@ -214,34 +216,37 @@ namespace Supply_Admin
             this.label9.TabIndex = 14;
             this.label9.Text = "Гражданство";
             // 
-            // comboBox1
+            // CB_DocType
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(286, 201);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 24);
-            this.comboBox1.TabIndex = 15;
+            this.CB_DocType.FormattingEnabled = true;
+            this.CB_DocType.Items.AddRange(new object[] {
+            "Паспорт",
+            "Удостоверение"});
+            this.CB_DocType.Location = new System.Drawing.Point(286, 201);
+            this.CB_DocType.Name = "CB_DocType";
+            this.CB_DocType.Size = new System.Drawing.Size(121, 24);
+            this.CB_DocType.TabIndex = 15;
             // 
-            // textBox4
+            // TB_DocSeries
             // 
-            this.textBox4.Location = new System.Drawing.Point(491, 203);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(205, 22);
-            this.textBox4.TabIndex = 16;
+            this.TB_DocSeries.Location = new System.Drawing.Point(491, 203);
+            this.TB_DocSeries.Name = "TB_DocSeries";
+            this.TB_DocSeries.Size = new System.Drawing.Size(205, 22);
+            this.TB_DocSeries.TabIndex = 16;
             // 
-            // textBox5
+            // TB_DocNumber
             // 
-            this.textBox5.Location = new System.Drawing.Point(759, 204);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(205, 22);
-            this.textBox5.TabIndex = 17;
+            this.TB_DocNumber.Location = new System.Drawing.Point(759, 204);
+            this.TB_DocNumber.Name = "TB_DocNumber";
+            this.TB_DocNumber.Size = new System.Drawing.Size(205, 22);
+            this.TB_DocNumber.TabIndex = 17;
             // 
-            // textBox6
+            // TB_Citizenship
             // 
-            this.textBox6.Location = new System.Drawing.Point(1081, 203);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(145, 22);
-            this.textBox6.TabIndex = 18;
+            this.TB_Citizenship.Location = new System.Drawing.Point(1081, 203);
+            this.TB_Citizenship.Name = "TB_Citizenship";
+            this.TB_Citizenship.Size = new System.Drawing.Size(145, 22);
+            this.TB_Citizenship.TabIndex = 18;
             // 
             // label10
             // 
@@ -252,13 +257,13 @@ namespace Supply_Admin
             this.label10.TabIndex = 19;
             this.label10.Text = "Кем выдан";
             // 
-            // richTextBox1
+            // TB_Given
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(118, 251);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(578, 57);
-            this.richTextBox1.TabIndex = 20;
-            this.richTextBox1.Text = "";
+            this.TB_Given.Location = new System.Drawing.Point(118, 251);
+            this.TB_Given.Name = "TB_Given";
+            this.TB_Given.Size = new System.Drawing.Size(578, 57);
+            this.TB_Given.TabIndex = 20;
+            this.TB_Given.Text = "";
             // 
             // label11
             // 
@@ -269,14 +274,14 @@ namespace Supply_Admin
             this.label11.TabIndex = 21;
             this.label11.Text = "Дата выдачи";
             // 
-            // maskedTextBox2
+            // TB_GivenDate
             // 
-            this.maskedTextBox2.Location = new System.Drawing.Point(822, 251);
-            this.maskedTextBox2.Mask = "00/00/0000";
-            this.maskedTextBox2.Name = "maskedTextBox2";
-            this.maskedTextBox2.Size = new System.Drawing.Size(142, 22);
-            this.maskedTextBox2.TabIndex = 22;
-            this.maskedTextBox2.ValidatingType = typeof(System.DateTime);
+            this.TB_GivenDate.Location = new System.Drawing.Point(822, 251);
+            this.TB_GivenDate.Mask = "00/00/0000";
+            this.TB_GivenDate.Name = "TB_GivenDate";
+            this.TB_GivenDate.Size = new System.Drawing.Size(142, 22);
+            this.TB_GivenDate.TabIndex = 22;
+            this.TB_GivenDate.ValidatingType = typeof(System.DateTime);
             // 
             // label12
             // 
@@ -287,18 +292,18 @@ namespace Supply_Admin
             this.label12.TabIndex = 23;
             this.label12.Text = "Код подразделения";
             // 
-            // textBox7
+            // TB_DocOrgNumb
             // 
-            this.textBox7.Location = new System.Drawing.Point(867, 291);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(170, 22);
-            this.textBox7.TabIndex = 24;
+            this.TB_DocOrgNumb.Location = new System.Drawing.Point(867, 291);
+            this.TB_DocOrgNumb.Name = "TB_DocOrgNumb";
+            this.TB_DocOrgNumb.Size = new System.Drawing.Size(170, 22);
+            this.TB_DocOrgNumb.TabIndex = 24;
             // 
             // label13
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label13.Location = new System.Drawing.Point(535, 327);
+            this.label13.Location = new System.Drawing.Point(535, 421);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(282, 29);
             this.label13.TabIndex = 25;
@@ -307,78 +312,82 @@ namespace Supply_Admin
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(16, 369);
+            this.label14.Location = new System.Drawing.Point(16, 463);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(165, 17);
             this.label14.TabIndex = 26;
             this.label14.Text = "Оформляется на время";
             // 
-            // comboBox2
+            // CB_Period
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(188, 369);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(167, 24);
-            this.comboBox2.TabIndex = 27;
+            this.CB_Period.FormattingEnabled = true;
+            this.CB_Period.Location = new System.Drawing.Point(188, 463);
+            this.CB_Period.Name = "CB_Period";
+            this.CB_Period.Size = new System.Drawing.Size(167, 24);
+            this.CB_Period.TabIndex = 27;
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(372, 372);
+            this.label15.Location = new System.Drawing.Point(372, 466);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(77, 17);
             this.label15.TabIndex = 28;
             this.label15.Text = "Период с: ";
             // 
-            // maskedTextBox3
+            // TB_OrderStart
             // 
-            this.maskedTextBox3.Location = new System.Drawing.Point(457, 371);
-            this.maskedTextBox3.Mask = "00/00/0000";
-            this.maskedTextBox3.Name = "maskedTextBox3";
-            this.maskedTextBox3.Size = new System.Drawing.Size(100, 22);
-            this.maskedTextBox3.TabIndex = 29;
-            this.maskedTextBox3.ValidatingType = typeof(System.DateTime);
+            this.TB_OrderStart.Location = new System.Drawing.Point(457, 465);
+            this.TB_OrderStart.Mask = "00/00/0000";
+            this.TB_OrderStart.Name = "TB_OrderStart";
+            this.TB_OrderStart.Size = new System.Drawing.Size(100, 22);
+            this.TB_OrderStart.TabIndex = 29;
+            this.TB_OrderStart.ValidatingType = typeof(System.DateTime);
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(575, 373);
+            this.label16.Location = new System.Drawing.Point(575, 467);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(32, 17);
             this.label16.TabIndex = 30;
             this.label16.Text = "по: ";
             // 
-            // maskedTextBox4
+            // TB_OrderEnd
             // 
-            this.maskedTextBox4.Location = new System.Drawing.Point(609, 371);
-            this.maskedTextBox4.Mask = "00/00/0000";
-            this.maskedTextBox4.Name = "maskedTextBox4";
-            this.maskedTextBox4.Size = new System.Drawing.Size(100, 22);
-            this.maskedTextBox4.TabIndex = 31;
-            this.maskedTextBox4.ValidatingType = typeof(System.DateTime);
+            this.TB_OrderEnd.Location = new System.Drawing.Point(609, 465);
+            this.TB_OrderEnd.Mask = "00/00/0000";
+            this.TB_OrderEnd.Name = "TB_OrderEnd";
+            this.TB_OrderEnd.Size = new System.Drawing.Size(100, 22);
+            this.TB_OrderEnd.TabIndex = 31;
+            this.TB_OrderEnd.ValidatingType = typeof(System.DateTime);
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(19, 404);
+            this.label17.Location = new System.Drawing.Point(19, 498);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(121, 17);
             this.label17.TabIndex = 32;
             this.label17.Text = "Форма обучения";
             // 
-            // comboBox3
+            // CB_EducationType
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(188, 404);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(167, 24);
-            this.comboBox3.TabIndex = 33;
+            this.CB_EducationType.FormattingEnabled = true;
+            this.CB_EducationType.Items.AddRange(new object[] {
+            "очная",
+            "очно-заочная",
+            "заочная"});
+            this.CB_EducationType.Location = new System.Drawing.Point(188, 498);
+            this.CB_EducationType.Name = "CB_EducationType";
+            this.CB_EducationType.Size = new System.Drawing.Size(167, 24);
+            this.CB_EducationType.TabIndex = 33;
             // 
             // label18
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label18.Location = new System.Drawing.Point(631, 438);
+            this.label18.Location = new System.Drawing.Point(627, 529);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(91, 29);
             this.label18.TabIndex = 34;
@@ -387,145 +396,149 @@ namespace Supply_Admin
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(22, 473);
+            this.label19.Location = new System.Drawing.Point(18, 571);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(115, 17);
             this.label19.TabIndex = 35;
             this.label19.Text = "Наличие льготы";
             // 
-            // checkBox1
+            // CB_Benifit
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(144, 476);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(18, 17);
-            this.checkBox1.TabIndex = 36;
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.CB_Benifit.AutoSize = true;
+            this.CB_Benifit.Location = new System.Drawing.Point(140, 572);
+            this.CB_Benifit.Name = "CB_Benifit";
+            this.CB_Benifit.Size = new System.Drawing.Size(18, 17);
+            this.CB_Benifit.TabIndex = 36;
+            this.CB_Benifit.UseVisualStyleBackColor = true;
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(22, 512);
+            this.label20.Location = new System.Drawing.Point(18, 608);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(103, 17);
             this.label20.TabIndex = 37;
             this.label20.Text = "Доверенность";
             // 
-            // textBox8
+            // TB_Proxy
             // 
-            this.textBox8.Location = new System.Drawing.Point(132, 512);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(100, 22);
-            this.textBox8.TabIndex = 38;
+            this.TB_Proxy.Location = new System.Drawing.Point(128, 605);
+            this.TB_Proxy.Name = "TB_Proxy";
+            this.TB_Proxy.Size = new System.Drawing.Size(100, 22);
+            this.TB_Proxy.TabIndex = 38;
             // 
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(239, 514);
+            this.label21.Location = new System.Drawing.Point(235, 607);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(23, 17);
             this.label21.TabIndex = 39;
             this.label21.Text = "от";
             // 
-            // maskedTextBox5
+            // TB_ProxyDate
             // 
-            this.maskedTextBox5.Location = new System.Drawing.Point(269, 512);
-            this.maskedTextBox5.Mask = "00/00/0000";
-            this.maskedTextBox5.Name = "maskedTextBox5";
-            this.maskedTextBox5.Size = new System.Drawing.Size(100, 22);
-            this.maskedTextBox5.TabIndex = 40;
-            this.maskedTextBox5.ValidatingType = typeof(System.DateTime);
+            this.TB_ProxyDate.Location = new System.Drawing.Point(265, 604);
+            this.TB_ProxyDate.Mask = "00/00/0000";
+            this.TB_ProxyDate.Name = "TB_ProxyDate";
+            this.TB_ProxyDate.Size = new System.Drawing.Size(100, 22);
+            this.TB_ProxyDate.TabIndex = 40;
+            this.TB_ProxyDate.ValidatingType = typeof(System.DateTime);
             // 
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(22, 555);
+            this.label22.Location = new System.Drawing.Point(18, 639);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(126, 17);
             this.label22.TabIndex = 41;
             this.label22.Text = "Категория льготы";
             // 
-            // comboBox4
+            // CB_BenifitCat
             // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(157, 552);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(121, 24);
-            this.comboBox4.TabIndex = 42;
+            this.CB_BenifitCat.FormattingEnabled = true;
+            this.CB_BenifitCat.Items.AddRange(new object[] {
+            "сирота",
+            "инвалид",
+            "получатель социальной помощи"});
+            this.CB_BenifitCat.Location = new System.Drawing.Point(153, 636);
+            this.CB_BenifitCat.Name = "CB_BenifitCat";
+            this.CB_BenifitCat.Size = new System.Drawing.Size(121, 24);
+            this.CB_BenifitCat.TabIndex = 42;
             // 
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(502, 512);
+            this.label23.Location = new System.Drawing.Point(499, 611);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(154, 17);
             this.label23.TabIndex = 43;
             this.label23.Text = "Основание: приказ от";
             // 
-            // maskedTextBox6
+            // TB_DecreeDate
             // 
-            this.maskedTextBox6.Location = new System.Drawing.Point(663, 512);
-            this.maskedTextBox6.Mask = "00/00/0000";
-            this.maskedTextBox6.Name = "maskedTextBox6";
-            this.maskedTextBox6.Size = new System.Drawing.Size(100, 22);
-            this.maskedTextBox6.TabIndex = 44;
-            this.maskedTextBox6.ValidatingType = typeof(System.DateTime);
+            this.TB_DecreeDate.Location = new System.Drawing.Point(672, 607);
+            this.TB_DecreeDate.Mask = "00/00/0000";
+            this.TB_DecreeDate.Name = "TB_DecreeDate";
+            this.TB_DecreeDate.Size = new System.Drawing.Size(100, 22);
+            this.TB_DecreeDate.TabIndex = 44;
+            this.TB_DecreeDate.ValidatingType = typeof(System.DateTime);
             // 
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(772, 514);
+            this.label24.Location = new System.Drawing.Point(779, 611);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(22, 17);
             this.label24.TabIndex = 45;
             this.label24.Text = "№";
             // 
-            // textBox9
+            // TB_Decree
             // 
-            this.textBox9.Location = new System.Drawing.Point(801, 512);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(100, 22);
-            this.textBox9.TabIndex = 46;
+            this.TB_Decree.Location = new System.Drawing.Point(812, 608);
+            this.TB_Decree.Name = "TB_Decree";
+            this.TB_Decree.Size = new System.Drawing.Size(100, 22);
+            this.TB_Decree.TabIndex = 46;
             // 
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(503, 552);
+            this.label25.Location = new System.Drawing.Point(499, 641);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(173, 17);
             this.label25.TabIndex = 47;
             this.label25.Text = "Срок действия льготы с: ";
             // 
-            // maskedTextBox7
+            // TB_BenifitStart
             // 
-            this.maskedTextBox7.Location = new System.Drawing.Point(677, 551);
-            this.maskedTextBox7.Mask = "00/00/0000";
-            this.maskedTextBox7.Name = "maskedTextBox7";
-            this.maskedTextBox7.Size = new System.Drawing.Size(100, 22);
-            this.maskedTextBox7.TabIndex = 48;
-            this.maskedTextBox7.ValidatingType = typeof(System.DateTime);
+            this.TB_BenifitStart.Location = new System.Drawing.Point(673, 639);
+            this.TB_BenifitStart.Mask = "00/00/0000";
+            this.TB_BenifitStart.Name = "TB_BenifitStart";
+            this.TB_BenifitStart.Size = new System.Drawing.Size(100, 22);
+            this.TB_BenifitStart.TabIndex = 48;
+            this.TB_BenifitStart.ValidatingType = typeof(System.DateTime);
             // 
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(785, 553);
+            this.label26.Location = new System.Drawing.Point(781, 641);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(28, 17);
             this.label26.TabIndex = 49;
             this.label26.Text = "по:";
             // 
-            // maskedTextBox8
+            // TB_BenifitEnd
             // 
-            this.maskedTextBox8.Location = new System.Drawing.Point(817, 551);
-            this.maskedTextBox8.Mask = "00/00/0000";
-            this.maskedTextBox8.Name = "maskedTextBox8";
-            this.maskedTextBox8.Size = new System.Drawing.Size(100, 22);
-            this.maskedTextBox8.TabIndex = 50;
-            this.maskedTextBox8.ValidatingType = typeof(System.DateTime);
+            this.TB_BenifitEnd.Location = new System.Drawing.Point(813, 638);
+            this.TB_BenifitEnd.Mask = "00/00/0000";
+            this.TB_BenifitEnd.Name = "TB_BenifitEnd";
+            this.TB_BenifitEnd.Size = new System.Drawing.Size(100, 22);
+            this.TB_BenifitEnd.TabIndex = 50;
+            this.TB_BenifitEnd.ValidatingType = typeof(System.DateTime);
             // 
             // BTN_Save
             // 
-            this.BTN_Save.Location = new System.Drawing.Point(1017, 639);
+            this.BTN_Save.Location = new System.Drawing.Point(1017, 700);
             this.BTN_Save.Name = "BTN_Save";
             this.BTN_Save.Size = new System.Drawing.Size(256, 37);
             this.BTN_Save.TabIndex = 51;
@@ -533,48 +546,67 @@ namespace Supply_Admin
             this.BTN_Save.UseVisualStyleBackColor = true;
             this.BTN_Save.Click += new System.EventHandler(this.BTN_SaveHuman_Click);
             // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(22, 324);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(123, 17);
+            this.label27.TabIndex = 52;
+            this.label27.Text = "Зарегистрирован";
+            // 
+            // TB_Registration
+            // 
+            this.TB_Registration.Location = new System.Drawing.Point(151, 321);
+            this.TB_Registration.Name = "TB_Registration";
+            this.TB_Registration.Size = new System.Drawing.Size(545, 96);
+            this.TB_Registration.TabIndex = 53;
+            this.TB_Registration.Text = "";
+            // 
             // HumanCreate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1285, 763);
+            this.Controls.Add(this.TB_Registration);
+            this.Controls.Add(this.label27);
             this.Controls.Add(this.BTN_Save);
-            this.Controls.Add(this.maskedTextBox8);
+            this.Controls.Add(this.TB_BenifitEnd);
             this.Controls.Add(this.label26);
-            this.Controls.Add(this.maskedTextBox7);
+            this.Controls.Add(this.TB_BenifitStart);
             this.Controls.Add(this.label25);
-            this.Controls.Add(this.textBox9);
+            this.Controls.Add(this.TB_Decree);
             this.Controls.Add(this.label24);
-            this.Controls.Add(this.maskedTextBox6);
+            this.Controls.Add(this.TB_DecreeDate);
             this.Controls.Add(this.label23);
-            this.Controls.Add(this.comboBox4);
+            this.Controls.Add(this.CB_BenifitCat);
             this.Controls.Add(this.label22);
-            this.Controls.Add(this.maskedTextBox5);
+            this.Controls.Add(this.TB_ProxyDate);
             this.Controls.Add(this.label21);
-            this.Controls.Add(this.textBox8);
+            this.Controls.Add(this.TB_Proxy);
             this.Controls.Add(this.label20);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.CB_Benifit);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.label18);
-            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.CB_EducationType);
             this.Controls.Add(this.label17);
-            this.Controls.Add(this.maskedTextBox4);
+            this.Controls.Add(this.TB_OrderEnd);
             this.Controls.Add(this.label16);
-            this.Controls.Add(this.maskedTextBox3);
+            this.Controls.Add(this.TB_OrderStart);
             this.Controls.Add(this.label15);
-            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.CB_Period);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
-            this.Controls.Add(this.textBox7);
+            this.Controls.Add(this.TB_DocOrgNumb);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.maskedTextBox2);
+            this.Controls.Add(this.TB_GivenDate);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.TB_Given);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.textBox6);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.TB_Citizenship);
+            this.Controls.Add(this.TB_DocNumber);
+            this.Controls.Add(this.TB_DocSeries);
+            this.Controls.Add(this.CB_DocType);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -616,42 +648,44 @@ namespace Supply_Admin
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.ComboBox CB_DocType;
+        private System.Windows.Forms.TextBox TB_DocSeries;
+        private System.Windows.Forms.TextBox TB_DocNumber;
+        private System.Windows.Forms.TextBox TB_Citizenship;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox TB_Given;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox2;
+        private System.Windows.Forms.MaskedTextBox TB_GivenDate;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox TB_DocOrgNumb;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox CB_Period;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox3;
+        private System.Windows.Forms.MaskedTextBox TB_OrderStart;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox4;
+        private System.Windows.Forms.MaskedTextBox TB_OrderEnd;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox CB_EducationType;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox CB_Benifit;
         private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.TextBox TB_Proxy;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox5;
+        private System.Windows.Forms.MaskedTextBox TB_ProxyDate;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.ComboBox CB_BenifitCat;
         private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox6;
+        private System.Windows.Forms.MaskedTextBox TB_DecreeDate;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.TextBox TB_Decree;
         private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox7;
+        private System.Windows.Forms.MaskedTextBox TB_BenifitStart;
         private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox8;
+        private System.Windows.Forms.MaskedTextBox TB_BenifitEnd;
         private System.Windows.Forms.Button BTN_Save;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.RichTextBox TB_Registration;
     }
 }
