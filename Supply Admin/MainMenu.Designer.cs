@@ -31,6 +31,7 @@
             this.GB_Hostels = new System.Windows.Forms.GroupBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.Menu_Settings = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,8 +43,6 @@
             this.LL_Categories = new System.Windows.Forms.LinkLabel();
             this.LL_Objects = new System.Windows.Forms.LinkLabel();
             this.LL_Rates = new System.Windows.Forms.LinkLabel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -76,6 +75,13 @@
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
             this.файлToolStripMenuItem.Text = "Файл";
+            // 
+            // ExitToolStripMenuItem
+            // 
+            this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
+            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(136, 26);
+            this.ExitToolStripMenuItem.Text = "Выход";
+            this.ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // настройкиToolStripMenuItem
             // 
@@ -181,6 +187,7 @@
             this.LL_Objects.TabIndex = 1;
             this.LL_Objects.TabStop = true;
             this.LL_Objects.Text = "Объекты";
+            this.LL_Objects.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LL_Objects_LinkClicked);
             // 
             // LL_Rates
             // 
@@ -194,30 +201,11 @@
             this.LL_Rates.Text = "Типы тарифов";
             this.LL_Rates.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LL_Rates_LinkClicked);
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Location = new System.Drawing.Point(1123, 46);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(334, 662);
-            this.groupBox1.TabIndex = 4;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Договора";
-            // 
-            // ExitToolStripMenuItem
-            // 
-            this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
-            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.ExitToolStripMenuItem.Text = "Выход";
-            this.ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
-            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1469, 720);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.GB_Hostels);
             this.Controls.Add(this.menuStrip1);
@@ -252,7 +240,6 @@
         private System.Windows.Forms.LinkLabel LL_Marks;
         private System.Windows.Forms.LinkLabel LL_Hostels;
         private System.Windows.Forms.LinkLabel LL_SupplyManagers;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.LinkLabel LL_Rooms;
         private System.Windows.Forms.ToolStripMenuItem ExitToolStripMenuItem;
     }

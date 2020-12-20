@@ -82,5 +82,11 @@ namespace Supply_Admin
         {
             Close();
         }
+
+        private void LL_Objects_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            GarageManager garageManager = new GarageManager(_db);
+            garageManager.ShowDialog();
+        }
     }
 }

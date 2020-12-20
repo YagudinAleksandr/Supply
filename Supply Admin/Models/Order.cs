@@ -15,6 +15,8 @@ namespace Supply_Admin.Models
         public Rent Rent { get; set; }
         public int? HumanId { get; set; }
         public Human Human { get; set; }
-
+        public int Benifit { get; set; }
+        public string EducationType { get; set; }
+        
     }
 }

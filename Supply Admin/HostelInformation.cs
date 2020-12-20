@@ -16,7 +16,7 @@ namespace Supply_Admin
         private SupplyDbContext _db;
         private int _hostelId;
         ContextMenu menu;
-        //TreeNode[] peopleNode;
+        
 
         public HostelInformation(SupplyDbContext db, int hostelId)
         {
@@ -24,17 +24,16 @@ namespace Supply_Admin
             _hostelId = hostelId;
             _db = db;
         }
-
-        private void HostelInformation_Shown(object sender, EventArgs e)
+        private void CreateTree()
         {
-            
+            TV_Hostels.Nodes.Clear();
             var hostel = _db.Hostels.Where(x => x.Id == _hostelId).FirstOrDefault();
             TreeNode hostelNode = new TreeNode($"Общежитие № {hostel.Name}");
 
             var enterances = _db.Enterances.Where(x => x.HostelsId == hostel.Id).ToList();
             TreeNode[] enterancesNode = new TreeNode[enterances.Count()];
-            
-            for(int k =0; k<enterances.Count();k++)
+
+            for (int k = 0; k < enterances.Count(); k++)
             {
                 enterancesNode[k] = new TreeNode();
                 enterancesNode[k].Text = $"Подъезд № {enterances[k].Name}";
@@ -60,17 +59,41 @@ namespace Supply_Admin
                         menu = new ContextMenu() { MenuItems = { new MenuItem("Добавить жильца", AddHumanHandler) } };
 
                         roomsNode[j].ContextMenu = menu;
+
+                        int roomId = rooms[j].Id;
+                        var humens = _db.Humen.Where(x => x.RoomId == roomId).ToList();
+                        TreeNode[] humensNode = new TreeNode[humens.Count()];
+
+                        for (int m = 0; m < humens.Count(); m++)
+                        {
+                            humensNode[m] = new TreeNode();
+                            humensNode[m].Text = humens[m].Surename + " " + humens[m].Name + " " + humens[m].Patronymic;
+                            humensNode[m].Tag = humens[m].Id;
+                            menu = new ContextMenu() { MenuItems = { new MenuItem("Хи-Хи") } };
+                            humensNode[m].ContextMenu = menu;
+
+                        }
+                        roomsNode[j].Nodes.AddRange(humensNode);
+
                     }
 
                     flatsNode[i].Nodes.AddRange(roomsNode);
+
                 }
                 enterancesNode[k].Nodes.AddRange(flatsNode);
+
             }
 
             hostelNode.Nodes.AddRange(enterancesNode);
-            
+
 
             TV_Hostels.Nodes.Add(hostelNode);
+            TV_Hostels.ExpandAll();
+        }
+        private void HostelInformation_Shown(object sender, EventArgs e)
+        {
+
+            CreateTree();
         }
         private void TV_Hostels_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
@@ -83,6 +106,7 @@ namespace Supply_Admin
                 int room_id = Convert.ToInt32(TV_Hostels.SelectedNode.Tag.ToString());
                 HumanCreate humanCreate = new HumanCreate(_db, room_id);
                 humanCreate.ShowDialog();
+                CreateTree();
             }
             
         }

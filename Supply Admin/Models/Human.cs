@@ -44,5 +44,6 @@ namespace Supply_Admin.Models
         public int? RoomId { get; set; }
         public Rooms Room { get; set; }
 
+        
     }
 }

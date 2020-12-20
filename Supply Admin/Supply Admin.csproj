@@ -14,6 +14,21 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,6 +48,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Supply.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -76,6 +94,12 @@
       <DependentUpon>CreateWordDocumentOrder.cs</DependentUpon>
     </Compile>
     <Compile Include="Domain\SupplyDbContext.cs" />
+    <Compile Include="GarageManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GarageManager.Designer.cs">
+      <DependentUpon>GarageManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="HostelInformation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +190,9 @@
     <EmbeddedResource Include="CreateWordDocumentOrder.resx">
       <DependentUpon>CreateWordDocumentOrder.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GarageManager.resx">
+      <DependentUpon>GarageManager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="HostelInformation.resx">
       <DependentUpon>HostelInformation.cs</DependentUpon>
     </EmbeddedResource>
@@ -211,6 +238,18 @@
     <EmbeddedResource Include="SupplyManagers.resx">
       <DependentUpon>SupplyManagers.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Files\Договор для СТУДЕНТОВ на доп услуги %28личные электроприборы%29 %281%29.docx" />
+    <None Include="Files\Договор найма жилого помещения в студенческом общежитии %28заочники ВО+ДОП.ОБР%29.docx" />
+    <None Include="Files\Договор найма жилого помещения в студенческом общежитии %28сотрудник%29.docx" />
+    <None Include="Files\Договор найма жилого помещения в студенческом общежитии %28сторонние лица%29.docx" />
+    <None Include="Files\Договор найма жилого помещения в студенческом общежитии %28студенты 3-х сторон. ОЧНИКИ%29.docx" />
+    <None Include="Files\Договор найма жилого помещения в студенческом общежитии %28студенты ОЧНИКИ%29.docx" />
+    <None Include="Files\ДОПОЛНИТЕЛЬНОЕ СОГЛАШЕНИЕ для льготников.docx" />
+    <None Include="Files\ДОПОЛНИТЕЛЬНОЕ СОГЛАШЕНИЕ на замену паспортных данных.docx" />
+    <None Include="Files\ДОПОЛНИТЕЛЬНОЕ СОГЛАШЕНИЕ на переселение.docx" />
+    <None Include="Files\ДОПОЛНИТЕЛЬНОЕ СОГЛАШЕНИЕ на продление проживания сотрудников.docx" />
+    <None Include="Files\ДОПОЛНИТЕЛЬНОЕ СОГЛАШЕНИЕ на рассрочку оплаты.docx" />
+    <None Include="Files\Направление на оплату.docx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -225,7 +264,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Supply.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
