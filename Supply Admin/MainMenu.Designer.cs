@@ -43,8 +43,11 @@
             this.LL_Categories = new System.Windows.Forms.LinkLabel();
             this.LL_Objects = new System.Windows.Forms.LinkLabel();
             this.LL_Rates = new System.Windows.Forms.LinkLabel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.BTN_Orders = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // GB_Hostels
@@ -64,7 +67,7 @@
             this.настройкиToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1469, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1469, 30);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -73,7 +76,7 @@
             this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ExitToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 26);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
             // ExitToolStripMenuItem
@@ -89,7 +92,7 @@
             this.toolStripSeparator1,
             this.Menu_Settings});
             this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
-            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(98, 24);
+            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(98, 26);
             this.настройкиToolStripMenuItem.Text = "Настройки";
             // 
             // toolStripSeparator1
@@ -201,11 +204,33 @@
             this.LL_Rates.Text = "Типы тарифов";
             this.LL_Rates.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LL_Rates_LinkClicked);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.BTN_Orders);
+            this.groupBox1.Location = new System.Drawing.Point(1108, 53);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(349, 287);
+            this.groupBox1.TabIndex = 4;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Документы";
+            // 
+            // BTN_Orders
+            // 
+            this.BTN_Orders.Location = new System.Drawing.Point(6, 32);
+            this.BTN_Orders.Name = "BTN_Orders";
+            this.BTN_Orders.Size = new System.Drawing.Size(337, 40);
+            this.BTN_Orders.TabIndex = 0;
+            this.BTN_Orders.Text = "Список договоров";
+            this.BTN_Orders.UseVisualStyleBackColor = true;
+            this.BTN_Orders.Click += new System.EventHandler(this.BTN_Orders_Click);
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1469, 720);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.GB_Hostels);
             this.Controls.Add(this.menuStrip1);
@@ -220,6 +245,7 @@
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -242,5 +268,7 @@
         private System.Windows.Forms.LinkLabel LL_SupplyManagers;
         private System.Windows.Forms.LinkLabel LL_Rooms;
         private System.Windows.Forms.ToolStripMenuItem ExitToolStripMenuItem;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button BTN_Orders;
     }
 }

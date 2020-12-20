@@ -29,12 +29,7 @@ namespace Supply_Admin
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.CB_Hostels = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.CB_Rooms = new System.Windows.Forms.ComboBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.DG_ViewGarage = new System.Windows.Forms.DataGridView();
             this.BTN_Add = new System.Windows.Forms.Button();
             this.COL_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Number = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -42,68 +37,25 @@ namespace Supply_Admin
             this.COL_EndDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Room = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Hostel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DG_ViewGarage)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // DG_ViewGarage
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 23);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(63, 17);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Фильтр:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(83, 24);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 17);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Общежитие";
-            // 
-            // CB_Hostels
-            // 
-            this.CB_Hostels.FormattingEnabled = true;
-            this.CB_Hostels.Location = new System.Drawing.Point(174, 23);
-            this.CB_Hostels.Name = "CB_Hostels";
-            this.CB_Hostels.Size = new System.Drawing.Size(79, 24);
-            this.CB_Hostels.TabIndex = 2;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(265, 26);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 17);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Комната";
-            // 
-            // CB_Rooms
-            // 
-            this.CB_Rooms.FormattingEnabled = true;
-            this.CB_Rooms.Location = new System.Drawing.Point(341, 22);
-            this.CB_Rooms.Name = "CB_Rooms";
-            this.CB_Rooms.Size = new System.Drawing.Size(85, 24);
-            this.CB_Rooms.TabIndex = 4;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DG_ViewGarage.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DG_ViewGarage.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.COL_Name,
             this.COL_Number,
             this.COL_StartDate,
             this.COL_EndDate,
             this.COL_Room,
             this.COL_Hostel});
-            this.dataGridView1.Location = new System.Drawing.Point(16, 55);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1210, 564);
-            this.dataGridView1.TabIndex = 5;
+            this.DG_ViewGarage.Location = new System.Drawing.Point(16, 12);
+            this.DG_ViewGarage.Name = "DG_ViewGarage";
+            this.DG_ViewGarage.RowHeadersWidth = 51;
+            this.DG_ViewGarage.RowTemplate.Height = 24;
+            this.DG_ViewGarage.Size = new System.Drawing.Size(1210, 639);
+            this.DG_ViewGarage.TabIndex = 5;
             // 
             // BTN_Add
             // 
@@ -113,6 +65,7 @@ namespace Supply_Admin
             this.BTN_Add.TabIndex = 6;
             this.BTN_Add.Text = "Добавить";
             this.BTN_Add.UseVisualStyleBackColor = true;
+            this.BTN_Add.Click += new System.EventHandler(this.BTN_Add_Click);
             // 
             // COL_Name
             // 
@@ -120,7 +73,7 @@ namespace Supply_Admin
             this.COL_Name.MinimumWidth = 6;
             this.COL_Name.Name = "COL_Name";
             this.COL_Name.ReadOnly = true;
-            this.COL_Name.Width = 125;
+            this.COL_Name.Width = 300;
             // 
             // COL_Number
             // 
@@ -168,29 +121,18 @@ namespace Supply_Admin
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1238, 743);
             this.Controls.Add(this.BTN_Add);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.CB_Rooms);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.CB_Hostels);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.DG_ViewGarage);
             this.Name = "GarageManager";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Инвентарные объекты общежитий";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.Shown += new System.EventHandler(this.GarageManager_Shown);
+            ((System.ComponentModel.ISupportInitialize)(this.DG_ViewGarage)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox CB_Hostels;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox CB_Rooms;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView DG_ViewGarage;
         private System.Windows.Forms.Button BTN_Add;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Name;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Number;

@@ -88,5 +88,11 @@ namespace Supply_Admin
             GarageManager garageManager = new GarageManager(_db);
             garageManager.ShowDialog();
         }
+
+        private void BTN_Orders_Click(object sender, EventArgs e)
+        {
+            OrdersManager ordersManager = new OrdersManager(_db);
+            ordersManager.ShowDialog();
+        }
     }
 }
