@@ -167,5 +167,11 @@ namespace Supply_Admin
                 DataGridViewInformation_Update();
             }
         }
+
+        private void BTN_Create_Click(object sender, EventArgs e)
+        {
+            CreateWordDocumentOrder createWordDocumentOrder = new CreateWordDocumentOrder(_db);
+            createWordDocumentOrder.ShowDialog();
+        }
     }
 }

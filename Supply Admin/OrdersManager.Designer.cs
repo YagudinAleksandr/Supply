@@ -42,7 +42,7 @@ namespace Supply_Admin
             this.label1 = new System.Windows.Forms.Label();
             this.TB_OrderNumber = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.BTN_Create = new System.Windows.Forms.Button();
             this.TB_OrderStart = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DG_View_Orders)).BeginInit();
             this.SuspendLayout();
@@ -167,15 +167,16 @@ namespace Supply_Admin
             this.label2.TabIndex = 3;
             this.label2.Text = "Дата заключения договора";
             // 
-            // button1
+            // BTN_Create
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(1136, 668);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(223, 32);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Сформировать договра";
-            this.button1.UseVisualStyleBackColor = true;
+            this.BTN_Create.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTN_Create.Location = new System.Drawing.Point(1136, 668);
+            this.BTN_Create.Name = "BTN_Create";
+            this.BTN_Create.Size = new System.Drawing.Size(223, 32);
+            this.BTN_Create.TabIndex = 5;
+            this.BTN_Create.Text = "Сформировать договра";
+            this.BTN_Create.UseVisualStyleBackColor = true;
+            this.BTN_Create.Click += new System.EventHandler(this.BTN_Create_Click);
             // 
             // TB_OrderStart
             // 
@@ -191,7 +192,7 @@ namespace Supply_Admin
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1371, 743);
             this.Controls.Add(this.TB_OrderStart);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.BTN_Create);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.TB_OrderNumber);
             this.Controls.Add(this.label1);
@@ -221,7 +222,7 @@ namespace Supply_Admin
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox TB_OrderNumber;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button BTN_Create;
         private System.Windows.Forms.TextBox TB_OrderStart;
     }
 }

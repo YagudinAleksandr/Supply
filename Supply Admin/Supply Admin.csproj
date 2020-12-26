@@ -256,12 +256,12 @@
     <EmbeddedResource Include="SupplyManagers.resx">
       <DependentUpon>SupplyManagers.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Files\OrderStudent.docx" />
     <None Include="Files\Договор для СТУДЕНТОВ на доп услуги %28личные электроприборы%29 %281%29.docx" />
     <None Include="Files\Договор найма жилого помещения в студенческом общежитии %28заочники ВО+ДОП.ОБР%29.docx" />
     <None Include="Files\Договор найма жилого помещения в студенческом общежитии %28сотрудник%29.docx" />
     <None Include="Files\Договор найма жилого помещения в студенческом общежитии %28сторонние лица%29.docx" />
     <None Include="Files\Договор найма жилого помещения в студенческом общежитии %28студенты 3-х сторон. ОЧНИКИ%29.docx" />
-    <None Include="Files\Договор найма жилого помещения в студенческом общежитии %28студенты ОЧНИКИ%29.docx" />
     <None Include="Files\ДОПОЛНИТЕЛЬНОЕ СОГЛАШЕНИЕ для льготников.docx" />
     <None Include="Files\ДОПОЛНИТЕЛЬНОЕ СОГЛАШЕНИЕ на замену паспортных данных.docx" />
     <None Include="Files\ДОПОЛНИТЕЛЬНОЕ СОГЛАШЕНИЕ на переселение.docx" />
