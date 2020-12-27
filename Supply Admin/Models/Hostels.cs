@@ -11,6 +11,7 @@ namespace Supply_Admin.Models
         public int Id { get; set; }
         public int Name { get; set; }
         public string Address { get; set; }
+        public int FlatCount { get; set; }
         public ICollection<Rooms> Rooms { get; set; }
         public ICollection<Flat> Flats { get; set; }
         public ICollection<Rate> Rates { get; set; }

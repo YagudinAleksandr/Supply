@@ -133,7 +133,7 @@ namespace Supply_Admin
                     string name="";
                     foreach(var supplies in db.Supplies.Where(x=>x.HostelsId == hostel.Id).ToList())
                     {
-                        name += supplies.Name + ", ";
+                        name += supplies.Surename + " " + supplies.Name + " " + supplies.Patronimic + ", ";
                     }
                     DG_View_HostelsManage.Rows[rowNumber].Cells[DGView_SupplyHostel.Name].Value = name;
                     DG_View_HostelsManage.Rows[rowNumber].Cells[COL_Address.Name].Value = hostel.Address;

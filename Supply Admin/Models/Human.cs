@@ -24,23 +24,7 @@ namespace Supply_Admin.Models
         public string Citizenship { get; set; }//Гражданство
 
 
-        /*
-        public string EducationType { get; set; }//Форма обучения
-
-        public string ToTime { get; set; }//Заключается на время...
-        public string OrderStart { get; set; }//Период действия с
-        public string OrderEnd { get; set; }//Период действия по
-
-
-        public int Benifit { get; set; }//Наличие льготы
-        public string BenifitCategory { get; set; } //Категория льготы
-        public string BenifitBase { get; set; }//Основание льготы
-        public string BenefitStart { get; set; }//Период льготы
-        public string BenefitEnd { get; set; }
-
-
-        public int Status { get; set; } //Статус документа
-        */
+        
         public int? RoomId { get; set; }
         public Rooms Room { get; set; }
 

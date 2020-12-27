@@ -136,9 +136,9 @@
     <Compile Include="MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202012171508152_AddCompanyMigration.cs" />
-    <Compile Include="Migrations\202012171508152_AddCompanyMigration.designer.cs">
-      <DependentUpon>202012171508152_AddCompanyMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202012272143060_AddCompanyMigration.cs" />
+    <Compile Include="Migrations\202012272143060_AddCompanyMigration.designer.cs">
+      <DependentUpon>202012272143060_AddCompanyMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Benefit.cs" />
@@ -190,6 +190,12 @@
     <Compile Include="RoomsManager.Designer.cs">
       <DependentUpon>RoomsManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="SupplyAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplyAdd.Designer.cs">
+      <DependentUpon>SupplyAdd.cs</DependentUpon>
+    </Compile>
     <Compile Include="SupplyManagers.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -223,8 +229,8 @@
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012171508152_AddCompanyMigration.resx">
-      <DependentUpon>202012171508152_AddCompanyMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202012272143060_AddCompanyMigration.resx">
+      <DependentUpon>202012272143060_AddCompanyMigration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrdersManager.resx">
       <DependentUpon>OrdersManager.cs</DependentUpon>
@@ -252,6 +258,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RoomsManager.resx">
       <DependentUpon>RoomsManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupplyAdd.resx">
+      <DependentUpon>SupplyAdd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SupplyManagers.resx">
       <DependentUpon>SupplyManagers.cs</DependentUpon>

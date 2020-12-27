@@ -80,6 +80,7 @@
             this.Controls.Add(this.BTN_Create);
             this.Controls.Add(this.label4);
             this.Name = "CreateWordDocumentOrder";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Сформировать Word договра";
             this.ResumeLayout(false);
             this.PerformLayout();

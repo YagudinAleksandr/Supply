@@ -50,8 +50,8 @@
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(),
                         Surename = c.String(),
-                        Patronymic = c.String(),
-                        PhoneNumber = c.String(),
+                        Patronymic = c.String(nullable:true),
+                        PhoneNumber = c.String(nullable:true),
                         DocType = c.String(),
                         Series = c.String(),
                         Number = c.String(),
@@ -120,6 +120,7 @@
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.Int(nullable: false),
                         Address = c.String(),
+                        FlatCount = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -133,7 +134,7 @@
                         Price = c.Double(nullable: false),
                         Taks = c.Int(),
                         TaksProcent = c.Double(),
-                        Description = c.String(),
+                        Description = c.String(nullable:true),
                         RentId = c.Int(),
                         HostelsId = c.Int(),
                     })
@@ -157,7 +158,11 @@
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
+                        Surename = c.String(),
                         Name = c.String(),
+                        Patronimic = c.String(nullable:true),
+                        Proxy = c.String(),
+                        ProxyDate = c.String(),
                         CreatedDate = c.String(),
                         HostelsId = c.Int(),
                     })

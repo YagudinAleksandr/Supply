@@ -22,68 +22,21 @@ namespace Supply_Admin
 
             _db = db;
 
-            LB_Hostel.Visible = false;
-            LB_Name.Visible = false;
-            CB_Hostel.Visible = false;
-            TB_Name.Visible = false;
-            BTN_Save.Visible = false;
         }
 
         private void SupplyManagers_Load(object sender, EventArgs e)
         {
-            var hostels = _db.Hostels.ToList();
             DataGridViewInformation();
-            CB_Hostel.DataSource = hostels;
-            CB_Hostel.DisplayMember = "Name";
-            CB_Hostel.ValueMember = "Id";
-            
         }
 
         private void BTN_Create_Click(object sender, EventArgs e)
         {
-            LB_Hostel.Visible = true;
-            LB_Name.Visible = true;
-            CB_Hostel.Visible = true;
-            TB_Name.Visible = true;
-            BTN_Save.Visible = true;
+            SupplyAdd supplyAdd = new SupplyAdd(_db);
+            supplyAdd.ShowDialog();
+            DataGridViewInformation();
         }
 
-        private void BTN_Save_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Supply supply = new Supply()
-                {
-                    Name = TB_Name.Text,
-                    HostelsId = index
-                };
-
-                _db.Supplies.Add(supply);
-                _db.SaveChanges();
-
-                MessageBox.Show("Запись добавлена успешно");
-
-                LB_Name.Text = "";
-
-                LB_Hostel.Visible = false;
-                LB_Name.Visible = false;
-                CB_Hostel.Visible = false;
-                TB_Name.Visible = false;
-                BTN_Save.Visible = false;
-
-                DataGridViewInformation();
-            }
-            catch
-            {
-                MessageBox.Show("Возникли проблемы с добавлением");
-            }
-            
-        }
-
-        private void CB_Hostel_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            index = (int)CB_Hostel.SelectedValue;
-        }
+       
 
         private void DataGridViewInformation()
         {
@@ -98,7 +51,11 @@ namespace Supply_Admin
                 {
                     int rowNumber = DGV_Supplies.Rows.Add();
                     DGV_Supplies.Rows[rowNumber].Cells[COL_Id.Name].Value = supply.Id;
+                    DGV_Supplies.Rows[rowNumber].Cells[COL_Surename.Name].Value = supply.Surename;
+                    DGV_Supplies.Rows[rowNumber].Cells[COL_Patronimuc.Name].Value = supply.Patronimic;
                     DGV_Supplies.Rows[rowNumber].Cells[COL_Name.Name].Value = supply.Name;
+                    DGV_Supplies.Rows[rowNumber].Cells[COL_Proxy.Name].Value = supply.Proxy;
+                    DGV_Supplies.Rows[rowNumber].Cells[COL_Start.Name].Value = supply.ProxyDate;
                     DGV_Supplies.Rows[rowNumber].Cells[COL_Hostel.Name].Value = supply.hostels.Name;
                 }
             }
