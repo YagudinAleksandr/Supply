@@ -124,6 +124,7 @@
     <Compile Include="HumanCreate.Designer.cs">
       <DependentUpon>HumanCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Libraries\NumbersToString.cs" />
     <Compile Include="LoadingForm.cs">
       <SubType>Form</SubType>
     </Compile>

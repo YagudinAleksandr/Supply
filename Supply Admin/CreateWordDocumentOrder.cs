@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Supply_Admin.Libraries;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
 
@@ -65,6 +66,7 @@ namespace Supply_Admin
                     var hostel = _db.Hostels.Where(x => x.Id == enterance.HostelsId).FirstOrDefault();
                     var supply = _db.Supplies.Where(x => x.HostelsId == hostel.Id).FirstOrDefault();
                     var rent = _db.Rents.Where(x => x.Id == order.RentId).FirstOrDefault();
+                    var garages = _db.Garages.Where(x => x.RoomsId == room.Id).ToList();
 
                     try
                     {
@@ -115,6 +117,13 @@ namespace Supply_Admin
                         app.Selection.Find.Execute("<hostelAddress>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.Address, 2);
                         app.Selection.Find.Execute("<hostelFlat>", missing, missing, missing, missing, missing, missing, missing, missing, flat.Name, 2);
                         app.Selection.Find.Execute("<hostelFlats>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.FlatCount, 2);
+
+                        string elements="";
+                        foreach(var garage in garages)
+                        {
+                            elements += garage.Name + "(№" + garage.Numeric + "), ";
+                        }
+                        app.Selection.Find.Execute("<Elements>", missing, missing, missing, missing, missing, missing, missing, missing, elements, 2);
 
                         app.Selection.Find.Execute("<supplySurename>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Surename, 2);
                         app.Selection.Find.Execute("<supplyName>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Name, 2);
