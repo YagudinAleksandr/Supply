@@ -16,12 +16,14 @@ namespace Supply_Admin
 {
     public partial class CreateWordDocumentOrder : Form
     {
+        
         private static SupplyDbContext _db;
         public CreateWordDocumentOrder(SupplyDbContext db)
         {
             InitializeComponent();
             _db = db;
             PB_Creation.Visible = false;
+            
         }
 
         private void BTN_Create_Click(object sender, EventArgs e)

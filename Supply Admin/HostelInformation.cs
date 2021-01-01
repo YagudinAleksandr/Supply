@@ -53,15 +53,20 @@ namespace Supply_Admin
                     TreeNode[] roomsNode = new TreeNode[rooms.Count()];
                     for (int j = 0; j < rooms.Count(); j++)
                     {
-                        roomsNode[j] = new TreeNode();
-                        roomsNode[j].Text = rooms[j].Name.ToString();
-                        roomsNode[j].Tag = rooms[j].Id;
-                        menu = new ContextMenu() { MenuItems = { new MenuItem("Добавить жильца", AddHumanHandler) } };
-
-                        roomsNode[j].ContextMenu = menu;
-
                         int roomId = rooms[j].Id;
                         var humens = _db.Humen.Where(x => x.RoomId == roomId).ToList();
+
+                        roomsNode[j] = new TreeNode();
+                        roomsNode[j].Text = rooms[j].Name.ToString() + " (Количесвто мест -" + rooms[j].Places.ToString() +" / использовано мест - "+ humens.Count().ToString()+")";
+                        roomsNode[j].Tag = rooms[j].Id;
+
+                        if(humens.Count() < rooms[j].Places)
+                        {
+                            menu = new ContextMenu() { MenuItems = { new MenuItem("Добавить жильца", AddHumanHandler) } };
+
+                            roomsNode[j].ContextMenu = menu;
+                        }
+
                         TreeNode[] humensNode = new TreeNode[humens.Count()];
 
                         for (int m = 0; m < humens.Count(); m++)
