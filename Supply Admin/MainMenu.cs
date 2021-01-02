@@ -94,5 +94,11 @@ namespace Supply_Admin
             OrdersManager ordersManager = new OrdersManager(_db);
             ordersManager.ShowDialog();
         }
+
+        private void BTN_OrderEl_Click(object sender, EventArgs e)
+        {
+            AddtionalServices addtionalServices = new AddtionalServices(_db);
+            addtionalServices.ShowDialog();
+        }
     }
 }

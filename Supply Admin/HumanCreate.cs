@@ -16,6 +16,7 @@ namespace Supply_Admin
     {
         SupplyDbContext _db;
         private static int _roomId;
+        private static int _hostelId;
 
         public HumanCreate(SupplyDbContext db, int roomId)
         {
@@ -77,6 +78,7 @@ namespace Supply_Admin
             var flat = _db.Flats.Where(x => x.Id == room.FlatId).FirstOrDefault();
             var enterance = _db.Enterances.Where(x => x.Id == flat.EnteranceId).FirstOrDefault();
             var hostel = _db.Hostels.Where(x => x.Id == enterance.HostelsId).FirstOrDefault();
+            _hostelId = hostel.Id;
 
             LB_Room.Text = $"Комната № {room.Name}";
             LB_Hostel.Text = $"Общежитие № {hostel.Name}";
@@ -100,6 +102,7 @@ namespace Supply_Admin
                 order.StartOrder = TB_OrderStart.Text;
                 order.EndOrder = TB_OrderEnd.Text;
                 order.RentId = (int)CB_Period.SelectedValue;
+                order.Status = 1;
                 if (CB_EducationType.SelectedItem != null)
                 {
                     order.EducationType = CB_EducationType.SelectedItem.ToString();
@@ -113,7 +116,7 @@ namespace Supply_Admin
                 else
                     order.Benifit = 0;
 
-                
+                order.HostelsId = _hostelId;
 
                 _db.Orders.Add(order);
                 _db.SaveChanges();

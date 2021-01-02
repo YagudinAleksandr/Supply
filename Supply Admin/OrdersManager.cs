@@ -50,6 +50,11 @@ namespace Supply_Admin
                         DG_View_Orders.Rows[rowNumber].Cells[COL_Benifit.Name].Value = "Да";
                     else
                         DG_View_Orders.Rows[rowNumber].Cells[COL_Benifit.Name].Value = "Нет";
+
+                    if (order.Status == 1)
+                        DG_View_Orders.Rows[rowNumber].Cells[COL_Status.Name].Value = "Активный";
+                    else
+                        DG_View_Orders.Rows[rowNumber].Cells[COL_Status.Name].Value = "Не активный";
                 }
 
             }
@@ -102,6 +107,11 @@ namespace Supply_Admin
                             DG_View_Orders.Rows[rowNumber].Cells[COL_Benifit.Name].Value = "Да";
                         else
                             DG_View_Orders.Rows[rowNumber].Cells[COL_Benifit.Name].Value = "Нет";
+
+                        if (order.Status == 1)
+                            DG_View_Orders.Rows[rowNumber].Cells[COL_Status.Name].Value = "Активный";
+                        else
+                            DG_View_Orders.Rows[rowNumber].Cells[COL_Status.Name].Value = "Не активный";
                     }
 
                 }
@@ -154,6 +164,11 @@ namespace Supply_Admin
                             DG_View_Orders.Rows[rowNumber].Cells[COL_Benifit.Name].Value = "Да";
                         else
                             DG_View_Orders.Rows[rowNumber].Cells[COL_Benifit.Name].Value = "Нет";
+
+                        if (order.Status == 1)
+                            DG_View_Orders.Rows[rowNumber].Cells[COL_Status.Name].Value = "Активный";
+                        else
+                            DG_View_Orders.Rows[rowNumber].Cells[COL_Status.Name].Value = "Не активный";
                     }
 
                 }

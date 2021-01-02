@@ -44,6 +44,7 @@
             this.LL_Objects = new System.Windows.Forms.LinkLabel();
             this.LL_Rates = new System.Windows.Forms.LinkLabel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.BTN_OrderEl = new System.Windows.Forms.Button();
             this.BTN_Orders = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -67,7 +68,7 @@
             this.настройкиToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1469, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1469, 28);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -76,7 +77,7 @@
             this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ExitToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 26);
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
             // ExitToolStripMenuItem
@@ -92,7 +93,7 @@
             this.toolStripSeparator1,
             this.Menu_Settings});
             this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
-            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(98, 26);
+            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(98, 24);
             this.настройкиToolStripMenuItem.Text = "Настройки";
             // 
             // toolStripSeparator1
@@ -207,6 +208,7 @@
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.BTN_OrderEl);
             this.groupBox1.Controls.Add(this.BTN_Orders);
             this.groupBox1.Location = new System.Drawing.Point(1108, 53);
             this.groupBox1.Name = "groupBox1";
@@ -214,6 +216,16 @@
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Документы";
+            // 
+            // BTN_OrderEl
+            // 
+            this.BTN_OrderEl.Location = new System.Drawing.Point(6, 79);
+            this.BTN_OrderEl.Name = "BTN_OrderEl";
+            this.BTN_OrderEl.Size = new System.Drawing.Size(337, 40);
+            this.BTN_OrderEl.TabIndex = 1;
+            this.BTN_OrderEl.Text = "Договора доп.услуги";
+            this.BTN_OrderEl.UseVisualStyleBackColor = true;
+            this.BTN_OrderEl.Click += new System.EventHandler(this.BTN_OrderEl_Click);
             // 
             // BTN_Orders
             // 
@@ -270,5 +282,6 @@
         private System.Windows.Forms.ToolStripMenuItem ExitToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button BTN_Orders;
+        private System.Windows.Forms.Button BTN_OrderEl;
     }
 }

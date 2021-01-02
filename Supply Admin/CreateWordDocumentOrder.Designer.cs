@@ -32,6 +32,8 @@
             this.BTN_Create = new System.Windows.Forms.Button();
             this.PB_Creation = new System.Windows.Forms.ProgressBar();
             this.TB_OrderStart = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.CB_Hostels = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label4
@@ -70,11 +72,30 @@
             this.TB_OrderStart.Size = new System.Drawing.Size(100, 22);
             this.TB_OrderStart.TabIndex = 16;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(295, 29);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(86, 17);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "Общежитие";
+            // 
+            // CB_Hostels
+            // 
+            this.CB_Hostels.FormattingEnabled = true;
+            this.CB_Hostels.Location = new System.Drawing.Point(388, 26);
+            this.CB_Hostels.Name = "CB_Hostels";
+            this.CB_Hostels.Size = new System.Drawing.Size(60, 24);
+            this.CB_Hostels.TabIndex = 18;
+            // 
             // CreateWordDocumentOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 128);
+            this.Controls.Add(this.CB_Hostels);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.TB_OrderStart);
             this.Controls.Add(this.PB_Creation);
             this.Controls.Add(this.BTN_Create);
@@ -92,5 +113,7 @@
         private System.Windows.Forms.Button BTN_Create;
         private System.Windows.Forms.ProgressBar PB_Creation;
         private System.Windows.Forms.TextBox TB_OrderStart;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox CB_Hostels;
     }
 }

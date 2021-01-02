@@ -30,7 +30,13 @@ namespace Supply_Admin
         private void InitializeComponent()
         {
             this.DG_View_Orders = new System.Windows.Forms.DataGridView();
+            this.label1 = new System.Windows.Forms.Label();
+            this.TB_OrderNumber = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.BTN_Create = new System.Windows.Forms.Button();
+            this.TB_OrderStart = new System.Windows.Forms.TextBox();
             this.COL_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.COL_Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Human = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Room = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Hostel = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -39,11 +45,6 @@ namespace Supply_Admin
             this.COL_EndDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Benifit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Edited = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label1 = new System.Windows.Forms.Label();
-            this.TB_OrderNumber = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.BTN_Create = new System.Windows.Forms.Button();
-            this.TB_OrderStart = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DG_View_Orders)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,6 +56,7 @@ namespace Supply_Admin
             this.DG_View_Orders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DG_View_Orders.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.COL_Id,
+            this.COL_Status,
             this.COL_Human,
             this.COL_Room,
             this.COL_Hostel,
@@ -70,6 +72,51 @@ namespace Supply_Admin
             this.DG_View_Orders.Size = new System.Drawing.Size(1346, 539);
             this.DG_View_Orders.TabIndex = 0;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(89, 17);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "№ Договора";
+            // 
+            // TB_OrderNumber
+            // 
+            this.TB_OrderNumber.Location = new System.Drawing.Point(109, 30);
+            this.TB_OrderNumber.Name = "TB_OrderNumber";
+            this.TB_OrderNumber.Size = new System.Drawing.Size(100, 22);
+            this.TB_OrderNumber.TabIndex = 2;
+            this.TB_OrderNumber.TextChanged += new System.EventHandler(this.TB_OrderNumber_TextChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(228, 32);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(190, 17);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Дата заключения договора";
+            // 
+            // BTN_Create
+            // 
+            this.BTN_Create.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTN_Create.Location = new System.Drawing.Point(1136, 668);
+            this.BTN_Create.Name = "BTN_Create";
+            this.BTN_Create.Size = new System.Drawing.Size(223, 32);
+            this.BTN_Create.TabIndex = 5;
+            this.BTN_Create.Text = "Сформировать договра";
+            this.BTN_Create.UseVisualStyleBackColor = true;
+            this.BTN_Create.Click += new System.EventHandler(this.BTN_Create_Click);
+            // 
+            // TB_OrderStart
+            // 
+            this.TB_OrderStart.Location = new System.Drawing.Point(425, 30);
+            this.TB_OrderStart.Name = "TB_OrderStart";
+            this.TB_OrderStart.Size = new System.Drawing.Size(100, 22);
+            this.TB_OrderStart.TabIndex = 6;
+            this.TB_OrderStart.TextChanged += new System.EventHandler(this.TB_OrderStart_TextChanged);
+            // 
             // COL_Id
             // 
             this.COL_Id.HeaderText = "Номер договора";
@@ -77,6 +124,13 @@ namespace Supply_Admin
             this.COL_Id.Name = "COL_Id";
             this.COL_Id.ReadOnly = true;
             this.COL_Id.Width = 125;
+            // 
+            // COL_Status
+            // 
+            this.COL_Status.HeaderText = "Статус договра";
+            this.COL_Status.MinimumWidth = 6;
+            this.COL_Status.Name = "COL_Status";
+            this.COL_Status.Width = 125;
             // 
             // COL_Human
             // 
@@ -141,51 +195,6 @@ namespace Supply_Admin
             this.COL_Edited.ReadOnly = true;
             this.COL_Edited.Width = 125;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 17);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "№ Договора";
-            // 
-            // TB_OrderNumber
-            // 
-            this.TB_OrderNumber.Location = new System.Drawing.Point(109, 30);
-            this.TB_OrderNumber.Name = "TB_OrderNumber";
-            this.TB_OrderNumber.Size = new System.Drawing.Size(100, 22);
-            this.TB_OrderNumber.TabIndex = 2;
-            this.TB_OrderNumber.TextChanged += new System.EventHandler(this.TB_OrderNumber_TextChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(228, 32);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(190, 17);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Дата заключения договора";
-            // 
-            // BTN_Create
-            // 
-            this.BTN_Create.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTN_Create.Location = new System.Drawing.Point(1136, 668);
-            this.BTN_Create.Name = "BTN_Create";
-            this.BTN_Create.Size = new System.Drawing.Size(223, 32);
-            this.BTN_Create.TabIndex = 5;
-            this.BTN_Create.Text = "Сформировать договра";
-            this.BTN_Create.UseVisualStyleBackColor = true;
-            this.BTN_Create.Click += new System.EventHandler(this.BTN_Create_Click);
-            // 
-            // TB_OrderStart
-            // 
-            this.TB_OrderStart.Location = new System.Drawing.Point(425, 30);
-            this.TB_OrderStart.Name = "TB_OrderStart";
-            this.TB_OrderStart.Size = new System.Drawing.Size(100, 22);
-            this.TB_OrderStart.TabIndex = 6;
-            this.TB_OrderStart.TextChanged += new System.EventHandler(this.TB_OrderStart_TextChanged);
-            // 
             // OrdersManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -210,7 +219,13 @@ namespace Supply_Admin
         #endregion
 
         private System.Windows.Forms.DataGridView DG_View_Orders;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox TB_OrderNumber;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button BTN_Create;
+        private System.Windows.Forms.TextBox TB_OrderStart;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn COL_Status;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Human;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Room;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Hostel;
@@ -219,10 +234,5 @@ namespace Supply_Admin
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_EndDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Benifit;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Edited;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox TB_OrderNumber;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button BTN_Create;
-        private System.Windows.Forms.TextBox TB_OrderStart;
     }
 }

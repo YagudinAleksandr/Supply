@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Supply_Admin.Libraries;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
+using System.Collections;
 
 namespace Supply_Admin
 {
@@ -23,13 +24,18 @@ namespace Supply_Admin
             InitializeComponent();
             _db = db;
             PB_Creation.Visible = false;
-            
+
+
+            var hostels = _db.Hostels.ToList();
+            CB_Hostels.DataSource = hostels;
+            CB_Hostels.DisplayMember = "Name";
+            CB_Hostels.ValueMember = "Id";
         }
 
         private void BTN_Create_Click(object sender, EventArgs e)
         {
-            
-            var orders = _db.Orders.Where(x => x.StartOrder == TB_OrderStart.Text).ToList();
+            int hostelId = (int)CB_Hostels.SelectedValue;
+            var orders = _db.Orders.Where(x => x.StartOrder == TB_OrderStart.Text).Where(x => x.HostelsId == hostelId).Where(x => x.Status == 1).ToList();
 
             object missing = Type.Missing;
 
@@ -121,11 +127,22 @@ namespace Supply_Admin
                         app.Selection.Find.Execute("<hostelFlats>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.FlatCount, 2);
 
                         string elements="";
-                        foreach(var garage in garages)
+
+                        for (int i = 0; i < garages.Count(); i++) 
                         {
-                            elements += garage.Name + "(№" + garage.Numeric + "), ";
+                            if(i == garages.Count()-1)
+                            {
+                                elements = garages[i].Name + "(№" + garages[i].Numeric + "), ";
+                                app.Selection.Find.Execute("<Elements>", missing, missing, missing, missing, missing, missing, missing, missing, elements, 2);
+                            }
+                            else
+                            {
+                                elements = garages[i].Name + "(№" + garages[i].Numeric + "), <Elements>";
+                                app.Selection.Find.Execute("<Elements>", missing, missing, missing, missing, missing, missing, missing, missing, elements, 2);
+                            }
                         }
-                        app.Selection.Find.Execute("<Elements>", missing, missing, missing, missing, missing, missing, missing, missing, elements, 2);
+                        
+                        
 
                         app.Selection.Find.Execute("<supplySurename>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Surename, 2);
                         app.Selection.Find.Execute("<supplyName>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Name, 2);
@@ -175,6 +192,11 @@ namespace Supply_Admin
 
                 
             }
+        }
+
+        public static bool CreateAdditionalsOrder(ArrayList listOfId)
+        {
+            return false;
         }
     }
 }

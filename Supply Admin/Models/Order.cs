@@ -17,6 +17,8 @@ namespace Supply_Admin.Models
         public Human Human { get; set; }
         public int Benifit { get; set; }
         public string EducationType { get; set; }
-        
+        public int Status { get; set; }//Статус договра
+        public int? HostelsId { get; set; }
+        public Hostels Hostels { get; set; }
     }
 }
