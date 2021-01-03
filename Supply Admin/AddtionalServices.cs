@@ -65,7 +65,7 @@ namespace Supply_Admin
         {
             MessageBox.Show("Ожидайте ответа программы!");
             
-            ArrayList listOfId = new ArrayList(); //Лист с ID договоров
+            List<int> listOfId = new List<int>(); //Лист с ID договоров
 
             for (int i = 0; i < DG_View_Orders.RowCount; i++)
             {

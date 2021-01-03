@@ -38,14 +38,17 @@
                         EducationType = c.String(),
                         Status = c.Int(nullable: false),
                         HostelsId = c.Int(),
+                        RateId = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Hostels", t => t.HostelsId)
                 .ForeignKey("dbo.Humen", t => t.HumanId)
+                .ForeignKey("dbo.Rates", t => t.RateId)
                 .ForeignKey("dbo.Rents", t => t.RentId)
                 .Index(t => t.RentId)
                 .Index(t => t.HumanId)
-                .Index(t => t.HostelsId);
+                .Index(t => t.HostelsId)
+                .Index(t => t.RateId);
             
             CreateTable(
                 "dbo.Hostels",
@@ -134,7 +137,7 @@
                         Number = c.String(),
                         Given = c.String(),
                         GivenDate = c.String(),
-                        GivenCode = c.String(),
+                        GivenCode = c.String(nullable:true),
                         Registration = c.String(),
                         Citizenship = c.String(),
                         RoomId = c.Int(),
@@ -195,6 +198,7 @@
         {
             DropForeignKey("dbo.Benefits", "OrderId", "dbo.Orders");
             DropForeignKey("dbo.Orders", "RentId", "dbo.Rents");
+            DropForeignKey("dbo.Orders", "RateId", "dbo.Rates");
             DropForeignKey("dbo.Orders", "HumanId", "dbo.Humen");
             DropForeignKey("dbo.Orders", "HostelsId", "dbo.Hostels");
             DropForeignKey("dbo.Supplies", "HostelsId", "dbo.Hostels");
@@ -219,6 +223,7 @@
             DropIndex("dbo.Enterances", new[] { "HostelsId" });
             DropIndex("dbo.Flats", new[] { "Hostels_Id" });
             DropIndex("dbo.Flats", new[] { "EnteranceId" });
+            DropIndex("dbo.Orders", new[] { "RateId" });
             DropIndex("dbo.Orders", new[] { "HostelsId" });
             DropIndex("dbo.Orders", new[] { "HumanId" });
             DropIndex("dbo.Orders", new[] { "RentId" });

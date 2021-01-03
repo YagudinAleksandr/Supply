@@ -20,5 +20,7 @@ namespace Supply_Admin.Models
         public int Status { get; set; }//Статус договра
         public int? HostelsId { get; set; }
         public Hostels Hostels { get; set; }
+        public int? RateId { get; set; }
+        public Rate Rate { get; set; }
     }
 }

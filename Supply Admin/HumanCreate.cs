@@ -23,6 +23,7 @@ namespace Supply_Admin
             InitializeComponent();
             _db = db;
             _roomId = roomId;
+           
         }
 
         private void BTN_SaveHuman_Click(object sender, EventArgs e)
@@ -78,17 +79,24 @@ namespace Supply_Admin
             var flat = _db.Flats.Where(x => x.Id == room.FlatId).FirstOrDefault();
             var enterance = _db.Enterances.Where(x => x.Id == flat.EnteranceId).FirstOrDefault();
             var hostel = _db.Hostels.Where(x => x.Id == enterance.HostelsId).FirstOrDefault();
+            
             _hostelId = hostel.Id;
+
+            var rates = _db.Rates.Where(x => x.HostelsId == _hostelId).ToList();
 
             LB_Room.Text = $"Комната № {room.Name}";
             LB_Hostel.Text = $"Общежитие № {hostel.Name}";
 
-            var rent = _db.Rents.ToList();
+            var rents = _db.Rents.ToList();
 
-            CB_Period.DataSource = rent;
+            CB_Period.DataSource = rents;
             CB_Period.DisplayMember = "Name";
             CB_Period.ValueMember = "Id";
 
+
+            CB_Rates.DataSource = rates;
+            CB_Rates.DisplayMember = "Name";
+            CB_Rates.ValueMember = "Id";
         }
 
         //Внутренние методы
@@ -102,6 +110,7 @@ namespace Supply_Admin
                 order.StartOrder = TB_OrderStart.Text;
                 order.EndOrder = TB_OrderEnd.Text;
                 order.RentId = (int)CB_Period.SelectedValue;
+                order.RateId = (int)CB_Rates.SelectedValue;
                 order.Status = 1;
                 if (CB_EducationType.SelectedItem != null)
                 {

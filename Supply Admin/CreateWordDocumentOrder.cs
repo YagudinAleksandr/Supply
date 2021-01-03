@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Supply_Admin.Libraries;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
-using System.Collections;
+using Supply_Admin.Libraries;
 
 namespace Supply_Admin
 {
@@ -75,6 +75,7 @@ namespace Supply_Admin
                     var supply = _db.Supplies.Where(x => x.HostelsId == hostel.Id).FirstOrDefault();
                     var rent = _db.Rents.Where(x => x.Id == order.RentId).FirstOrDefault();
                     var garages = _db.Garages.Where(x => x.RoomsId == room.Id).ToList();
+                    var rate = _db.Rates.Where(x => x.Id == order.Id).FirstOrDefault();
 
                     try
                     {
@@ -141,8 +142,11 @@ namespace Supply_Admin
                                 app.Selection.Find.Execute("<Elements>", missing, missing, missing, missing, missing, missing, missing, missing, elements, 2);
                             }
                         }
-                        
-                        
+
+                        app.Selection.Find.Execute("<rate>", missing, missing, missing, missing, missing, missing, missing, missing, rate.Price, 2);
+                        app.Selection.Find.Execute("<rateWord>", missing, missing, missing, missing, missing, missing, missing, missing, NumbersToString.Str((int)rate.Price), 2);
+                        app.Selection.Find.Execute("<yearRate>", missing, missing, missing, missing, missing, missing, missing, missing, rate.Price * 12, 2);
+
 
                         app.Selection.Find.Execute("<supplySurename>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Surename, 2);
                         app.Selection.Find.Execute("<supplyName>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Name, 2);

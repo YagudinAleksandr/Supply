@@ -83,6 +83,8 @@ namespace Supply_Admin
             this.BTN_Save = new System.Windows.Forms.Button();
             this.label27 = new System.Windows.Forms.Label();
             this.TB_Registration = new System.Windows.Forms.RichTextBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.CB_Rates = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // LB_Room
@@ -563,11 +565,30 @@ namespace Supply_Admin
             this.TB_Registration.TabIndex = 53;
             this.TB_Registration.Text = "";
             // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(372, 501);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(178, 17);
+            this.label28.TabIndex = 54;
+            this.label28.Text = "Арендная плата за место";
+            // 
+            // CB_Rates
+            // 
+            this.CB_Rates.FormattingEnabled = true;
+            this.CB_Rates.Location = new System.Drawing.Point(556, 498);
+            this.CB_Rates.Name = "CB_Rates";
+            this.CB_Rates.Size = new System.Drawing.Size(717, 24);
+            this.CB_Rates.TabIndex = 55;
+            // 
             // HumanCreate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1285, 763);
+            this.Controls.Add(this.CB_Rates);
+            this.Controls.Add(this.label28);
             this.Controls.Add(this.TB_Registration);
             this.Controls.Add(this.label27);
             this.Controls.Add(this.BTN_Save);
@@ -687,5 +708,7 @@ namespace Supply_Admin
         private System.Windows.Forms.Button BTN_Save;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.RichTextBox TB_Registration;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.ComboBox CB_Rates;
     }
 }
