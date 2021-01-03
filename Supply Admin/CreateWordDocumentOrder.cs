@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Supply_Admin.Libraries;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
-using Supply_Admin.Libraries;
 
 namespace Supply_Admin
 {
