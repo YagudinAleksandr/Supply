@@ -100,5 +100,10 @@ namespace Supply_Admin
             AddtionalServices addtionalServices = new AddtionalServices(_db);
             addtionalServices.ShowDialog();
         }
+
+        private void Settings_Click(object sender, EventArgs e)
+        {
+            SettingsWindow settingsWindow = new SettingsWindow();
+        }
     }
 }

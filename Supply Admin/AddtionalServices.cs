@@ -15,6 +15,7 @@ namespace Supply_Admin
     public partial class AddtionalServices : Form
     {
         private static SupplyDbContext _db;
+        private static int hostelId;
         public AddtionalServices(SupplyDbContext db)
         {
             InitializeComponent();
@@ -28,7 +29,7 @@ namespace Supply_Admin
 
         private void CB_Hostels_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int hostelId = (int)CB_Hostels.SelectedValue;
+            hostelId = (int)CB_Hostels.SelectedValue;
             UpdateInformationInDataGridView(hostelId);
         }
 
@@ -62,6 +63,7 @@ namespace Supply_Admin
 
         private void button1_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("Ожидайте ответа программы!");
             
             ArrayList listOfId = new ArrayList(); //Лист с ID договоров
 
@@ -70,8 +72,21 @@ namespace Supply_Admin
                 if (Convert.ToBoolean(DG_View_Orders.Rows[i].Cells[COL_OrderId.Name].Value) == true)
                     listOfId.Add(Convert.ToInt32(DG_View_Orders.Rows[i].Cells[COL_OrderNumber.Name].Value));
             }
+
+            bool errorReport;
+
             if (listOfId.Count != 0)
-            { }
+            {
+                errorReport = WordExcelIO.CreatAdditionalSettings(_db, listOfId);
+            }
+            else
+                errorReport = WordExcelIO.CreatAdditionalSettings(_db, hostelId);
+
+            if (errorReport == false)
+                MessageBox.Show("Возникли проблемы при создании файлов");
+            else
+                MessageBox.Show("Файлы созданы успешно");
+
         }
     }
 }

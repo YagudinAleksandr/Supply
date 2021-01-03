@@ -194,9 +194,5 @@ namespace Supply_Admin
             }
         }
 
-        public static bool CreateAdditionalsOrder(ArrayList listOfId)
-        {
-            return false;
-        }
     }
 }

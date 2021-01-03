@@ -32,9 +32,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.Menu_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.LL_Rooms = new System.Windows.Forms.LinkLabel();
             this.LL_SupplyManagers = new System.Windows.Forms.LinkLabel();
@@ -65,10 +64,10 @@
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.файлToolStripMenuItem,
-            this.настройкиToolStripMenuItem});
+            this.Settings});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1469, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1469, 30);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -77,7 +76,7 @@
             this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ExitToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 26);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
             // ExitToolStripMenuItem
@@ -87,25 +86,19 @@
             this.ExitToolStripMenuItem.Text = "Выход";
             this.ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
-            // настройкиToolStripMenuItem
+            // Settings
             // 
-            this.настройкиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripSeparator1,
-            this.Menu_Settings});
-            this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
-            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(98, 24);
-            this.настройкиToolStripMenuItem.Text = "Настройки";
+            this.Settings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSeparator1});
+            this.Settings.Name = "Settings";
+            this.Settings.Size = new System.Drawing.Size(98, 26);
+            this.Settings.Text = "Настройки";
+            this.Settings.Click += new System.EventHandler(this.Settings_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(164, 6);
-            // 
-            // Menu_Settings
-            // 
-            this.Menu_Settings.Name = "Menu_Settings";
-            this.Menu_Settings.Size = new System.Drawing.Size(167, 26);
-            this.Menu_Settings.Text = "Настройки";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(221, 6);
             // 
             // panel1
             // 
@@ -268,9 +261,8 @@
         private System.Windows.Forms.GroupBox GB_Hostels;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem настройкиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Settings;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem Menu_Settings;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.LinkLabel LL_Objects;
         private System.Windows.Forms.LinkLabel LL_Rates;
