@@ -12,7 +12,7 @@ namespace Supply_Admin.Domain
     public class SupplyDbContext:DbContext
     {
         public SupplyDbContext()
-                : base("DbConnection")
+                : base(Properties.Settings.Default.ConnectionString.ToString())
         { }
 
         public DbSet<Hostels> Hostels { get; set; }

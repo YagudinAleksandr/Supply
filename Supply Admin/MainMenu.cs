@@ -104,6 +104,7 @@ namespace Supply_Admin
         private void Settings_Click(object sender, EventArgs e)
         {
             SettingsWindow settingsWindow = new SettingsWindow();
+            settingsWindow.ShowDialog();
         }
     }
 }

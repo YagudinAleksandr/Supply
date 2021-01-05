@@ -49,13 +49,17 @@ namespace Supply_Admin
                 
                 if (_db == null)
                 {
-                    
+                    this.Hide();
+                    SettingsWindow settingsWindow = new SettingsWindow();
+                    settingsWindow.ShowDialog();
                 }
                 
             }
             catch
             {
-
+                this.Hide();
+                SettingsWindow settingsWindow = new SettingsWindow();
+                settingsWindow.ShowDialog();
             }
             LB_Inform.Text = "Создание среды работы";
             
