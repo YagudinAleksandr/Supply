@@ -74,7 +74,17 @@ namespace Supply_Admin
                             humensNode[m] = new TreeNode();
                             humensNode[m].Text = humens[m].Surename + " " + humens[m].Name + " " + humens[m].Patronymic;
                             humensNode[m].Tag = humens[m].Id;
-                            menu = new ContextMenu() { MenuItems = { new MenuItem("Хи-Хи") } };
+
+                            menu = new ContextMenu()
+                            {
+                                MenuItems = {
+
+                                    new MenuItem("Сформировать договор", CreateOrderForHuman),
+                                    new MenuItem("Сформировать дополнение к договру (Льготники)"),
+                                    new MenuItem("Сформировать договор на дополнительныеуслуги (Электроэнергия)", CreateAdditionaElectrocity)
+                                }
+                            };
+
                             humensNode[m].ContextMenu = menu;
 
                         }
@@ -97,13 +107,12 @@ namespace Supply_Admin
         }
         private void HostelInformation_Shown(object sender, EventArgs e)
         {
-
             CreateTree();
         }
-        private void TV_Hostels_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
+        
 
-        }
+        //Menu Item Handler
+        //Создание жильца 
         private void AddHumanHandler(object sender, EventArgs e)
         {
             if (TV_Hostels.SelectedNode != null)
@@ -115,5 +124,35 @@ namespace Supply_Admin
             }
             
         }
+        //Создание договора на жильца
+        private void CreateOrderForHuman(object sender,EventArgs e)
+        {
+            if (TV_Hostels.SelectedNode != null) 
+            {
+                int humanId = Convert.ToInt32(TV_Hostels.SelectedNode.Tag.ToString());
+                bool flag = WordExcelIO.CreateOrderForHuman(_db, humanId);
+
+                if (flag == true)
+                    MessageBox.Show("Договор создан!");
+                else
+                    MessageBox.Show("Ошибка при создании договора!");
+            }
+            
+        }
+        //Договор на дополнительные услуги (Электроэнергия) на жильца
+        private void CreateAdditionaElectrocity(object sender,EventArgs e)
+        {
+            if(TV_Hostels.SelectedNode!=null)
+            {
+                int humanId = Convert.ToInt32(TV_Hostels.SelectedNode.Tag.ToString());
+                bool flag = WordExcelIO.CreatAdditionalSettings(_db, 2, humanId);
+
+                if (flag == true)
+                    MessageBox.Show("Договор создан!");
+                else
+                    MessageBox.Show("Ошибка при создании договора!");
+            }
+        }
+        
     }
 }

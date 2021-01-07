@@ -1,13 +1,7 @@
 ﻿using Supply_Admin.Domain;
-using Supply_Admin.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Supply_Admin.Libraries;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
@@ -60,9 +54,16 @@ namespace Supply_Admin
 
                 foreach (var order in orders)
                 {
-                    doc = app.Documents.Open(fileName, missing, missing);
-                    app.Selection.Find.ClearFormatting();
-                    app.Selection.Find.Replacement.ClearFormatting();
+                    try
+                    {
+                        doc = app.Documents.Open(fileName, missing, missing);
+                        app.Selection.Find.ClearFormatting();
+                        app.Selection.Find.Replacement.ClearFormatting();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Проблемы работы с Word документом");
+                    }
 
 
 
@@ -82,6 +83,11 @@ namespace Supply_Admin
                         app.Selection.Find.Execute("<startOrder>", missing, missing, missing, missing, missing, missing, missing, missing, order.StartOrder, 2);
                         app.Selection.Find.Execute("<EndOrder>", missing, missing, missing, missing, missing, missing, missing, missing, order.EndOrder, 2);
 
+                        DateTime orderEndDate = Convert.ToDateTime(order.EndOrder);
+                        DateTime orderStartDate = Convert.ToDateTime(order.StartOrder);
+
+                        app.Selection.Find.Execute("<yearEndDate>", missing, missing, missing, missing, missing, missing, missing, missing, orderEndDate.Year.ToString(), 2);
+
                         app.Selection.Find.Execute("<rent>", missing, missing, missing, missing, missing, missing, missing, missing, rent.Name, 2);
 
                         app.Selection.Find.Execute("<surename>", missing, missing, missing, missing, missing, missing, missing, missing, human.Surename, 2);
@@ -95,11 +101,11 @@ namespace Supply_Admin
                         app.Selection.Find.Execute("<HumanAddress>", missing, missing, missing, missing, missing, missing, missing, missing, human.Registration, 2);
                         app.Selection.Find.Execute("<humanCitizenship>", missing, missing, missing, missing, missing, missing, missing, missing, human.Citizenship, 2);
 
-                        if(order.Benifit == 1)
+                        if (order.Benifit == 1)
                         {
                             var benefit = _db.Benefits.Where(x => x.OrderId == order.Id).FirstOrDefault();
 
-                            app.Selection.Find.Execute("<benefit>", missing, missing, missing, missing, missing, missing, missing, missing,"да",2);
+                            app.Selection.Find.Execute("<benefit>", missing, missing, missing, missing, missing, missing, missing, missing, "да", 2);
                             app.Selection.Find.Execute("<benefitCategory>", missing, missing, missing, missing, missing, missing, missing, missing, benefit.BenifitCat, 2);
                             app.Selection.Find.Execute("<benefitDecreeDate>", missing, missing, missing, missing, missing, missing, missing, missing, benefit.DecreeDate, 2);
                             app.Selection.Find.Execute("<benefitDecree>", missing, missing, missing, missing, missing, missing, missing, missing, benefit.Decree, 2);
@@ -115,7 +121,7 @@ namespace Supply_Admin
                             app.Selection.Find.Execute("<benefitStartDate>", missing, missing, missing, missing, missing, missing, missing, missing, "-", 2);
                             app.Selection.Find.Execute("<benefitEndDate>", missing, missing, missing, missing, missing, missing, missing, missing, "-", 2);
                         }
-                        
+
                         app.Selection.Find.Execute("<ns>", missing, missing, missing, missing, missing, missing, missing, missing, human.Name[0].ToString(), 2);
                         app.Selection.Find.Execute("<ps>", missing, missing, missing, missing, missing, missing, missing, missing, human.Patronymic[0].ToString(), 2);
 
@@ -126,11 +132,11 @@ namespace Supply_Admin
                         app.Selection.Find.Execute("<hostelFlat>", missing, missing, missing, missing, missing, missing, missing, missing, flat.Name, 2);
                         app.Selection.Find.Execute("<hostelFlats>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.FlatCount, 2);
 
-                        string elements="";
+                        string elements = "";
 
-                        for (int i = 0; i < garages.Count(); i++) 
+                        for (int i = 0; i < garages.Count(); i++)
                         {
-                            if(i == garages.Count()-1)
+                            if (i == garages.Count() - 1)
                             {
                                 elements = garages[i].Name + "(№" + garages[i].Numeric + "), ";
                                 app.Selection.Find.Execute("<Elements>", missing, missing, missing, missing, missing, missing, missing, missing, elements, 2);
@@ -145,7 +151,15 @@ namespace Supply_Admin
                         app.Selection.Find.Execute("<rate>", missing, missing, missing, missing, missing, missing, missing, missing, rate.Price, 2);
                         app.Selection.Find.Execute("<rateWord>", missing, missing, missing, missing, missing, missing, missing, missing, NumbersToString.Str((int)rate.Price), 2);
                         app.Selection.Find.Execute("<yearRate>", missing, missing, missing, missing, missing, missing, missing, missing, rate.Price * 12, 2);
+                        app.Selection.Find.Execute("<rateWordYear>", missing, missing, missing, missing, missing, missing, missing, missing, NumbersToString.Str((int)rate.Price * 12), 2);
 
+                        int iOrderStartDate = Convert.ToInt32(orderStartDate.Year);
+                        int iOrderEndDate = Convert.ToInt32(orderEndDate.Year);
+
+                        int allMonthOrder = (iOrderEndDate - iOrderStartDate) * 12;
+
+                        app.Selection.Find.Execute("<allTimeRate>", missing, missing, missing, missing, missing, missing, missing, missing, (int)rate.Price * allMonthOrder, 2);
+                        app.Selection.Find.Execute("<allTimeRateWord>", missing, missing, missing, missing, missing, missing, missing, missing, NumbersToString.Str((int)rate.Price * allMonthOrder), 2);
 
                         app.Selection.Find.Execute("<supplySurename>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Surename, 2);
                         app.Selection.Find.Execute("<supplyName>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Name, 2);
@@ -170,7 +184,7 @@ namespace Supply_Admin
                         return;
                     }
 
-                    
+
                     //Сохранение договоров
                     object saveAsFile = (object)"C:\\Users\\Aleksandr\\Desktop\\Report\\Договор№" + order.Id.ToString() + ".doc";
                     doc.SaveAs2(saveAsFile, missing, missing, missing);
@@ -193,8 +207,10 @@ namespace Supply_Admin
 
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
 
-                
+
             }
+            else
+                MessageBox.Show("В базе данных не найдено совпадений по введенным данным!");
         }
 
     }

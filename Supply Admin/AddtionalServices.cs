@@ -80,7 +80,7 @@ namespace Supply_Admin
                 errorReport = WordExcelIO.CreatAdditionalSettings(_db, listOfId);
             }
             else
-                errorReport = WordExcelIO.CreatAdditionalSettings(_db, hostelId);
+                errorReport = WordExcelIO.CreatAdditionalSettings(_db, 1, hostelId);
 
             if (errorReport == false)
                 MessageBox.Show("Возникли проблемы при создании файлов");
