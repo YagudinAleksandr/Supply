@@ -12,7 +12,7 @@ namespace Supply_Admin.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.0.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,7 +25,9 @@ namespace Supply_Admin.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=tcp:nimi.database.windows.net,1433;Initial Catalog=nimi;Persist Security I" +
+            "nfo=False;User ID=yagudin97;Password=c9vjCdm7;MultipleActiveResultSets=False;Enc" +
+            "rypt=True;TrustServerCertificate=False;Connection Timeout=30;")]
         public string ConnectionString {
             get {
                 return ((string)(this["ConnectionString"]));
