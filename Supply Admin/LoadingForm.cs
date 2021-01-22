@@ -47,8 +47,9 @@ namespace Supply_Admin
                 
                 _db = new SupplyDbContext();
                 
-                if (_db == null)
+                if (_db.Database.Exists() == false)
                 {
+                    
                     this.Hide();
                     SettingsWindow settingsWindow = new SettingsWindow();
                     settingsWindow.ShowDialog();

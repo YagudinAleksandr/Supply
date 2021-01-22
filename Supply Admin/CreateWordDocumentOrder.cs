@@ -5,6 +5,7 @@ using System.Linq;
 using Supply_Admin.Libraries;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
+using System.IO;
 
 namespace Supply_Admin
 {
@@ -29,7 +30,7 @@ namespace Supply_Admin
         {
             int hostelId = (int)CB_Hostels.SelectedValue;
             var orders = _db.Orders.Where(x => x.StartOrder == TB_OrderStart.Text).Where(x => x.HostelsId == hostelId).Where(x => x.Status == 1).ToList();
-
+            string path = Directory.GetCurrentDirectory();
             object missing = Type.Missing;
 
             if (orders.Count() != 0)
