@@ -15,7 +15,6 @@ namespace Supply_Admin
     public partial class SupplyManagers : Form
     {
         SupplyDbContext _db;
-        private static int index = 0;
         public SupplyManagers(SupplyDbContext db)
         {
             InitializeComponent();

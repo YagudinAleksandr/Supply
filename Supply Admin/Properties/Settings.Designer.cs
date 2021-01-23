@@ -72,5 +72,17 @@ namespace Supply_Admin.Properties {
                 this["Directory"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TemplateDir {
+            get {
+                return ((string)(this["TemplateDir"]));
+            }
+            set {
+                this["TemplateDir"] = value;
+            }
+        }
     }
 }

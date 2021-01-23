@@ -6,6 +6,8 @@ using Supply_Admin.Libraries;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
 using System.IO;
+using QRCoder;
+using System.Drawing;
 
 namespace Supply_Admin
 {
@@ -30,7 +32,7 @@ namespace Supply_Admin
         {
             int hostelId = (int)CB_Hostels.SelectedValue;
             var orders = _db.Orders.Where(x => x.StartOrder == TB_OrderStart.Text).Where(x => x.HostelsId == hostelId).Where(x => x.Status == 1).ToList();
-            string path = Directory.GetCurrentDirectory();
+            
             object missing = Type.Missing;
 
             if (orders.Count() != 0)
@@ -50,14 +52,17 @@ namespace Supply_Admin
                 //Загрузка WORD шаблона
                 Word.Document doc = null;
 
-                object fileName = "Y:\\U2035\\Supply\\Supply Admin\\Files\\OrderStudent.docx";
+                //Директория хранения шаблона
+                string templateDirectory = Properties.Settings.Default.TemplateDir + "\\OrderStudent.docx";
+
+                
 
 
                 foreach (var order in orders)
                 {
                     try
                     {
-                        doc = app.Documents.Open(fileName, missing, missing);
+                        doc = app.Documents.Open((object)templateDirectory, missing, missing);
                         app.Selection.Find.ClearFormatting();
                         app.Selection.Find.Replacement.ClearFormatting();
                     }
@@ -66,7 +71,7 @@ namespace Supply_Admin
                         MessageBox.Show("Проблемы работы с Word документом");
                     }
 
-
+                    
 
                     var human = _db.Humen.Where(x => x.Id == order.HumanId).FirstOrDefault();
                     var room = _db.Rooms.Where(x => x.Id == human.RoomId).FirstOrDefault();
@@ -77,6 +82,29 @@ namespace Supply_Admin
                     var rent = _db.Rents.Where(x => x.Id == order.RentId).FirstOrDefault();
                     var garages = _db.Garages.Where(x => x.RoomsId == room.Id).ToList();
                     var rate = _db.Rates.Where(x => x.Id == order.Id).FirstOrDefault();
+
+
+
+                    try
+                    {
+                        
+                        
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Возникла проблема с QR-кодом");
+                        //Закрытие ProgressBar
+                        PB_Creation.Visible = false;
+
+                        //Закрытие документа
+                        doc.Close(false, missing, missing);
+                        app.Quit(false, false, false);
+
+                        System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
+                        return;
+                    }
+
+
 
                     try
                     {
@@ -169,6 +197,19 @@ namespace Supply_Admin
                         app.Selection.Find.Execute("<supplyP>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Patronimic[0].ToString(), 2);
                         app.Selection.Find.Execute("<supplyProxy>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Proxy, 2);
                         app.Selection.Find.Execute("<supplyProxyDate>", missing, missing, missing, missing, missing, missing, missing, missing, supply.ProxyDate, 2);
+
+                        
+                        QRCodeGenerator Qr = new QRCodeGenerator();
+                        var QrCodeData = Qr.CreateQrCode("https://www.youtube.com/watch?v=MYXeJusnBTQ", QRCodeGenerator.ECCLevel.M,true,true);
+                        var QRData = new QRCode(QrCodeData);
+                        Image image = QRData.GetGraphic(150);
+                        
+                        //app.Selection.Find.Execute("<QRCode>", missing, missing, missing, missing, missing, missing, missing, missing,image, 2);
+                        /*
+                        app
+                        */
+                        Clipboard.SetImage(image);
+                        app.ActiveDocument.Bookmarks["QRCodeMark"].Range.Paste();
                     }
                     catch
                     {
@@ -185,9 +226,9 @@ namespace Supply_Admin
                         return;
                     }
 
-
+                    string saveDirectory = Properties.Settings.Default.Directory + "\\Договор№" + order.Id.ToString() + ".doc";
                     //Сохранение договоров
-                    object saveAsFile = (object)"C:\\Users\\Aleksandr\\Desktop\\Report\\Договор№" + order.Id.ToString() + ".doc";
+                    object saveAsFile =(object)saveDirectory;
                     doc.SaveAs2(saveAsFile, missing, missing, missing);
 
                     //Изменение знаечения ProgressBar
