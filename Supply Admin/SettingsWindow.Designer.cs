@@ -35,13 +35,15 @@ namespace Supply_Admin
             this.TabControlSettings = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.BTN_TemplateDir = new System.Windows.Forms.Button();
+            this.TB_TempDir = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.BTN_OpenFolder = new System.Windows.Forms.Button();
             this.TB_SaveFolderDir = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.label3 = new System.Windows.Forms.Label();
-            this.TB_TempDir = new System.Windows.Forms.TextBox();
-            this.BTN_TemplateDir = new System.Windows.Forms.Button();
+            this.BTN_Apply = new System.Windows.Forms.Button();
+            this.BTN_Cancel = new System.Windows.Forms.Button();
             this.TabControlSettings.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -69,7 +71,7 @@ namespace Supply_Admin
             // 
             // BTN_SaveChanges
             // 
-            this.BTN_SaveChanges.Location = new System.Drawing.Point(701, 446);
+            this.BTN_SaveChanges.Location = new System.Drawing.Point(566, 446);
             this.BTN_SaveChanges.Margin = new System.Windows.Forms.Padding(2);
             this.BTN_SaveChanges.Name = "BTN_SaveChanges";
             this.BTN_SaveChanges.Size = new System.Drawing.Size(102, 32);
@@ -120,6 +122,32 @@ namespace Supply_Admin
             this.tabPage2.Text = "Настройки сохранения файлов";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // BTN_TemplateDir
+            // 
+            this.BTN_TemplateDir.Location = new System.Drawing.Point(679, 51);
+            this.BTN_TemplateDir.Name = "BTN_TemplateDir";
+            this.BTN_TemplateDir.Size = new System.Drawing.Size(92, 23);
+            this.BTN_TemplateDir.TabIndex = 5;
+            this.BTN_TemplateDir.Text = "Обзор";
+            this.BTN_TemplateDir.UseVisualStyleBackColor = true;
+            this.BTN_TemplateDir.Click += new System.EventHandler(this.BTN_TemplateDir_Click);
+            // 
+            // TB_TempDir
+            // 
+            this.TB_TempDir.Location = new System.Drawing.Point(186, 51);
+            this.TB_TempDir.Name = "TB_TempDir";
+            this.TB_TempDir.Size = new System.Drawing.Size(473, 20);
+            this.TB_TempDir.TabIndex = 4;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(10, 59);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(122, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Директория шаблонов";
+            // 
             // BTN_OpenFolder
             // 
             this.BTN_OpenFolder.Location = new System.Drawing.Point(679, 15);
@@ -155,37 +183,33 @@ namespace Supply_Admin
             this.tabPage3.Text = "Пользователь";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // label3
+            // BTN_Apply
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 59);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(122, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Директория шаблонов";
+            this.BTN_Apply.Location = new System.Drawing.Point(674, 446);
+            this.BTN_Apply.Name = "BTN_Apply";
+            this.BTN_Apply.Size = new System.Drawing.Size(109, 32);
+            this.BTN_Apply.TabIndex = 4;
+            this.BTN_Apply.Text = "Применить";
+            this.BTN_Apply.UseVisualStyleBackColor = true;
+            this.BTN_Apply.Click += new System.EventHandler(this.BTN_Apply_Click);
             // 
-            // TB_TempDir
+            // BTN_Cancel
             // 
-            this.TB_TempDir.Location = new System.Drawing.Point(186, 51);
-            this.TB_TempDir.Name = "TB_TempDir";
-            this.TB_TempDir.Size = new System.Drawing.Size(473, 20);
-            this.TB_TempDir.TabIndex = 4;
-            // 
-            // BTN_TemplateDir
-            // 
-            this.BTN_TemplateDir.Location = new System.Drawing.Point(679, 51);
-            this.BTN_TemplateDir.Name = "BTN_TemplateDir";
-            this.BTN_TemplateDir.Size = new System.Drawing.Size(92, 23);
-            this.BTN_TemplateDir.TabIndex = 5;
-            this.BTN_TemplateDir.Text = "Обзор";
-            this.BTN_TemplateDir.UseVisualStyleBackColor = true;
-            this.BTN_TemplateDir.Click += new System.EventHandler(this.BTN_TemplateDir_Click);
+            this.BTN_Cancel.Location = new System.Drawing.Point(467, 446);
+            this.BTN_Cancel.Name = "BTN_Cancel";
+            this.BTN_Cancel.Size = new System.Drawing.Size(94, 32);
+            this.BTN_Cancel.TabIndex = 5;
+            this.BTN_Cancel.Text = "Отменить";
+            this.BTN_Cancel.UseVisualStyleBackColor = true;
+            this.BTN_Cancel.Click += new System.EventHandler(this.BTN_Cancel_Click);
             // 
             // SettingsWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(814, 489);
+            this.Controls.Add(this.BTN_Cancel);
+            this.Controls.Add(this.BTN_Apply);
             this.Controls.Add(this.TabControlSettings);
             this.Controls.Add(this.BTN_SaveChanges);
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -216,5 +240,7 @@ namespace Supply_Admin
         private System.Windows.Forms.Button BTN_TemplateDir;
         private System.Windows.Forms.TextBox TB_TempDir;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button BTN_Apply;
+        private System.Windows.Forms.Button BTN_Cancel;
     }
 }

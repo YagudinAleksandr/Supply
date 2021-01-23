@@ -33,17 +33,22 @@
             // 
             // TV_Hostels
             // 
-            this.TV_Hostels.Location = new System.Drawing.Point(13, 13);
+            this.TV_Hostels.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TV_Hostels.Location = new System.Drawing.Point(10, 11);
+            this.TV_Hostels.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.TV_Hostels.Name = "TV_Hostels";
-            this.TV_Hostels.Size = new System.Drawing.Size(1136, 720);
+            this.TV_Hostels.Size = new System.Drawing.Size(853, 586);
             this.TV_Hostels.TabIndex = 0;
             // 
             // HostelInformation
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1161, 745);
+            this.ClientSize = new System.Drawing.Size(871, 605);
             this.Controls.Add(this.TV_Hostels);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "HostelInformation";
             this.Text = "Данные по общежитию";
             this.Shown += new System.EventHandler(this.HostelInformation_Shown);

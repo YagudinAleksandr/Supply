@@ -25,16 +25,7 @@ namespace Supply_Admin
         {
             MessageBox.Show("Приложение будет перезапущено!");
 
-            if(TB_ConnectionString.Text != "")
-                Properties.Settings.Default.ConnectionString = TB_ConnectionString.Text;
-
-            if (TB_SaveFolderDir.Text != "")
-                Properties.Settings.Default.Directory = TB_SaveFolderDir.Text;
-
-            if (TB_SaveFolderDir.Text != "")
-                Properties.Settings.Default.TemplateDir = TB_TempDir.Text;
-
-            Properties.Settings.Default.Save();
+            
             Application.Restart();
         }
 
@@ -52,6 +43,25 @@ namespace Supply_Admin
             {
                 TB_TempDir.Text = folderBrowserDialog1.SelectedPath;
             }
+        }
+
+        private void BTN_Apply_Click(object sender, EventArgs e)
+        {
+            if (TB_ConnectionString.Text != "")
+                Properties.Settings.Default.ConnectionString = TB_ConnectionString.Text;
+
+            if (TB_SaveFolderDir.Text != "")
+                Properties.Settings.Default.Directory = TB_SaveFolderDir.Text;
+
+            if (TB_SaveFolderDir.Text != "")
+                Properties.Settings.Default.TemplateDir = TB_TempDir.Text;
+
+            Properties.Settings.Default.Save();
+        }
+
+        private void BTN_Cancel_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

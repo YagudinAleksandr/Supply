@@ -29,8 +29,16 @@ namespace Supply_Admin
 
         private void CB_Hostels_SelectedIndexChanged(object sender, EventArgs e)
         {
-            hostelId = (int)CB_Hostels.SelectedValue;
-            UpdateInformationInDataGridView(hostelId);
+            try
+            {
+                hostelId = (int)CB_Hostels.SelectedValue;
+                UpdateInformationInDataGridView(hostelId);
+            }
+            catch
+            {
+                return;
+            }
+            
         }
 
         private void UpdateInformationInDataGridView(int hostelId)

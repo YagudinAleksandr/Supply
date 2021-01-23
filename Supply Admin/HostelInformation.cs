@@ -13,9 +13,9 @@ namespace Supply_Admin
 {
     public partial class HostelInformation : Form
     {
-        private SupplyDbContext _db;
-        private int _hostelId;
-        ContextMenu menu;
+        private SupplyDbContext _db;//Контекст данных
+        private int _hostelId;//Получение ID общежития
+        ContextMenu menu;//Контекстное меню
         
 
         public HostelInformation(SupplyDbContext db, int hostelId)
@@ -24,12 +24,18 @@ namespace Supply_Admin
             _hostelId = hostelId;
             _db = db;
         }
+
+        //Создание дерева общежития
         private void CreateTree()
         {
+            //Очистка дерева (Для обновления дерева)
             TV_Hostels.Nodes.Clear();
+            //Получение данных об общежитии
             var hostel = _db.Hostels.Where(x => x.Id == _hostelId).FirstOrDefault();
+            //Создание основной ноды общежития
             TreeNode hostelNode = new TreeNode($"Общежитие № {hostel.Name}");
 
+            //Ноды подъездов
             var enterances = _db.Enterances.Where(x => x.HostelsId == hostel.Id).ToList();
             TreeNode[] enterancesNode = new TreeNode[enterances.Count()];
 
@@ -39,6 +45,7 @@ namespace Supply_Admin
                 enterancesNode[k].Text = $"Подъезд № {enterances[k].Name}";
                 int enteranceId = enterances[k].Id;
 
+                //Создание ноды по этажам
                 var flats = _db.Flats.Where(x => x.EnteranceId == enteranceId).ToList();
                 TreeNode[] flatsNode = new TreeNode[flats.Count()];
 
@@ -49,24 +56,29 @@ namespace Supply_Admin
                     flatsNode[i].Tag = flats[i].Id;
                     int f = flats[i].Id;
 
+                    //Создание ноды комнат по этажам
                     var rooms = _db.Rooms.Where(p => p.FlatId == f).ToList();
                     TreeNode[] roomsNode = new TreeNode[rooms.Count()];
                     for (int j = 0; j < rooms.Count(); j++)
                     {
                         int roomId = rooms[j].Id;
+                        //Сведения о жильцах комнаты (Вносим в ноду комнаты)
                         var humens = _db.Humen.Where(x => x.RoomId == roomId).ToList();
 
                         roomsNode[j] = new TreeNode();
                         roomsNode[j].Text = rooms[j].Name.ToString() + " (Количесвто мест -" + rooms[j].Places.ToString() +" / использовано мест - "+ humens.Count().ToString()+")";
                         roomsNode[j].Tag = rooms[j].Id;
 
+                        //Проверка (Если количество мест в комнате больше проживающих, то позволяем добавлять жильца)
                         if(humens.Count() < rooms[j].Places)
                         {
+                            //Создание контекстного меню для создания жильца и договора
                             menu = new ContextMenu() { MenuItems = { new MenuItem("Добавить жильца", AddHumanHandler) } };
 
                             roomsNode[j].ContextMenu = menu;
                         }
 
+                        //Создание ноды жильцов комнаты
                         TreeNode[] humensNode = new TreeNode[humens.Count()];
 
                         for (int m = 0; m < humens.Count(); m++)
@@ -75,15 +87,36 @@ namespace Supply_Admin
                             humensNode[m].Text = humens[m].Surename + " " + humens[m].Name + " " + humens[m].Patronymic;
                             humensNode[m].Tag = humens[m].Id;
 
-                            menu = new ContextMenu()
+                            int humanId = humens[m].Id;
+                            //Получение сведений по договору
+                            var order = _db.Orders.Where(x => x.HumanId == humanId).First();
+                            
+                            //Проверка данных договора (Имеется ли льгота)
+                            if(order.Benifit == 1)
                             {
-                                MenuItems = {
+                                menu = new ContextMenu()
+                                {
+                                    MenuItems = {
 
-                                    new MenuItem("Сформировать договор", CreateOrderForHuman),
-                                    new MenuItem("Сформировать дополнение к договру (Льготники)"),
-                                    new MenuItem("Сформировать договор на дополнительныеуслуги (Электроэнергия)", CreateAdditionaElectrocity)
-                                }
-                            };
+                                        new MenuItem("Сформировать договор", CreateOrderForHuman),
+                                        new MenuItem("Сформировать дополнение к договру (Льготники)"),
+                                        new MenuItem("Сформировать договор на дополнительныеуслуги (Электроэнергия)", CreateAdditionaElectrocity),
+                                        new MenuItem("Сформировать дополнение к договору (Рассрочка на оплату)")
+                                    }
+                                };
+                            }
+                            else
+                            {
+                                menu = new ContextMenu()
+                                {
+                                    MenuItems = {
+
+                                        new MenuItem("Сформировать договор", CreateOrderForHuman),
+                                        new MenuItem("Сформировать договор на дополнительныеуслуги (Электроэнергия)", CreateAdditionaElectrocity),
+                                        new MenuItem("Сформировать дополнение к договору (Рассрочка на оплату)")
+                                    }
+                                };
+                            }
 
                             humensNode[m].ContextMenu = menu;
 
