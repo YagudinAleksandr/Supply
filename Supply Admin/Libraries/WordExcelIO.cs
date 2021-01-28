@@ -29,12 +29,12 @@ namespace Supply_Admin
                     //Загрузка WORD шаблона
                     Word.Document doc = null;
 
-                    object fileName = "Y:\\U2035\\Supply\\Supply Admin\\Files\\Electosupplies.docx";
+                    string templateDirectory = Properties.Settings.Default.TemplateDir + "\\Electosupplies.docx";
 
 
                     foreach (var order in orders)
                     {
-                        doc = app.Documents.Open(fileName, missing, missing);
+                        doc = app.Documents.Open((object)templateDirectory, missing, missing);
                         app.Selection.Find.ClearFormatting();
                         app.Selection.Find.Replacement.ClearFormatting();
 
@@ -98,8 +98,8 @@ namespace Supply_Admin
 
 
                         //Сохранение договоров
-                        object saveAsFile = (object)"C:\\Users\\Aleksandr\\Desktop\\Report\\Договор(Эл.энергия)" + order.Id.ToString() + ".doc";
-                        doc.SaveAs2(saveAsFile, missing, missing, missing);
+                        string saveDirectory = Properties.Settings.Default.Directory + "\\Договор(Эл.энергия)" + order.Id.ToString() + ".doc";
+                        doc.SaveAs2((object)saveDirectory, missing, missing, missing);
 
                         return true;
 
@@ -132,10 +132,10 @@ namespace Supply_Admin
                     //Загрузка WORD шаблона
                     Word.Document doc = null;
 
-                    object fileName = "Y:\\U2035\\Supply\\Supply Admin\\Files\\Electosupplies.docx";
+                    string templateDirectory = Properties.Settings.Default.TemplateDir + "\\Electosupplies.docx";
 
 
-                    doc = app.Documents.Open(fileName, missing, missing);
+                    doc = app.Documents.Open((object)templateDirectory, missing, missing);
                     app.Selection.Find.ClearFormatting();
                     app.Selection.Find.Replacement.ClearFormatting();
 
@@ -199,8 +199,8 @@ namespace Supply_Admin
 
 
                     //Сохранение договоров
-                    object saveAsFile = (object)"C:\\Users\\Aleksandr\\Desktop\\Report\\Договор(Эл.энергия)" + order.Id.ToString() + ".doc";
-                    doc.SaveAs2(saveAsFile, missing, missing, missing);
+                    string saveDirectory = Properties.Settings.Default.Directory + "\\Договор(Эл.энергия)" + order.Id.ToString() + ".doc";
+                    doc.SaveAs2((object)saveDirectory, missing, missing, missing);
 
 
                     //Закрытие документа
@@ -226,7 +226,7 @@ namespace Supply_Admin
             //Загрузка WORD шаблона
             Word.Document doc = null;
 
-            object fileName = "Y:\\U2035\\Supply\\Supply Admin\\Files\\Electosupplies.docx";
+            string templateDirectory = Properties.Settings.Default.TemplateDir + "\\Electosupplies.docx";
 
             for (int i = 0; i < listOfId.Count; i++)
             {
@@ -234,7 +234,7 @@ namespace Supply_Admin
                 var order = _db.Orders.Where(x => x.Id == orderId).Where(x => x.Status == 1).First();
 
 
-                doc = app.Documents.Open(fileName, missing, missing);
+                doc = app.Documents.Open((object)templateDirectory, missing, missing);
                 app.Selection.Find.ClearFormatting();
                 app.Selection.Find.Replacement.ClearFormatting();
 
@@ -295,8 +295,8 @@ namespace Supply_Admin
 
 
                 //Сохранение договоров
-                object saveAsFile = (object)"C:\\Users\\Aleksandr\\Desktop\\Report\\Договор(Эл.энергия)" + order.Id.ToString() + ".doc";
-                doc.SaveAs2(saveAsFile, missing, missing, missing);
+                string saveDirectory = Properties.Settings.Default.Directory +"\\Договор(Эл.энергия)" + order.Id.ToString() + ".doc";
+                doc.SaveAs2((object)saveDirectory, missing, missing, missing);
             }
 
             //Закрытие документа
@@ -324,12 +324,12 @@ namespace Supply_Admin
                 //Загрузка WORD шаблона
                 Word.Document doc = null;
 
-                object fileName = "Y:\\U2035\\Supply\\Supply Admin\\Files\\OrderStudent.docx";
+                string templateDirectory = Properties.Settings.Default.TemplateDir + "\\OrderStudent.docx";
 
 
                 try
                 {
-                    doc = app.Documents.Open(fileName, missing, missing);
+                    doc = app.Documents.Open((object)templateDirectory, missing, missing);
                     app.Selection.Find.ClearFormatting();
                     app.Selection.Find.Replacement.ClearFormatting();
                 }
@@ -456,8 +456,8 @@ namespace Supply_Admin
 
 
                 //Сохранение договоров
-                object saveAsFile = (object)"C:\\Users\\Aleksandr\\Desktop\\Report\\Договор№" + order.Id.ToString() + ".doc";
-                doc.SaveAs2(saveAsFile, missing, missing, missing);
+                string saveDirectory = Properties.Settings.Default.Directory + "\\Договор№" + order.Id.ToString() + ".doc";
+                doc.SaveAs2((object)saveDirectory, missing, missing, missing);
 
                 
                 //Закрытие документа
@@ -471,6 +471,10 @@ namespace Supply_Admin
             }
             else
                 return false;
+        }
+        public static bool CreateBenefitOrder(SupplyDbContext _db,int humanId)
+        {
+            return true;
         }
     }
 }

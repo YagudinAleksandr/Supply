@@ -164,5 +164,17 @@ namespace Supply_Admin
                 MessageBox.Show("Возникли проблемы при добавлении льготы!");
             }
         }
+
+        private void CB_Benifit_CheckedChanged(object sender, EventArgs e)
+        {
+            if(CB_Benifit.Checked)
+            {
+                TB_BenifitEnd.ReadOnly = false;
+            }
+            else
+            {
+                TB_BenifitEnd.ReadOnly = true;
+            }
+        }
     }
 }

@@ -99,7 +99,7 @@ namespace Supply_Admin
                                     MenuItems = {
 
                                         new MenuItem("Сформировать договор", CreateOrderForHuman),
-                                        new MenuItem("Сформировать дополнение к договру (Льготники)"),
+                                        new MenuItem("Сформировать дополнение к договру (Льготники)", CreatBenefitOrder),
                                         new MenuItem("Сформировать договор на дополнительныеуслуги (Электроэнергия)", CreateAdditionaElectrocity),
                                         new MenuItem("Сформировать дополнение к договору (Рассрочка на оплату)")
                                     }
@@ -184,6 +184,19 @@ namespace Supply_Admin
                     MessageBox.Show("Договор создан!");
                 else
                     MessageBox.Show("Ошибка при создании договора!");
+            }
+        }
+        private void CreatBenefitOrder(object sender,EventArgs e)
+        {
+            if (TV_Hostels.SelectedNode != null) 
+            {
+                int humanId = Convert.ToInt32(TV_Hostels.SelectedNode.Tag.ToString());
+                bool flag = WordExcelIO.CreateBenefitOrder(_db, humanId);
+
+                if (flag == true)
+                    MessageBox.Show("Дополнение к договору сформировано успешно!");
+                else
+                    MessageBox.Show("Произошла ошибка при формировании дополнения к договору");
             }
         }
         
