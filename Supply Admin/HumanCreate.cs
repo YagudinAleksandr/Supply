@@ -155,7 +155,7 @@ namespace Supply_Admin
                 benefit.EndDate = TB_BenifitEnd.Text;
                 benefit.Decree = TB_Decree.Text;
                 benefit.DecreeDate = TB_DecreeDate.Text;
-
+                benefit.Price = Convert.ToInt32(TB_BenefitPrice.Text);
                 _db.Benefits.Add(benefit);
                 _db.SaveChanges();
 

@@ -90,34 +90,29 @@ namespace Supply_Admin
                             int humanId = humens[m].Id;
                             //Получение сведений по договору
                             var order = _db.Orders.Where(x => x.HumanId == humanId).First();
+
                             
-                            //Проверка данных договора (Имеется ли льгота)
-                            if(order.Benifit == 1)
+                            
+                           
+                            MenuItem menuItemCreateOrder = new MenuItem("Сформировать договор", CreateOrderForHuman);
+                            MenuItem menuItemAdditionalElectricity = new MenuItem("Сформировать договор на дополнительныеуслуги (Электроэнергия)", CreateAdditionaElectrocity);
+                            MenuItem menuItemChangePassport = new MenuItem("Доп.соглашение (Замена паспорта)", CreatChangePassport);
+                            MenuItem menuItemChangeHouse = new MenuItem("Доп.соглашение (Переселение)", CreatChangeHouse);
+                            MenuItem menuItemKeepHouse = new MenuItem("Доп.соглашение (Продление проживания)", CreatKeepHouse);
+                            MenuItem menuItemPay = new MenuItem("Доп.соглашение (Рассрочка оплаты)", CreatPay);
+
+                            menu = new ContextMenu();
+                            menu.MenuItems.Add(menuItemCreateOrder);
+                            menu.MenuItems.Add(menuItemAdditionalElectricity);
+                            menu.MenuItems.Add(menuItemChangePassport);
+                            menu.MenuItems.Add(menuItemKeepHouse);
+                            menu.MenuItems.Add(menuItemPay);
+                            menu.MenuItems.Add(menuItemChangeHouse);
+
+                            if (order.Benifit == 1)
                             {
-                                menu = new ContextMenu()
-                                {
-                                    MenuItems = {
-
-                                        new MenuItem("Сформировать договор", CreateOrderForHuman),
-                                        new MenuItem("Сформировать дополнение к договру (Льготники)", CreatBenefitOrder),
-                                        new MenuItem("Сформировать договор на дополнительныеуслуги (Электроэнергия)", CreateAdditionaElectrocity),
-                                        new MenuItem("Сформировать дополнение к договору (Рассрочка на оплату)")
-                                    }
-                                };
+                                menu.MenuItems.Add(new MenuItem("Доп.соглашение (льготники)", CreatBenefitOrder));
                             }
-                            else
-                            {
-                                menu = new ContextMenu()
-                                {
-                                    MenuItems = {
-
-                                        new MenuItem("Сформировать договор", CreateOrderForHuman),
-                                        new MenuItem("Сформировать договор на дополнительныеуслуги (Электроэнергия)", CreateAdditionaElectrocity),
-                                        new MenuItem("Сформировать дополнение к договору (Рассрочка на оплату)")
-                                    }
-                                };
-                            }
-
                             humensNode[m].ContextMenu = menu;
 
                         }
@@ -199,6 +194,51 @@ namespace Supply_Admin
                     MessageBox.Show("Произошла ошибка при формировании дополнения к договору");
             }
         }
-        
+        private void CreatChangePassport(object sender, EventArgs e)
+        {
+            if (TV_Hostels.SelectedNode != null)
+            {
+                int humanId = Convert.ToInt32(TV_Hostels.SelectedNode.Tag.ToString());
+                ChangePassport changePassport = new ChangePassport(_db, humanId);
+                changePassport.ShowDialog();
+                CreateTree();
+            }
+        }
+        private void CreatChangeHouse(object sender, EventArgs e)
+        {
+            if (TV_Hostels.SelectedNode != null)
+            {
+                int humanId = Convert.ToInt32(TV_Hostels.SelectedNode.Tag.ToString());
+                ChangeHouse changeHouse = new ChangeHouse(_db, humanId);
+                changeHouse.ShowDialog();
+                CreateTree();
+            }
+        }
+        private void CreatKeepHouse(object sender, EventArgs e)
+        {
+            if (TV_Hostels.SelectedNode != null)
+            {
+                int humanId = Convert.ToInt32(TV_Hostels.SelectedNode.Tag.ToString());
+                bool flag = WordExcelIO.CreateBenefitOrder(_db, humanId);
+
+                if (flag == true)
+                    MessageBox.Show("Дополнение к договору сформировано успешно!");
+                else
+                    MessageBox.Show("Произошла ошибка при формировании дополнения к договору");
+            }
+        }
+        private void CreatPay(object sender, EventArgs e)
+        {
+            if (TV_Hostels.SelectedNode != null)
+            {
+                int humanId = Convert.ToInt32(TV_Hostels.SelectedNode.Tag.ToString());
+                bool flag = WordExcelIO.CreateBenefitOrder(_db, humanId);
+
+                if (flag == true)
+                    MessageBox.Show("Дополнение к договору сформировано успешно!");
+                else
+                    MessageBox.Show("Произошла ошибка при формировании дополнения к договору");
+            }
+        }
     }
 }

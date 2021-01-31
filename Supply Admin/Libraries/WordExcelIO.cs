@@ -476,7 +476,287 @@ namespace Supply_Admin
         }
         public static bool CreateBenefitOrder(SupplyDbContext _db,int humanId)
         {
-            return true;
+            var human = _db.Humen.Where(x => x.Id == humanId).FirstOrDefault();
+            var order = _db.Orders.Where(x => x.HumanId == human.Id).Where(x => x.Status == 1).First();
+
+            object missing = Type.Missing;
+
+            if (order != null)
+            {
+
+                //Создание объекта Word
+                Word.Application app = new Word.Application();
+
+                //Загрузка WORD шаблона
+                Word.Document doc = null;
+
+                string templateDirectory = Properties.Settings.Default.TemplateDir + "\\Benefit.docx";
+
+
+                try
+                {
+                    doc = app.Documents.Open((object)templateDirectory, missing, missing);
+                    app.Selection.Find.ClearFormatting();
+                    app.Selection.Find.Replacement.ClearFormatting();
+                }
+                catch
+                {
+                    MessageBox.Show("Проблемы работы с Word документом");
+                }
+
+                try
+                {
+                    
+
+                    app.Selection.Find.Execute("<ID>", missing, missing, missing, missing, missing, missing, missing, missing, order.Id, 2);
+                    app.Selection.Find.Execute("<startOrder>", missing, missing, missing, missing, missing, missing, missing, missing, order.StartOrder, 2);
+
+                    app.Selection.Find.Execute("<OrderAdditionalDate>", missing, missing, missing, missing, missing, missing, missing, missing, DateTime.Now.Date.ToString("MM.dd.yyyy"), 2);
+
+                    app.Selection.Find.Execute("<surename>", missing, missing, missing, missing, missing, missing, missing, missing, human.Surename, 2);
+                    app.Selection.Find.Execute("<name>", missing, missing, missing, missing, missing, missing, missing, missing, human.Name, 2);
+                    app.Selection.Find.Execute("<patronymic>", missing, missing, missing, missing, missing, missing, missing, missing, human.Patronymic, 2);
+                    app.Selection.Find.Execute("<DocSeries>", missing, missing, missing, missing, missing, missing, missing, missing, human.Series, 2);
+                    app.Selection.Find.Execute("<DocNumber>", missing, missing, missing, missing, missing, missing, missing, missing, human.Number, 2);
+                    app.Selection.Find.Execute("<DocGiven>", missing, missing, missing, missing, missing, missing, missing, missing, human.Given, 2);
+                    app.Selection.Find.Execute("<DocDate>", missing, missing, missing, missing, missing, missing, missing, missing, human.GivenDate, 2);
+                    app.Selection.Find.Execute("<DocCode>", missing, missing, missing, missing, missing, missing, missing, missing, human.GivenCode, 2);
+                    app.Selection.Find.Execute("<HumanAddress>", missing, missing, missing, missing, missing, missing, missing, missing, human.Registration, 2);
+                    app.Selection.Find.Execute("<humanCitizenship>", missing, missing, missing, missing, missing, missing, missing, missing, human.Citizenship, 2);
+
+                    app.Selection.Find.Execute("<ns>", missing, missing, missing, missing, missing, missing, missing, missing, human.Name[0].ToString(), 2);
+                    app.Selection.Find.Execute("<ps>", missing, missing, missing, missing, missing, missing, missing, missing, human.Patronymic[0].ToString(), 2);
+
+                    var benefit = _db.Benefits.Where(x => x.OrderId == order.Id).FirstOrDefault();
+
+                    app.Selection.Find.Execute("<benefit>", missing, missing, missing, missing, missing, missing, missing, missing, "да", 2);
+                    app.Selection.Find.Execute("<benefitCategory>", missing, missing, missing, missing, missing, missing, missing, missing, benefit.BenifitCat, 2);
+                    app.Selection.Find.Execute("<benefitDecreeDate>", missing, missing, missing, missing, missing, missing, missing, missing, benefit.DecreeDate, 2);
+                    app.Selection.Find.Execute("<benefitDecree>", missing, missing, missing, missing, missing, missing, missing, missing, benefit.Decree, 2);
+                    app.Selection.Find.Execute("<benefitStartDate>", missing, missing, missing, missing, missing, missing, missing, missing, benefit.StartDate, 2);
+                    app.Selection.Find.Execute("<benefitEndDate>", missing, missing, missing, missing, missing, missing, missing, missing, benefit.EndDate, 2);
+
+                    app.Selection.Find.Execute("<rate>", missing, missing, missing, missing, missing, missing, missing, missing, benefit.Price, 2);
+                    app.Selection.Find.Execute("<rateWord>", missing, missing, missing, missing, missing, missing, missing, missing, NumbersToString.Str((int)benefit.Price), 2);
+                    app.Selection.Find.Execute("<yearRate>", missing, missing, missing, missing, missing, missing, missing, missing, benefit.Price * 12, 2);
+                    app.Selection.Find.Execute("<rateWordYear>", missing, missing, missing, missing, missing, missing, missing, missing, NumbersToString.Str((int)benefit.Price * 12), 2);
+
+                    DateTime orderEndDate = Convert.ToDateTime(order.EndOrder);
+                    DateTime orderStartDate = Convert.ToDateTime(order.StartOrder);
+                    int totalMonth = Math.Abs((orderEndDate.Month - orderStartDate.Month) + 12 * (orderEndDate.Year - orderStartDate.Year));
+                    app.Selection.Find.Execute("<allTimeRate>", missing, missing, missing, missing, missing, missing, missing, missing, (int)benefit.Price * totalMonth, 2);
+                    app.Selection.Find.Execute("<allTimeRateWord>", missing, missing, missing, missing, missing, missing, missing, missing, NumbersToString.Str((int)benefit.Price * totalMonth), 2);
+                }
+                catch
+                {
+                    MessageBox.Show("Ошибка работы с шаблоном");
+
+
+
+                    //Закрытие документа
+                    doc.Close(false, missing, missing);
+                    app.Quit(false, false, false);
+
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
+                    return false;
+                }
+
+
+                //Сохранение договоров
+                string saveDirectory = Properties.Settings.Default.Directory + "\\Дополнение_к_договру(Льготник)№" + order.Id.ToString() + ".doc";
+                doc.SaveAs2((object)saveDirectory, missing, missing, missing);
+
+
+                //Закрытие документа
+                doc.Close(false, missing, missing);
+                app.Quit(false, false, false);
+
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
+
+                return true;
+
+            }
+            else
+                return false;
+        }
+        public static bool CreateChangePassport(SupplyDbContext _db,int humanId)
+        {
+            var human = _db.Humen.Where(x => x.Id == humanId).FirstOrDefault();
+            var order = _db.Orders.Where(x => x.HumanId == human.Id).Where(x => x.Status == 1).First();
+
+            object missing = Type.Missing;
+
+            if (order != null)
+            {
+
+                //Создание объекта Word
+                Word.Application app = new Word.Application();
+
+                //Загрузка WORD шаблона
+                Word.Document doc = null;
+
+                string templateDirectory = Properties.Settings.Default.TemplateDir + "\\ChangePassport.docx";
+
+
+                try
+                {
+                    doc = app.Documents.Open((object)templateDirectory, missing, missing);
+                    app.Selection.Find.ClearFormatting();
+                    app.Selection.Find.Replacement.ClearFormatting();
+                }
+                catch
+                {
+                    MessageBox.Show("Проблемы работы с Word документом");
+                }
+
+                try
+                {
+                    app.Selection.Find.Execute("<ID>", missing, missing, missing, missing, missing, missing, missing, missing, order.Id, 2);
+                    app.Selection.Find.Execute("<startOrder>", missing, missing, missing, missing, missing, missing, missing, missing, order.StartOrder, 2);
+
+                    app.Selection.Find.Execute("<OrderAdditionalDate>", missing, missing, missing, missing, missing, missing, missing, missing, DateTime.Now.Date.ToString("MM.dd.yyyy"), 2);
+
+                    app.Selection.Find.Execute("<surename>", missing, missing, missing, missing, missing, missing, missing, missing, human.Surename, 2);
+                    app.Selection.Find.Execute("<name>", missing, missing, missing, missing, missing, missing, missing, missing, human.Name, 2);
+                    app.Selection.Find.Execute("<patronymic>", missing, missing, missing, missing, missing, missing, missing, missing, human.Patronymic, 2);
+                    app.Selection.Find.Execute("<DocSeries>", missing, missing, missing, missing, missing, missing, missing, missing, human.Series, 2);
+                    app.Selection.Find.Execute("<DocNumber>", missing, missing, missing, missing, missing, missing, missing, missing, human.Number, 2);
+                    app.Selection.Find.Execute("<DocGiven>", missing, missing, missing, missing, missing, missing, missing, missing, human.Given, 2);
+                    app.Selection.Find.Execute("<DocDate>", missing, missing, missing, missing, missing, missing, missing, missing, human.GivenDate, 2);
+                    app.Selection.Find.Execute("<DocCode>", missing, missing, missing, missing, missing, missing, missing, missing, human.GivenCode, 2);
+                    app.Selection.Find.Execute("<HumanAddress>", missing, missing, missing, missing, missing, missing, missing, missing, human.Registration, 2);
+                    app.Selection.Find.Execute("<humanCitizenship>", missing, missing, missing, missing, missing, missing, missing, missing, human.Citizenship, 2);
+
+                    app.Selection.Find.Execute("<ns>", missing, missing, missing, missing, missing, missing, missing, missing, human.Name[0].ToString(), 2);
+                    app.Selection.Find.Execute("<ps>", missing, missing, missing, missing, missing, missing, missing, missing, human.Patronymic[0].ToString(), 2);
+
+                    
+                }
+                catch
+                {
+                    MessageBox.Show("Ошибка работы с шаблоном");
+
+
+
+                    //Закрытие документа
+                    doc.Close(false, missing, missing);
+                    app.Quit(false, false, false);
+
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
+                    return false;
+                }
+
+
+                //Сохранение договоров
+                string saveDirectory = Properties.Settings.Default.Directory + "\\Дополнение_к_договру(Смена_паспорта)№" + order.Id.ToString() + ".doc";
+                doc.SaveAs2((object)saveDirectory, missing, missing, missing);
+
+
+                //Закрытие документа
+                doc.Close(false, missing, missing);
+                app.Quit(false, false, false);
+
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
+
+                return true;
+
+            }
+            else
+                return false;
+        }
+        public static bool CreateChangeHouse(SupplyDbContext _db,int humanId)
+        {
+            var human = _db.Humen.Where(x => x.Id == humanId).FirstOrDefault();
+            var order = _db.Orders.Where(x => x.HumanId == human.Id).Where(x => x.Status == 1).First();
+
+            object missing = Type.Missing;
+
+            if (order != null)
+            {
+
+                //Создание объекта Word
+                Word.Application app = new Word.Application();
+
+                //Загрузка WORD шаблона
+                Word.Document doc = null;
+
+                string templateDirectory = Properties.Settings.Default.TemplateDir + "\\ChangeHouse.docx";
+
+                var room = _db.Rooms.Where(x => x.Id == human.RoomId).FirstOrDefault();
+                var flat = _db.Flats.Where(x => x.Id == room.FlatId).FirstOrDefault();
+                var enterance = _db.Enterances.Where(x => x.Id == flat.EnteranceId).FirstOrDefault();
+                var hostel = _db.Hostels.Where(x => x.Id == enterance.HostelsId).FirstOrDefault();
+
+                try
+                {
+                    doc = app.Documents.Open((object)templateDirectory, missing, missing);
+                    app.Selection.Find.ClearFormatting();
+                    app.Selection.Find.Replacement.ClearFormatting();
+                }
+                catch
+                {
+                    MessageBox.Show("Проблемы работы с Word документом");
+                }
+
+                try
+                {
+                    app.Selection.Find.Execute("<ID>", missing, missing, missing, missing, missing, missing, missing, missing, order.Id, 2);
+                    app.Selection.Find.Execute("<startOrder>", missing, missing, missing, missing, missing, missing, missing, missing, order.StartOrder, 2);
+
+                    app.Selection.Find.Execute("<OrderAdditionalDate>", missing, missing, missing, missing, missing, missing, missing, missing, DateTime.Now.Date.ToString("MM.dd.yyyy"), 2);
+
+                    app.Selection.Find.Execute("<surename>", missing, missing, missing, missing, missing, missing, missing, missing, human.Surename, 2);
+                    app.Selection.Find.Execute("<name>", missing, missing, missing, missing, missing, missing, missing, missing, human.Name, 2);
+                    app.Selection.Find.Execute("<patronymic>", missing, missing, missing, missing, missing, missing, missing, missing, human.Patronymic, 2);
+                    app.Selection.Find.Execute("<DocSeries>", missing, missing, missing, missing, missing, missing, missing, missing, human.Series, 2);
+                    app.Selection.Find.Execute("<DocNumber>", missing, missing, missing, missing, missing, missing, missing, missing, human.Number, 2);
+                    app.Selection.Find.Execute("<DocGiven>", missing, missing, missing, missing, missing, missing, missing, missing, human.Given, 2);
+                    app.Selection.Find.Execute("<DocDate>", missing, missing, missing, missing, missing, missing, missing, missing, human.GivenDate, 2);
+                    app.Selection.Find.Execute("<DocCode>", missing, missing, missing, missing, missing, missing, missing, missing, human.GivenCode, 2);
+                    app.Selection.Find.Execute("<HumanAddress>", missing, missing, missing, missing, missing, missing, missing, missing, human.Registration, 2);
+                    app.Selection.Find.Execute("<humanCitizenship>", missing, missing, missing, missing, missing, missing, missing, missing, human.Citizenship, 2);
+
+                    app.Selection.Find.Execute("<ns>", missing, missing, missing, missing, missing, missing, missing, missing, human.Name[0].ToString(), 2);
+                    app.Selection.Find.Execute("<ps>", missing, missing, missing, missing, missing, missing, missing, missing, human.Patronymic[0].ToString(), 2);
+
+                    app.Selection.Find.Execute("<roomName>", missing, missing, missing, missing, missing, missing, missing, missing, room.Name, 2);
+                    app.Selection.Find.Execute("<roomType>", missing, missing, missing, missing, missing, missing, missing, missing, room.Type, 2);
+                    app.Selection.Find.Execute("<hostelName>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.Name, 2);
+                    app.Selection.Find.Execute("<hostelAddress>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.Address, 2);
+                    app.Selection.Find.Execute("<hostelFlat>", missing, missing, missing, missing, missing, missing, missing, missing, flat.Name, 2);
+                    app.Selection.Find.Execute("<hostelFlats>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.FlatCount, 2);
+                }
+                catch
+                {
+                    MessageBox.Show("Ошибка работы с шаблоном");
+
+
+
+                    //Закрытие документа
+                    doc.Close(false, missing, missing);
+                    app.Quit(false, false, false);
+
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
+                    return false;
+                }
+
+
+                //Сохранение договоров
+                string saveDirectory = Properties.Settings.Default.Directory + "\\Дополнение_к_договру(Переселение)№" + order.Id.ToString() + ".doc";
+                doc.SaveAs2((object)saveDirectory, missing, missing, missing);
+
+
+                //Закрытие документа
+                doc.Close(false, missing, missing);
+                app.Quit(false, false, false);
+
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
+
+                return true;
+
+            }
+            else
+                return false;
         }
         /*Excel Functions*/
         public static bool CreateTableExcel(SupplyDbContext _db)

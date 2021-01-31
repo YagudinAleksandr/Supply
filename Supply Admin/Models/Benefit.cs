@@ -16,6 +16,7 @@ namespace Supply_Admin.Models
         public string DecreeDate { get; set; }//Дата приказа
         public string StartDate { get; set; }//Начало льготы
         public string EndDate { get; set; }//Окончание льготы
+        public int Price { get; set; }//Стоимость
         public int? OrderId { get; set; }//Договор №
         public Order Order { get; set; }
     }

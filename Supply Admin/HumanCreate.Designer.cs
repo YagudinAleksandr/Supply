@@ -85,6 +85,8 @@ namespace Supply_Admin
             this.TB_Registration = new System.Windows.Forms.RichTextBox();
             this.label28 = new System.Windows.Forms.Label();
             this.CB_Rates = new System.Windows.Forms.ComboBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.TB_BenefitPrice = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // LB_Room
@@ -515,7 +517,7 @@ namespace Supply_Admin
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(374, 496);
+            this.label23.Location = new System.Drawing.Point(279, 493);
             this.label23.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(119, 13);
@@ -524,7 +526,7 @@ namespace Supply_Admin
             // 
             // TB_DecreeDate
             // 
-            this.TB_DecreeDate.Location = new System.Drawing.Point(504, 493);
+            this.TB_DecreeDate.Location = new System.Drawing.Point(446, 489);
             this.TB_DecreeDate.Margin = new System.Windows.Forms.Padding(2);
             this.TB_DecreeDate.Mask = "00/00/0000";
             this.TB_DecreeDate.Name = "TB_DecreeDate";
@@ -535,7 +537,7 @@ namespace Supply_Admin
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(584, 496);
+            this.label24.Location = new System.Drawing.Point(540, 493);
             this.label24.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(18, 13);
@@ -544,7 +546,7 @@ namespace Supply_Admin
             // 
             // TB_Decree
             // 
-            this.TB_Decree.Location = new System.Drawing.Point(609, 494);
+            this.TB_Decree.Location = new System.Drawing.Point(562, 489);
             this.TB_Decree.Margin = new System.Windows.Forms.Padding(2);
             this.TB_Decree.Name = "TB_Decree";
             this.TB_Decree.Size = new System.Drawing.Size(76, 20);
@@ -553,7 +555,7 @@ namespace Supply_Admin
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(374, 521);
+            this.label25.Location = new System.Drawing.Point(279, 521);
             this.label25.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(136, 13);
@@ -562,7 +564,7 @@ namespace Supply_Admin
             // 
             // TB_BenifitStart
             // 
-            this.TB_BenifitStart.Location = new System.Drawing.Point(505, 519);
+            this.TB_BenifitStart.Location = new System.Drawing.Point(446, 516);
             this.TB_BenifitStart.Margin = new System.Windows.Forms.Padding(2);
             this.TB_BenifitStart.Mask = "00/00/0000";
             this.TB_BenifitStart.Name = "TB_BenifitStart";
@@ -573,7 +575,7 @@ namespace Supply_Admin
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(586, 521);
+            this.label26.Location = new System.Drawing.Point(540, 519);
             this.label26.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(22, 13);
@@ -582,7 +584,7 @@ namespace Supply_Admin
             // 
             // TB_BenifitEnd
             // 
-            this.TB_BenifitEnd.Location = new System.Drawing.Point(610, 518);
+            this.TB_BenifitEnd.Location = new System.Drawing.Point(562, 516);
             this.TB_BenifitEnd.Margin = new System.Windows.Forms.Padding(2);
             this.TB_BenifitEnd.Mask = "00/00/0000";
             this.TB_BenifitEnd.Name = "TB_BenifitEnd";
@@ -639,11 +641,29 @@ namespace Supply_Admin
             this.CB_Rates.Size = new System.Drawing.Size(588, 21);
             this.CB_Rates.TabIndex = 55;
             // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(650, 505);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(88, 13);
+            this.label29.TabIndex = 56;
+            this.label29.Text = "Оплата в месяц";
+            // 
+            // TB_BenefitPrice
+            // 
+            this.TB_BenefitPrice.Location = new System.Drawing.Point(744, 502);
+            this.TB_BenefitPrice.Name = "TB_BenefitPrice";
+            this.TB_BenefitPrice.Size = new System.Drawing.Size(100, 20);
+            this.TB_BenefitPrice.TabIndex = 57;
+            // 
             // HumanCreate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(964, 620);
+            this.Controls.Add(this.TB_BenefitPrice);
+            this.Controls.Add(this.label29);
             this.Controls.Add(this.CB_Rates);
             this.Controls.Add(this.label28);
             this.Controls.Add(this.TB_Registration);
@@ -768,5 +788,7 @@ namespace Supply_Admin
         private System.Windows.Forms.RichTextBox TB_Registration;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.ComboBox CB_Rates;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.TextBox TB_BenefitPrice;
     }
 }

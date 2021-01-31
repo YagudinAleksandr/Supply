@@ -52,9 +52,13 @@ namespace Supply_Admin
                 //Загрузка WORD шаблона
                 Word.Document doc = null;
 
-                
 
-                
+                QRCodeGenerator Qr = new QRCodeGenerator();
+                var QrCodeData = Qr.CreateQrCode("http://ngma.su", QRCodeGenerator.ECCLevel.M, true, true);
+                var QRData = new QRCode(QrCodeData);
+                Image image = QRData.GetGraphic(150);
+                Clipboard.SetImage(image);
+
 
 
                 foreach (var order in orders)
@@ -192,11 +196,7 @@ namespace Supply_Admin
                                 app.Selection.Find.Execute("<supplyProxyDate>", missing, missing, missing, missing, missing, missing, missing, missing, supply.ProxyDate, 2);
 
 
-                                QRCodeGenerator Qr = new QRCodeGenerator();
-                                var QrCodeData = Qr.CreateQrCode("http://ngma.su", QRCodeGenerator.ECCLevel.M, true, true);
-                                var QRData = new QRCode(QrCodeData);
-                                Image image = QRData.GetGraphic(150);
-                                Clipboard.SetImage(image);
+                                
                                 app.ActiveDocument.Bookmarks["QRCodeMark"].Range.Paste();
                             }
                             catch
@@ -289,11 +289,7 @@ namespace Supply_Admin
                                 app.Selection.Find.Execute("<supplyProxyDate>", missing, missing, missing, missing, missing, missing, missing, missing, supply.ProxyDate, 2);
 
 
-                                QRCodeGenerator Qr = new QRCodeGenerator();
-                                var QrCodeData = Qr.CreateQrCode("http://ngma.su", QRCodeGenerator.ECCLevel.M, true, true);
-                                var QRData = new QRCode(QrCodeData);
-                                Image image = QRData.GetGraphic(150);
-                                Clipboard.SetImage(image);
+                                
                                 app.ActiveDocument.Bookmarks["QRCodeMark"].Range.Paste();
                             }
                             catch
@@ -384,11 +380,7 @@ namespace Supply_Admin
                                 app.Selection.Find.Execute("<supplyProxyDate>", missing, missing, missing, missing, missing, missing, missing, missing, supply.ProxyDate, 2);
 
 
-                                QRCodeGenerator Qr = new QRCodeGenerator();
-                                var QrCodeData = Qr.CreateQrCode("http://ngma.su", QRCodeGenerator.ECCLevel.M, true, true);
-                                var QRData = new QRCode(QrCodeData);
-                                Image image = QRData.GetGraphic(150);
-                                Clipboard.SetImage(image);
+                                
                                 app.ActiveDocument.Bookmarks["QRCodeMark"].Range.Paste();
                             }
                             catch
@@ -479,11 +471,7 @@ namespace Supply_Admin
                                 app.Selection.Find.Execute("<supplyProxyDate>", missing, missing, missing, missing, missing, missing, missing, missing, supply.ProxyDate, 2);
 
 
-                                QRCodeGenerator Qr = new QRCodeGenerator();
-                                var QrCodeData = Qr.CreateQrCode("http://ngma.su", QRCodeGenerator.ECCLevel.M, true, true);
-                                var QRData = new QRCode(QrCodeData);
-                                Image image = QRData.GetGraphic(150);
-                                Clipboard.SetImage(image);
+                                
                                 app.ActiveDocument.Bookmarks["QRCodeMark"].Range.Paste();
                             }
                             catch

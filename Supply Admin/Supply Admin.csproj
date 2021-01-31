@@ -93,6 +93,18 @@
     <Compile Include="AddtionalServices.Designer.cs">
       <DependentUpon>AddtionalServices.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChangeHouse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeHouse.Designer.cs">
+      <DependentUpon>ChangeHouse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChangePassport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangePassport.Designer.cs">
+      <DependentUpon>ChangePassport.cs</DependentUpon>
+    </Compile>
     <Compile Include="CreateHostel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -153,6 +165,10 @@
     <Compile Include="Migrations\202101311108370_AddCompanyMigration.cs" />
     <Compile Include="Migrations\202101311108370_AddCompanyMigration.designer.cs">
       <DependentUpon>202101311108370_AddCompanyMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101312026138_Supply.cs" />
+    <Compile Include="Migrations\202101312026138_Supply.designer.cs">
+      <DependentUpon>202101312026138_Supply.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Benefit.cs" />
@@ -226,6 +242,12 @@
     <EmbeddedResource Include="AddtionalServices.resx">
       <DependentUpon>AddtionalServices.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ChangeHouse.resx">
+      <DependentUpon>ChangeHouse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangePassport.resx">
+      <DependentUpon>ChangePassport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CreateHostel.resx">
       <DependentUpon>CreateHostel.cs</DependentUpon>
     </EmbeddedResource>
@@ -255,6 +277,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101311108370_AddCompanyMigration.resx">
       <DependentUpon>202101311108370_AddCompanyMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101312026138_Supply.resx">
+      <DependentUpon>202101312026138_Supply.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrdersManager.resx">
       <DependentUpon>OrdersManager.cs</DependentUpon>
@@ -298,9 +323,9 @@
     <None Include="Files\OrderWorker.docx" />
     <None Include="Files\OrderRent.docx" />
     <None Include="Files\Договор найма жилого помещения в студенческом общежитии %28студенты 3-х сторон. ОЧНИКИ%29.docx" />
-    <None Include="Files\ДОПОЛНИТЕЛЬНОЕ СОГЛАШЕНИЕ для льготников.docx" />
-    <None Include="Files\ДОПОЛНИТЕЛЬНОЕ СОГЛАШЕНИЕ на замену паспортных данных.docx" />
-    <None Include="Files\ДОПОЛНИТЕЛЬНОЕ СОГЛАШЕНИЕ на переселение.docx" />
+    <None Include="Files\Benefit.docx" />
+    <None Include="Files\ChangePassport.docx" />
+    <None Include="Files\ChangeHouse.docx" />
     <None Include="Files\ДОПОЛНИТЕЛЬНОЕ СОГЛАШЕНИЕ на продление проживания сотрудников.docx" />
     <None Include="Files\ДОПОЛНИТЕЛЬНОЕ СОГЛАШЕНИЕ на рассрочку оплаты.docx" />
     <None Include="Files\Направление на оплату.docx" />
