@@ -93,6 +93,13 @@ namespace Supply_Admin
 
                 _db.Entry(human).State = System.Data.Entity.EntityState.Modified;
                 _db.SaveChanges();
+
+                var order = _db.Orders.Where(x => x.HumanId == _humanId).First();
+                order.HostelsId = (int)CB_Hostel.SelectedValue;
+
+                _db.Entry(order).State = System.Data.Entity.EntityState.Modified;
+                _db.SaveChanges();
+
                 bool flag = WordExcelIO.CreateChangeHouse(_db, _humanId);
                 MessageBox.Show("Житель перемещен успешно!");
                 if(flag==true)
