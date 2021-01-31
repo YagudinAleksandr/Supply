@@ -294,9 +294,9 @@
     </EmbeddedResource>
     <None Include="Files\OrderStudent.docx" />
     <None Include="Files\Electosupplies.docx" />
-    <None Include="Files\Договор найма жилого помещения в студенческом общежитии %28заочники ВО+ДОП.ОБР%29.docx" />
-    <None Include="Files\Договор найма жилого помещения в студенческом общежитии %28сотрудник%29.docx" />
-    <None Include="Files\Договор найма жилого помещения в студенческом общежитии %28сторонние лица%29.docx" />
+    <None Include="Files\OrderStudent2.docx" />
+    <None Include="Files\OrderWorker.docx" />
+    <None Include="Files\OrderRent.docx" />
     <None Include="Files\Договор найма жилого помещения в студенческом общежитии %28студенты 3-х сторон. ОЧНИКИ%29.docx" />
     <None Include="Files\ДОПОЛНИТЕЛЬНОЕ СОГЛАШЕНИЕ для льготников.docx" />
     <None Include="Files\ДОПОЛНИТЕЛЬНОЕ СОГЛАШЕНИЕ на замену паспортных данных.docx" />

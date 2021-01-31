@@ -27,10 +27,17 @@ namespace Supply_Admin
 
         private void CB_Hostels_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var enterances = _db.Enterances.Where(x => x.HostelsId == (int)CB_Hostels.SelectedValue).ToList();
-            CB_Enterance.DataSource = enterances;
-            CB_Enterance.DisplayMember = "Name";
-            CB_Enterance.ValueMember = "Id";
+            try
+            {
+                var enterances = _db.Enterances.Where(x => x.HostelsId == (int)CB_Hostels.SelectedValue).ToList();
+                CB_Enterance.DataSource = enterances;
+                CB_Enterance.DisplayMember = "Name";
+                CB_Enterance.ValueMember = "Id";
+            }
+            catch
+            {
+                return;
+            }
         }
         private void CB_Enterance_SelectedIndexChanged(object sender, EventArgs e)
         {

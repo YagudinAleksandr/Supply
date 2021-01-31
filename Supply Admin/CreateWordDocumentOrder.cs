@@ -52,14 +52,29 @@ namespace Supply_Admin
                 //Загрузка WORD шаблона
                 Word.Document doc = null;
 
-                //Директория хранения шаблона
-                string templateDirectory = Properties.Settings.Default.TemplateDir + "\\OrderStudent.docx";
+                
 
                 
 
 
                 foreach (var order in orders)
                 {
+                    var rent = _db.Rents.Where(x => x.Id == order.RentId).FirstOrDefault();
+
+                    //Директория хранения шаблона
+                    string templateDirectory = "";
+                    if (rent.Name == "обучения (очное)")
+                        templateDirectory = Properties.Settings.Default.TemplateDir + "\\OrderStudent.docx";
+                    else if(rent.Name == "обучение")
+                        templateDirectory = Properties.Settings.Default.TemplateDir + "\\OrderStudent2.docx";
+                    else if(rent.Name == "промежуточной аттестации")
+                        templateDirectory = Properties.Settings.Default.TemplateDir + "\\OrderStudent2.docx";
+                    else if (rent.Name == "итоговой аттестации")
+                        templateDirectory = Properties.Settings.Default.TemplateDir + "\\OrderStudent2.docx";
+                    else if(rent.Name == "иной")
+                        templateDirectory = Properties.Settings.Default.TemplateDir + "\\OrderRent.docx";
+                    else if(rent.Name == "работы")
+                        templateDirectory = Properties.Settings.Default.TemplateDir + "\\OrderWorker.docx";
                     try
                     {
                         doc = app.Documents.Open((object)templateDirectory, missing, missing);
@@ -80,123 +95,411 @@ namespace Supply_Admin
                         var enterance = _db.Enterances.Where(x => x.Id == flat.EnteranceId).FirstOrDefault();
                         var hostel = _db.Hostels.Where(x => x.Id == enterance.HostelsId).FirstOrDefault();
                         var supply = _db.Supplies.Where(x => x.HostelsId == hostel.Id).FirstOrDefault();
-                        var rent = _db.Rents.Where(x => x.Id == order.RentId).FirstOrDefault();
                         var garages = _db.Garages.Where(x => x.RoomsId == room.Id).ToList();
                         var rate = _db.Rates.Where(x => x.Id == order.RateId).FirstOrDefault();
 
-                        try
+
+                        if(rent.Name == "обучения (очное)")
                         {
-                            app.Selection.Find.Execute("<ID>", missing, missing, missing, missing, missing, missing, missing, missing, order.Id, 2);
-                            app.Selection.Find.Execute("<startOrder>", missing, missing, missing, missing, missing, missing, missing, missing, order.StartOrder, 2);
-                            app.Selection.Find.Execute("<EndOrder>", missing, missing, missing, missing, missing, missing, missing, missing, order.EndOrder, 2);
-
-                            DateTime orderEndDate = Convert.ToDateTime(order.EndOrder);
-                            DateTime orderStartDate = Convert.ToDateTime(order.StartOrder);
-
-                            app.Selection.Find.Execute("<yearEndDate>", missing, missing, missing, missing, missing, missing, missing, missing, orderEndDate.Year.ToString(), 2);
-
-                            app.Selection.Find.Execute("<rent>", missing, missing, missing, missing, missing, missing, missing, missing, rent.Name, 2);
-
-                            app.Selection.Find.Execute("<surename>", missing, missing, missing, missing, missing, missing, missing, missing, human.Surename, 2);
-                            app.Selection.Find.Execute("<name>", missing, missing, missing, missing, missing, missing, missing, missing, human.Name, 2);
-                            app.Selection.Find.Execute("<patronymic>", missing, missing, missing, missing, missing, missing, missing, missing, human.Patronymic, 2);
-                            app.Selection.Find.Execute("<DocSeries>", missing, missing, missing, missing, missing, missing, missing, missing, human.Series, 2);
-                            app.Selection.Find.Execute("<DocNumber>", missing, missing, missing, missing, missing, missing, missing, missing, human.Number, 2);
-                            app.Selection.Find.Execute("<DocGiven>", missing, missing, missing, missing, missing, missing, missing, missing, human.Given, 2);
-                            app.Selection.Find.Execute("<DocDate>", missing, missing, missing, missing, missing, missing, missing, missing, human.GivenDate, 2);
-                            app.Selection.Find.Execute("<DocCode>", missing, missing, missing, missing, missing, missing, missing, missing, human.GivenCode, 2);
-                            app.Selection.Find.Execute("<HumanAddress>", missing, missing, missing, missing, missing, missing, missing, missing, human.Registration, 2);
-                            app.Selection.Find.Execute("<humanCitizenship>", missing, missing, missing, missing, missing, missing, missing, missing, human.Citizenship, 2);
-
-                            if (order.Benifit == 1)
+                            try
                             {
-                                var benefit = _db.Benefits.Where(x => x.OrderId == order.Id).FirstOrDefault();
+                                app.Selection.Find.Execute("<ID>", missing, missing, missing, missing, missing, missing, missing, missing, order.Id, 2);
+                                app.Selection.Find.Execute("<startOrder>", missing, missing, missing, missing, missing, missing, missing, missing, order.StartOrder, 2);
+                                app.Selection.Find.Execute("<EndOrder>", missing, missing, missing, missing, missing, missing, missing, missing, order.EndOrder, 2);
 
-                                app.Selection.Find.Execute("<benefit>", missing, missing, missing, missing, missing, missing, missing, missing, "да", 2);
-                                app.Selection.Find.Execute("<benefitCategory>", missing, missing, missing, missing, missing, missing, missing, missing, benefit.BenifitCat, 2);
-                                app.Selection.Find.Execute("<benefitDecreeDate>", missing, missing, missing, missing, missing, missing, missing, missing, benefit.DecreeDate, 2);
-                                app.Selection.Find.Execute("<benefitDecree>", missing, missing, missing, missing, missing, missing, missing, missing, benefit.Decree, 2);
-                                app.Selection.Find.Execute("<benefitStartDate>", missing, missing, missing, missing, missing, missing, missing, missing, benefit.StartDate, 2);
-                                app.Selection.Find.Execute("<benefitEndDate>", missing, missing, missing, missing, missing, missing, missing, missing, benefit.EndDate, 2);
-                            }
-                            else
-                            {
-                                app.Selection.Find.Execute("<benefit>", missing, missing, missing, missing, missing, missing, missing, missing, "нет", 2);
-                                app.Selection.Find.Execute("<benefitCategory>", missing, missing, missing, missing, missing, missing, missing, missing, "-", 2);
-                                app.Selection.Find.Execute("<benefitDecreeDate>", missing, missing, missing, missing, missing, missing, missing, missing, "-", 2);
-                                app.Selection.Find.Execute("<benefitDecree>", missing, missing, missing, missing, missing, missing, missing, missing, "-", 2);
-                                app.Selection.Find.Execute("<benefitStartDate>", missing, missing, missing, missing, missing, missing, missing, missing, "-", 2);
-                                app.Selection.Find.Execute("<benefitEndDate>", missing, missing, missing, missing, missing, missing, missing, missing, "-", 2);
-                            }
+                                DateTime orderEndDate = Convert.ToDateTime(order.EndOrder);
+                                DateTime orderStartDate = Convert.ToDateTime(order.StartOrder);
 
-                            app.Selection.Find.Execute("<ns>", missing, missing, missing, missing, missing, missing, missing, missing, human.Name[0].ToString(), 2);
-                            app.Selection.Find.Execute("<ps>", missing, missing, missing, missing, missing, missing, missing, missing, human.Patronymic[0].ToString(), 2);
+                                app.Selection.Find.Execute("<yearEndDate>", missing, missing, missing, missing, missing, missing, missing, missing, orderEndDate.Year.ToString(), 2);
 
-                            app.Selection.Find.Execute("<roomName>", missing, missing, missing, missing, missing, missing, missing, missing, room.Name, 2);
-                            app.Selection.Find.Execute("<roomType>", missing, missing, missing, missing, missing, missing, missing, missing, room.Type, 2);
-                            app.Selection.Find.Execute("<hostelName>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.Name, 2);
-                            app.Selection.Find.Execute("<hostelAddress>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.Address, 2);
-                            app.Selection.Find.Execute("<hostelFlat>", missing, missing, missing, missing, missing, missing, missing, missing, flat.Name, 2);
-                            app.Selection.Find.Execute("<hostelFlats>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.FlatCount, 2);
+                                app.Selection.Find.Execute("<rent>", missing, missing, missing, missing, missing, missing, missing, missing, rent.Name, 2);
 
-                            string elements = "";
+                                app.Selection.Find.Execute("<surename>", missing, missing, missing, missing, missing, missing, missing, missing, human.Surename, 2);
+                                app.Selection.Find.Execute("<name>", missing, missing, missing, missing, missing, missing, missing, missing, human.Name, 2);
+                                app.Selection.Find.Execute("<patronymic>", missing, missing, missing, missing, missing, missing, missing, missing, human.Patronymic, 2);
+                                app.Selection.Find.Execute("<DocSeries>", missing, missing, missing, missing, missing, missing, missing, missing, human.Series, 2);
+                                app.Selection.Find.Execute("<DocNumber>", missing, missing, missing, missing, missing, missing, missing, missing, human.Number, 2);
+                                app.Selection.Find.Execute("<DocGiven>", missing, missing, missing, missing, missing, missing, missing, missing, human.Given, 2);
+                                app.Selection.Find.Execute("<DocDate>", missing, missing, missing, missing, missing, missing, missing, missing, human.GivenDate, 2);
+                                app.Selection.Find.Execute("<DocCode>", missing, missing, missing, missing, missing, missing, missing, missing, human.GivenCode, 2);
+                                app.Selection.Find.Execute("<HumanAddress>", missing, missing, missing, missing, missing, missing, missing, missing, human.Registration, 2);
+                                app.Selection.Find.Execute("<humanCitizenship>", missing, missing, missing, missing, missing, missing, missing, missing, human.Citizenship, 2);
 
-                            for (int i = 0; i < garages.Count(); i++)
-                            {
-                                if (i == garages.Count() - 1)
+                                if (order.Benifit == 1)
                                 {
-                                    elements = garages[i].Name + "(№" + garages[i].Numeric + "), ";
-                                    app.Selection.Find.Execute("<Elements>", missing, missing, missing, missing, missing, missing, missing, missing, elements, 2);
+                                    var benefit = _db.Benefits.Where(x => x.OrderId == order.Id).FirstOrDefault();
+
+                                    app.Selection.Find.Execute("<benefit>", missing, missing, missing, missing, missing, missing, missing, missing, "да", 2);
+                                    app.Selection.Find.Execute("<benefitCategory>", missing, missing, missing, missing, missing, missing, missing, missing, benefit.BenifitCat, 2);
+                                    app.Selection.Find.Execute("<benefitDecreeDate>", missing, missing, missing, missing, missing, missing, missing, missing, benefit.DecreeDate, 2);
+                                    app.Selection.Find.Execute("<benefitDecree>", missing, missing, missing, missing, missing, missing, missing, missing, benefit.Decree, 2);
+                                    app.Selection.Find.Execute("<benefitStartDate>", missing, missing, missing, missing, missing, missing, missing, missing, benefit.StartDate, 2);
+                                    app.Selection.Find.Execute("<benefitEndDate>", missing, missing, missing, missing, missing, missing, missing, missing, benefit.EndDate, 2);
                                 }
                                 else
                                 {
-                                    elements = garages[i].Name + "(№" + garages[i].Numeric + "), <Elements>";
-                                    app.Selection.Find.Execute("<Elements>", missing, missing, missing, missing, missing, missing, missing, missing, elements, 2);
+                                    app.Selection.Find.Execute("<benefit>", missing, missing, missing, missing, missing, missing, missing, missing, "нет", 2);
+                                    app.Selection.Find.Execute("<benefitCategory>", missing, missing, missing, missing, missing, missing, missing, missing, "-", 2);
+                                    app.Selection.Find.Execute("<benefitDecreeDate>", missing, missing, missing, missing, missing, missing, missing, missing, "-", 2);
+                                    app.Selection.Find.Execute("<benefitDecree>", missing, missing, missing, missing, missing, missing, missing, missing, "-", 2);
+                                    app.Selection.Find.Execute("<benefitStartDate>", missing, missing, missing, missing, missing, missing, missing, missing, "-", 2);
+                                    app.Selection.Find.Execute("<benefitEndDate>", missing, missing, missing, missing, missing, missing, missing, missing, "-", 2);
                                 }
+
+                                app.Selection.Find.Execute("<ns>", missing, missing, missing, missing, missing, missing, missing, missing, human.Name[0].ToString(), 2);
+                                app.Selection.Find.Execute("<ps>", missing, missing, missing, missing, missing, missing, missing, missing, human.Patronymic[0].ToString(), 2);
+
+                                app.Selection.Find.Execute("<roomName>", missing, missing, missing, missing, missing, missing, missing, missing, room.Name, 2);
+                                app.Selection.Find.Execute("<roomType>", missing, missing, missing, missing, missing, missing, missing, missing, room.Type, 2);
+                                app.Selection.Find.Execute("<hostelName>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.Name, 2);
+                                app.Selection.Find.Execute("<hostelAddress>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.Address, 2);
+                                app.Selection.Find.Execute("<hostelFlat>", missing, missing, missing, missing, missing, missing, missing, missing, flat.Name, 2);
+                                app.Selection.Find.Execute("<hostelFlats>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.FlatCount, 2);
+
+                                string elements = "";
+
+                                for (int i = 0; i < garages.Count(); i++)
+                                {
+                                    if (i == garages.Count() - 1)
+                                    {
+                                        elements = garages[i].Name + "(№" + garages[i].Numeric + "), ";
+                                        app.Selection.Find.Execute("<Elements>", missing, missing, missing, missing, missing, missing, missing, missing, elements, 2);
+                                    }
+                                    else
+                                    {
+                                        elements = garages[i].Name + "(№" + garages[i].Numeric + "), <Elements>";
+                                        app.Selection.Find.Execute("<Elements>", missing, missing, missing, missing, missing, missing, missing, missing, elements, 2);
+                                    }
+                                }
+
+                                app.Selection.Find.Execute("<rate>", missing, missing, missing, missing, missing, missing, missing, missing, rate.Price, 2);
+                                app.Selection.Find.Execute("<rateWord>", missing, missing, missing, missing, missing, missing, missing, missing, NumbersToString.Str((int)rate.Price), 2);
+                                app.Selection.Find.Execute("<yearRate>", missing, missing, missing, missing, missing, missing, missing, missing, rate.Price * 12, 2);
+                                app.Selection.Find.Execute("<rateWordYear>", missing, missing, missing, missing, missing, missing, missing, missing, NumbersToString.Str((int)rate.Price * 12), 2);
+
+                                int totalMonth = Math.Abs((orderEndDate.Month - orderStartDate.Month) + 12 * (orderEndDate.Year - orderStartDate.Year));
+                                
+
+                                app.Selection.Find.Execute("<allTimeRate>", missing, missing, missing, missing, missing, missing, missing, missing, (int)rate.Price * totalMonth, 2);
+                                app.Selection.Find.Execute("<allTimeRateWord>", missing, missing, missing, missing, missing, missing, missing, missing, NumbersToString.Str((int)rate.Price * totalMonth), 2);
+
+                                app.Selection.Find.Execute("<supplySurename>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Surename, 2);
+                                app.Selection.Find.Execute("<supplyName>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Name, 2);
+                                app.Selection.Find.Execute("<supplyPatronymic>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Patronimic, 2);
+                                app.Selection.Find.Execute("<supplyN>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Name[0].ToString(), 2);
+                                app.Selection.Find.Execute("<supplyP>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Patronimic[0].ToString(), 2);
+                                app.Selection.Find.Execute("<supplyProxy>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Proxy, 2);
+                                app.Selection.Find.Execute("<supplyProxyDate>", missing, missing, missing, missing, missing, missing, missing, missing, supply.ProxyDate, 2);
+
+
+                                QRCodeGenerator Qr = new QRCodeGenerator();
+                                var QrCodeData = Qr.CreateQrCode("http://ngma.su", QRCodeGenerator.ECCLevel.M, true, true);
+                                var QRData = new QRCode(QrCodeData);
+                                Image image = QRData.GetGraphic(150);
+                                Clipboard.SetImage(image);
+                                app.ActiveDocument.Bookmarks["QRCodeMark"].Range.Paste();
                             }
+                            catch
+                            {
+                                MessageBox.Show("Ошибка работы с шаблоном");
 
-                            app.Selection.Find.Execute("<rate>", missing, missing, missing, missing, missing, missing, missing, missing, rate.Price, 2);
-                            app.Selection.Find.Execute("<rateWord>", missing, missing, missing, missing, missing, missing, missing, missing, NumbersToString.Str((int)rate.Price), 2);
-                            app.Selection.Find.Execute("<yearRate>", missing, missing, missing, missing, missing, missing, missing, missing, rate.Price * 12, 2);
-                            app.Selection.Find.Execute("<rateWordYear>", missing, missing, missing, missing, missing, missing, missing, missing, NumbersToString.Str((int)rate.Price * 12), 2);
+                                //Закрытие ProgressBar
+                                PB_Creation.Visible = false;
 
-                            int iOrderStartDate = Convert.ToInt32(orderStartDate.Year);
-                            int iOrderEndDate = Convert.ToInt32(orderEndDate.Year);
+                                //Закрытие документа
+                                doc.Close(false, missing, missing);
+                                app.Quit(false, false, false);
 
-                            int allMonthOrder = (iOrderEndDate - iOrderStartDate) * 12;
-
-                            app.Selection.Find.Execute("<allTimeRate>", missing, missing, missing, missing, missing, missing, missing, missing, (int)rate.Price * allMonthOrder, 2);
-                            app.Selection.Find.Execute("<allTimeRateWord>", missing, missing, missing, missing, missing, missing, missing, missing, NumbersToString.Str((int)rate.Price * allMonthOrder), 2);
-
-                            app.Selection.Find.Execute("<supplySurename>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Surename, 2);
-                            app.Selection.Find.Execute("<supplyName>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Name, 2);
-                            app.Selection.Find.Execute("<supplyPatronymic>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Patronimic, 2);
-                            app.Selection.Find.Execute("<supplyN>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Name[0].ToString(), 2);
-                            app.Selection.Find.Execute("<supplyP>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Patronimic[0].ToString(), 2);
-                            app.Selection.Find.Execute("<supplyProxy>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Proxy, 2);
-                            app.Selection.Find.Execute("<supplyProxyDate>", missing, missing, missing, missing, missing, missing, missing, missing, supply.ProxyDate, 2);
-
-
-                            QRCodeGenerator Qr = new QRCodeGenerator();
-                            var QrCodeData = Qr.CreateQrCode("http://ngma.su", QRCodeGenerator.ECCLevel.M, true, true);
-                            var QRData = new QRCode(QrCodeData);
-                            Image image = QRData.GetGraphic(150);
-                            Clipboard.SetImage(image);
-                            app.ActiveDocument.Bookmarks["QRCodeMark"].Range.Paste();
+                                System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
+                                return;
+                            }
                         }
-                        catch
+                        if (rent.Name == "обучение" | rent.Name == "промежуточной аттестации" | rent.Name == "итоговой аттестации")
                         {
-                            MessageBox.Show("Ошибка работы с шаблоном");
+                            try
+                            {
+                                app.Selection.Find.Execute("<ID>", missing, missing, missing, missing, missing, missing, missing, missing, order.Id, 2);
+                                app.Selection.Find.Execute("<startOrder>", missing, missing, missing, missing, missing, missing, missing, missing, order.StartOrder, 2);
+                                app.Selection.Find.Execute("<EndOrder>", missing, missing, missing, missing, missing, missing, missing, missing, order.EndOrder, 2);
 
-                            //Закрытие ProgressBar
-                            PB_Creation.Visible = false;
+                                DateTime orderEndDate = Convert.ToDateTime(order.EndOrder);
+                                DateTime orderStartDate = Convert.ToDateTime(order.StartOrder);
 
-                            //Закрытие документа
-                            doc.Close(false, missing, missing);
-                            app.Quit(false, false, false);
+                                app.Selection.Find.Execute("<yearEndDate>", missing, missing, missing, missing, missing, missing, missing, missing, orderEndDate.Year.ToString(), 2);
 
-                            System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
-                            return;
+                                app.Selection.Find.Execute("<rent>", missing, missing, missing, missing, missing, missing, missing, missing, rent.Name, 2);
+
+                                app.Selection.Find.Execute("<surename>", missing, missing, missing, missing, missing, missing, missing, missing, human.Surename, 2);
+                                app.Selection.Find.Execute("<name>", missing, missing, missing, missing, missing, missing, missing, missing, human.Name, 2);
+                                app.Selection.Find.Execute("<patronymic>", missing, missing, missing, missing, missing, missing, missing, missing, human.Patronymic, 2);
+                                app.Selection.Find.Execute("<DocSeries>", missing, missing, missing, missing, missing, missing, missing, missing, human.Series, 2);
+                                app.Selection.Find.Execute("<DocNumber>", missing, missing, missing, missing, missing, missing, missing, missing, human.Number, 2);
+                                app.Selection.Find.Execute("<DocGiven>", missing, missing, missing, missing, missing, missing, missing, missing, human.Given, 2);
+                                app.Selection.Find.Execute("<DocDate>", missing, missing, missing, missing, missing, missing, missing, missing, human.GivenDate, 2);
+                                app.Selection.Find.Execute("<DocCode>", missing, missing, missing, missing, missing, missing, missing, missing, human.GivenCode, 2);
+                                app.Selection.Find.Execute("<HumanAddress>", missing, missing, missing, missing, missing, missing, missing, missing, human.Registration, 2);
+                                app.Selection.Find.Execute("<humanCitizenship>", missing, missing, missing, missing, missing, missing, missing, missing, human.Citizenship, 2);
+
+                                app.Selection.Find.Execute("<eduType>", missing, missing, missing, missing, missing, missing, missing, missing, order.EducationType, 2);
+
+                                app.Selection.Find.Execute("<ns>", missing, missing, missing, missing, missing, missing, missing, missing, human.Name[0].ToString(), 2);
+                                app.Selection.Find.Execute("<ps>", missing, missing, missing, missing, missing, missing, missing, missing, human.Patronymic[0].ToString(), 2);
+
+                                app.Selection.Find.Execute("<roomName>", missing, missing, missing, missing, missing, missing, missing, missing, room.Name, 2);
+                                app.Selection.Find.Execute("<roomType>", missing, missing, missing, missing, missing, missing, missing, missing, room.Type, 2);
+                                app.Selection.Find.Execute("<hostelName>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.Name, 2);
+                                app.Selection.Find.Execute("<hostelAddress>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.Address, 2);
+                                app.Selection.Find.Execute("<hostelFlat>", missing, missing, missing, missing, missing, missing, missing, missing, flat.Name, 2);
+                                app.Selection.Find.Execute("<hostelFlats>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.FlatCount, 2);
+
+                                string elements = "";
+
+                                for (int i = 0; i < garages.Count(); i++)
+                                {
+                                    if (i == garages.Count() - 1)
+                                    {
+                                        elements = garages[i].Name + "(№" + garages[i].Numeric + "), ";
+                                        app.Selection.Find.Execute("<Elements>", missing, missing, missing, missing, missing, missing, missing, missing, elements, 2);
+                                    }
+                                    else
+                                    {
+                                        elements = garages[i].Name + "(№" + garages[i].Numeric + "), <Elements>";
+                                        app.Selection.Find.Execute("<Elements>", missing, missing, missing, missing, missing, missing, missing, missing, elements, 2);
+                                    }
+                                }
+
+
+
+                                int days = (int)(orderEndDate - orderStartDate).TotalDays;
+
+                                double rents = days * rate.Price;
+
+                                app.Selection.Find.Execute("<allTimeRate>", missing, missing, missing, missing, missing, missing, missing, missing, rents, 2);
+                                app.Selection.Find.Execute("<allTimeRateWord>", missing, missing, missing, missing, missing, missing, missing, missing, NumbersToString.Str((int)rents), 2);
+                                app.Selection.Find.Execute("<rate>", missing, missing, missing, missing, missing, missing, missing, missing, rate.Price, 2);
+                                app.Selection.Find.Execute("<rateWord>", missing, missing, missing, missing, missing, missing, missing, missing, NumbersToString.Str((int)rate.Price), 2);
+
+
+                                app.Selection.Find.Execute("<supplySurename>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Surename, 2);
+                                app.Selection.Find.Execute("<supplyName>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Name, 2);
+                                app.Selection.Find.Execute("<supplyPatronymic>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Patronimic, 2);
+                                app.Selection.Find.Execute("<supplyN>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Name[0].ToString(), 2);
+                                app.Selection.Find.Execute("<supplyP>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Patronimic[0].ToString(), 2);
+                                app.Selection.Find.Execute("<supplyProxy>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Proxy, 2);
+                                app.Selection.Find.Execute("<supplyProxyDate>", missing, missing, missing, missing, missing, missing, missing, missing, supply.ProxyDate, 2);
+
+
+                                QRCodeGenerator Qr = new QRCodeGenerator();
+                                var QrCodeData = Qr.CreateQrCode("http://ngma.su", QRCodeGenerator.ECCLevel.M, true, true);
+                                var QRData = new QRCode(QrCodeData);
+                                Image image = QRData.GetGraphic(150);
+                                Clipboard.SetImage(image);
+                                app.ActiveDocument.Bookmarks["QRCodeMark"].Range.Paste();
+                            }
+                            catch
+                            {
+                                MessageBox.Show("Ошибка работы с шаблоном");
+
+                                //Закрытие ProgressBar
+                                PB_Creation.Visible = false;
+
+                                //Закрытие документа
+                                doc.Close(false, missing, missing);
+                                app.Quit(false, false, false);
+
+                                System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
+                                return;
+                            }
+                        }
+                        if(rent.Name == "иной")
+                        {
+                            try
+                            {
+                                app.Selection.Find.Execute("<ID>", missing, missing, missing, missing, missing, missing, missing, missing, order.Id, 2);
+                                app.Selection.Find.Execute("<startOrder>", missing, missing, missing, missing, missing, missing, missing, missing, order.StartOrder, 2);
+                                app.Selection.Find.Execute("<EndOrder>", missing, missing, missing, missing, missing, missing, missing, missing, order.EndOrder, 2);
+
+                                DateTime orderEndDate = Convert.ToDateTime(order.EndOrder);
+                                DateTime orderStartDate = Convert.ToDateTime(order.StartOrder);
+
+                                app.Selection.Find.Execute("<yearEndDate>", missing, missing, missing, missing, missing, missing, missing, missing, orderEndDate.Year.ToString(), 2);
+
+                                app.Selection.Find.Execute("<rent>", missing, missing, missing, missing, missing, missing, missing, missing, rent.Name, 2);
+
+                                app.Selection.Find.Execute("<surename>", missing, missing, missing, missing, missing, missing, missing, missing, human.Surename, 2);
+                                app.Selection.Find.Execute("<name>", missing, missing, missing, missing, missing, missing, missing, missing, human.Name, 2);
+                                app.Selection.Find.Execute("<patronymic>", missing, missing, missing, missing, missing, missing, missing, missing, human.Patronymic, 2);
+                                app.Selection.Find.Execute("<DocSeries>", missing, missing, missing, missing, missing, missing, missing, missing, human.Series, 2);
+                                app.Selection.Find.Execute("<DocNumber>", missing, missing, missing, missing, missing, missing, missing, missing, human.Number, 2);
+                                app.Selection.Find.Execute("<DocGiven>", missing, missing, missing, missing, missing, missing, missing, missing, human.Given, 2);
+                                app.Selection.Find.Execute("<DocDate>", missing, missing, missing, missing, missing, missing, missing, missing, human.GivenDate, 2);
+                                app.Selection.Find.Execute("<DocCode>", missing, missing, missing, missing, missing, missing, missing, missing, human.GivenCode, 2);
+                                app.Selection.Find.Execute("<HumanAddress>", missing, missing, missing, missing, missing, missing, missing, missing, human.Registration, 2);
+                                app.Selection.Find.Execute("<humanCitizenship>", missing, missing, missing, missing, missing, missing, missing, missing, human.Citizenship, 2);
+
+                                
+
+                                app.Selection.Find.Execute("<ns>", missing, missing, missing, missing, missing, missing, missing, missing, human.Name[0].ToString(), 2);
+                                app.Selection.Find.Execute("<ps>", missing, missing, missing, missing, missing, missing, missing, missing, human.Patronymic[0].ToString(), 2);
+
+                                app.Selection.Find.Execute("<roomName>", missing, missing, missing, missing, missing, missing, missing, missing, room.Name, 2);
+                                app.Selection.Find.Execute("<roomType>", missing, missing, missing, missing, missing, missing, missing, missing, room.Type, 2);
+                                app.Selection.Find.Execute("<hostelName>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.Name, 2);
+                                app.Selection.Find.Execute("<hostelAddress>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.Address, 2);
+                                app.Selection.Find.Execute("<hostelFlat>", missing, missing, missing, missing, missing, missing, missing, missing, flat.Name, 2);
+                                app.Selection.Find.Execute("<hostelFlats>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.FlatCount, 2);
+
+                                string elements = "";
+
+                                for (int i = 0; i < garages.Count(); i++)
+                                {
+                                    if (i == garages.Count() - 1)
+                                    {
+                                        elements = garages[i].Name + "(№" + garages[i].Numeric + "), ";
+                                        app.Selection.Find.Execute("<Elements>", missing, missing, missing, missing, missing, missing, missing, missing, elements, 2);
+                                    }
+                                    else
+                                    {
+                                        elements = garages[i].Name + "(№" + garages[i].Numeric + "), <Elements>";
+                                        app.Selection.Find.Execute("<Elements>", missing, missing, missing, missing, missing, missing, missing, missing, elements, 2);
+                                    }
+                                }
+
+                                app.Selection.Find.Execute("<rate>", missing, missing, missing, missing, missing, missing, missing, missing, rate.Price, 2);
+                                app.Selection.Find.Execute("<rateWord>", missing, missing, missing, missing, missing, missing, missing, missing, NumbersToString.Str((int)rate.Price), 2);
+                                
+
+                                int totalMonth = Math.Abs((orderEndDate.Month - orderStartDate.Month) + 12 * (orderEndDate.Year - orderStartDate.Year));
+
+
+                                app.Selection.Find.Execute("<allTimeRate>", missing, missing, missing, missing, missing, missing, missing, missing, (int)rate.Price * totalMonth, 2);
+                                app.Selection.Find.Execute("<allTimeRateWord>", missing, missing, missing, missing, missing, missing, missing, missing, NumbersToString.Str((int)rate.Price * totalMonth), 2);
+
+                                app.Selection.Find.Execute("<supplySurename>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Surename, 2);
+                                app.Selection.Find.Execute("<supplyName>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Name, 2);
+                                app.Selection.Find.Execute("<supplyPatronymic>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Patronimic, 2);
+                                app.Selection.Find.Execute("<supplyN>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Name[0].ToString(), 2);
+                                app.Selection.Find.Execute("<supplyP>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Patronimic[0].ToString(), 2);
+                                app.Selection.Find.Execute("<supplyProxy>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Proxy, 2);
+                                app.Selection.Find.Execute("<supplyProxyDate>", missing, missing, missing, missing, missing, missing, missing, missing, supply.ProxyDate, 2);
+
+
+                                QRCodeGenerator Qr = new QRCodeGenerator();
+                                var QrCodeData = Qr.CreateQrCode("http://ngma.su", QRCodeGenerator.ECCLevel.M, true, true);
+                                var QRData = new QRCode(QrCodeData);
+                                Image image = QRData.GetGraphic(150);
+                                Clipboard.SetImage(image);
+                                app.ActiveDocument.Bookmarks["QRCodeMark"].Range.Paste();
+                            }
+                            catch
+                            {
+                                MessageBox.Show("Ошибка работы с шаблоном");
+
+                                //Закрытие ProgressBar
+                                PB_Creation.Visible = false;
+
+                                //Закрытие документа
+                                doc.Close(false, missing, missing);
+                                app.Quit(false, false, false);
+
+                                System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
+                                return;
+                            }
+                        }    
+                        if(rent.Name == "работы")
+                        {
+                            try
+                            {
+                                app.Selection.Find.Execute("<ID>", missing, missing, missing, missing, missing, missing, missing, missing, order.Id, 2);
+                                app.Selection.Find.Execute("<startOrder>", missing, missing, missing, missing, missing, missing, missing, missing, order.StartOrder, 2);
+                                app.Selection.Find.Execute("<EndOrder>", missing, missing, missing, missing, missing, missing, missing, missing, order.EndOrder, 2);
+
+                                DateTime orderEndDate = Convert.ToDateTime(order.EndOrder);
+                                DateTime orderStartDate = Convert.ToDateTime(order.StartOrder);
+
+                                app.Selection.Find.Execute("<yearEndDate>", missing, missing, missing, missing, missing, missing, missing, missing, orderEndDate.Year.ToString(), 2);
+
+                                app.Selection.Find.Execute("<rent>", missing, missing, missing, missing, missing, missing, missing, missing, rent.Name, 2);
+
+                                app.Selection.Find.Execute("<surename>", missing, missing, missing, missing, missing, missing, missing, missing, human.Surename, 2);
+                                app.Selection.Find.Execute("<name>", missing, missing, missing, missing, missing, missing, missing, missing, human.Name, 2);
+                                app.Selection.Find.Execute("<patronymic>", missing, missing, missing, missing, missing, missing, missing, missing, human.Patronymic, 2);
+                                app.Selection.Find.Execute("<DocSeries>", missing, missing, missing, missing, missing, missing, missing, missing, human.Series, 2);
+                                app.Selection.Find.Execute("<DocNumber>", missing, missing, missing, missing, missing, missing, missing, missing, human.Number, 2);
+                                app.Selection.Find.Execute("<DocGiven>", missing, missing, missing, missing, missing, missing, missing, missing, human.Given, 2);
+                                app.Selection.Find.Execute("<DocDate>", missing, missing, missing, missing, missing, missing, missing, missing, human.GivenDate, 2);
+                                app.Selection.Find.Execute("<DocCode>", missing, missing, missing, missing, missing, missing, missing, missing, human.GivenCode, 2);
+                                app.Selection.Find.Execute("<HumanAddress>", missing, missing, missing, missing, missing, missing, missing, missing, human.Registration, 2);
+                                app.Selection.Find.Execute("<humanCitizenship>", missing, missing, missing, missing, missing, missing, missing, missing, human.Citizenship, 2);
+
+
+
+                                app.Selection.Find.Execute("<ns>", missing, missing, missing, missing, missing, missing, missing, missing, human.Name[0].ToString(), 2);
+                                app.Selection.Find.Execute("<ps>", missing, missing, missing, missing, missing, missing, missing, missing, human.Patronymic[0].ToString(), 2);
+
+                                app.Selection.Find.Execute("<roomName>", missing, missing, missing, missing, missing, missing, missing, missing, room.Name, 2);
+                                app.Selection.Find.Execute("<roomType>", missing, missing, missing, missing, missing, missing, missing, missing, room.Type, 2);
+                                app.Selection.Find.Execute("<hostelName>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.Name, 2);
+                                app.Selection.Find.Execute("<hostelAddress>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.Address, 2);
+                                app.Selection.Find.Execute("<hostelFlat>", missing, missing, missing, missing, missing, missing, missing, missing, flat.Name, 2);
+                                app.Selection.Find.Execute("<hostelFlats>", missing, missing, missing, missing, missing, missing, missing, missing, hostel.FlatCount, 2);
+
+                                string elements = "";
+
+                                for (int i = 0; i < garages.Count(); i++)
+                                {
+                                    if (i == garages.Count() - 1)
+                                    {
+                                        elements = garages[i].Name + "(№" + garages[i].Numeric + "), ";
+                                        app.Selection.Find.Execute("<Elements>", missing, missing, missing, missing, missing, missing, missing, missing, elements, 2);
+                                    }
+                                    else
+                                    {
+                                        elements = garages[i].Name + "(№" + garages[i].Numeric + "), <Elements>";
+                                        app.Selection.Find.Execute("<Elements>", missing, missing, missing, missing, missing, missing, missing, missing, elements, 2);
+                                    }
+                                }
+
+                                app.Selection.Find.Execute("<rate>", missing, missing, missing, missing, missing, missing, missing, missing, rate.Price, 2);
+                                app.Selection.Find.Execute("<rateWord>", missing, missing, missing, missing, missing, missing, missing, missing, NumbersToString.Str((int)rate.Price), 2);
+
+
+                                
+
+
+                                app.Selection.Find.Execute("<allTimeRate>", missing, missing, missing, missing, missing, missing, missing, missing, (int)rate.Price * 12, 2);
+                                app.Selection.Find.Execute("<allTimeRateWord>", missing, missing, missing, missing, missing, missing, missing, missing, NumbersToString.Str((int)rate.Price * 12), 2);
+
+                                app.Selection.Find.Execute("<supplySurename>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Surename, 2);
+                                app.Selection.Find.Execute("<supplyName>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Name, 2);
+                                app.Selection.Find.Execute("<supplyPatronymic>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Patronimic, 2);
+                                app.Selection.Find.Execute("<supplyN>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Name[0].ToString(), 2);
+                                app.Selection.Find.Execute("<supplyP>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Patronimic[0].ToString(), 2);
+                                app.Selection.Find.Execute("<supplyProxy>", missing, missing, missing, missing, missing, missing, missing, missing, supply.Proxy, 2);
+                                app.Selection.Find.Execute("<supplyProxyDate>", missing, missing, missing, missing, missing, missing, missing, missing, supply.ProxyDate, 2);
+
+
+                                QRCodeGenerator Qr = new QRCodeGenerator();
+                                var QrCodeData = Qr.CreateQrCode("http://ngma.su", QRCodeGenerator.ECCLevel.M, true, true);
+                                var QRData = new QRCode(QrCodeData);
+                                Image image = QRData.GetGraphic(150);
+                                Clipboard.SetImage(image);
+                                app.ActiveDocument.Bookmarks["QRCodeMark"].Range.Paste();
+                            }
+                            catch
+                            {
+                                MessageBox.Show("Ошибка работы с шаблоном");
+
+                                //Закрытие ProgressBar
+                                PB_Creation.Visible = false;
+
+                                //Закрытие документа
+                                doc.Close(false, missing, missing);
+                                app.Quit(false, false, false);
+
+                                System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
+                                return;
+                            }
                         }
 
                         string saveDirectory = Properties.Settings.Default.Directory + "\\Договор№" + order.Id.ToString() + ".doc";
