@@ -5,12 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
+using System.Reflection;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Supply_Admin
 {
     public class WordExcelIO
     {
-
+        /*Word Functions*/
         public static bool CreatAdditionalSettings(SupplyDbContext _db, int flag, int Infid)
         {
             if(flag == 1)
@@ -475,6 +477,47 @@ namespace Supply_Admin
         public static bool CreateBenefitOrder(SupplyDbContext _db,int humanId)
         {
             return true;
+        }
+        /*Excel Functions*/
+        public static bool CreateTableExcel(SupplyDbContext _db)
+        {
+            try
+            {
+                string path = Properties.Settings.Default.Directory + "\\Договора" + ".xlsx";
+
+                Excel.Application excelApp = new Excel.Application();
+                Excel.Workbook workbook = excelApp.Workbooks.Add();
+                Excel.Worksheet worksheet = workbook.ActiveSheet;
+
+                var orders = _db.Orders.ToList();
+
+                worksheet.Rows[1].Columns[1] = "№ договора";
+                worksheet.Rows[1].Columns[2] = "Фамилия";
+                worksheet.Rows[1].Columns[3] = "Имя";
+                worksheet.Rows[1].Columns[4] = "Отчество";
+                
+                for (int i = 0; i < orders.Count(); i++)
+                {
+                    worksheet.Rows[i + 1].Columns[1] = orders[i].Id;
+                    int humanId = (int)orders[i].HumanId;
+                    var human = _db.Humen.Where(x => x.Id == humanId).First();
+
+                    worksheet.Rows[i + 1].Columns[2] = human.Surename.ToString();
+                    worksheet.Rows[i + 1].Columns[3] = human.Name.ToString();
+                    worksheet.Rows[i + 1].Columns[4] = human.Patronymic.ToString();
+                }
+
+                excelApp.AlertBeforeOverwriting = false;
+                workbook.SaveAs((object)path);
+                excelApp.Quit();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            
         }
     }
 }

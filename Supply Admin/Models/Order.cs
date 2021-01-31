@@ -9,6 +9,7 @@ namespace Supply_Admin.Models
     public class Order
     {
         public int Id { get; set; } //Номер договора
+        public int OrderType { get; set; }//Тип договра
         public string StartOrder { get; set; }//Дата начала договора
         public string EndOrder { get; set; }//Дата окончания договора
         public int? RentId { get; set; }

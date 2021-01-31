@@ -188,5 +188,14 @@ namespace Supply_Admin
             CreateWordDocumentOrder createWordDocumentOrder = new CreateWordDocumentOrder(_db);
             createWordDocumentOrder.ShowDialog();
         }
+
+        private void BTN_Excel_Click(object sender, EventArgs e)
+        {
+            bool flag = WordExcelIO.CreateTableExcel(_db);
+            if (flag == true)
+                MessageBox.Show("Данные сформированы в таблицу Excel");
+            else
+                MessageBox.Show("Возникла ошибка!");
+        }
     }
 }

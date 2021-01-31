@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Supply_Admin.Models;
+using Supply_Admin.Libraries;
 
 namespace Supply_Admin
 {
@@ -107,6 +108,7 @@ namespace Supply_Admin
                 Order order = new Order();
 
                 order.HumanId = human;
+                order.OrderType = (int)SypplyLibrary.OrderType.MainOrder;
                 order.StartOrder = TB_OrderStart.Text;
                 order.EndOrder = TB_OrderEnd.Text;
                 order.RentId = (int)CB_Period.SelectedValue;

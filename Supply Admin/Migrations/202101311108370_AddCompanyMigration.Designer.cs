@@ -13,7 +13,7 @@ namespace Supply_Admin.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202101031951226_AddCompanyMigration"; }
+            get { return "202101311108370_AddCompanyMigration"; }
         }
         
         string IMigrationMetadata.Source

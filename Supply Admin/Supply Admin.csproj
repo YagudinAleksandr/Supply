@@ -137,6 +137,7 @@
       <DependentUpon>HumanCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Libraries\NumbersToString.cs" />
+    <Compile Include="Libraries\SypplyLibrary.cs" />
     <Compile Include="LoadingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -149,9 +150,9 @@
     <Compile Include="MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202101031951226_AddCompanyMigration.cs" />
-    <Compile Include="Migrations\202101031951226_AddCompanyMigration.designer.cs">
-      <DependentUpon>202101031951226_AddCompanyMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202101311108370_AddCompanyMigration.cs" />
+    <Compile Include="Migrations\202101311108370_AddCompanyMigration.designer.cs">
+      <DependentUpon>202101311108370_AddCompanyMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Benefit.cs" />
@@ -252,8 +253,8 @@
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202101031951226_AddCompanyMigration.resx">
-      <DependentUpon>202101031951226_AddCompanyMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202101311108370_AddCompanyMigration.resx">
+      <DependentUpon>202101311108370_AddCompanyMigration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrdersManager.resx">
       <DependentUpon>OrdersManager.cs</DependentUpon>
