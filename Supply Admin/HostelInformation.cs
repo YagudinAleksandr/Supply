@@ -95,6 +95,7 @@ namespace Supply_Admin
                             
                            
                             MenuItem menuItemCreateOrder = new MenuItem("Сформировать договор", CreateOrderForHuman);
+                            MenuItem menuItemCreateOrderThreePersons = new MenuItem("Сформировать договор 3-х сторон", CreateOrderForThreePersons);
                             MenuItem menuItemAdditionalElectricity = new MenuItem("Сформировать договор на дополнительныеуслуги (Электроэнергия)", CreateAdditionaElectrocity);
                             MenuItem menuItemChangePassport = new MenuItem("Доп.соглашение (Замена паспорта)", CreatChangePassport);
                             MenuItem menuItemChangeHouse = new MenuItem("Доп.соглашение (Переселение)", CreatChangeHouse);
@@ -103,6 +104,7 @@ namespace Supply_Admin
 
                             menu = new ContextMenu();
                             menu.MenuItems.Add(menuItemCreateOrder);
+                            menu.MenuItems.Add(menuItemCreateOrderThreePersons);
                             menu.MenuItems.Add(menuItemAdditionalElectricity);
                             menu.MenuItems.Add(menuItemChangePassport);
                             menu.MenuItems.Add(menuItemKeepHouse);
@@ -113,6 +115,8 @@ namespace Supply_Admin
                             {
                                 menu.MenuItems.Add(new MenuItem("Доп.соглашение (льготники)", CreatBenefitOrder));
                             }
+
+                             
                             humensNode[m].ContextMenu = menu;
 
                         }
@@ -238,6 +242,23 @@ namespace Supply_Admin
                     MessageBox.Show("Дополнение к договору сформировано успешно!");
                 else
                     MessageBox.Show("Произошла ошибка при формировании дополнения к договору");
+            }
+        }
+        private void CreateOrderForThreePersons(object sender, EventArgs e)
+        {
+            if (TV_Hostels.SelectedNode != null)
+            {
+                int humanId = Convert.ToInt32(TV_Hostels.SelectedNode.Tag.ToString());
+                OrderForThreePersons orderForThreePersons = new OrderForThreePersons(_db, humanId);
+                orderForThreePersons.ShowDialog();
+                /*
+                bool flag = WordExcelIO.CreateBenefitOrder(_db, humanId);
+
+                if (flag == true)
+                    MessageBox.Show("Дополнение к договору сформировано успешно!");
+                else
+                    MessageBox.Show("Произошла ошибка при формировании дополнения к договору");
+                */
             }
         }
     }
