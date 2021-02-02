@@ -251,14 +251,7 @@ namespace Supply_Admin
                 int humanId = Convert.ToInt32(TV_Hostels.SelectedNode.Tag.ToString());
                 OrderForThreePersons orderForThreePersons = new OrderForThreePersons(_db, humanId);
                 orderForThreePersons.ShowDialog();
-                /*
-                bool flag = WordExcelIO.CreateBenefitOrder(_db, humanId);
-
-                if (flag == true)
-                    MessageBox.Show("Дополнение к договору сформировано успешно!");
-                else
-                    MessageBox.Show("Произошла ошибка при формировании дополнения к договору");
-                */
+                
             }
         }
     }
