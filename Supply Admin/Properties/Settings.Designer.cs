@@ -25,9 +25,9 @@ namespace Supply_Admin.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=tcp:nimi.database.windows.net,1433;Initial Catalog=nimi;Persist Security I" +
-            "nfo=False;User ID=yagudin97;Password=c9vjCdm7;MultipleActiveResultSets=False;Enc" +
-            "rypt=True;TrustServerCertificate=False;Connection Timeout=30;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=EASYNOTE\\SQLEXPRESS;Integrated Security=True;Connect Timeout=30;Encry" +
+            "pt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFai" +
+            "lover=False")]
         public string ConnectionString {
             get {
                 return ((string)(this["ConnectionString"]));
