@@ -190,6 +190,7 @@
       <DependentUpon>202101312026138_Supply.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Additianal.cs" />
     <Compile Include="Models\Benefit.cs" />
     <Compile Include="Models\Enterance.cs" />
     <Compile Include="Models\Flat.cs" />
