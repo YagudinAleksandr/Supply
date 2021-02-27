@@ -10,6 +10,6 @@ namespace Supply_Admin.Models
     {
         //Дополнительные соглашения к договору
         public int ID { get; set; }//ID
-        
+        public int? OrderId { get; set; }//Номер договора
     }
 }

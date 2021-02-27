@@ -25,9 +25,7 @@ namespace Supply_Admin.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=EASYNOTE\\SQLEXPRESS;Integrated Security=True;Connect Timeout=30;Encry" +
-            "pt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFai" +
-            "lover=False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=EASYNOTE\\SQLEXPRESS;Initial Catalog=Supply;Integrated Security=True")]
         public string ConnectionString {
             get {
                 return ((string)(this["ConnectionString"]));

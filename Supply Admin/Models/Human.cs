@@ -23,7 +23,7 @@ namespace Supply_Admin.Models
         public string Registration { get; set; }//Зарегистрирован
         public string Citizenship { get; set; }//Гражданство
 
-
+        public string GroupName { get; set; }//Группа обучающегося
         
         public int? RoomId { get; set; }
         public Rooms Room { get; set; }
