@@ -14,9 +14,12 @@ namespace Supply.Models
         public string Patronymic { get; set; }
 
         public ICollection<License> Licenses { get; set; }
+        public ICollection<Hostel> Hostels { get; set; }
         public Manager()
         {
             Licenses = new List<License>();
+            Hostels = new List<Hostel>();
+
         }
     }
 }

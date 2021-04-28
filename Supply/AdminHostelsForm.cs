@@ -1,12 +1,8 @@
 ﻿using Supply.Domain;
+using Supply.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Supply
@@ -20,6 +16,13 @@ namespace Supply
 
         private void AdminHostelsForm_Shown(object sender, EventArgs e)
         {
+            DataGridViewButtonColumn dataGridViewButtonColumn1 = new DataGridViewButtonColumn();
+            dataGridViewButtonColumn1.HeaderText = "Комнаты";
+            dataGridViewButtonColumn1.Name = "COL_Settings";
+            dataGridViewButtonColumn1.Text = "Комнаты";
+            dataGridViewButtonColumn1.UseColumnTextForButtonValue = true;
+            DG_Hostels.Columns.Add(dataGridViewButtonColumn1);
+
             DataGridViewButtonColumn dataGridViewButtonColumn2 = new DataGridViewButtonColumn();
             dataGridViewButtonColumn2.HeaderText = "Настройки";
             dataGridViewButtonColumn2.Name = "COL_Settings";
@@ -44,18 +47,16 @@ namespace Supply
 
                 try
                 {
-                    var hostels = db.Hostels.ToList();
-
-                    foreach (var hostel in hostels)
+                    foreach(Hostel hostel in db.Hostels.Include(a=>a.Address).Include(m=>m.Manager))
                     {
                         int rowNumber = DG_Hostels.Rows.Add();
 
                         DG_Hostels.Rows[rowNumber].Cells[COL_ID.Name].Value = hostel.ID;
                         DG_Hostels.Rows[rowNumber].Cells[COL_Name.Name].Value = hostel.Name;
-                        DG_Hostels.Rows[rowNumber].Cells[COL_Address.Name].Value = hostel.Manager.Surename+" "+hostel.Manager.Name+" "+hostel.Manager.Patronymic;
+                        DG_Hostels.Rows[rowNumber].Cells[COL_Manager.Name].Value = hostel.Manager.Surename + " " + hostel.Manager.Name + " " + hostel.Manager.Patronymic;
                         DG_Hostels.Rows[rowNumber].Cells[COL_Address.Name].Value = hostel.Address.ZipCode + ", " + hostel.Address.Country + "," + hostel.Address.Region + "," + hostel.Address.City + "," + hostel.Address.Street + "," + hostel.Address.House;
-                        
                     }
+                    
                 }
                 catch (Exception ex)
                 {
@@ -69,6 +70,32 @@ namespace Supply
             AdminHostelsFormAdd adminHostelsFormAdd = new AdminHostelsFormAdd();
             adminHostelsFormAdd.ShowDialog();
             UpdateInfo();
+        }
+
+        private void DG_Hostels_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if(e.ColumnIndex==4)//Комнаты
+            {
+                int hostelid = 0;
+                using (SupplyDbContext db = new SupplyDbContext())
+                {
+                    int id = int.Parse(DG_Hostels.Rows[e.RowIndex].Cells[0].Value.ToString());
+                    Hostel hostel = db.Hostels.Where(x => x.ID == id).First();
+                    if (hostel != null)
+                    {
+                        hostelid = hostel.ID;
+                        
+                    }
+                    else
+                    {
+                        MessageBox.Show("Общежитие не найдено!");
+                    }
+
+                    AdminRoomsForm adminRoomsForm = new AdminRoomsForm(hostelid);
+                    adminRoomsForm.ShowDialog();
+                }
+                
+            }
         }
     }
 }

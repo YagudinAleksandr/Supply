@@ -7,13 +7,13 @@ namespace Supply.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class AddingManagersAndLicenses : IMigrationMetadata
+    public sealed partial class CreateProjFirstMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddingManagersAndLicenses));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateProjFirstMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "202104252209427_AddingManagersAndLicenses"; }
+            get { return "202104282212054_CreateProjFirstMigration"; }
         }
         
         string IMigrationMetadata.Source

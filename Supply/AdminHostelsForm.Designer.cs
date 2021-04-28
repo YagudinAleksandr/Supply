@@ -31,11 +31,11 @@ namespace Supply
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminHostelsForm));
             this.DG_Hostels = new System.Windows.Forms.DataGridView();
-            this.BTN_OpenHostelAddWindow = new System.Windows.Forms.Button();
             this.COL_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Manager = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BTN_OpenHostelAddWindow = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DG_Hostels)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,16 +52,7 @@ namespace Supply
             this.DG_Hostels.Name = "DG_Hostels";
             this.DG_Hostels.Size = new System.Drawing.Size(775, 268);
             this.DG_Hostels.TabIndex = 0;
-            // 
-            // BTN_OpenHostelAddWindow
-            // 
-            this.BTN_OpenHostelAddWindow.Location = new System.Drawing.Point(713, 306);
-            this.BTN_OpenHostelAddWindow.Name = "BTN_OpenHostelAddWindow";
-            this.BTN_OpenHostelAddWindow.Size = new System.Drawing.Size(75, 23);
-            this.BTN_OpenHostelAddWindow.TabIndex = 1;
-            this.BTN_OpenHostelAddWindow.Text = "Добавить";
-            this.BTN_OpenHostelAddWindow.UseVisualStyleBackColor = true;
-            this.BTN_OpenHostelAddWindow.Click += new System.EventHandler(this.BTN_OpenHostelAddWindow_Click);
+            this.DG_Hostels.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DG_Hostels_CellClick);
             // 
             // COL_ID
             // 
@@ -86,6 +77,16 @@ namespace Supply
             this.COL_Address.HeaderText = "Адрес";
             this.COL_Address.Name = "COL_Address";
             this.COL_Address.ReadOnly = true;
+            // 
+            // BTN_OpenHostelAddWindow
+            // 
+            this.BTN_OpenHostelAddWindow.Location = new System.Drawing.Point(713, 306);
+            this.BTN_OpenHostelAddWindow.Name = "BTN_OpenHostelAddWindow";
+            this.BTN_OpenHostelAddWindow.Size = new System.Drawing.Size(75, 23);
+            this.BTN_OpenHostelAddWindow.TabIndex = 1;
+            this.BTN_OpenHostelAddWindow.Text = "Добавить";
+            this.BTN_OpenHostelAddWindow.UseVisualStyleBackColor = true;
+            this.BTN_OpenHostelAddWindow.Click += new System.EventHandler(this.BTN_OpenHostelAddWindow_Click);
             // 
             // AdminHostelsForm
             // 

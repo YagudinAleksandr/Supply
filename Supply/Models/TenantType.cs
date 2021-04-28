@@ -7,18 +7,14 @@ using System.Threading.Tasks;
 
 namespace Supply.Models
 {
-    public class Flat
+    public class TenantType
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        [ForeignKey("Enterance")]
-        public int Enterance_ID { get; set; }
-        public Enterance Enterance { get; set; }
-
-        public ICollection<Room> Rooms { get; set; }
-        public Flat()
+        public ICollection<Payment> Payments { get; set; }
+        public TenantType()
         {
-            Rooms = new List<Room>();
+            Payments = new List<Payment>();
         }
     }
 }

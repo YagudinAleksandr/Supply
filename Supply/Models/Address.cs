@@ -27,5 +27,11 @@ namespace Supply.Models
         public string Housing { get; set; }
         [Required]
         public int ZipCode { get; set; }
+
+        public ICollection<Hostel> Hostels { get; set; }
+        public Address()
+        {
+            Hostels = new List<Hostel>();
+        }
     }
 }

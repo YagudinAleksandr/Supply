@@ -7,18 +7,17 @@ using System.Threading.Tasks;
 
 namespace Supply.Models
 {
-    public class Flat
+    public class Room
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        [ForeignKey("Enterance")]
-        public int Enterance_ID { get; set; }
-        public Enterance Enterance { get; set; }
+        public int Places { get; set; }
+        public int? RoomTypeID { get; set; }
+        public RoomType RoomType { get; set; }
 
-        public ICollection<Room> Rooms { get; set; }
-        public Flat()
-        {
-            Rooms = new List<Room>();
-        }
+        [ForeignKey("Flat")]
+        public int FlatID { get; set; }
+        public Flat Flat { get; set; }
+
     }
 }
