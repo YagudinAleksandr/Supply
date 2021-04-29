@@ -19,5 +19,11 @@ namespace Supply.Models
         public int FlatID { get; set; }
         public Flat Flat { get; set; }
 
+        public ICollection<Property> Properties { get; set; }
+        public Room()
+        {
+            Properties = new List<Property>();
+        }
+
     }
 }

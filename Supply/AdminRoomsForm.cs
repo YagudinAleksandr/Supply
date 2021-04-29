@@ -89,5 +89,19 @@ namespace Supply
                 }
             }
         }
+
+        private void DG_Rooms_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if(e.ColumnIndex==6)
+            {
+
+                int id = int.Parse(DG_Rooms.Rows[e.RowIndex].Cells[0].Value.ToString());
+
+                AdminPropertiesForm adminPropertiesForm = new AdminPropertiesForm(id);
+                adminPropertiesForm.ShowDialog();
+
+                UpdateInfo();
+            }
+        }
     }
 }

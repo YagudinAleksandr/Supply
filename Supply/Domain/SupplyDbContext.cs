@@ -26,5 +26,6 @@ namespace Supply.Domain
         public DbSet<Room> Rooms { get; set; }
         public DbSet<TenantType> TenantTypes { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<Property> PropertiesR { get; set; }
     }
 }

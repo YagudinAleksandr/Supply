@@ -16,8 +16,8 @@ namespace Supply.Models
         public bool Status { get; set; }
         public string CreatedAt { get; set; }
         public string UpdatedAt { get; set; }
-        public int? ManagerID { get; set; }
-        public Manager Manager { get; set; }
+        public int? UserID { get; set; }
+        public User User { get; set; }
 
         public int? TenantTypeID { get; set; }
         public TenantType TenantType { get; set; }

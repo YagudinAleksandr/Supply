@@ -57,9 +57,6 @@ namespace Supply
                 ToolStripMenuItem addresses = new ToolStripMenuItem("Адреса");
                 addresses.Click += AddressesInformation_Click;
 
-                ToolStripMenuItem managers = new ToolStripMenuItem("Менеджеры");
-                managers.Click += managersToolStripMenuItem_Click;
-
                 ToolStripMenuItem hostels = new ToolStripMenuItem("Общежития");
                 hostels.Click += Hostels_Click;
 
@@ -70,10 +67,21 @@ namespace Supply
                 users.Click += Users_Click;
 
                 settingItem.DropDownItems.Add(addresses);
-                settingItem.DropDownItems.Add(managers);
+                
                 settingItem.DropDownItems.Add(hostels);
                 settingItem.DropDownItems.Add(roomType);
                 settingItem.DropDownItems.Add(users);
+            }
+
+            if(_role.Name=="ADMINISTRATOR" || _role.Name=="MANAGER")
+            {
+                ToolStripMenuItem managers = new ToolStripMenuItem("Менеджеры");
+                managers.Click += managersToolStripMenuItem_Click;
+                settingItem.DropDownItems.Add(managers);
+
+                ToolStripMenuItem payments = new ToolStripMenuItem("Тарифные планы");
+                payments.Click += Payments_Click;
+                settingItem.DropDownItems.Add(payments);
             }
 
             ToolStripMenuItem settingsWindow = new ToolStripMenuItem("Настройки");
@@ -122,6 +130,11 @@ namespace Supply
         {
             AdminRoomTypes adminRoomTypes = new AdminRoomTypes();
             adminRoomTypes.Show();
+        }
+        private void Payments_Click(object sender, EventArgs e)
+        {
+            AdminPaymentsForm adminPaymentsForm = new AdminPaymentsForm(_user.ID);
+            adminPaymentsForm.Show();
         }
     }
 }

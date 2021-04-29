@@ -31,13 +31,13 @@ namespace Supply
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminRoomsForm));
             this.DG_Rooms = new System.Windows.Forms.DataGridView();
-            this.BTN_OpenRoomAddForm = new System.Windows.Forms.Button();
             this.COL_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Flat = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Enterance = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Places = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BTN_OpenRoomAddForm = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DG_Rooms)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,16 +56,7 @@ namespace Supply
             this.DG_Rooms.Name = "DG_Rooms";
             this.DG_Rooms.Size = new System.Drawing.Size(775, 386);
             this.DG_Rooms.TabIndex = 0;
-            // 
-            // BTN_OpenRoomAddForm
-            // 
-            this.BTN_OpenRoomAddForm.Location = new System.Drawing.Point(713, 415);
-            this.BTN_OpenRoomAddForm.Name = "BTN_OpenRoomAddForm";
-            this.BTN_OpenRoomAddForm.Size = new System.Drawing.Size(75, 23);
-            this.BTN_OpenRoomAddForm.TabIndex = 1;
-            this.BTN_OpenRoomAddForm.Text = "Добавить";
-            this.BTN_OpenRoomAddForm.UseVisualStyleBackColor = true;
-            this.BTN_OpenRoomAddForm.Click += new System.EventHandler(this.BTN_OpenRoomAddForm_Click);
+            this.DG_Rooms.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DG_Rooms_CellClick);
             // 
             // COL_ID
             // 
@@ -100,6 +91,16 @@ namespace Supply
             this.COL_Type.HeaderText = "Тип комнаты";
             this.COL_Type.Name = "COL_Type";
             this.COL_Type.ReadOnly = true;
+            // 
+            // BTN_OpenRoomAddForm
+            // 
+            this.BTN_OpenRoomAddForm.Location = new System.Drawing.Point(713, 415);
+            this.BTN_OpenRoomAddForm.Name = "BTN_OpenRoomAddForm";
+            this.BTN_OpenRoomAddForm.Size = new System.Drawing.Size(75, 23);
+            this.BTN_OpenRoomAddForm.TabIndex = 1;
+            this.BTN_OpenRoomAddForm.Text = "Добавить";
+            this.BTN_OpenRoomAddForm.UseVisualStyleBackColor = true;
+            this.BTN_OpenRoomAddForm.Click += new System.EventHandler(this.BTN_OpenRoomAddForm_Click);
             // 
             // AdminRoomsForm
             // 

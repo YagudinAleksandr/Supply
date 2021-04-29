@@ -35,6 +35,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Supply.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -104,6 +107,30 @@
     <Compile Include="AdminManagersLicensesAdd.Designer.cs">
       <DependentUpon>AdminManagersLicensesAdd.cs</DependentUpon>
     </Compile>
+    <Compile Include="AdminPaymentsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminPaymentsForm.Designer.cs">
+      <DependentUpon>AdminPaymentsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPaymentsFormAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminPaymentsFormAdd.Designer.cs">
+      <DependentUpon>AdminPaymentsFormAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPropertiesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminPropertiesForm.Designer.cs">
+      <DependentUpon>AdminPropertiesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPropertiesFormAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminPropertiesFormAdd.Designer.cs">
+      <DependentUpon>AdminPropertiesFormAdd.cs</DependentUpon>
+    </Compile>
     <Compile Include="AdminRoomsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -157,6 +184,18 @@
     <Compile Include="Migrations\202104282212054_CreateProjFirstMigration.designer.cs">
       <DependentUpon>202104282212054_CreateProjFirstMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104291728406_CreateProperty.cs" />
+    <Compile Include="Migrations\202104291728406_CreateProperty.designer.cs">
+      <DependentUpon>202104291728406_CreateProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104291909066_UpdateProperty.cs" />
+    <Compile Include="Migrations\202104291909066_UpdateProperty.designer.cs">
+      <DependentUpon>202104291909066_UpdateProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104292051200_UpdatePayments.cs" />
+    <Compile Include="Migrations\202104292051200_UpdatePayments.designer.cs">
+      <DependentUpon>202104292051200_UpdatePayments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Enterance.cs" />
@@ -165,6 +204,7 @@
     <Compile Include="Models\License.cs" />
     <Compile Include="Models\Manager.cs" />
     <Compile Include="Models\Payment.cs" />
+    <Compile Include="Models\Property.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Room.cs" />
     <Compile Include="Models\RoomType.cs" />
@@ -196,6 +236,18 @@
     <EmbeddedResource Include="AdminManagersLicensesAdd.resx">
       <DependentUpon>AdminManagersLicensesAdd.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AdminPaymentsForm.resx">
+      <DependentUpon>AdminPaymentsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminPaymentsFormAdd.resx">
+      <DependentUpon>AdminPaymentsFormAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminPropertiesForm.resx">
+      <DependentUpon>AdminPropertiesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminPropertiesFormAdd.resx">
+      <DependentUpon>AdminPropertiesFormAdd.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AdminRoomsForm.resx">
       <DependentUpon>AdminRoomsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -223,6 +275,15 @@
     <EmbeddedResource Include="Migrations\202104282212054_CreateProjFirstMigration.resx">
       <DependentUpon>202104282212054_CreateProjFirstMigration.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104291728406_CreateProperty.resx">
+      <DependentUpon>202104291728406_CreateProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104291909066_UpdateProperty.resx">
+      <DependentUpon>202104291909066_UpdateProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104292051200_UpdatePayments.resx">
+      <DependentUpon>202104292051200_UpdatePayments.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -245,6 +306,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Supply.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
