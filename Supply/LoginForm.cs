@@ -33,10 +33,16 @@ namespace Supply
             using(SupplyDbContext db = new SupplyDbContext())
             {
                 User user = db.Users.Where(x => x.Login == TB_Login.Text).FirstOrDefault();
-
+                if(user==null)
+                {
+                    MessageBox.Show("Пользователь с такими данными не найден!");
+                    TB_Password.Text = "";
+                    return;
+                }
                 if(user.Password!=GetHashPass(TB_Password.Text))
                 {
-                    MessageBox.Show("Не верный логин или пароль!");
+                    MessageBox.Show("Пользователь с такими данными не найден!");
+                    TB_Password.Text = "";
                     return;
                 }
                 _user = user;

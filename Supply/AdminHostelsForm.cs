@@ -18,7 +18,7 @@ namespace Supply
         {
             DataGridViewButtonColumn dataGridViewButtonColumn1 = new DataGridViewButtonColumn();
             dataGridViewButtonColumn1.HeaderText = "Комнаты";
-            dataGridViewButtonColumn1.Name = "COL_Settings";
+            dataGridViewButtonColumn1.Name = "COL_Rooms";
             dataGridViewButtonColumn1.Text = "Комнаты";
             dataGridViewButtonColumn1.UseColumnTextForButtonValue = true;
             DG_Hostels.Columns.Add(dataGridViewButtonColumn1);
@@ -95,6 +95,32 @@ namespace Supply
                     adminRoomsForm.ShowDialog();
                 }
                 
+            }
+
+            if (e.ColumnIndex == 6)//Удаление общежитий
+            {
+                using(SupplyDbContext db = new SupplyDbContext())
+                {
+                    int id = int.Parse(DG_Hostels.Rows[e.RowIndex].Cells[0].Value.ToString());
+                    Hostel hostel = db.Hostels.Where(x => x.ID == id).First();
+
+                    if (hostel != null)
+                    {
+                        DialogResult result = MessageBox.Show("Вы действительно хотите удалить общежитие и все связанные данные?", "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if(result==DialogResult.Yes)
+                        {
+                            db.Hostels.Remove(hostel);
+                            db.SaveChanges();
+                            MessageBox.Show("Общежитие удалено успешно и все данные связанные с ним удалены!");
+                            UpdateInfo();
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+
+                }
             }
         }
     }
