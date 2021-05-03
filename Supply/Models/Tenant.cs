@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Supply.Models
 {
@@ -14,12 +10,18 @@ namespace Supply.Models
         public string CreatedAt { get; set; }
         public string UpdatedAt { get; set; }
         [ForeignKey("TenantType")]
-        public int TenantTypeID { get; set; }
+        public int? TenantTypeID { get; set; }
         public TenantType TenantType { get; set; }
         [ForeignKey("Room")]
         public int RoomID { get; set; }
         public Room Room { get; set; }
         public Identification Identification { get; set; }
+        public Order Order { get; set; }
+        public ICollection<AdditionalInformation> AdditionalInformation { get; set; }
+        public Tenant()
+        {
+            AdditionalInformation = new List<AdditionalInformation>();
+        }
 
     }
 }

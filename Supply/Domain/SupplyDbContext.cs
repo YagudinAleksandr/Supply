@@ -31,5 +31,8 @@ namespace Supply.Domain
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
         public DbSet<Identification> Identifications { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<AdditionalInformationType> AdditionalInformationTypes { get; set; }
+        public DbSet<AdditionalInformation> AdditionalInformation { get; set; }
     }
 }

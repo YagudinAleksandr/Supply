@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
@@ -243,13 +244,28 @@ namespace Supply
 
                         for(int k=0;k<rooms.Count;k++)
                         {
+                            int roomId = rooms[k].ID;
+                            var tenants = db.Tenants.Where(x => x.RoomID == roomId).Where(y=>y.Status==true).Include(p=>p.Identification).ToList();
                             roomNodes[k] = new TreeNode();
-                            roomNodes[k].Text = $"Комната № {rooms[k].Name} (Количество мест-{rooms[k].Places} / Использовано-)";
-                            roomNodes[k].Tag = rooms[k].ID;
+                            roomNodes[k].Text = $"Комната № {rooms[k].Name} (Количество мест-{rooms[k].Places} / Использовано-{tenants.Count})";
+                            roomNodes[k].Tag = roomId;
 
-                            
-                            CreateConetxtMenuForNode("room", out contextMenuForNode);
-                            roomNodes[k].ContextMenu = contextMenuForNode;
+                            TreeNode[] tenantNodes = new TreeNode[tenants.Count];
+
+                            for(int l=0;l<tenants.Count;l++)
+                            {
+                                tenantNodes[l] = new TreeNode();
+                                tenantNodes[l].Text = tenants[l].Identification.Surename + " " + tenants[l].Identification.Name;
+                            }
+
+                            roomNodes[k].Nodes.AddRange(tenantNodes);
+
+                            if(tenants.Count!=rooms[k].Places || tenants.Count<rooms[k].Places)
+                            {
+                                CreateConetxtMenuForNode("room", out contextMenuForNode);
+                                roomNodes[k].ContextMenu = contextMenuForNode;
+                            }
+
                         }
                         flatNodes[j].Nodes.AddRange(roomNodes);
                     }
@@ -276,10 +292,11 @@ namespace Supply
 
         private void AddHumanHandler(object sender, EventArgs e)
         {
-            if (TV_HostelInformation.SelectedNode != null)
+            if (TV_HostelInformation.SelectedNode.Tag != null)
             {
                 int room_id = Convert.ToInt32(TV_HostelInformation.SelectedNode.Tag.ToString());
-                MessageBox.Show(room_id.ToString());
+                TenantAdd tenantAdd = new TenantAdd(room_id);
+                tenantAdd.ShowDialog();
                 CreateTreeOnTreeView(_hostelID);
             }
 

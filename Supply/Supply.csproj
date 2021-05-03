@@ -236,7 +236,21 @@
     <Compile Include="Migrations\202105022350510_CreateTenantInformation.designer.cs">
       <DependentUpon>202105022350510_CreateTenantInformation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105031929539_CreaeteOrderModel.cs" />
+    <Compile Include="Migrations\202105031929539_CreaeteOrderModel.designer.cs">
+      <DependentUpon>202105031929539_CreaeteOrderModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105031944476_Additional.cs" />
+    <Compile Include="Migrations\202105031944476_Additional.designer.cs">
+      <DependentUpon>202105031944476_Additional.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105032016159_UpdateTenant.cs" />
+    <Compile Include="Migrations\202105032016159_UpdateTenant.designer.cs">
+      <DependentUpon>202105032016159_UpdateTenant.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AdditionalInformation.cs" />
+    <Compile Include="Models\AdditionalInformationType.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\DocumentType.cs" />
     <Compile Include="Models\Enterance.cs" />
@@ -246,6 +260,7 @@
     <Compile Include="Models\License.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\Manager.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\Property.cs" />
     <Compile Include="Models\Role.cs" />
@@ -256,6 +271,12 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TenantAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TenantAdd.Designer.cs">
+      <DependentUpon>TenantAdd.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AdminAddressesForm.resx">
       <DependentUpon>AdminAddressesForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -337,6 +358,15 @@
     <EmbeddedResource Include="Migrations\202105022350510_CreateTenantInformation.resx">
       <DependentUpon>202105022350510_CreateTenantInformation.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105031929539_CreaeteOrderModel.resx">
+      <DependentUpon>202105031929539_CreaeteOrderModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105031944476_Additional.resx">
+      <DependentUpon>202105031944476_Additional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105032016159_UpdateTenant.resx">
+      <DependentUpon>202105032016159_UpdateTenant.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -346,6 +376,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="TenantAdd.resx">
+      <DependentUpon>TenantAdd.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
