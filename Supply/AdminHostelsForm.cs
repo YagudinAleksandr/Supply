@@ -9,9 +9,11 @@ namespace Supply
 {
     public partial class AdminHostelsForm : Form
     {
-        public AdminHostelsForm()
+        private int _userID;
+        public AdminHostelsForm(int userID)
         {
             InitializeComponent();
+            _userID = userID;
         }
 
         private void AdminHostelsForm_Shown(object sender, EventArgs e)
@@ -112,6 +114,17 @@ namespace Supply
                             db.Hostels.Remove(hostel);
                             db.SaveChanges();
                             MessageBox.Show("Общежитие удалено успешно и все данные связанные с ним удалены!");
+
+                            //Создаем LOG запись об удалении!
+                            Log logInfo = new Log();
+                            logInfo.ID = Guid.NewGuid();
+                            logInfo.UserID = _userID;
+                            logInfo.CreatedAt = DateTime.Now.ToString();
+                            logInfo.Type = "Удаление данных";
+                            logInfo.Caption = $"Удален объект из базы HOSTELS и все сопутстствующие объекты! Объект:{hostel.Name},название:{hostel.Name}";
+                            db.Logs.Add(logInfo);
+                            db.SaveChanges();
+
                             UpdateInfo();
                         }
                         else

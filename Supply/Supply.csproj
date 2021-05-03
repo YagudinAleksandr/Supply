@@ -33,7 +33,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -224,18 +224,34 @@
     <Compile Include="Migrations\202104292051200_UpdatePayments.designer.cs">
       <DependentUpon>202104292051200_UpdatePayments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104302234174_CreateLogModel.cs" />
+    <Compile Include="Migrations\202104302234174_CreateLogModel.designer.cs">
+      <DependentUpon>202104302234174_CreateLogModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105022320389_CreateTenantModel.cs" />
+    <Compile Include="Migrations\202105022320389_CreateTenantModel.designer.cs">
+      <DependentUpon>202105022320389_CreateTenantModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105022350510_CreateTenantInformation.cs" />
+    <Compile Include="Migrations\202105022350510_CreateTenantInformation.designer.cs">
+      <DependentUpon>202105022350510_CreateTenantInformation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\DocumentType.cs" />
     <Compile Include="Models\Enterance.cs" />
     <Compile Include="Models\Flat.cs" />
     <Compile Include="Models\Hostel.cs" />
+    <Compile Include="Models\Identification.cs" />
     <Compile Include="Models\License.cs" />
+    <Compile Include="Models\Log.cs" />
     <Compile Include="Models\Manager.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\Property.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Room.cs" />
     <Compile Include="Models\RoomType.cs" />
+    <Compile Include="Models\Tenant.cs" />
     <Compile Include="Models\TenantType.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Program.cs" />
@@ -311,6 +327,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104292051200_UpdatePayments.resx">
       <DependentUpon>202104292051200_UpdatePayments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104302234174_CreateLogModel.resx">
+      <DependentUpon>202104302234174_CreateLogModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105022320389_CreateTenantModel.resx">
+      <DependentUpon>202105022320389_CreateTenantModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105022350510_CreateTenantInformation.resx">
+      <DependentUpon>202105022350510_CreateTenantInformation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

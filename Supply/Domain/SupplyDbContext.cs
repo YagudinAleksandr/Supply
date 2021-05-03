@@ -14,6 +14,7 @@ namespace Supply.Domain
                 : base(Properties.Settings.Default.DatabaseConnection.ToString())
         { }
 
+        public DbSet<Log> Logs { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Address> Adresses { get; set; }
@@ -27,5 +28,8 @@ namespace Supply.Domain
         public DbSet<TenantType> TenantTypes { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Property> PropertiesR { get; set; }
+        public DbSet<Tenant> Tenants { get; set; }
+        public DbSet<DocumentType> DocumentTypes { get; set; }
+        public DbSet<Identification> Identifications { get; set; }
     }
 }

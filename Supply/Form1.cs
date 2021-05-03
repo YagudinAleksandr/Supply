@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,10 +17,54 @@ namespace Supply
     {
         private User _user;
         private Role _role;
+        private int _hostelID;
         public Form1(User user)
         {
             InitializeComponent();
             _user = user;
+            _hostelID = 0;
+        }
+
+        #region MainWindowMainFunctions
+        private void AddressesInformation_Click(object sender, EventArgs e)
+        {
+            AdminAddressesForm adminAddressesForm = new AdminAddressesForm();
+            adminAddressesForm.ShowDialog();
+        }
+
+        private void managersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AdminManagersForm adminManagersForm = new AdminManagersForm();
+            adminManagersForm.ShowDialog();
+        }
+
+        private void Hostels_Click(object sender, EventArgs e)
+        {
+            AdminHostelsForm adminHostelsForm = new AdminHostelsForm(_user.ID);
+            adminHostelsForm.ShowDialog();
+            UpdateComboboxItems();
+        }
+
+        private void Users_Click(object sender, EventArgs e)
+        {
+            AdminUsersForm adminUsersForm = new AdminUsersForm(_user.ID);
+            adminUsersForm.Show();
+        }
+
+        private void RoomType_Click(object sender, EventArgs e)
+        {
+            AdminRoomTypes adminRoomTypes = new AdminRoomTypes();
+            adminRoomTypes.Show();
+        }
+        private void Payments_Click(object sender, EventArgs e)
+        {
+            AdminPaymentsForm adminPaymentsForm = new AdminPaymentsForm(_user.ID);
+            adminPaymentsForm.Show();
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
 
         private void CloseApp_Click(object sender, EventArgs e)
@@ -40,10 +85,11 @@ namespace Supply
         private void Form1_Shown(object sender, EventArgs e)
         {
             LB_UserName.Text = _user.Name;
+            TV_HostelInformation.Nodes.Clear();
 
             ToolStripMenuItem fileItem = new ToolStripMenuItem("Файл");
             ToolStripMenuItem settingItem = new ToolStripMenuItem("Настройки");
-
+            ToolStripMenuItem declaration = new ToolStripMenuItem("Отчеты");
 
 
             using (SupplyDbContext db = new SupplyDbContext())
@@ -67,13 +113,13 @@ namespace Supply
                 users.Click += Users_Click;
 
                 settingItem.DropDownItems.Add(addresses);
-                
+
                 settingItem.DropDownItems.Add(hostels);
                 settingItem.DropDownItems.Add(roomType);
                 settingItem.DropDownItems.Add(users);
             }
 
-            if(_role.Name=="ADMINISTRATOR" || _role.Name=="MANAGER")
+            if (_role.Name == "ADMINISTRATOR" || _role.Name == "MANAGER")
             {
                 ToolStripMenuItem managers = new ToolStripMenuItem("Менеджеры");
                 managers.Click += managersToolStripMenuItem_Click;
@@ -82,6 +128,9 @@ namespace Supply
                 ToolStripMenuItem payments = new ToolStripMenuItem("Тарифные планы");
                 payments.Click += Payments_Click;
                 settingItem.DropDownItems.Add(payments);
+
+                ToolStripMenuItem payOrder = new ToolStripMenuItem("Оплаты");
+                declaration.DropDownItems.Add(payOrder);
             }
 
             ToolStripMenuItem settingsWindow = new ToolStripMenuItem("Настройки");
@@ -100,41 +149,142 @@ namespace Supply
 
             menuStrip1.Items.Add(fileItem);
             menuStrip1.Items.Add(settingItem);
+            menuStrip1.Items.Add(declaration);
+
+            UpdateComboboxItems();
+        }
+        #endregion
+        #region FunctionsForNodeTree
+        private void UpdateComboboxItems()
+        {
+            TV_HostelInformation.Nodes.Clear();
+            LB_Hostels.DataSource = null;
+
+            using(SupplyDbContext db = new SupplyDbContext())
+            {
+                var hostels = db.Hostels.ToList();
+                for(int i=0;i<hostels.Count;i++)
+                {
+                    hostels[i].Name = $"Общежитие {hostels[i].Name}";
+                }
+                LB_Hostels.DataSource = hostels;
+                LB_Hostels.ValueMember = "ID";
+                LB_Hostels.DisplayMember = "Name";
+            }
         }
 
-        private void AddressesInformation_Click(object sender, EventArgs e)
+        private void LB_Hostels_SelectedIndexChanged(object sender, EventArgs e)
         {
-            AdminAddressesForm adminAddressesForm = new AdminAddressesForm();
-            adminAddressesForm.ShowDialog();
+            TV_HostelInformation.Nodes.Clear();
+            try
+            {
+                
+                if (LB_Hostels.SelectedValue != null)
+                {
+                    int.TryParse(LB_Hostels.SelectedValue.ToString(), out _hostelID);
+                    if (_hostelID != 0)
+                    {
+                        CreateTreeOnTreeView(_hostelID);
+                    }
+                }
+                
+                
+            }
+            catch
+            {
+                return;
+            }
         }
 
-        private void managersToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CreateTreeOnTreeView(int hostelIndex)
         {
-            AdminManagersForm adminManagersForm = new AdminManagersForm();
-            adminManagersForm.ShowDialog();
+            TV_HostelInformation.Nodes.Clear();
+
+            using(SupplyDbContext db = new SupplyDbContext())
+            {
+                Hostel hostel = db.Hostels.Where(id => id.ID == hostelIndex).First();
+
+                ContextMenu contextMenuForNode;//Variable for context menu
+
+                if (hostel==null)
+                {
+                    MessageBox.Show("Не существует общежития!");
+                    Log log = new Log() { ID = Guid.NewGuid(), Caption = $"Ошибка выборки из общежитий, объект с индексом {hostelIndex} не существует", Type = "Ошибка выборки", CreatedAt = DateTime.Now.ToString(), UserID = _user.ID };
+                    db.Logs.Add(log);
+                    db.SaveChanges();
+                    return;
+                }
+
+                TreeNode hostelNode = new TreeNode($"Общежитие {hostel.Name}");
+
+                var enterances = db.Enterances.Where(id => id.HostelId == hostel.ID).ToList();
+                TreeNode[] enteranceNodes = new TreeNode[enterances.Count];
+
+                for(int i=0;i<enterances.Count;i++)
+                {
+                    enteranceNodes[i] = new TreeNode();
+                    enteranceNodes[i].Text = $"Подъезд №{enterances[i].Name}";
+                    int enteranceIndex = enterances[i].ID;
+
+                    var flats = db.Flats.Where(id => id.Enterance_ID == enteranceIndex).ToList();
+                    TreeNode[] flatNodes = new TreeNode[flats.Count];
+
+                    for (int j = 0; j < flats.Count; j++)
+                    {
+                        flatNodes[j] = new TreeNode();
+                        flatNodes[j].Text = $"Этаж №{flats[j].Name}";
+
+                        int flatIndex = flats[j].ID;
+
+                        var rooms = db.Rooms.Where(id => id.FlatID == flatIndex).OrderBy(x=>x.Name).ToList();
+                        TreeNode[] roomNodes = new TreeNode[rooms.Count];
+
+                        
+
+                        for(int k=0;k<rooms.Count;k++)
+                        {
+                            roomNodes[k] = new TreeNode();
+                            roomNodes[k].Text = $"Комната № {rooms[k].Name} (Количество мест-{rooms[k].Places} / Использовано-)";
+                            roomNodes[k].Tag = rooms[k].ID;
+
+                            
+                            CreateConetxtMenuForNode("room", out contextMenuForNode);
+                            roomNodes[k].ContextMenu = contextMenuForNode;
+                        }
+                        flatNodes[j].Nodes.AddRange(roomNodes);
+                    }
+                    enteranceNodes[i].Nodes.AddRange(flatNodes);
+                }
+
+                hostelNode.Nodes.AddRange(enteranceNodes);
+
+                TV_HostelInformation.Nodes.Add(hostelNode);
+                TV_HostelInformation.ExpandAll();
+            }
+        }
+        private void CreateConetxtMenuForNode(string menuType, out ContextMenu contextMenu)
+        {
+            contextMenu = new ContextMenu();
+
+            switch(menuType)
+            {
+                case "room":
+                    contextMenu.MenuItems.Add("Добавить жильца",AddHumanHandler);
+                    break;
+            }
         }
 
-        private void Hostels_Click(object sender, EventArgs e)
+        private void AddHumanHandler(object sender, EventArgs e)
         {
-            AdminHostelsForm adminHostelsForm = new AdminHostelsForm();
-            adminHostelsForm.ShowDialog();
-        }
+            if (TV_HostelInformation.SelectedNode != null)
+            {
+                int room_id = Convert.ToInt32(TV_HostelInformation.SelectedNode.Tag.ToString());
+                MessageBox.Show(room_id.ToString());
+                CreateTreeOnTreeView(_hostelID);
+            }
 
-        private void Users_Click(object sender, EventArgs e)
-        {
-            AdminUsersForm adminUsersForm = new AdminUsersForm(_user.ID);
-            adminUsersForm.Show();
         }
-
-        private void RoomType_Click(object sender, EventArgs e)
-        {
-            AdminRoomTypes adminRoomTypes = new AdminRoomTypes();
-            adminRoomTypes.Show();
-        }
-        private void Payments_Click(object sender, EventArgs e)
-        {
-            AdminPaymentsForm adminPaymentsForm = new AdminPaymentsForm(_user.ID);
-            adminPaymentsForm.Show();
-        }
+        
+        #endregion
     }
 }

@@ -33,6 +33,12 @@ namespace Supply
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.LB_UserName = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.LB_Hostels = new System.Windows.Forms.ListBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.TV_HostelInformation = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -61,11 +67,72 @@ namespace Supply
             this.label1.TabIndex = 2;
             this.label1.Text = "Вы вошли как:";
             // 
+            // LB_Hostels
+            // 
+            this.LB_Hostels.FormattingEnabled = true;
+            this.LB_Hostels.Location = new System.Drawing.Point(15, 69);
+            this.LB_Hostels.Name = "LB_Hostels";
+            this.LB_Hostels.Size = new System.Drawing.Size(183, 82);
+            this.LB_Hostels.TabIndex = 4;
+            this.LB_Hostels.SelectedIndexChanged += new System.EventHandler(this.LB_Hostels_SelectedIndexChanged);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(15, 158);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(183, 31);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(15, 195);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(183, 31);
+            this.button2.TabIndex = 6;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(15, 232);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(183, 31);
+            this.button3.TabIndex = 7;
+            this.button3.Text = "button3";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(15, 269);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(183, 31);
+            this.button4.TabIndex = 8;
+            this.button4.Text = "button4";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // TV_HostelInformation
+            // 
+            this.TV_HostelInformation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TV_HostelInformation.Location = new System.Drawing.Point(205, 69);
+            this.TV_HostelInformation.Name = "TV_HostelInformation";
+            this.TV_HostelInformation.Size = new System.Drawing.Size(615, 404);
+            this.TV_HostelInformation.TabIndex = 9;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(832, 485);
+            this.Controls.Add(this.TV_HostelInformation);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.LB_Hostels);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.LB_UserName);
             this.Controls.Add(this.menuStrip1);
@@ -75,6 +142,7 @@ namespace Supply
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Менеджер общежитий";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Shown += new System.EventHandler(this.Form1_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -86,6 +154,12 @@ namespace Supply
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.Label LB_UserName;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ListBox LB_Hostels;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.TreeView TV_HostelInformation;
     }
 }
 

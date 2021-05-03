@@ -46,6 +46,14 @@ namespace Supply
                     return;
                 }
                 _user = user;
+
+                Log logInfo = new Log();
+                logInfo.ID = Guid.NewGuid();
+                logInfo.Type = "Вход в систему";
+                logInfo.Caption = $"Удачный вход в систему пользователя: {_user.ID} - {_user.Name}";
+                logInfo.CreatedAt = DateTime.Now.ToString();
+                db.Logs.Add(logInfo);
+                db.SaveChanges();
             }
 
             TB_Login.Text = String.Empty;

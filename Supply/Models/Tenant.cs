@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Supply.Models
+{
+    public class Tenant
+    {
+        public int ID { get; set; }
+        public bool Status { get; set; }
+        public string CreatedAt { get; set; }
+        public string UpdatedAt { get; set; }
+        [ForeignKey("TenantType")]
+        public int TenantTypeID { get; set; }
+        public TenantType TenantType { get; set; }
+        [ForeignKey("Room")]
+        public int RoomID { get; set; }
+        public Room Room { get; set; }
+        public Identification Identification { get; set; }
+
+    }
+}

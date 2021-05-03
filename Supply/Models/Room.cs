@@ -20,9 +20,11 @@ namespace Supply.Models
         public Flat Flat { get; set; }
 
         public ICollection<Property> Properties { get; set; }
+        public ICollection<Tenant> Tenants { get; set; }
         public Room()
         {
             Properties = new List<Property>();
+            Tenants = new List<Tenant>();
         }
 
     }
