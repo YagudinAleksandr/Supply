@@ -48,6 +48,14 @@ namespace Supply
 
             using(SupplyDbContext db = new SupplyDbContext())
             {
+                //Проверка подключения к базе данных
+                if(!db.Database.Exists())
+                {
+                    MessageBox.Show("Невозможно подключиться к базе данных!");
+                    Application.Exit();
+                }
+
+                //Начало проверки на существование пользователя
                 User user = db.Users.Where(x => x.Login == TB_Login.Text).FirstOrDefault();
                 if(user==null)
                 {
@@ -81,6 +89,12 @@ namespace Supply
             mainForm.FormClosed += (object s, FormClosedEventArgs ev) => { this.Show(); };
         }
 
+        
+        /// <summary>
+        /// Метод создания хэша 
+        /// </summary>
+        /// <param name="password">Строка с паролем</param>
+        /// <returns>Хэш</returns>
         string GetHashPass(string password)
         {
             //переводим строку в байт-массим  

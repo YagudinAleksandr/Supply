@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Libraries.WordSystem;
+using System.Data.Entity;
 
 namespace Supply
 {
@@ -53,9 +54,24 @@ namespace Supply
             
             using(SupplyDbContext db = new SupplyDbContext())
             {
-                WordDocument orderDoc = new WordDocument();
-
-                var orders = db.Orders.ToList();
+                var enterances = db.Enterances.Where(x => x.HostelId == _hostelIndex).ToList();
+                foreach(var enterance in enterances)
+                {
+                    var flats = db.Flats.Where(x => x.Enterance_ID == enterance.ID).ToList();
+                    foreach(var flat in flats)
+                    {
+                        var rooms = db.Rooms.Where(x => x.FlatID == flat.ID).ToList();
+                        foreach(var room in rooms)
+                        {
+                            var orders = db.Orders.Where(x => x.RoomID == room.ID).Where(y => y.StartDate == TB_StartOrder.Text).ToList();
+                            foreach(var order in orders)
+                            {
+                                WordDocument orderModel = new WordDocument();
+                                
+                            }
+                        }
+                    }
+                }
             }
             GC.Collect();
         }

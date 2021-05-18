@@ -11,9 +11,9 @@ namespace Supply.Domain
 {
     public class SupplyDbContext : DbContext
     {
-        
+
         public SupplyDbContext()
-                : base(Properties.Settings.Default.DatabaseConnection.ToString())
+                : base(AppSettings.GetTemplateSetting("connectionString"))
         { }
         
         public DbSet<Log> Logs { get; set; }

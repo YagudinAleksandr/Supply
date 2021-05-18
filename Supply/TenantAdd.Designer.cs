@@ -56,6 +56,7 @@ namespace Supply
             this.BTN_Save = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.BTN_AdditionalInformation = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -280,11 +281,22 @@ namespace Supply
             this.comboBox1.TabIndex = 25;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
+            // BTN_AdditionalInformation
+            // 
+            this.BTN_AdditionalInformation.Location = new System.Drawing.Point(275, 356);
+            this.BTN_AdditionalInformation.Name = "BTN_AdditionalInformation";
+            this.BTN_AdditionalInformation.Size = new System.Drawing.Size(204, 23);
+            this.BTN_AdditionalInformation.TabIndex = 26;
+            this.BTN_AdditionalInformation.Text = "Дополнительная информация";
+            this.BTN_AdditionalInformation.UseVisualStyleBackColor = true;
+            this.BTN_AdditionalInformation.Click += new System.EventHandler(this.BTN_AdditionalInformation_Click);
+            // 
             // TenantAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(605, 440);
+            this.Controls.Add(this.BTN_AdditionalInformation);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.BTN_Save);
@@ -349,5 +361,6 @@ namespace Supply
         private System.Windows.Forms.Button BTN_Save;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button BTN_AdditionalInformation;
     }
 }

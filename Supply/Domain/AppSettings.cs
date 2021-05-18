@@ -11,7 +11,7 @@ namespace Supply.Domain
     {
         //Data Source = EASYNOTE\SQLEXPRESS;Initial Catalog = SupplyMain; Persist Security Info=True;User ID =; Password=c9vjCdm7
         private static XmlDocument userSettingsXmlFile;
-        #region Main functions
+        
         private static void CreateXmlSettingsFile()
         {
             AppDomain domain = AppDomain.CurrentDomain;
@@ -73,13 +73,7 @@ namespace Supply.Domain
                 return null;
             }
         }
-        #endregion
-
-        #region DatabaseSettings
-
-        #endregion
-
-        #region Templates settings
+        
         public static string GetTemplateSetting(string field)
         {
             AppDomain domain = AppDomain.CurrentDomain;
@@ -99,6 +93,10 @@ namespace Supply.Domain
                             }
                         }
                     }
+                    if (settingsNode.Name == "connectionString" && field == "connectionString") 
+                    {
+                        return settingsNode.InnerText;
+                    }
                 }
             }
             else
@@ -108,7 +106,7 @@ namespace Supply.Domain
 
             return string.Empty;
         }
-        #endregion
+        
     }
 
 }

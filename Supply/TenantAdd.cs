@@ -113,6 +113,7 @@ namespace Supply
                     orderAddForm.ShowDialog();
                     this.Show();
                     MessageBox.Show("Жилец добавлен успешно!");
+                    GC.Collect();
                     this.Close();
                 }
                 
@@ -132,6 +133,12 @@ namespace Supply
                 }
                 MessageBox.Show(err);
             }
+        }
+
+        private void BTN_AdditionalInformation_Click(object sender, EventArgs e)
+        {
+            TenantAdditionalInformationAdd tenantAdditionalInformationAdd = new TenantAdditionalInformationAdd(_tenantID);
+            tenantAdditionalInformationAdd.ShowDialog();
         }
     }
 }

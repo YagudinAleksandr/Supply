@@ -65,7 +65,7 @@ namespace Supply
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Application.Exit();
+            //Application.Exit();
         }
 
         private void CloseApp_Click(object sender, EventArgs e)
@@ -317,44 +317,52 @@ namespace Supply
 
         private void DisabledTenant(object sender, EventArgs e)
         {
-            if (TV_HostelInformation.SelectedNode.Tag != null)
+            try
             {
-                DialogResult result = MessageBox.Show("Вы дейтвительно хотите удалить жильца", "Удалить жильца?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if(result==DialogResult.Yes)
+                if (TV_HostelInformation.SelectedNode.Tag != null)
                 {
-                    int tenantId = Convert.ToInt32(TV_HostelInformation.SelectedNode.Tag.ToString());
-                    using (SupplyDbContext db = new SupplyDbContext())
+                    DialogResult result = MessageBox.Show("Вы дейтвительно хотите удалить жильца", "Удалить жильца?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (result == DialogResult.Yes)
                     {
-                        Tenant tenant = db.Tenants.Where(x => x.ID == tenantId).First();
-                        tenant.Status = false;
-                        tenant.UpdatedAt = DateTime.Now.ToString();
-                        try
+                        int tenantId = Convert.ToInt32(TV_HostelInformation.SelectedNode.Tag.ToString());
+                        using (SupplyDbContext db = new SupplyDbContext())
                         {
-                            db.Entry(tenant).State = System.Data.Entity.EntityState.Modified;
-                            db.SaveChanges();
-                            MessageBox.Show("Жилец удален!");
-                            CreateTreeOnTreeView(_hostelID);
-                        }
-                        catch(Exception ex)
-                        {
-                            Log log = new Log();
-                            log.ID = Guid.NewGuid();
-                            log.Type = "ERROR";
-                            log.CreatedAt = DateTime.Now.ToString();
-                            log.UserID = _user.ID;
-                            log.Caption = ex.Message;
+                            Tenant tenant = db.Tenants.Where(x => x.ID == tenantId).First();
+                            tenant.Status = false;
+                            tenant.UpdatedAt = DateTime.Now.ToString();
+                            try
+                            {
+                                db.Entry(tenant).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
+                                MessageBox.Show("Жилец удален!");
+                                CreateTreeOnTreeView(_hostelID);
+                            }
+                            catch (Exception ex)
+                            {
+                                Log log = new Log();
+                                log.ID = Guid.NewGuid();
+                                log.Type = "ERROR";
+                                log.CreatedAt = DateTime.Now.ToString();
+                                log.UserID = _user.ID;
+                                log.Caption = ex.Message;
 
-                            db.Logs.Add(log);
-                            db.SaveChanges();
-                            MessageBox.Show(ex.Message);
-                            return;
-                            
+                                db.Logs.Add(log);
+                                db.SaveChanges();
+                                MessageBox.Show(ex.Message);
+                                return;
+
+                            }
                         }
                     }
+
+
                 }
-                
-                
             }
+            catch
+            {
+                return;
+            }
+           
         }
         private void AddHumanMainOrder(object sender, EventArgs e)
         {

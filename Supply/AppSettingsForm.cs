@@ -21,9 +21,34 @@ namespace Supply
         private void AppSettingsForm_Load(object sender, EventArgs e)
         {
 
-            TB_Directory.Text = AppSettings.GetTemplateSetting("template1");
-
+            TB_StudentOrder.Text = AppSettings.GetTemplateSetting("template1");
+            TB_WorkerOrder.Text = AppSettings.GetTemplateSetting("template2");
+            TB_DatabaseConnectionString.Text = AppSettings.GetTemplateSetting("connectionString");
             
+        }
+
+        private void BTN_Save_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("После сохранения приложение будет перезапущено!", "Предкпреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if(result==DialogResult.Yes)
+            {
+                Application.Restart();
+            }
+            
+        }
+
+        private void BTN_Browse_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openDatabaseDirectory = new OpenFileDialog())
+            {
+                openDatabaseDirectory.Filter = "Microsoft Word (*.docx)|*.docx"; 
+
+                if (openDatabaseDirectory.ShowDialog() == DialogResult.OK)
+                {
+                    TB_StudentOrder.Text = openDatabaseDirectory.FileName;
+                }
+            }
         }
     }
 }

@@ -64,6 +64,7 @@ namespace Libraries.WordSystem
         }
         public bool CloseWordTemplate()
         {
+            GC.Collect();
             return true;
             
         }

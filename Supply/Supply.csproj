@@ -308,6 +308,12 @@
     <Compile Include="TenantAdd.Designer.cs">
       <DependentUpon>TenantAdd.cs</DependentUpon>
     </Compile>
+    <Compile Include="TenantAdditionalInformationAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TenantAdditionalInformationAdd.Designer.cs">
+      <DependentUpon>TenantAdditionalInformationAdd.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AdminAddressesForm.resx">
       <DependentUpon>AdminAddressesForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -424,6 +430,9 @@
     </Compile>
     <EmbeddedResource Include="TenantAdd.resx">
       <DependentUpon>TenantAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TenantAdditionalInformationAdd.resx">
+      <DependentUpon>TenantAdditionalInformationAdd.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
