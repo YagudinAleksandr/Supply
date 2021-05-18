@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
-using System.Drawing;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Supply.Domain;
 using Supply.Models;
@@ -45,7 +39,13 @@ namespace Supply
             adminHostelsForm.ShowDialog();
             UpdateComboboxItems();
         }
-
+        private void Tenants_Click(object sender, EventArgs e)
+        {
+            AdminTenantsForm adminTenantsForm = new AdminTenantsForm();
+            this.Hide();
+            adminTenantsForm.ShowDialog();
+            this.Show();
+        }
         private void Users_Click(object sender, EventArgs e)
         {
             AdminUsersForm adminUsersForm = new AdminUsersForm(_user.ID);
@@ -80,7 +80,8 @@ namespace Supply
 
         private void AppSettings_Click(object sender, EventArgs e)
         {
-
+            AppSettingsForm appSettingsForm = new AppSettingsForm();
+            appSettingsForm.ShowDialog();
         }
 
         private void Form1_Shown(object sender, EventArgs e)
@@ -107,6 +108,9 @@ namespace Supply
                 ToolStripMenuItem hostels = new ToolStripMenuItem("Общежития");
                 hostels.Click += Hostels_Click;
 
+                ToolStripMenuItem tenant = new ToolStripMenuItem("Жильцы");
+                tenant.Click += Tenants_Click;
+
                 ToolStripMenuItem roomType = new ToolStripMenuItem("Типы комнат");
                 roomType.Click += RoomType_Click;
 
@@ -117,6 +121,7 @@ namespace Supply
 
                 settingItem.DropDownItems.Add(hostels);
                 settingItem.DropDownItems.Add(roomType);
+                settingItem.DropDownItems.Add(tenant);
                 settingItem.DropDownItems.Add(users);
             }
 
@@ -135,7 +140,7 @@ namespace Supply
             }
 
             ToolStripMenuItem settingsWindow = new ToolStripMenuItem("Настройки");
-            settingItem.Click += AppSettings_Click;
+            settingsWindow.Click += AppSettings_Click;
 
             settingItem.DropDownItems.Add(settingsWindow);
 
@@ -221,7 +226,7 @@ namespace Supply
                 var enterances = db.Enterances.Where(id => id.HostelId == hostel.ID).ToList();
                 TreeNode[] enteranceNodes = new TreeNode[enterances.Count];
 
-                for(int i=0;i<enterances.Count;i++)
+                for (int i = 0; i < enterances.Count; i++) 
                 {
                     enteranceNodes[i] = new TreeNode();
                     enteranceNodes[i].Text = $"Подъезд №{enterances[i].Name}";
@@ -240,9 +245,9 @@ namespace Supply
                         var rooms = db.Rooms.Where(id => id.FlatID == flatIndex).OrderBy(x=>x.Name).ToList();
                         TreeNode[] roomNodes = new TreeNode[rooms.Count];
 
-                        
 
-                        for(int k=0;k<rooms.Count;k++)
+
+                        for (int k = 0; k < rooms.Count; k++) 
                         {
                             int roomId = rooms[k].ID;
                             var tenants = db.Tenants.Where(x => x.RoomID == roomId).Where(y=>y.Status==true).Include(p=>p.Identification).ToList();
@@ -252,10 +257,13 @@ namespace Supply
 
                             TreeNode[] tenantNodes = new TreeNode[tenants.Count];
 
-                            for(int l=0;l<tenants.Count;l++)
+                            for (int l = 0; l < tenants.Count; l++) 
                             {
                                 tenantNodes[l] = new TreeNode();
                                 tenantNodes[l].Text = tenants[l].Identification.Surename + " " + tenants[l].Identification.Name;
+                                tenantNodes[l].Tag = tenants[l].ID;
+                                CreateConetxtMenuForNode("tenant", out contextMenuForNode);
+                                tenantNodes[l].ContextMenu = contextMenuForNode;
                             }
 
                             roomNodes[k].Nodes.AddRange(tenantNodes);
@@ -287,6 +295,12 @@ namespace Supply
                 case "room":
                     contextMenu.MenuItems.Add("Добавить жильца",AddHumanHandler);
                     break;
+                case "tenant":
+                    contextMenu.MenuItems.Add("Изменить");
+                    contextMenu.MenuItems.Add("Сформировать договор", AddHumanMainOrder);
+                    contextMenu.MenuItems.Add("Расторжение договора");
+                    contextMenu.MenuItems.Add("Удалить", DisabledTenant);
+                    break;
             }
         }
 
@@ -299,9 +313,63 @@ namespace Supply
                 tenantAdd.ShowDialog();
                 CreateTreeOnTreeView(_hostelID);
             }
-
         }
-        
+
+        private void DisabledTenant(object sender, EventArgs e)
+        {
+            if (TV_HostelInformation.SelectedNode.Tag != null)
+            {
+                DialogResult result = MessageBox.Show("Вы дейтвительно хотите удалить жильца", "Удалить жильца?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if(result==DialogResult.Yes)
+                {
+                    int tenantId = Convert.ToInt32(TV_HostelInformation.SelectedNode.Tag.ToString());
+                    using (SupplyDbContext db = new SupplyDbContext())
+                    {
+                        Tenant tenant = db.Tenants.Where(x => x.ID == tenantId).First();
+                        tenant.Status = false;
+                        tenant.UpdatedAt = DateTime.Now.ToString();
+                        try
+                        {
+                            db.Entry(tenant).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+                            MessageBox.Show("Жилец удален!");
+                            CreateTreeOnTreeView(_hostelID);
+                        }
+                        catch(Exception ex)
+                        {
+                            Log log = new Log();
+                            log.ID = Guid.NewGuid();
+                            log.Type = "ERROR";
+                            log.CreatedAt = DateTime.Now.ToString();
+                            log.UserID = _user.ID;
+                            log.Caption = ex.Message;
+
+                            db.Logs.Add(log);
+                            db.SaveChanges();
+                            MessageBox.Show(ex.Message);
+                            return;
+                            
+                        }
+                    }
+                }
+                
+                
+            }
+        }
+        private void AddHumanMainOrder(object sender, EventArgs e)
+        {
+            if (TV_HostelInformation.SelectedNode.Tag != null) 
+            {
+
+            }
+        }
+
         #endregion
+
+        private void BTN_CreateOrders_Click(object sender, EventArgs e)
+        {
+            OrderCreateForm orderCreateForm = new OrderCreateForm();
+            orderCreateForm.ShowDialog();
+        }
     }
 }

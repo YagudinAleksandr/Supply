@@ -31,16 +31,17 @@ namespace Supply
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminUsersForm));
             this.DG_Users = new System.Windows.Forms.DataGridView();
-            this.BTN_OpenUserAddForm = new System.Windows.Forms.Button();
             this.COL_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Login = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Role = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BTN_OpenUserAddForm = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DG_Users)).BeginInit();
             this.SuspendLayout();
             // 
             // DG_Users
             // 
+            this.DG_Users.AllowUserToAddRows = false;
             this.DG_Users.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DG_Users.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.COL_ID,
@@ -51,16 +52,6 @@ namespace Supply
             this.DG_Users.Name = "DG_Users";
             this.DG_Users.Size = new System.Drawing.Size(775, 379);
             this.DG_Users.TabIndex = 0;
-            // 
-            // BTN_OpenUserAddForm
-            // 
-            this.BTN_OpenUserAddForm.Location = new System.Drawing.Point(713, 415);
-            this.BTN_OpenUserAddForm.Name = "BTN_OpenUserAddForm";
-            this.BTN_OpenUserAddForm.Size = new System.Drawing.Size(75, 23);
-            this.BTN_OpenUserAddForm.TabIndex = 1;
-            this.BTN_OpenUserAddForm.Text = "Добавить";
-            this.BTN_OpenUserAddForm.UseVisualStyleBackColor = true;
-            this.BTN_OpenUserAddForm.Click += new System.EventHandler(this.BTN_OpenUserAddForm_Click);
             // 
             // COL_ID
             // 
@@ -86,6 +77,16 @@ namespace Supply
             this.COL_Role.HeaderText = "Роль";
             this.COL_Role.Name = "COL_Role";
             this.COL_Role.ReadOnly = true;
+            // 
+            // BTN_OpenUserAddForm
+            // 
+            this.BTN_OpenUserAddForm.Location = new System.Drawing.Point(713, 415);
+            this.BTN_OpenUserAddForm.Name = "BTN_OpenUserAddForm";
+            this.BTN_OpenUserAddForm.Size = new System.Drawing.Size(75, 23);
+            this.BTN_OpenUserAddForm.TabIndex = 1;
+            this.BTN_OpenUserAddForm.Text = "Добавить";
+            this.BTN_OpenUserAddForm.UseVisualStyleBackColor = true;
+            this.BTN_OpenUserAddForm.Click += new System.EventHandler(this.BTN_OpenUserAddForm_Click);
             // 
             // AdminUsersForm
             // 

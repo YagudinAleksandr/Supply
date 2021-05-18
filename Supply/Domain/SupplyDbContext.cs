@@ -5,15 +5,17 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace Supply.Domain
 {
     public class SupplyDbContext : DbContext
     {
+        
         public SupplyDbContext()
                 : base(Properties.Settings.Default.DatabaseConnection.ToString())
         { }
-
+        
         public DbSet<Log> Logs { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }

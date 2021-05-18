@@ -5,6 +5,7 @@ using System.Text;
 using Supply.Domain;
 using Supply.Models;
 using System.Linq;
+using System.IO;
 
 namespace Supply
 {
@@ -13,7 +14,22 @@ namespace Supply
         private User _user;
         public LoginForm()
         {
+            AppDomain domain = AppDomain.CurrentDomain;
+            string directory = domain.BaseDirectory;
+
+            
+
             InitializeComponent();
+
+            if (File.Exists(directory + "UserSettingsFile.xml"))
+            {
+                AppSettings.GetTemplateSetting("connectionString");
+            }
+            else
+            {
+                AppSettingsForm appSettingsForm = new AppSettingsForm();
+                appSettingsForm.ShowDialog();
+            }
         }
 
         private void BT_Enter_Click(object sender, EventArgs e)

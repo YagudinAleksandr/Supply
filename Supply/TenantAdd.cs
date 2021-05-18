@@ -108,6 +108,10 @@ namespace Supply
                     db.Entry(tenant).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
 
+                    OrderAddForm orderAddForm = new OrderAddForm(tenant);
+                    this.Hide();
+                    orderAddForm.ShowDialog();
+                    this.Show();
                     MessageBox.Show("Жилец добавлен успешно!");
                     this.Close();
                 }

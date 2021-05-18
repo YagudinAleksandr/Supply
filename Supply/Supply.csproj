@@ -183,6 +183,12 @@
     <Compile Include="AdminRoomTypesAdd.Designer.cs">
       <DependentUpon>AdminRoomTypesAdd.cs</DependentUpon>
     </Compile>
+    <Compile Include="AdminTenantsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminTenantsForm.Designer.cs">
+      <DependentUpon>AdminTenantsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="AdminUsersForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -195,6 +201,13 @@
     <Compile Include="AdminUsersFormAdd.Designer.cs">
       <DependentUpon>AdminUsersFormAdd.cs</DependentUpon>
     </Compile>
+    <Compile Include="AppSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AppSettingsForm.Designer.cs">
+      <DependentUpon>AppSettingsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\AppSettings.cs" />
     <Compile Include="Domain\SupplyDbContext.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -269,6 +282,24 @@
     <Compile Include="Models\Tenant.cs" />
     <Compile Include="Models\TenantType.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="OrderAddForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrderAddForm.Designer.cs">
+      <DependentUpon>OrderAddForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OrderCreateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrderCreateForm.Designer.cs">
+      <DependentUpon>OrderCreateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Preloader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Preloader.Designer.cs">
+      <DependentUpon>Preloader.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TenantAdd.cs">
@@ -325,11 +356,17 @@
     <EmbeddedResource Include="AdminRoomTypesAdd.resx">
       <DependentUpon>AdminRoomTypesAdd.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AdminTenantsForm.resx">
+      <DependentUpon>AdminTenantsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AdminUsersForm.resx">
       <DependentUpon>AdminUsersForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AdminUsersFormAdd.resx">
       <DependentUpon>AdminUsersFormAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AppSettingsForm.resx">
+      <DependentUpon>AppSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -366,6 +403,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105032016159_UpdateTenant.resx">
       <DependentUpon>202105032016159_UpdateTenant.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderAddForm.resx">
+      <DependentUpon>OrderAddForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderCreateForm.resx">
+      <DependentUpon>OrderCreateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Preloader.resx">
+      <DependentUpon>Preloader.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -408,6 +454,13 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Libraries\Libraries.csproj">
+      <Project>{2960daff-8ec0-4694-8fcb-5782dead307c}</Project>
+      <Name>Libraries</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
