@@ -22,18 +22,5 @@ namespace Supply.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=EASYNOTE\\SQLEXPRESS;Initial Catalog=SupplyMain;Integrated Security=Tr" +
-            "ue")]
-        public string DatabaseConnection {
-            get {
-                return ((string)(this["DatabaseConnection"]));
-            }
-            set {
-                this["DatabaseConnection"] = value;
-            }
-        }
     }
 }
