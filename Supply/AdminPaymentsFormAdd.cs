@@ -69,6 +69,7 @@ namespace Supply
                 payment.Status = true;
                 payment.Rent = decimal.Parse(TB_Coast.Text);
                 payment.TenantTypeID = _tenantTypeID;
+                payment.PaymentType = CB_PeriodOfPayment.SelectedItem.ToString();
                 
                 try
                 {

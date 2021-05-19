@@ -11,11 +11,15 @@ namespace Supply.Domain
 {
     public class SupplyDbContext : DbContext
     {
-
+        /*
         public SupplyDbContext()
                 : base(AppSettings.GetTemplateSetting("connectionString"))
+        { }*/
+
+        public SupplyDbContext()
+                : base(Properties.Settings.Default.connect)
         { }
-        
+
         public DbSet<Log> Logs { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }

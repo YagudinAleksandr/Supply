@@ -31,6 +31,7 @@ namespace Supply.Models
         public string GivenDate { get; set; }
         [Required]
         public string Issued { get; set; }
+        public string Code { get; set; }
         [Required]
         public string Cityzenship { get; set; }
         [Required]

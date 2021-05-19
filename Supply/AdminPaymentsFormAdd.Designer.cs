@@ -43,6 +43,8 @@ namespace Supply
             this.BTN_Save = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.CB_TenantTypes = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.CB_PeriodOfPayment = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -75,7 +77,7 @@ namespace Supply
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 139);
+            this.label4.Location = new System.Drawing.Point(17, 183);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(67, 13);
             this.label4.TabIndex = 3;
@@ -84,7 +86,7 @@ namespace Supply
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(191, 139);
+            this.label5.Location = new System.Drawing.Point(195, 183);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(74, 13);
             this.label5.TabIndex = 4;
@@ -114,7 +116,7 @@ namespace Supply
             // CB_Hostels
             // 
             this.CB_Hostels.FormattingEnabled = true;
-            this.CB_Hostels.Location = new System.Drawing.Point(86, 136);
+            this.CB_Hostels.Location = new System.Drawing.Point(90, 180);
             this.CB_Hostels.Name = "CB_Hostels";
             this.CB_Hostels.Size = new System.Drawing.Size(98, 21);
             this.CB_Hostels.TabIndex = 8;
@@ -123,7 +125,7 @@ namespace Supply
             // CB_RoomTypes
             // 
             this.CB_RoomTypes.FormattingEnabled = true;
-            this.CB_RoomTypes.Location = new System.Drawing.Point(271, 136);
+            this.CB_RoomTypes.Location = new System.Drawing.Point(275, 180);
             this.CB_RoomTypes.Name = "CB_RoomTypes";
             this.CB_RoomTypes.Size = new System.Drawing.Size(148, 21);
             this.CB_RoomTypes.TabIndex = 9;
@@ -131,7 +133,7 @@ namespace Supply
             // 
             // BTN_Save
             // 
-            this.BTN_Save.Location = new System.Drawing.Point(465, 177);
+            this.BTN_Save.Location = new System.Drawing.Point(465, 248);
             this.BTN_Save.Name = "BTN_Save";
             this.BTN_Save.Size = new System.Drawing.Size(75, 23);
             this.BTN_Save.TabIndex = 10;
@@ -142,7 +144,7 @@ namespace Supply
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(218, 94);
+            this.label6.Location = new System.Drawing.Point(15, 143);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(107, 13);
             this.label6.TabIndex = 11;
@@ -151,17 +153,40 @@ namespace Supply
             // CB_TenantTypes
             // 
             this.CB_TenantTypes.FormattingEnabled = true;
-            this.CB_TenantTypes.Location = new System.Drawing.Point(331, 90);
+            this.CB_TenantTypes.Location = new System.Drawing.Point(128, 139);
             this.CB_TenantTypes.Name = "CB_TenantTypes";
             this.CB_TenantTypes.Size = new System.Drawing.Size(209, 21);
             this.CB_TenantTypes.TabIndex = 12;
             this.CB_TenantTypes.SelectedIndexChanged += new System.EventHandler(this.CB_TenantTypes_SelectedIndexChanged);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(218, 94);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(85, 13);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "Период оплаты";
+            // 
+            // CB_PeriodOfPayment
+            // 
+            this.CB_PeriodOfPayment.FormattingEnabled = true;
+            this.CB_PeriodOfPayment.Items.AddRange(new object[] {
+            "День",
+            "Месяц",
+            "Год"});
+            this.CB_PeriodOfPayment.Location = new System.Drawing.Point(309, 91);
+            this.CB_PeriodOfPayment.Name = "CB_PeriodOfPayment";
+            this.CB_PeriodOfPayment.Size = new System.Drawing.Size(231, 21);
+            this.CB_PeriodOfPayment.TabIndex = 14;
+            // 
             // AdminPaymentsFormAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(559, 212);
+            this.ClientSize = new System.Drawing.Size(559, 283);
+            this.Controls.Add(this.CB_PeriodOfPayment);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.CB_TenantTypes);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.BTN_Save);
@@ -200,5 +225,7 @@ namespace Supply
         private System.Windows.Forms.Button BTN_Save;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox CB_TenantTypes;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox CB_PeriodOfPayment;
     }
 }

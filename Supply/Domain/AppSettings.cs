@@ -97,6 +97,7 @@ namespace Supply.Domain
                     {
                         return settingsNode.InnerText;
                     }
+                    
                 }
             }
             else

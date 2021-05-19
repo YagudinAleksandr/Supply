@@ -37,6 +37,8 @@ namespace Supply
             this.TB_StartDate = new System.Windows.Forms.MaskedTextBox();
             this.TB_EndDate = new System.Windows.Forms.MaskedTextBox();
             this.BTN_Save = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.CB_Managers = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -93,7 +95,7 @@ namespace Supply
             // 
             // BTN_Save
             // 
-            this.BTN_Save.Location = new System.Drawing.Point(187, 109);
+            this.BTN_Save.Location = new System.Drawing.Point(360, 146);
             this.BTN_Save.Name = "BTN_Save";
             this.BTN_Save.Size = new System.Drawing.Size(100, 23);
             this.BTN_Save.TabIndex = 6;
@@ -101,11 +103,31 @@ namespace Supply
             this.BTN_Save.UseVisualStyleBackColor = true;
             this.BTN_Save.Click += new System.EventHandler(this.BTN_Save_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(13, 94);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(111, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Ответственное лицо";
+            // 
+            // CB_Managers
+            // 
+            this.CB_Managers.FormattingEnabled = true;
+            this.CB_Managers.Location = new System.Drawing.Point(187, 91);
+            this.CB_Managers.Name = "CB_Managers";
+            this.CB_Managers.Size = new System.Drawing.Size(273, 21);
+            this.CB_Managers.TabIndex = 8;
+            this.CB_Managers.SelectedIndexChanged += new System.EventHandler(this.CB_Managers_SelectedIndexChanged);
+            // 
             // OrderAddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(303, 148);
+            this.ClientSize = new System.Drawing.Size(472, 181);
+            this.Controls.Add(this.CB_Managers);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.BTN_Save);
             this.Controls.Add(this.TB_EndDate);
             this.Controls.Add(this.TB_StartDate);
@@ -132,5 +154,7 @@ namespace Supply
         private System.Windows.Forms.MaskedTextBox TB_StartDate;
         private System.Windows.Forms.MaskedTextBox TB_EndDate;
         private System.Windows.Forms.Button BTN_Save;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox CB_Managers;
     }
 }

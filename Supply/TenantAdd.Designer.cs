@@ -57,6 +57,10 @@ namespace Supply
             this.label13 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.BTN_AdditionalInformation = new System.Windows.Forms.Button();
+            this.label14 = new System.Windows.Forms.Label();
+            this.TB_Code = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.CB_PaymentType = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -255,7 +259,7 @@ namespace Supply
             // 
             // BTN_Save
             // 
-            this.BTN_Save.Location = new System.Drawing.Point(496, 405);
+            this.BTN_Save.Location = new System.Drawing.Point(496, 449);
             this.BTN_Save.Name = "BTN_Save";
             this.BTN_Save.Size = new System.Drawing.Size(88, 23);
             this.BTN_Save.TabIndex = 23;
@@ -266,7 +270,7 @@ namespace Supply
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(16, 361);
+            this.label13.Location = new System.Drawing.Point(16, 342);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(67, 13);
             this.label13.TabIndex = 24;
@@ -275,7 +279,7 @@ namespace Supply
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(110, 358);
+            this.comboBox1.Location = new System.Drawing.Point(110, 339);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(154, 21);
             this.comboBox1.TabIndex = 25;
@@ -283,7 +287,7 @@ namespace Supply
             // 
             // BTN_AdditionalInformation
             // 
-            this.BTN_AdditionalInformation.Location = new System.Drawing.Point(275, 356);
+            this.BTN_AdditionalInformation.Location = new System.Drawing.Point(275, 337);
             this.BTN_AdditionalInformation.Name = "BTN_AdditionalInformation";
             this.BTN_AdditionalInformation.Size = new System.Drawing.Size(204, 23);
             this.BTN_AdditionalInformation.TabIndex = 26;
@@ -291,11 +295,49 @@ namespace Supply
             this.BTN_AdditionalInformation.UseVisualStyleBackColor = true;
             this.BTN_AdditionalInformation.Click += new System.EventHandler(this.BTN_AdditionalInformation_Click);
             // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(454, 115);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(26, 13);
+            this.label14.TabIndex = 27;
+            this.label14.Text = "Код";
+            // 
+            // TB_Code
+            // 
+            this.TB_Code.Location = new System.Drawing.Point(486, 112);
+            this.TB_Code.Name = "TB_Code";
+            this.TB_Code.Size = new System.Drawing.Size(100, 20);
+            this.TB_Code.TabIndex = 28;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(16, 389);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(116, 13);
+            this.label15.TabIndex = 29;
+            this.label15.Text = "Тип тарифного плана";
+            // 
+            // CB_PaymentType
+            // 
+            this.CB_PaymentType.FormattingEnabled = true;
+            this.CB_PaymentType.Location = new System.Drawing.Point(143, 386);
+            this.CB_PaymentType.Name = "CB_PaymentType";
+            this.CB_PaymentType.Size = new System.Drawing.Size(441, 21);
+            this.CB_PaymentType.TabIndex = 30;
+            this.CB_PaymentType.SelectedIndexChanged += new System.EventHandler(this.CB_PaymentType_SelectedIndexChanged);
+            // 
             // TenantAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(605, 440);
+            this.ClientSize = new System.Drawing.Size(605, 484);
+            this.Controls.Add(this.CB_PaymentType);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.TB_Code);
+            this.Controls.Add(this.label14);
             this.Controls.Add(this.BTN_AdditionalInformation);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label13);
@@ -362,5 +404,9 @@ namespace Supply
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button BTN_AdditionalInformation;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox TB_Code;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ComboBox CB_PaymentType;
     }
 }

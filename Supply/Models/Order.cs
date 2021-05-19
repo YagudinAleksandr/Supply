@@ -16,6 +16,9 @@ namespace Supply.Models
         [ForeignKey("Room")]
         public int RoomID { get; set; }
         public Room Room { get; set; }
+        [ForeignKey("Manager")]
+        public int? ManagerID { get; set; }
+        public Manager Manager { get; set; }
         [Required]
         public string CreatedAt { get; set; }
         [Required]

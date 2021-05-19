@@ -34,7 +34,7 @@ namespace Supply
             this.CB_Hostels = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.TB_StartOrder = new System.Windows.Forms.MaskedTextBox();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.PB_Creation = new System.Windows.Forms.ProgressBar();
             this.BTN_Create = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -74,12 +74,12 @@ namespace Supply
             this.TB_StartOrder.TabIndex = 4;
             this.TB_StartOrder.ValidatingType = typeof(System.DateTime);
             // 
-            // progressBar1
+            // PB_Creation
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 37);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(773, 23);
-            this.progressBar1.TabIndex = 5;
+            this.PB_Creation.Location = new System.Drawing.Point(12, 37);
+            this.PB_Creation.Name = "PB_Creation";
+            this.PB_Creation.Size = new System.Drawing.Size(773, 23);
+            this.PB_Creation.TabIndex = 5;
             // 
             // BTN_Create
             // 
@@ -97,7 +97,7 @@ namespace Supply
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 105);
             this.Controls.Add(this.BTN_Create);
-            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.PB_Creation);
             this.Controls.Add(this.TB_StartOrder);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.CB_Hostels);
@@ -118,7 +118,7 @@ namespace Supply
         private System.Windows.Forms.ComboBox CB_Hostels;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.MaskedTextBox TB_StartOrder;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar PB_Creation;
         private System.Windows.Forms.Button BTN_Create;
     }
 }

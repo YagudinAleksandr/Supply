@@ -261,6 +261,22 @@
     <Compile Include="Migrations\202105032016159_UpdateTenant.designer.cs">
       <DependentUpon>202105032016159_UpdateTenant.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105191752388_updateOrderTable.cs" />
+    <Compile Include="Migrations\202105191752388_updateOrderTable.designer.cs">
+      <DependentUpon>202105191752388_updateOrderTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105191910567_updateIdent.cs" />
+    <Compile Include="Migrations\202105191910567_updateIdent.designer.cs">
+      <DependentUpon>202105191910567_updateIdent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105192051109_updatePayment.cs" />
+    <Compile Include="Migrations\202105192051109_updatePayment.designer.cs">
+      <DependentUpon>202105192051109_updatePayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105192101203_updateTenant2.cs" />
+    <Compile Include="Migrations\202105192101203_updateTenant2.designer.cs">
+      <DependentUpon>202105192101203_updateTenant2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdditionalInformation.cs" />
     <Compile Include="Models\AdditionalInformationType.cs" />
@@ -410,6 +426,18 @@
     <EmbeddedResource Include="Migrations\202105032016159_UpdateTenant.resx">
       <DependentUpon>202105032016159_UpdateTenant.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105191752388_updateOrderTable.resx">
+      <DependentUpon>202105191752388_updateOrderTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105191910567_updateIdent.resx">
+      <DependentUpon>202105191910567_updateIdent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105192051109_updatePayment.resx">
+      <DependentUpon>202105192051109_updatePayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105192101203_updateTenant2.resx">
+      <DependentUpon>202105192101203_updateTenant2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OrderAddForm.resx">
       <DependentUpon>OrderAddForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -469,6 +497,10 @@
     <ProjectReference Include="..\Libraries\Libraries.csproj">
       <Project>{2960daff-8ec0-4694-8fcb-5782dead307c}</Project>
       <Name>Libraries</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NumbersToString\NumbersToString.csproj">
+      <Project>{b4fc1ed2-5c86-4cd6-b805-c73c6a6c995d}</Project>
+      <Name>NumbersToString</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

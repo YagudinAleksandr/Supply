@@ -16,37 +16,30 @@ namespace Libraries.WordSystem
         /// <summary>
         /// Директория шаблона
         /// </summary>
-        public string TemplateDirectory { get; set; }
-        /// <summary>
-        /// Название шаблона
-        /// </summary>
-        public string TemplateName { get; set; }
+        private string TemplateName { get; set; }
         /// <summary>
         /// Директория выходного файла
         /// </summary>
-        public string OutFileDirectory { get; set; }
+        private string OutFileDirectory { get; set; }
         /// <summary>
         /// Название выходного файла
         /// </summary>
-        public string OutFileName { get; set; }
-        /// <summary>
-        /// Свойства по которым идет поиск в документе
-        /// </summary>
-        public Dictionary<string, string> Properties { get; set; } //Свойства по которым идет поиск документа
+        private string OutFileName { get; set; }
         #endregion
         #region private fields
-        private object missing = Type.Missing;
-        private Word.Application app;
-        private Word.Document doc;
+        private object _missing = Type.Missing;
+        private Word.Application _app;
+        private Word.Document _doc;
         #endregion
-        public WordDocument()
+        public WordDocument(string templateName, string outFileDirectory, string outFileName)
         {
-            //Создание коллекции элементов для поиска
-            Properties = new Dictionary<string, string>();
             //Создание объекта Word
-            app = new Word.Application();
+            _app = new Word.Application();
             //Загрузка WORD шаблона
-            doc = null;
+            _doc = null;
+            TemplateName = templateName;
+            OutFileDirectory = outFileDirectory;
+            OutFileName = outFileName;
         }
 
         public bool OpenWordTemplate(out string ErrMessage)
@@ -54,22 +47,65 @@ namespace Libraries.WordSystem
             ErrMessage = String.Empty;
             try
             {
+                _doc = _app.Documents.Open((object)TemplateName, _missing, _missing);
+                _app.Selection.Find.ClearFormatting();
+                _app.Selection.Find.Replacement.ClearFormatting();
                 return true;
             }
             catch (Exception ex)
             {
                 ErrMessage = ex.Message;
+                
                 return false;
             }
         }
-        public bool CloseWordTemplate()
+        public bool CloseWordTemplate(out string ErrMessage)
         {
-            GC.Collect();
-            return true;
-            
+            ErrMessage = String.Empty;
+            try
+            {
+                _doc.Close(false, _missing, _missing);
+                _app.Quit(false, false, false);
+
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(_app);
+                return true;
+            }
+            catch(Exception ex)
+            {
+                ErrMessage = ex.Message;
+                return false;
+            }
         }
-        public bool MakeReplacementInWordTemplate()
+        public bool MakeReplacementInWordTemplate(Dictionary<string,string> replaceKeyEndValue)
         {
+            foreach(KeyValuePair<string,string> replace in replaceKeyEndValue)
+            {
+                try
+                {
+                    _app.Selection.Find.Execute($"<{replace.Key}>", _missing, _missing, _missing, _missing, _missing, _missing, _missing, _missing, replace.Value, 2);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+
+            string saveDirectory = OutFileDirectory + OutFileName  + ".doc";
+            //Сохранение договоров
+            object saveAsFile = (object)saveDirectory;
+            try
+            {
+                _doc.SaveAs2(saveAsFile, _missing, _missing, _missing);
+            }
+            catch
+            {
+                _doc.Close(false, _missing, _missing);
+                _app.Quit(false, false, false);
+
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(_app);
+                return false;
+            }
+
             return true;
         }
     }

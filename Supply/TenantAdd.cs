@@ -1,6 +1,7 @@
 ﻿using Supply.Domain;
 using Supply.Models;
 using System;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows.Forms;
@@ -13,11 +14,13 @@ namespace Supply
         private int _tenantID;
         private int _documentTypeID;
         private int _tenantTypeID;
+        private int _paymentTypeID;
         public TenantAdd(int roomID)
         {
             InitializeComponent();
             _roomID = roomID;
             _tenantID = _documentTypeID = _tenantTypeID = 0;
+            _paymentTypeID = 0;
         }
 
         private void TenantAdd_Load(object sender, EventArgs e)
@@ -70,6 +73,19 @@ namespace Supply
             try
             {
                 _tenantTypeID = (int)comboBox1.SelectedValue;
+
+                using(SupplyDbContext db = new SupplyDbContext())
+                {
+                    Room room = db.Rooms.Where(x => x.ID == _roomID).Include(y => y.RoomType).First();
+                    Flat flat = db.Flats.Where(x => x.ID == room.FlatID).Include(y => y.Enterance).First();
+                    Hostel hostel = db.Hostels.Where(x => x.ID == flat.Enterance.HostelId).First();
+
+                    var payments = db.Payments.Where(x => x.HostelID == hostel.ID).Where(y => y.RoomTypeID == room.RoomType.ID).ToList();
+
+                    CB_PaymentType.DataSource = payments;
+                    CB_PaymentType.DisplayMember = "Name";
+                    CB_PaymentType.ValueMember = "ID";
+                }
             }
             catch
             {
@@ -93,6 +109,7 @@ namespace Supply
             identification.CreatedAt = DateTime.Now.ToString();
             identification.UpdatedAt = DateTime.Now.ToString();
             identification.GivenDate = TB_GivenDate.Text;
+            identification.Code = TB_Code.Text;
             identification.ID = _tenantID;
             try
             {
@@ -105,6 +122,7 @@ namespace Supply
                     tenant.Status = true;
                     tenant.UpdatedAt = DateTime.Now.ToString();
                     tenant.TenantTypeID = _tenantTypeID;
+                    tenant.PaymentID = _paymentTypeID;
                     db.Entry(tenant).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
 
@@ -139,6 +157,18 @@ namespace Supply
         {
             TenantAdditionalInformationAdd tenantAdditionalInformationAdd = new TenantAdditionalInformationAdd(_tenantID);
             tenantAdditionalInformationAdd.ShowDialog();
+        }
+
+        private void CB_PaymentType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                _paymentTypeID = (int)CB_PaymentType.SelectedValue;
+            }
+            catch
+            {
+                return;
+            }
         }
     }
 }
