@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using Libraries.WordSystem;
 using System.Data.Entity;
 using Supply.Models;
+using Supply.Libs;
 
 namespace Supply
 {
@@ -73,7 +74,7 @@ namespace Supply
                         var rooms = db.Rooms.Where(x => x.FlatID == flat.ID).Include(y=>y.RoomType).Include(p=>p.Properties).ToList();
                         foreach(var room in rooms)
                         {
-                            var orders = db.Orders.Where(x => x.RoomID == room.ID).Where(y => y.StartDate == TB_StartOrder.Text).Include(p=>p.Manager).ToList();
+                            var orders = db.Orders.Where(x => x.RoomID == room.ID).Where(y => y.StartDate == TB_StartOrder.Text).Include(lic=>lic.License).ToList();
                             foreach(var order in orders)
                             {
                                 Tenant tenant = db.Tenants.Where(x => x.ID == order.ID).Where(y=>y.Status==true).Include(p=>p.Payment).First();
@@ -152,7 +153,11 @@ namespace Supply
                                         + hostel.Address.City + ", " + hostel.Address.Street + ", " + hostel.Address.House);
                                     replacements.Add("hostelFlat", flat.Name );
                                     replacements.Add("hostelFlats", flats.Count.ToString());
-                                    replacements.Add("MainManager", order.Manager.Surename + " " + order.Manager.Name[0] + "." + order.Manager.Patronymic[0] + ".");
+                                    replacements.Add("MainManager", order.License.Manager.Surename + " "+ order.License.Manager.Name[0]+"." + order.License.Manager.Patronymic[0] + ".");
+                                    replacements.Add("Manager", order.License.Manager.Surename + " " + order.License.Manager.Name + " " + order.License.Manager.Patronymic);
+                                    replacements.Add("LicenseType", order.License.Type);
+                                    replacements.Add("LicenseNumber", order.License.Name);
+                                    replacements.Add("LicenseStart", order.License.StartDate);
                                     replacements.Add("supplySurename", hostel.Manager.Surename + " " + hostel.Manager.Name[0] + "." + hostel.Manager.Patronymic[0] + ".");
                                     replacements.Add("supply", hostel.Manager.Surename + " " + hostel.Manager.Name + " " + hostel.Manager.Patronymic);
                                     replacements.Add("supplyProxy", license.Name);
@@ -194,5 +199,11 @@ namespace Supply
 
             this.Close();
         }
+
+        private bool Benefit()
+        {
+            return false;
+        }
     }
+
 }

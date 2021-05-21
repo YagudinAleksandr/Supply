@@ -40,5 +40,7 @@ namespace Supply.Domain
         public DbSet<Order> Orders { get; set; }
         public DbSet<AdditionalInformationType> AdditionalInformationTypes { get; set; }
         public DbSet<AdditionalInformation> AdditionalInformation { get; set; }
+        public DbSet<BenefitType> BenefitTypes { get; set; }
+        public DbSet<Benefit> Benefits { get; set; }
     }
 }

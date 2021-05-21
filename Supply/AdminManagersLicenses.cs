@@ -28,7 +28,7 @@ namespace Supply
 
                 try
                 {
-                    var licenses = db.Licenses.ToList();
+                    var licenses = db.Licenses.Where(x=>x.ManagerId== _managerId).ToList();
 
                     foreach (var license in licenses)
                     {

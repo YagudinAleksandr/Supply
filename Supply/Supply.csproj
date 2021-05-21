@@ -208,6 +208,7 @@
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Domain\AppSettings.cs" />
+    <Compile Include="Domain\FirstStart.cs" />
     <Compile Include="Domain\SupplyDbContext.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -215,72 +216,23 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Libs\MainInfLibs.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202104282212054_CreateProjFirstMigration.cs" />
-    <Compile Include="Migrations\202104282212054_CreateProjFirstMigration.designer.cs">
-      <DependentUpon>202104282212054_CreateProjFirstMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202104291728406_CreateProperty.cs" />
-    <Compile Include="Migrations\202104291728406_CreateProperty.designer.cs">
-      <DependentUpon>202104291728406_CreateProperty.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202104291909066_UpdateProperty.cs" />
-    <Compile Include="Migrations\202104291909066_UpdateProperty.designer.cs">
-      <DependentUpon>202104291909066_UpdateProperty.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202104292051200_UpdatePayments.cs" />
-    <Compile Include="Migrations\202104292051200_UpdatePayments.designer.cs">
-      <DependentUpon>202104292051200_UpdatePayments.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202104302234174_CreateLogModel.cs" />
-    <Compile Include="Migrations\202104302234174_CreateLogModel.designer.cs">
-      <DependentUpon>202104302234174_CreateLogModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105022320389_CreateTenantModel.cs" />
-    <Compile Include="Migrations\202105022320389_CreateTenantModel.designer.cs">
-      <DependentUpon>202105022320389_CreateTenantModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105022350510_CreateTenantInformation.cs" />
-    <Compile Include="Migrations\202105022350510_CreateTenantInformation.designer.cs">
-      <DependentUpon>202105022350510_CreateTenantInformation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105031929539_CreaeteOrderModel.cs" />
-    <Compile Include="Migrations\202105031929539_CreaeteOrderModel.designer.cs">
-      <DependentUpon>202105031929539_CreaeteOrderModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105031944476_Additional.cs" />
-    <Compile Include="Migrations\202105031944476_Additional.designer.cs">
-      <DependentUpon>202105031944476_Additional.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105032016159_UpdateTenant.cs" />
-    <Compile Include="Migrations\202105032016159_UpdateTenant.designer.cs">
-      <DependentUpon>202105032016159_UpdateTenant.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105191752388_updateOrderTable.cs" />
-    <Compile Include="Migrations\202105191752388_updateOrderTable.designer.cs">
-      <DependentUpon>202105191752388_updateOrderTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105191910567_updateIdent.cs" />
-    <Compile Include="Migrations\202105191910567_updateIdent.designer.cs">
-      <DependentUpon>202105191910567_updateIdent.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105192051109_updatePayment.cs" />
-    <Compile Include="Migrations\202105192051109_updatePayment.designer.cs">
-      <DependentUpon>202105192051109_updatePayment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105192101203_updateTenant2.cs" />
-    <Compile Include="Migrations\202105192101203_updateTenant2.designer.cs">
-      <DependentUpon>202105192101203_updateTenant2.cs</DependentUpon>
+    <Compile Include="Migrations\202105212153196_FirstMainMigation.cs" />
+    <Compile Include="Migrations\202105212153196_FirstMainMigation.designer.cs">
+      <DependentUpon>202105212153196_FirstMainMigation.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdditionalInformation.cs" />
     <Compile Include="Models\AdditionalInformationType.cs" />
     <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\Benefit.cs" />
+    <Compile Include="Models\BenefitType.cs" />
     <Compile Include="Models\DocumentType.cs" />
     <Compile Include="Models\Enterance.cs" />
     <Compile Include="Models\Flat.cs" />
@@ -329,6 +281,12 @@
     </Compile>
     <Compile Include="TenantAdditionalInformationAdd.Designer.cs">
       <DependentUpon>TenantAdditionalInformationAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TenantBenefitAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TenantBenefitAdd.Designer.cs">
+      <DependentUpon>TenantBenefitAdd.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="AdminAddressesForm.resx">
       <DependentUpon>AdminAddressesForm.cs</DependentUpon>
@@ -396,47 +354,8 @@
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202104282212054_CreateProjFirstMigration.resx">
-      <DependentUpon>202104282212054_CreateProjFirstMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202104291728406_CreateProperty.resx">
-      <DependentUpon>202104291728406_CreateProperty.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202104291909066_UpdateProperty.resx">
-      <DependentUpon>202104291909066_UpdateProperty.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202104292051200_UpdatePayments.resx">
-      <DependentUpon>202104292051200_UpdatePayments.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202104302234174_CreateLogModel.resx">
-      <DependentUpon>202104302234174_CreateLogModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105022320389_CreateTenantModel.resx">
-      <DependentUpon>202105022320389_CreateTenantModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105022350510_CreateTenantInformation.resx">
-      <DependentUpon>202105022350510_CreateTenantInformation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105031929539_CreaeteOrderModel.resx">
-      <DependentUpon>202105031929539_CreaeteOrderModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105031944476_Additional.resx">
-      <DependentUpon>202105031944476_Additional.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105032016159_UpdateTenant.resx">
-      <DependentUpon>202105032016159_UpdateTenant.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105191752388_updateOrderTable.resx">
-      <DependentUpon>202105191752388_updateOrderTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105191910567_updateIdent.resx">
-      <DependentUpon>202105191910567_updateIdent.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105192051109_updatePayment.resx">
-      <DependentUpon>202105192051109_updatePayment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105192101203_updateTenant2.resx">
-      <DependentUpon>202105192101203_updateTenant2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202105212153196_FirstMainMigation.resx">
+      <DependentUpon>202105212153196_FirstMainMigation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderAddForm.resx">
       <DependentUpon>OrderAddForm.cs</DependentUpon>
@@ -461,6 +380,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TenantAdditionalInformationAdd.resx">
       <DependentUpon>TenantAdditionalInformationAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TenantBenefitAdd.resx">
+      <DependentUpon>TenantBenefitAdd.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -16,10 +16,11 @@ namespace Supply.Models
         public int RoomID { get; set; }
         public Room Room { get; set; }
         public Identification Identification { get; set; }
-        public Order Order { get; set; }
         [ForeignKey("Payment")]
         public int? PaymentID { get; set; }
         public Payment Payment { get; set; }
+
+        public Order Order { get; set; }
         public ICollection<AdditionalInformation> AdditionalInformation { get; set; }
         public Tenant()
         {

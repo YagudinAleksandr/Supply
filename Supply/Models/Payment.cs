@@ -22,11 +22,17 @@ namespace Supply.Models
 
         public int? TenantTypeID { get; set; }
         public TenantType TenantType { get; set; }
-
+        [ForeignKey("RoomType")]
         public int? RoomTypeID { get; set; }
         public RoomType RoomType { get; set; }
         [ForeignKey("Hostel")]
-        public int HostelID { get; set; }
+        public int? HostelID { get; set; }
         public Hostel Hostel { get; set; }
+
+        public ICollection<Tenant> Tenants { get; set; }
+        public Payment()
+        {
+            Tenants = new List<Tenant>();
+        }
     }
 }

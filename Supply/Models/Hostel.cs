@@ -16,9 +16,11 @@ namespace Supply.Models
         public Manager Manager { get; set; }
 
         public ICollection<Enterance> Enterances { get; set; }
+        public ICollection<Payment> Payments { get; set; }
         public Hostel()
         {
             Enterances = new List<Enterance>();
+            Payments = new List<Payment>();
         }
     }
 }

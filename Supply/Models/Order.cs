@@ -16,9 +16,9 @@ namespace Supply.Models
         [ForeignKey("Room")]
         public int RoomID { get; set; }
         public Room Room { get; set; }
-        [ForeignKey("Manager")]
-        public int? ManagerID { get; set; }
-        public Manager Manager { get; set; }
+        [ForeignKey("License")]
+        public int? LicenseID { get; set; }
+        public License License { get; set; }
         [Required]
         public string CreatedAt { get; set; }
         [Required]
@@ -27,5 +27,10 @@ namespace Supply.Models
         public string EndDate { get; set; }
         [Required]
         public string UpdatedAt { get; set; }
+        public ICollection<Benefit> Benefits { get; set; }
+        public Order()
+        {
+            Benefits = new List<Benefit>();
+        }
     }
 }

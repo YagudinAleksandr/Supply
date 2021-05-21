@@ -52,32 +52,53 @@ namespace Supply
                 if(!db.Database.Exists())
                 {
                     MessageBox.Show("Невозможно подключиться к базе данных!");
-                    Application.Exit();
+                    AppSettingsForm appSettingsForm = new AppSettingsForm();
+                    appSettingsForm.ShowDialog();
+                    Application.Restart();
+                }
+
+                string error = FirstStart.Start();
+                if(error!=string.Empty)
+                {
+                    Log logInfo = new Log();
+                    logInfo.ID = Guid.NewGuid();
+                    logInfo.Type = "ERROR";
+                    logInfo.Caption = $"LoginForm.cs. Class: FirstStart. Method: Start."+error;
+                    logInfo.CreatedAt = DateTime.Now.ToString();
+                    db.Logs.Add(logInfo);
+                    db.SaveChanges();
                 }
 
                 //Начало проверки на существование пользователя
-                User user = db.Users.Where(x => x.Login == TB_Login.Text).FirstOrDefault();
-                if(user==null)
+                try
                 {
-                    MessageBox.Show("Пользователь с такими данными не найден!");
-                    TB_Password.Text = "";
-                    return;
+                    User user = db.Users.Where(x => x.Login == TB_Login.Text).FirstOrDefault();
+                    if (user == null)
+                    {
+                        MessageBox.Show("Пользователь с такими данными не найден!");
+                        TB_Password.Text = "";
+                        return;
+                    }
+                    if (user.Password != GetHashPass(TB_Password.Text))
+                    {
+                        MessageBox.Show("Пользователь с такими данными не найден!");
+                        TB_Password.Text = "";
+                        return;
+                    }
+                    _user = user;
                 }
-                if(user.Password!=GetHashPass(TB_Password.Text))
+                catch(Exception ex)
                 {
-                    MessageBox.Show("Пользователь с такими данными не найден!");
-                    TB_Password.Text = "";
-                    return;
+                    Log logInfo = new Log();
+                    logInfo.ID = Guid.NewGuid();
+                    logInfo.Type = "ERROR";
+                    logInfo.Caption = $"LoginForm.cs. Login form exception." + ex.Message + "." + ex.InnerException;
+                    logInfo.CreatedAt = DateTime.Now.ToString();
+                    db.Logs.Add(logInfo);
+                    db.SaveChanges();
                 }
-                _user = user;
 
-                Log logInfo = new Log();
-                logInfo.ID = Guid.NewGuid();
-                logInfo.Type = "Вход в систему";
-                logInfo.Caption = $"Удачный вход в систему пользователя: {_user.ID} - {_user.Name}";
-                logInfo.CreatedAt = DateTime.Now.ToString();
-                db.Logs.Add(logInfo);
-                db.SaveChanges();
+                
             }
 
             TB_Login.Text = String.Empty;

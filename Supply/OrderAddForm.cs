@@ -23,15 +23,15 @@ namespace Supply
 
             using(SupplyDbContext db = new SupplyDbContext())
             {
-                var managers = db.Managers.ToList();
+                var licenses = db.Licenses.ToList();
 
-                for (int i = 0; i < managers.Count; i++)
+                for (int i = 0; i < licenses.Count; i++)
                 {
-                    managers[i].Surename += " " + managers[i].Name + " " + managers[i].Patronymic;
+                    licenses[i].Name = licenses[i].Manager.Surename + " " + licenses[i].Manager.Name + " " + licenses[i].Manager.Patronymic + " " + licenses[i].Name + $"({licenses[i].StartDate})";
                 }
 
-                CB_Managers.DataSource = managers;
-                CB_Managers.DisplayMember = "Surename";
+                CB_Managers.DataSource = licenses;
+                CB_Managers.DisplayMember = "Name";
                 CB_Managers.ValueMember = "ID";
             }
         }
@@ -46,7 +46,7 @@ namespace Supply
                 order.StartDate = TB_StartDate.Text;
                 order.EndDate = TB_EndDate.Text;
                 order.RoomID = _tenantID.RoomID;
-                order.ManagerID = _selectedIndexOfManagers;
+                order.LicenseID = _selectedIndexOfManagers;
                 order.CreatedAt = DateTime.Now.ToString();
                 order.UpdatedAt = DateTime.Now.ToString();
 

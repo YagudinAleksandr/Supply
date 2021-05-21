@@ -298,12 +298,28 @@ namespace Supply
                 case "tenant":
                     contextMenu.MenuItems.Add("Изменить");
                     contextMenu.MenuItems.Add("Сформировать договор", AddHumanMainOrder);
+                    contextMenu.MenuItems.Add("Создать льготу", AddBenefitHandler);
                     contextMenu.MenuItems.Add("Расторжение договора");
                     contextMenu.MenuItems.Add("Удалить", DisabledTenant);
                     break;
             }
         }
-
+        private void AddBenefitHandler(object sender, EventArgs e)
+        {
+            try
+            {
+                if (TV_HostelInformation.SelectedNode.Tag != null)
+                {
+                    int tenantID = int.Parse(TV_HostelInformation.SelectedNode.Tag.ToString());
+                    TenantBenefitAdd tenantBenefitAdd = new TenantBenefitAdd(tenantID);
+                    tenantBenefitAdd.Show();
+                }
+            }
+            catch
+            {
+                return;
+            }
+        }
         private void AddHumanHandler(object sender, EventArgs e)
         {
             if (TV_HostelInformation.SelectedNode.Tag != null)
