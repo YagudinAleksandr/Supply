@@ -91,7 +91,38 @@ namespace Supply
 
                                 //Создание Word документа
                                 string errorMessage = String.Empty;
-                                WordDocument document = new WordDocument(AppSettings.GetTemplateSetting("template1"), AppSettings.GetTemplateSetting("outfileDir"), "Договор №" + order.OrderNumber.ToString());
+
+                                string template = string.Empty;
+
+                                switch(AdditionalInf(5,tenant.ID))
+                                {
+                                    case "Очная":
+                                    case "очная":
+                                    case "Очно-заочная":
+                                    case "очно-заочная":
+                                        template = "template1";
+                                        break;
+                                    case "Заочная":
+                                    case "заочная":
+                                        template = "template2";
+                                        break;
+                                    default:
+                                        template = "";
+                                        break;
+                                }
+
+                                if (tenant.TenantTypeID == 2)
+                                {
+                                    template = "template3";
+                                }
+
+                                if(template==string.Empty)
+                                {
+                                    MessageBox.Show("Несуществующий тип договора!");
+                                    continue;
+                                }
+
+                                WordDocument document = new WordDocument(AppSettings.GetTemplateSetting(template), AppSettings.GetTemplateSetting("outfileDir"), "Договор №" + order.OrderNumber.ToString());
 
                                 if(document.OpenWordTemplate(out errorMessage))
                                 {
@@ -188,14 +219,38 @@ namespace Supply
                                     replacements.Add("supplyProxy", license.Name);
                                     replacements.Add("supplyProxyDate", license.StartDate);
 
+                                    int totalDate = 0;
                                     /*Тарифный план*/
-                                    replacements.Add("rate", tenant.Payment.Rent.ToString());
-                                    replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)tenant.Payment.Rent));
-                                    replacements.Add("yearRate", (tenant.Payment.Rent * 12).ToString());
-                                    replacements.Add("rateWordYear", NumbersToString.NumbersToString.Str((int)tenant.Payment.Rent * 12));
-                                    int totalMonth = Math.Abs((orderEndDate.Month - orderStartDate.Month) + 12 * (orderEndDate.Year - orderStartDate.Year));
-                                    replacements.Add("allTimeRate", ((int)tenant.Payment.Rent * totalMonth).ToString());
-                                    replacements.Add("allTimeRateWord", NumbersToString.NumbersToString.Str((int)tenant.Payment.Rent * totalMonth));
+                                    switch(template)
+                                    {
+                                        case "tempate1":
+
+                                            replacements.Add("rate", tenant.Payment.Rent.ToString());
+                                            replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)tenant.Payment.Rent));
+                                            replacements.Add("yearRate", (tenant.Payment.Rent * 12).ToString());
+                                            replacements.Add("rateWordYear", NumbersToString.NumbersToString.Str((int)tenant.Payment.Rent * 12));
+                                            totalDate = Math.Abs((orderEndDate.Month - orderStartDate.Month) + 12 * (orderEndDate.Year - orderStartDate.Year));
+                                            replacements.Add("allTimeRate", ((int)tenant.Payment.Rent * totalDate).ToString());
+                                            replacements.Add("allTimeRateWord", NumbersToString.NumbersToString.Str((int)tenant.Payment.Rent * totalDate));
+
+                                            break;
+
+
+                                        case "template2":
+
+                                            replacements.Add("rate", tenant.Payment.Rent.ToString());
+                                            replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)tenant.Payment.Rent));
+                                            totalDate = Math.Abs((orderEndDate.Day - orderStartDate.Day) + (orderEndDate.Day - orderStartDate.Day));
+                                            replacements.Add("allTimeRate", ((int)tenant.Payment.Rent * totalDate).ToString());
+                                            replacements.Add("allTimeRateWord", NumbersToString.NumbersToString.Str((int)tenant.Payment.Rent * totalDate));
+                                            break;
+
+                                        case "template3":
+                                            
+
+                                            break;
+                                    }
+                                    
 
                                     //Начинаем замену в шаблоне и сохраняем документ
                                     document.MakeReplacementInWordTemplate(replacements);
@@ -258,6 +313,8 @@ namespace Supply
             }
             return string.Empty;
         }
+
+         
     }
 
 }
