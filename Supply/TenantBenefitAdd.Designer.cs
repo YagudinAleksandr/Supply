@@ -37,19 +37,19 @@ namespace Supply
             this.label3 = new System.Windows.Forms.Label();
             this.CB_ManagersLicenses = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.TB_Decree = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
+            this.TB_DecreeDate = new System.Windows.Forms.MaskedTextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.TB_DecreeName = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.CB_BenefitsTypes = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.maskedTextBox2 = new System.Windows.Forms.MaskedTextBox();
-            this.maskedTextBox3 = new System.Windows.Forms.MaskedTextBox();
+            this.TB_StartDate = new System.Windows.Forms.MaskedTextBox();
+            this.TB_EndDate = new System.Windows.Forms.MaskedTextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.maskedTextBox4 = new System.Windows.Forms.MaskedTextBox();
+            this.TB_Payment = new System.Windows.Forms.MaskedTextBox();
             this.BTN_Save = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -116,12 +116,12 @@ namespace Supply
             this.label4.TabIndex = 6;
             this.label4.Text = "Основание";
             // 
-            // textBox1
+            // TB_Decree
             // 
-            this.textBox1.Location = new System.Drawing.Point(82, 126);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(189, 20);
-            this.textBox1.TabIndex = 7;
+            this.TB_Decree.Location = new System.Drawing.Point(82, 126);
+            this.TB_Decree.Name = "TB_Decree";
+            this.TB_Decree.Size = new System.Drawing.Size(189, 20);
+            this.TB_Decree.TabIndex = 7;
             // 
             // label5
             // 
@@ -132,14 +132,14 @@ namespace Supply
             this.label5.TabIndex = 8;
             this.label5.Text = "от";
             // 
-            // maskedTextBox1
+            // TB_DecreeDate
             // 
-            this.maskedTextBox1.Location = new System.Drawing.Point(302, 126);
-            this.maskedTextBox1.Mask = "00/00/0000";
-            this.maskedTextBox1.Name = "maskedTextBox1";
-            this.maskedTextBox1.Size = new System.Drawing.Size(100, 20);
-            this.maskedTextBox1.TabIndex = 9;
-            this.maskedTextBox1.ValidatingType = typeof(System.DateTime);
+            this.TB_DecreeDate.Location = new System.Drawing.Point(302, 126);
+            this.TB_DecreeDate.Mask = "00/00/0000";
+            this.TB_DecreeDate.Name = "TB_DecreeDate";
+            this.TB_DecreeDate.Size = new System.Drawing.Size(100, 20);
+            this.TB_DecreeDate.TabIndex = 9;
+            this.TB_DecreeDate.ValidatingType = typeof(System.DateTime);
             // 
             // label6
             // 
@@ -150,12 +150,12 @@ namespace Supply
             this.label6.TabIndex = 10;
             this.label6.Text = "№";
             // 
-            // textBox2
+            // TB_DecreeName
             // 
-            this.textBox2.Location = new System.Drawing.Point(433, 126);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(174, 20);
-            this.textBox2.TabIndex = 11;
+            this.TB_DecreeName.Location = new System.Drawing.Point(433, 126);
+            this.TB_DecreeName.Name = "TB_DecreeName";
+            this.TB_DecreeName.Size = new System.Drawing.Size(174, 20);
+            this.TB_DecreeName.TabIndex = 11;
             // 
             // label7
             // 
@@ -184,23 +184,23 @@ namespace Supply
             this.label8.TabIndex = 14;
             this.label8.Text = "Начало";
             // 
-            // maskedTextBox2
+            // TB_StartDate
             // 
-            this.maskedTextBox2.Location = new System.Drawing.Point(65, 194);
-            this.maskedTextBox2.Mask = "00/00/0000";
-            this.maskedTextBox2.Name = "maskedTextBox2";
-            this.maskedTextBox2.Size = new System.Drawing.Size(78, 20);
-            this.maskedTextBox2.TabIndex = 15;
-            this.maskedTextBox2.ValidatingType = typeof(System.DateTime);
+            this.TB_StartDate.Location = new System.Drawing.Point(65, 194);
+            this.TB_StartDate.Mask = "00/00/0000";
+            this.TB_StartDate.Name = "TB_StartDate";
+            this.TB_StartDate.Size = new System.Drawing.Size(78, 20);
+            this.TB_StartDate.TabIndex = 15;
+            this.TB_StartDate.ValidatingType = typeof(System.DateTime);
             // 
-            // maskedTextBox3
+            // TB_EndDate
             // 
-            this.maskedTextBox3.Location = new System.Drawing.Point(217, 194);
-            this.maskedTextBox3.Mask = "00/00/0000";
-            this.maskedTextBox3.Name = "maskedTextBox3";
-            this.maskedTextBox3.Size = new System.Drawing.Size(78, 20);
-            this.maskedTextBox3.TabIndex = 17;
-            this.maskedTextBox3.ValidatingType = typeof(System.DateTime);
+            this.TB_EndDate.Location = new System.Drawing.Point(217, 194);
+            this.TB_EndDate.Mask = "00/00/0000";
+            this.TB_EndDate.Name = "TB_EndDate";
+            this.TB_EndDate.Size = new System.Drawing.Size(78, 20);
+            this.TB_EndDate.TabIndex = 17;
+            this.TB_EndDate.ValidatingType = typeof(System.DateTime);
             // 
             // label9
             // 
@@ -220,12 +220,12 @@ namespace Supply
             this.label10.TabIndex = 18;
             this.label10.Text = "Оплата за жилое помещение в месяц";
             // 
-            // maskedTextBox4
+            // TB_Payment
             // 
-            this.maskedTextBox4.Location = new System.Drawing.Point(507, 194);
-            this.maskedTextBox4.Name = "maskedTextBox4";
-            this.maskedTextBox4.Size = new System.Drawing.Size(100, 20);
-            this.maskedTextBox4.TabIndex = 19;
+            this.TB_Payment.Location = new System.Drawing.Point(507, 194);
+            this.TB_Payment.Name = "TB_Payment";
+            this.TB_Payment.Size = new System.Drawing.Size(100, 20);
+            this.TB_Payment.TabIndex = 19;
             // 
             // BTN_Save
             // 
@@ -243,19 +243,19 @@ namespace Supply
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 302);
             this.Controls.Add(this.BTN_Save);
-            this.Controls.Add(this.maskedTextBox4);
+            this.Controls.Add(this.TB_Payment);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.maskedTextBox3);
+            this.Controls.Add(this.TB_EndDate);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.maskedTextBox2);
+            this.Controls.Add(this.TB_StartDate);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.CB_BenefitsTypes);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.TB_DecreeName);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.maskedTextBox1);
+            this.Controls.Add(this.TB_DecreeDate);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.TB_Decree);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.CB_ManagersLicenses);
             this.Controls.Add(this.label3);
@@ -282,19 +282,19 @@ namespace Supply
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox CB_ManagersLicenses;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox TB_Decree;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox1;
+        private System.Windows.Forms.MaskedTextBox TB_DecreeDate;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox TB_DecreeName;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox CB_BenefitsTypes;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox2;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox3;
+        private System.Windows.Forms.MaskedTextBox TB_StartDate;
+        private System.Windows.Forms.MaskedTextBox TB_EndDate;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox4;
+        private System.Windows.Forms.MaskedTextBox TB_Payment;
         private System.Windows.Forms.Button BTN_Save;
     }
 }

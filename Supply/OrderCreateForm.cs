@@ -135,6 +135,26 @@ namespace Supply
                                     replacements.Add("humanCitizenship", identification.Cityzenship);
 
                                     /*Льготы*/
+                                    Benefit benefit;
+
+                                    if (BenefitCheck(order, out benefit))
+                                    {
+                                        replacements.Add("benefit", "Да");
+                                        replacements.Add("benefitCategory", benefit.BenefitType.Name);
+                                        replacements.Add("benefitDecreeDate", benefit.DecreeDate);
+                                        replacements.Add("benefitDecree", benefit.DecreeNumber);
+                                        replacements.Add("benefitStartDate", benefit.StartDate);
+                                        replacements.Add("benefitEndDate", benefit.EndDate);
+                                    }
+                                    else
+                                    {
+                                        replacements.Add("benefit", "Нет");
+                                        replacements.Add("benefitCategory", "-");
+                                        replacements.Add("benefitDecreeDate", "-");
+                                        replacements.Add("benefitDecree", "-");
+                                        replacements.Add("benefitStartDate", "-");
+                                        replacements.Add("benefitEndDate", "-");
+                                    }
 
                                     /*Данные по комнате*/
                                     replacements.Add("roomName", room.Name);
@@ -200,8 +220,19 @@ namespace Supply
             this.Close();
         }
 
-        private bool Benefit()
+        private bool BenefitCheck(Order order, out Benefit benefit)
         {
+            benefit = new Benefit();
+
+            using(SupplyDbContext db = new SupplyDbContext())
+            {
+                Benefit tempBenefit = db.Benefits.Where(x => x.OrderID == order.ID).Where(s => s.Status == true).Include(t => t.BenefitType).FirstOrDefault();
+                if(tempBenefit!=null)
+                {
+                    benefit = tempBenefit;
+                    return true;
+                }
+            }
             return false;
         }
     }
