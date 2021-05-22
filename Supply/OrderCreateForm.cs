@@ -119,6 +119,8 @@ namespace Supply
                                         replacements.Add("ps", "");
                                     }
 
+
+
                                     replacements.Add("DocSeries", identification.DocumentSeries);
                                     replacements.Add("DocNumber", identification.DocumentNumber);
                                     replacements.Add("DocGiven", identification.Issued);
@@ -133,6 +135,9 @@ namespace Supply
                                     }
                                     replacements.Add("HumanAddress", identification.Address);
                                     replacements.Add("humanCitizenship", identification.Cityzenship);
+
+                                    replacements.Add("eduType", AdditionalInf(5, tenant.ID));
+                                    replacements.Add("rent", AdditionalInf(7, tenant.ID));
 
                                     /*Льготы*/
                                     Benefit benefit;
@@ -234,6 +239,24 @@ namespace Supply
                 }
             }
             return false;
+        }
+
+        private string AdditionalInf(int type,int tenantId)
+        {
+            using(SupplyDbContext db = new SupplyDbContext())
+            {
+                var addinf = db.AdditionalInformation.Where(tenantid => tenantid.TenantID == tenantId)
+                    .Where(x => x.AdditionalInformationTypeID == type)
+                    .Include(t=>t.AdditionalInformationType)
+                    .FirstOrDefault();
+
+                if (addinf != null)
+                {
+                    return addinf.Value;
+                }
+
+            }
+            return string.Empty;
         }
     }
 
