@@ -246,7 +246,26 @@ namespace Supply
                                             break;
 
                                         case "template3":
-                                            
+
+                                            var tenantFamily = additionalInformation.Where(x => x.AdditionalInformationTypeID == 8).ToList();
+                                            if(tenantFamily.Count!=0)
+                                            {
+                                                string family = string.Empty;
+                                                for (int y = 0; y < tenantFamily.Count; y++)
+                                                {
+                                                    family += $"{y + 1}) " + tenantFamily[y].Value + "\n";
+                                                }
+                                                replacements.Add("family", family);
+                                            }
+                                            else
+                                            {
+                                                replacements.Add("family", "");
+                                            }
+
+                                            replacements.Add("rate", tenant.Payment.Rent.ToString());
+                                            replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)tenant.Payment.Rent));
+                                            replacements.Add("yearRate", (tenant.Payment.Rent * 12).ToString());
+                                            replacements.Add("rateWordYear", NumbersToString.NumbersToString.Str((int)tenant.Payment.Rent * 12));
 
                                             break;
                                     }

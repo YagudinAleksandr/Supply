@@ -250,7 +250,12 @@ namespace Supply
                         for (int k = 0; k < rooms.Count; k++) 
                         {
                             int roomId = rooms[k].ID;
-                            var tenants = db.Tenants.Where(x => x.RoomID == roomId).Where(y=>y.Status==true).Include(p=>p.Identification).ToList();
+                            var tenants = db.Tenants.Where(x => x.RoomID == roomId)
+                                .Where(y=>y.Status==true)
+                                .Include(p=>p.Identification)
+                                .Include(ai=>ai.AdditionalInformation)
+                                .ToList();
+
                             roomNodes[k] = new TreeNode();
                             roomNodes[k].Text = $"Комната № {rooms[k].Name} (Количество мест-{rooms[k].Places} / Использовано-{tenants.Count})";
                             roomNodes[k].Tag = roomId;
@@ -264,6 +269,17 @@ namespace Supply
                                 tenantNodes[l].Tag = tenants[l].ID;
                                 CreateConetxtMenuForNode("tenant", out contextMenuForNode);
                                 tenantNodes[l].ContextMenu = contextMenuForNode;
+
+                                var adinften = tenants[l].AdditionalInformation.Where(x => x.AdditionalInformationTypeID == 8).ToList();
+                                TreeNode[] additionalInfNode = new TreeNode[adinften.Count()];
+                                for (int a = 0; a < adinften.Count; a++) 
+                                {
+                                    additionalInfNode[a] = new TreeNode();
+                                    additionalInfNode[a].Text = $"{adinften[a].Value}";
+                                }
+
+                                tenantNodes[l].Nodes.AddRange(additionalInfNode);
+
                             }
 
                             roomNodes[k].Nodes.AddRange(tenantNodes);
