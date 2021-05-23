@@ -18,9 +18,9 @@ namespace Supply.Domain
                     var roles = db.Roles.ToList();
                     if (roles.Count == 0)
                     {
-                        db.Roles.Add(new Role() { ID = 1, Name = "ADMINISTRATOR" });
-                        db.Roles.Add(new Role() { ID = 2, Name = "MANAGER" });
-                        db.Roles.Add(new Role() { ID = 3, Name = "USER" });
+                        db.Roles.Add(new Role() { ID = 1, Name = "ADMINISTRATOR", Title = "Администратор" });
+                        db.Roles.Add(new Role() { ID = 2, Name = "MANAGER", Title = "Менеджер" });
+                        db.Roles.Add(new Role() { ID = 3, Name = "USER", Title = "Пользователь" });
                         db.SaveChanges();
                     }
 

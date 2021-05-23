@@ -217,6 +217,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Libs\MainInfLibs.cs" />
+    <Compile Include="Libs\OrdersCreation.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Windows.Forms;
 using Supply.Domain;
+using Supply.Libs;
 using Supply.Models;
 
 namespace Supply
@@ -400,7 +401,16 @@ namespace Supply
         {
             if (TV_HostelInformation.SelectedNode.Tag != null) 
             {
-
+                string error = string.Empty;
+                int tenantID = int.Parse(TV_HostelInformation.SelectedNode.Tag.ToString());
+                if (OrdersCreation.CreateOrders(tenantID, out error) == false) 
+                {
+                    MessageBox.Show(error);
+                }
+                else
+                {
+                    MessageBox.Show("Договор сформирован");
+                }
             }
         }
 

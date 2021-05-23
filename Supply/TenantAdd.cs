@@ -80,7 +80,7 @@ namespace Supply
                     Flat flat = db.Flats.Where(x => x.ID == room.FlatID).Include(y => y.Enterance).First();
                     Hostel hostel = db.Hostels.Where(x => x.ID == flat.Enterance.HostelId).First();
 
-                    var payments = db.Payments.Where(x => x.HostelID == hostel.ID).Where(y => y.RoomTypeID == room.RoomType.ID).ToList();
+                    var payments = db.Payments.Where(x => x.HostelID == hostel.ID).Where(y => y.RoomTypeID == room.RoomType.ID).Where(tt=>tt.TenantTypeID==_tenantTypeID).ToList();
 
                     CB_PaymentType.DataSource = payments;
                     CB_PaymentType.DisplayMember = "Name";

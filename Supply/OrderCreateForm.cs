@@ -94,7 +94,7 @@ namespace Supply
 
                                 string template = string.Empty;
 
-                                switch(AdditionalInf(5,tenant.ID))
+                                switch(OrdersCreation.AdditionalInf(5,tenant.ID))
                                 {
                                     case "Очная":
                                     case "очная":
@@ -114,6 +114,11 @@ namespace Supply
                                 if (tenant.TenantTypeID == 2)
                                 {
                                     template = "template3";
+                                }
+
+                                if (tenant.TenantTypeID == 3)
+                                {
+                                    template = "template4";
                                 }
 
                                 if(template==string.Empty)
@@ -139,7 +144,7 @@ namespace Supply
                                     replacements.Add("name", identification.Name);
                                     replacements.Add("ns", identification.Name[0].ToString());
                                     
-                                    if (identification.Patronymic!=null)
+                                    if (identification.Patronymic!=string.Empty)
                                     {
                                         replacements.Add("patronymic", identification.Patronymic);
                                         replacements.Add("ps", identification.Patronymic[0].ToString());
@@ -167,13 +172,13 @@ namespace Supply
                                     replacements.Add("HumanAddress", identification.Address);
                                     replacements.Add("humanCitizenship", identification.Cityzenship);
 
-                                    replacements.Add("eduType", AdditionalInf(5, tenant.ID));
-                                    replacements.Add("rent", AdditionalInf(7, tenant.ID));
+                                    replacements.Add("eduType", OrdersCreation.AdditionalInf(5, tenant.ID));
+                                    replacements.Add("rent", OrdersCreation.AdditionalInf(7, tenant.ID));
 
                                     /*Льготы*/
                                     Benefit benefit;
 
-                                    if (BenefitCheck(order, out benefit))
+                                    if (OrdersCreation.BenefitCheck(order, out benefit))
                                     {
                                         replacements.Add("benefit", "Да");
                                         replacements.Add("benefitCategory", benefit.BenefitType.Name);
@@ -223,7 +228,7 @@ namespace Supply
                                     /*Тарифный план*/
                                     switch(template)
                                     {
-                                        case "tempate1":
+                                        case "template1":
 
                                             replacements.Add("rate", tenant.Payment.Rent.ToString());
                                             replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)tenant.Payment.Rent));
@@ -268,6 +273,29 @@ namespace Supply
                                             replacements.Add("rateWordYear", NumbersToString.NumbersToString.Str((int)tenant.Payment.Rent * 12));
 
                                             break;
+
+                                        case "template4":
+                                            var tenantFamily1 = additionalInformation.Where(x => x.AdditionalInformationTypeID == 8).ToList();
+                                            if (tenantFamily1.Count != 0)
+                                            {
+                                                string family = string.Empty;
+                                                for (int y = 0; y < tenantFamily1.Count; y++)
+                                                {
+                                                    family += $"{y + 1}) " + tenantFamily1[y].Value + "\n";
+                                                }
+                                                replacements.Add("family", family);
+                                            }
+                                            else
+                                            {
+                                                replacements.Add("family", "");
+                                            }
+
+                                            replacements.Add("rate", tenant.Payment.Rent.ToString());
+                                            replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)tenant.Payment.Rent));
+                                            totalDate = Math.Abs((orderEndDate.Day - orderStartDate.Day) + (orderEndDate.Day - orderStartDate.Day));
+                                            replacements.Add("allTimeRate", ((int)tenant.Payment.Rent * totalDate).ToString());
+                                            replacements.Add("allTimeRateWord", NumbersToString.NumbersToString.Str((int)tenant.Payment.Rent * totalDate));
+                                            break;
                                     }
                                     
 
@@ -299,39 +327,7 @@ namespace Supply
             this.Close();
         }
 
-        private bool BenefitCheck(Order order, out Benefit benefit)
-        {
-            benefit = new Benefit();
-
-            using(SupplyDbContext db = new SupplyDbContext())
-            {
-                Benefit tempBenefit = db.Benefits.Where(x => x.OrderID == order.ID).Where(s => s.Status == true).Include(t => t.BenefitType).FirstOrDefault();
-                if(tempBenefit!=null)
-                {
-                    benefit = tempBenefit;
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private string AdditionalInf(int type,int tenantId)
-        {
-            using(SupplyDbContext db = new SupplyDbContext())
-            {
-                var addinf = db.AdditionalInformation.Where(tenantid => tenantid.TenantID == tenantId)
-                    .Where(x => x.AdditionalInformationTypeID == type)
-                    .Include(t=>t.AdditionalInformationType)
-                    .FirstOrDefault();
-
-                if (addinf != null)
-                {
-                    return addinf.Value;
-                }
-
-            }
-            return string.Empty;
-        }
+        
 
          
     }

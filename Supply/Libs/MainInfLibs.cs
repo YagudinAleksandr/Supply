@@ -1,6 +1,8 @@
-﻿using Supply.Models;
+﻿using Supply.Domain;
+using Supply.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,4 +36,5 @@ namespace Supply.Libs
             return int.MinValue;
         }
     }
+
 }
