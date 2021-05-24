@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -44,50 +45,58 @@ namespace Supply
             dataGridViewButtonColumn3.Text = "Удалить";
             dataGridViewButtonColumn3.UseColumnTextForButtonValue = true;
             DG_Rooms.Columns.Add(dataGridViewButtonColumn3);
-            UpdateInfo();
+
+            Thread thread = new Thread(UpdateInfo);
+            thread.Start();
         }
 
         private void BTN_OpenRoomAddForm_Click(object sender, EventArgs e)
         {
             AdminRoomsFormAdd adminRoomsFormAdd = new AdminRoomsFormAdd(_hostelId);
             adminRoomsFormAdd.ShowDialog();
-            UpdateInfo();
+            Thread thread = new Thread(UpdateInfo);
+            thread.Start();
         }
 
         private void UpdateInfo()
         {
-            using (SupplyDbContext db = new SupplyDbContext())
+            Action action = () => 
             {
-                DG_Rooms.Rows.Clear();
-
-                try
+                using (SupplyDbContext db = new SupplyDbContext())
                 {
-                    foreach (Enterance enterance in db.Enterances.Where(id => id.HostelId == _hostelId).ToList()) 
-                    {
-                        int enteranceId = enterance.ID;
-                        foreach (Flat flat in db.Flats.Where(x => x.Enterance_ID == enteranceId).ToList()) 
-                        {
-                            int flatId = flat.ID;
-                            foreach (Room room in db.Rooms.Include(roomType => roomType.RoomType).Where(x => x.FlatID == flatId))
-                            {
-                                int rowNumber = DG_Rooms.Rows.Add();
+                    DG_Rooms.Rows.Clear();
 
-                                DG_Rooms.Rows[rowNumber].Cells[COL_ID.Name].Value = room.ID;
-                                DG_Rooms.Rows[rowNumber].Cells[COL_Name.Name].Value = room.Name;
-                                DG_Rooms.Rows[rowNumber].Cells[COL_Places.Name].Value = room.Places;
-                                DG_Rooms.Rows[rowNumber].Cells[COL_Type.Name].Value = room.RoomType.Name;
-                                DG_Rooms.Rows[rowNumber].Cells[COL_Enterance.Name].Value = enterance.Name;
-                                DG_Rooms.Rows[rowNumber].Cells[COL_Flat.Name].Value = flat.Name;
+                    try
+                    {
+                        foreach (Enterance enterance in db.Enterances.Where(id => id.HostelId == _hostelId).ToList())
+                        {
+                            int enteranceId = enterance.ID;
+                            foreach (Flat flat in db.Flats.Where(x => x.Enterance_ID == enteranceId).ToList())
+                            {
+                                int flatId = flat.ID;
+                                foreach (Room room in db.Rooms.Include(roomType => roomType.RoomType).Where(x => x.FlatID == flatId))
+                                {
+                                    int rowNumber = DG_Rooms.Rows.Add();
+
+                                    DG_Rooms.Rows[rowNumber].Cells[COL_ID.Name].Value = room.ID;
+                                    DG_Rooms.Rows[rowNumber].Cells[COL_Name.Name].Value = room.Name;
+                                    DG_Rooms.Rows[rowNumber].Cells[COL_Places.Name].Value = room.Places;
+                                    DG_Rooms.Rows[rowNumber].Cells[COL_Type.Name].Value = room.RoomType.Name;
+                                    DG_Rooms.Rows[rowNumber].Cells[COL_Enterance.Name].Value = enterance.Name;
+                                    DG_Rooms.Rows[rowNumber].Cells[COL_Flat.Name].Value = flat.Name;
+                                }
                             }
                         }
+
                     }
-                    
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
+            };
+
+            Invoke(action);
         }
 
         private void DG_Rooms_CellClick(object sender, DataGridViewCellEventArgs e)

@@ -4,6 +4,7 @@ using System;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Supply
@@ -31,63 +32,69 @@ namespace Supply
             dataGridViewButtonColumn3.Text = "Удалить";
             dataGridViewButtonColumn3.UseColumnTextForButtonValue = true;
             DG_TenantsView.Columns.Add(dataGridViewButtonColumn3);
-            UpdateInfo();
+
+            Thread thread = new Thread(UpdateInfo);
+            thread.Start();
         }
 
         private void UpdateInfo()
         {
-            using (SupplyDbContext db = new SupplyDbContext())
+            Action action = () =>
             {
-                DG_TenantsView.Rows.Clear();
-
-                try
+                using (SupplyDbContext db = new SupplyDbContext())
                 {
-                    var tenants = db.Tenants.ToList();
+                    DG_TenantsView.Rows.Clear();
 
-                    foreach (var tenant in tenants)
+                    try
                     {
-                        int rowNumber = DG_TenantsView.Rows.Add();
+                        var tenants = db.Tenants.ToList();
 
-                        DG_TenantsView.Rows[rowNumber].Cells[COL_ID.Name].Value = tenant.ID;
-                        DG_TenantsView.Rows[rowNumber].Cells[COL_Status.Name].Value = tenant.Status;
-                        DG_TenantsView.Rows[rowNumber].Cells[COL_CreatedAt.Name].Value = tenant.CreatedAt;
-                        DG_TenantsView.Rows[rowNumber].Cells[COL_UpdatedAt.Name].Value = tenant.UpdatedAt;
-                        Order order = db.Orders.Where(x => x.ID == tenant.ID).FirstOrDefault();
-                        if(order!=null)
+                        foreach (var tenant in tenants)
                         {
-                            DG_TenantsView.Rows[rowNumber].Cells[COL_Order.Name].Value = order.OrderNumber;
+                            int rowNumber = DG_TenantsView.Rows.Add();
+
+                            DG_TenantsView.Rows[rowNumber].Cells[COL_ID.Name].Value = tenant.ID;
+                            DG_TenantsView.Rows[rowNumber].Cells[COL_Status.Name].Value = tenant.Status;
+                            DG_TenantsView.Rows[rowNumber].Cells[COL_CreatedAt.Name].Value = tenant.CreatedAt;
+                            DG_TenantsView.Rows[rowNumber].Cells[COL_UpdatedAt.Name].Value = tenant.UpdatedAt;
+                            Order order = db.Orders.Where(x => x.ID == tenant.ID).FirstOrDefault();
+                            if (order != null)
+                            {
+                                DG_TenantsView.Rows[rowNumber].Cells[COL_Order.Name].Value = order.OrderNumber;
+                            }
+                            else
+                            {
+                                DG_TenantsView.Rows[rowNumber].Cells[COL_Order.Name].Value = "-";
+                            }
+                            Identification identification = db.Identifications.Include(p => p.DocumentType).Where(x => x.ID == tenant.ID).FirstOrDefault();
+                            if (identification != null)
+                            {
+                                DG_TenantsView.Rows[rowNumber].Cells[COL_Name.Name].Value = identification.Name;
+                                DG_TenantsView.Rows[rowNumber].Cells[COL_Surename.Name].Value = identification.Surename;
+                                DG_TenantsView.Rows[rowNumber].Cells[COL_Patronymic.Name].Value = identification.Patronymic;
+                                DG_TenantsView.Rows[rowNumber].Cells[COL_DocType.Name].Value = identification.DocumentType.Name;
+                                DG_TenantsView.Rows[rowNumber].Cells[COL_Series.Name].Value = identification.DocumentSeries;
+                                DG_TenantsView.Rows[rowNumber].Cells[COL_DocNumb.Name].Value = identification.DocumentNumber;
+                            }
+                            else
+                            {
+                                DG_TenantsView.Rows[rowNumber].Cells[COL_Name.Name].Value = "-";
+                                DG_TenantsView.Rows[rowNumber].Cells[COL_Surename.Name].Value = "-";
+                                DG_TenantsView.Rows[rowNumber].Cells[COL_Patronymic.Name].Value = "-";
+                                DG_TenantsView.Rows[rowNumber].Cells[COL_DocType.Name].Value = "-";
+                                DG_TenantsView.Rows[rowNumber].Cells[COL_Series.Name].Value = "-";
+                                DG_TenantsView.Rows[rowNumber].Cells[COL_DocNumb.Name].Value = "-";
+                            }
+
                         }
-                        else
-                        {
-                            DG_TenantsView.Rows[rowNumber].Cells[COL_Order.Name].Value = "-";
-                        }
-                        Identification identification = db.Identifications.Include(p=>p.DocumentType).Where(x => x.ID == tenant.ID).FirstOrDefault();
-                        if(identification!=null)
-                        {
-                            DG_TenantsView.Rows[rowNumber].Cells[COL_Name.Name].Value = identification.Name;
-                            DG_TenantsView.Rows[rowNumber].Cells[COL_Surename.Name].Value = identification.Surename;
-                            DG_TenantsView.Rows[rowNumber].Cells[COL_Patronymic.Name].Value = identification.Patronymic;
-                            DG_TenantsView.Rows[rowNumber].Cells[COL_DocType.Name].Value = identification.DocumentType.Name;
-                            DG_TenantsView.Rows[rowNumber].Cells[COL_Series.Name].Value = identification.DocumentSeries;
-                            DG_TenantsView.Rows[rowNumber].Cells[COL_DocNumb.Name].Value = identification.DocumentNumber;
-                        }
-                        else
-                        {
-                            DG_TenantsView.Rows[rowNumber].Cells[COL_Name.Name].Value = "-";
-                            DG_TenantsView.Rows[rowNumber].Cells[COL_Surename.Name].Value = "-";
-                            DG_TenantsView.Rows[rowNumber].Cells[COL_Patronymic.Name].Value = "-";
-                            DG_TenantsView.Rows[rowNumber].Cells[COL_DocType.Name].Value = "-";
-                            DG_TenantsView.Rows[rowNumber].Cells[COL_Series.Name].Value = "-";
-                            DG_TenantsView.Rows[rowNumber].Cells[COL_DocNumb.Name].Value = "-";
-                        }
-                        
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
+            };
+            Invoke(action);
         }
 
         private void DG_TenantsView_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -107,7 +114,8 @@ namespace Supply
                             db.Tenants.Remove(tenant);
                             db.SaveChanges();
                             MessageBox.Show("Жилец удален!");
-                            UpdateInfo();
+                            Thread thread = new Thread(UpdateInfo);
+                            thread.Start();
                         }
                     }
                 }

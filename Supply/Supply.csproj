@@ -135,6 +135,12 @@
     <Compile Include="AdminManagersLicensesAdd.Designer.cs">
       <DependentUpon>AdminManagersLicensesAdd.cs</DependentUpon>
     </Compile>
+    <Compile Include="AdminOrders.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminOrders.Designer.cs">
+      <DependentUpon>AdminOrders.cs</DependentUpon>
+    </Compile>
     <Compile Include="AdminPaymentsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -312,6 +318,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AdminManagersLicensesAdd.resx">
       <DependentUpon>AdminManagersLicensesAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminOrders.resx">
+      <DependentUpon>AdminOrders.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AdminPaymentsForm.resx">
       <DependentUpon>AdminPaymentsForm.cs</DependentUpon>

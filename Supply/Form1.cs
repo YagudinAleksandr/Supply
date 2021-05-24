@@ -86,7 +86,11 @@ namespace Supply
             AppSettingsForm appSettingsForm = new AppSettingsForm();
             appSettingsForm.ShowDialog();
         }
-
+        private void MainOrders_Click(object sender,EventArgs e)
+        {
+            AdminOrders adminOrders = new AdminOrders();
+            adminOrders.Show();
+        }
         private void Form1_Shown(object sender, EventArgs e)
         {
             LB_UserName.Text = _user.Name;
@@ -140,6 +144,10 @@ namespace Supply
 
                 ToolStripMenuItem payOrder = new ToolStripMenuItem("Оплаты");
                 declaration.DropDownItems.Add(payOrder);
+
+                ToolStripMenuItem mainOrder = new ToolStripMenuItem("Договора");
+                mainOrder.Click += MainOrders_Click;
+                declaration.DropDownItems.Add(mainOrder);
             }
 
             ToolStripMenuItem settingsWindow = new ToolStripMenuItem("Настройки");
