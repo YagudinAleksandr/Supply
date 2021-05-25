@@ -447,7 +447,18 @@ namespace Supply
             OrderCreateForm orderCreateForm = new OrderCreateForm();
             orderCreateForm.ShowDialog();
         }
+
+        private void BTN_CreatePaymentOrder_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BTN_OrderToElectricity_Click(object sender, EventArgs e)
+        {
+
+        }
         #endregion
+
 
     }
 }

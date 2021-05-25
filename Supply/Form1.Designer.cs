@@ -35,8 +35,8 @@ namespace Supply
             this.label1 = new System.Windows.Forms.Label();
             this.LB_Hostels = new System.Windows.Forms.ListBox();
             this.BTN_CreateOrders = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.BTN_CreatePaymentOrder = new System.Windows.Forms.Button();
+            this.BTN_OrderToElectricity = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.TV_HostelInformation = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
@@ -86,27 +86,29 @@ namespace Supply
             this.BTN_CreateOrders.UseVisualStyleBackColor = true;
             this.BTN_CreateOrders.Click += new System.EventHandler(this.BTN_CreateOrders_Click);
             // 
-            // button2
+            // BTN_CreatePaymentOrder
             // 
-            this.button2.Location = new System.Drawing.Point(15, 195);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(183, 31);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.BTN_CreatePaymentOrder.Location = new System.Drawing.Point(15, 195);
+            this.BTN_CreatePaymentOrder.Name = "BTN_CreatePaymentOrder";
+            this.BTN_CreatePaymentOrder.Size = new System.Drawing.Size(183, 57);
+            this.BTN_CreatePaymentOrder.TabIndex = 6;
+            this.BTN_CreatePaymentOrder.Text = "Сформировать платёжные поручения";
+            this.BTN_CreatePaymentOrder.UseVisualStyleBackColor = true;
+            this.BTN_CreatePaymentOrder.Click += new System.EventHandler(this.BTN_CreatePaymentOrder_Click);
             // 
-            // button3
+            // BTN_OrderToElectricity
             // 
-            this.button3.Location = new System.Drawing.Point(15, 232);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(183, 31);
-            this.button3.TabIndex = 7;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
+            this.BTN_OrderToElectricity.Location = new System.Drawing.Point(16, 258);
+            this.BTN_OrderToElectricity.Name = "BTN_OrderToElectricity";
+            this.BTN_OrderToElectricity.Size = new System.Drawing.Size(183, 55);
+            this.BTN_OrderToElectricity.TabIndex = 7;
+            this.BTN_OrderToElectricity.Text = "Сформировать договора на электроэнергию";
+            this.BTN_OrderToElectricity.UseVisualStyleBackColor = true;
+            this.BTN_OrderToElectricity.Click += new System.EventHandler(this.BTN_OrderToElectricity_Click);
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(15, 269);
+            this.button4.Location = new System.Drawing.Point(16, 319);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(183, 31);
             this.button4.TabIndex = 8;
@@ -130,8 +132,8 @@ namespace Supply
             this.ClientSize = new System.Drawing.Size(832, 485);
             this.Controls.Add(this.TV_HostelInformation);
             this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.BTN_OrderToElectricity);
+            this.Controls.Add(this.BTN_CreatePaymentOrder);
             this.Controls.Add(this.BTN_CreateOrders);
             this.Controls.Add(this.LB_Hostels);
             this.Controls.Add(this.label1);
@@ -157,8 +159,8 @@ namespace Supply
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox LB_Hostels;
         private System.Windows.Forms.Button BTN_CreateOrders;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button BTN_CreatePaymentOrder;
+        private System.Windows.Forms.Button BTN_OrderToElectricity;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.TreeView TV_HostelInformation;
     }
