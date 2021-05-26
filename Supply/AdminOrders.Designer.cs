@@ -31,6 +31,7 @@ namespace Supply
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminOrders));
             this.DG_View_Orders = new System.Windows.Forms.DataGridView();
+            this.BTN_CreateExcel = new System.Windows.Forms.Button();
             this.COL_OrderNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Tenant = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Room = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -40,7 +41,7 @@ namespace Supply
             this.COL_Payment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_StartOrder = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_OrderEnd = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BTN_CreateExcel = new System.Windows.Forms.Button();
+            this.COL_CreatedAt = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DG_View_Orders)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,11 +61,23 @@ namespace Supply
             this.COL_TenantType,
             this.COL_Payment,
             this.COL_StartOrder,
-            this.COL_OrderEnd});
+            this.COL_OrderEnd,
+            this.COL_CreatedAt});
             this.DG_View_Orders.Location = new System.Drawing.Point(13, 13);
             this.DG_View_Orders.Name = "DG_View_Orders";
             this.DG_View_Orders.Size = new System.Drawing.Size(775, 380);
             this.DG_View_Orders.TabIndex = 0;
+            // 
+            // BTN_CreateExcel
+            // 
+            this.BTN_CreateExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTN_CreateExcel.Location = new System.Drawing.Point(713, 415);
+            this.BTN_CreateExcel.Name = "BTN_CreateExcel";
+            this.BTN_CreateExcel.Size = new System.Drawing.Size(75, 23);
+            this.BTN_CreateExcel.TabIndex = 1;
+            this.BTN_CreateExcel.Text = "В Excel";
+            this.BTN_CreateExcel.UseVisualStyleBackColor = true;
+            this.BTN_CreateExcel.Click += new System.EventHandler(this.BTN_CreateExcel_Click);
             // 
             // COL_OrderNumber
             // 
@@ -120,16 +133,11 @@ namespace Supply
             this.COL_OrderEnd.Name = "COL_OrderEnd";
             this.COL_OrderEnd.ReadOnly = true;
             // 
-            // BTN_CreateExcel
+            // COL_CreatedAt
             // 
-            this.BTN_CreateExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTN_CreateExcel.Location = new System.Drawing.Point(713, 415);
-            this.BTN_CreateExcel.Name = "BTN_CreateExcel";
-            this.BTN_CreateExcel.Size = new System.Drawing.Size(75, 23);
-            this.BTN_CreateExcel.TabIndex = 1;
-            this.BTN_CreateExcel.Text = "В Excel";
-            this.BTN_CreateExcel.UseVisualStyleBackColor = true;
-            this.BTN_CreateExcel.Click += new System.EventHandler(this.BTN_CreateExcel_Click);
+            this.COL_CreatedAt.HeaderText = "Дата создания";
+            this.COL_CreatedAt.Name = "COL_CreatedAt";
+            this.COL_CreatedAt.ReadOnly = true;
             // 
             // AdminOrders
             // 
@@ -162,5 +170,6 @@ namespace Supply
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Payment;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_StartOrder;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_OrderEnd;
+        private System.Windows.Forms.DataGridViewTextBoxColumn COL_CreatedAt;
     }
 }
