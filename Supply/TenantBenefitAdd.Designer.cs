@@ -51,6 +51,7 @@ namespace Supply
             this.label10 = new System.Windows.Forms.Label();
             this.TB_Payment = new System.Windows.Forms.MaskedTextBox();
             this.BTN_Save = new System.Windows.Forms.Button();
+            this.BTN_SaveAndCreate = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -229,19 +230,32 @@ namespace Supply
             // 
             // BTN_Save
             // 
-            this.BTN_Save.Location = new System.Drawing.Point(532, 267);
+            this.BTN_Save.Location = new System.Drawing.Point(351, 267);
             this.BTN_Save.Name = "BTN_Save";
             this.BTN_Save.Size = new System.Drawing.Size(75, 23);
             this.BTN_Save.TabIndex = 20;
+            this.BTN_Save.Tag = "Save";
             this.BTN_Save.Text = "Сохранить";
             this.BTN_Save.UseVisualStyleBackColor = true;
             this.BTN_Save.Click += new System.EventHandler(this.BTN_Save_Click);
+            // 
+            // BTN_SaveAndCreate
+            // 
+            this.BTN_SaveAndCreate.Location = new System.Drawing.Point(432, 267);
+            this.BTN_SaveAndCreate.Name = "BTN_SaveAndCreate";
+            this.BTN_SaveAndCreate.Size = new System.Drawing.Size(175, 23);
+            this.BTN_SaveAndCreate.TabIndex = 21;
+            this.BTN_SaveAndCreate.Tag = "SaveAndCreate";
+            this.BTN_SaveAndCreate.Text = "Сохранить и создать документ";
+            this.BTN_SaveAndCreate.UseVisualStyleBackColor = true;
+            this.BTN_SaveAndCreate.Click += new System.EventHandler(this.BTN_Save_Click);
             // 
             // TenantBenefitAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 302);
+            this.Controls.Add(this.BTN_SaveAndCreate);
             this.Controls.Add(this.BTN_Save);
             this.Controls.Add(this.TB_Payment);
             this.Controls.Add(this.label10);
@@ -296,5 +310,6 @@ namespace Supply
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.MaskedTextBox TB_Payment;
         private System.Windows.Forms.Button BTN_Save;
+        private System.Windows.Forms.Button BTN_SaveAndCreate;
     }
 }

@@ -75,5 +75,64 @@ namespace Supply
                 }
             }
         }
+
+        private void DG_Users_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 4)
+            {
+                int userId = 0;
+                int.TryParse(DG_Users.Rows[e.RowIndex].Cells[0].Value.ToString(), out userId);
+                if (userId != 0)
+                {
+                    AdminUsersFormAdd adminUsersFormAdd = new AdminUsersFormAdd(userId);
+                    adminUsersFormAdd.ShowDialog();
+                    UpdateInfo();
+                }
+                
+            }
+
+            if (e.ColumnIndex == 5)
+            {
+                DialogResult result = MessageBox.Show("Удалить пользователя системы?", "Вы уверены?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    using(SupplyDbContext db = new SupplyDbContext())
+                    {
+                        int userId = 0;
+                        int.TryParse(DG_Users.Rows[e.RowIndex].Cells[0].Value.ToString(), out userId);
+
+                        if (userId != 0)
+                        {
+                            User user = db.Users.Where(x => x.ID == userId).FirstOrDefault();
+                            if (user != null)
+                            {
+                                try
+                                {
+                                    db.Users.Remove(user);
+                                    db.SaveChanges();
+                                    MessageBox.Show("Пользователь удален успешно!");
+                                    UpdateInfo();
+                                }
+                                catch(Exception ex)
+                                {
+                                    //Создаем LOG запись об удалении!
+                                    Log logInfo = new Log();
+                                    logInfo.ID = Guid.NewGuid();
+                                    logInfo.UserID = _userID;
+                                    logInfo.CreatedAt = DateTime.Now.ToString();
+                                    logInfo.Type = "ERROR";
+                                    logInfo.Caption = $"Class:AdminUsersForm.cs. Method: DG_Users_CellContentClick. {ex.Message}. {ex.InnerException}";
+                                    db.Logs.Add(logInfo);
+                                    db.SaveChanges();
+
+                                    MessageBox.Show(ex.Message);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

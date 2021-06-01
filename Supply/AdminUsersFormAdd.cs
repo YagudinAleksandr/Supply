@@ -11,9 +11,21 @@ namespace Supply
     public partial class AdminUsersFormAdd : Form
     {
         private int _selectedIndexOfRole;
+        private User _user;
+        private bool _changeInformation = false;
         public AdminUsersFormAdd()
         {
             InitializeComponent();
+        }
+
+        public AdminUsersFormAdd(int userID)
+        {
+            InitializeComponent();
+            using (SupplyDbContext db = new SupplyDbContext())
+            {
+                _user = db.Users.Where(x => x.ID == userID).FirstOrDefault();
+                _changeInformation = true;
+            }
         }
 
         private void BTN_Save_Click(object sender, EventArgs e)
@@ -28,31 +40,73 @@ namespace Supply
                 MessageBox.Show("Заполните поле Логин!");
                 return;
             }
-            if(TB_Password.Text=="")
-            {
-                MessageBox.Show("Заполните поле Пароль!");
-                return;
-            }
+            
             if(_selectedIndexOfRole==0)
             {
                 MessageBox.Show("Выбирите роль!");
                 return;
             }
 
-            using(SupplyDbContext db = new SupplyDbContext())
+            if(_changeInformation==false)
             {
-                User user = new User();
-                user.Name = TB_Name.Text;
-                user.Login = TB_Login.Text;
-                user.Password = GetHashPass(TB_Password.Text);
-                user.RoleID = _selectedIndexOfRole;
+                if (TB_Password.Text == "")
+                {
+                    MessageBox.Show("Заполните поле Пароль!");
+                    return;
+                }
 
-                db.Users.Add(user);
-                db.SaveChanges();
+                using (SupplyDbContext db = new SupplyDbContext())
+                {
+                    User user = new User();
+                    user.Name = TB_Name.Text;
+                    user.Login = TB_Login.Text;
+                    user.Password = GetHashPass(TB_Password.Text);
+                    user.RoleID = _selectedIndexOfRole;
+
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                }
+                MessageBox.Show($"Пользователь {TB_Name.Text} успешно добавлен в систему! Логин: {TB_Login.Text} Пароль: {TB_Password.Text}");
+                this.Close();
+            }
+            else
+            {
+                using(SupplyDbContext db = new SupplyDbContext())
+                {
+                    User user = db.Users.Where(x => x.ID == _user.ID).First();
+                    user.Name = TB_Name.Text;
+                    user.Login = TB_Login.Text;
+                    user.RoleID = _selectedIndexOfRole;
+                    if (TB_Password.Text != "")
+                    {
+                        user.Password = GetHashPass(TB_Password.Text);
+                    }
+                    try
+                    {
+                        db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+
+                        MessageBox.Show($"Пользователь {TB_Name.Text} успешно изменен! Логин: {TB_Login.Text} Пароль: {TB_Password.Text}");
+                        this.Close();
+                    }
+                    catch(Exception ex)
+                    {
+                        //Создаем LOG запись об удалении!
+                        Log logInfo = new Log();
+                        logInfo.ID = Guid.NewGuid();
+                        logInfo.CreatedAt = DateTime.Now.ToString();
+                        logInfo.Type = "ERROR";
+                        logInfo.Caption = $"Class:AdminUsersFormAdd.cs. Method: BTN_Save_Click. {ex.Message}. {ex.InnerException}";
+                        db.Logs.Add(logInfo);
+                        db.SaveChanges();
+
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+                
             }
 
-            MessageBox.Show($"Пользователь {TB_Name.Text} успешно добавлен в систему! Логин: {TB_Login.Text} Пароль: {TB_Password.Text}");
-            this.Close();
+            
         }
 
         private void AdminUsersFormAdd_Shown(object sender, EventArgs e)
@@ -66,6 +120,13 @@ namespace Supply
                 CB_Roles.DataSource = roles;
                 CB_Roles.DisplayMember = "Title";
                 CB_Roles.ValueMember = "ID";
+            }
+
+            if(_user!=null)
+            {
+                TB_Login.Text = _user.Login;
+                TB_Name.Text = _user.Name;
+                CB_Roles.SelectedValue = _user.RoleID;
             }
         }
 

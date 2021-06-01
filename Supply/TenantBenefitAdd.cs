@@ -1,4 +1,5 @@
 ﻿using Supply.Domain;
+using Supply.Libs;
 using Supply.Models;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Supply
@@ -90,7 +92,7 @@ namespace Supply
         {
             try
             {
-                _licenseID = (int)CB_ManagersLicenses.SelectedIndex;
+                _licenseID = (int)CB_ManagersLicenses.SelectedValue;
             }
             catch
             {
@@ -102,7 +104,7 @@ namespace Supply
         {
             try
             {
-                _benefitTypeID = (int)CB_BenefitsTypes.SelectedIndex;
+                _benefitTypeID = (int)CB_BenefitsTypes.SelectedValue;
             }
             catch
             {
@@ -133,7 +135,19 @@ namespace Supply
                     db.Benefits.Add(benefit);
                     db.SaveChanges();
                     MessageBox.Show("Льгота добавлена успешно!");
-                    this.Close();
+
+                    Button saveButton = (Button)sender;
+                    if ((string)saveButton.Tag == "SaveAndCreate")
+                    {
+                        Thread thread = new Thread(CreateBenefitOrder);
+                        thread.Start();
+                        this.Close();
+                    }
+                    else
+                    {
+                        this.Close();
+                    }
+                    
                 }
                 catch(Exception ex)
                 {
@@ -148,6 +162,38 @@ namespace Supply
                     MessageBox.Show(ex.Message + "." + ex.InnerException);
                 }
             }
+        }
+
+        private void CreateBenefitOrder()
+        {
+            Action action = () =>
+              {
+                  Order order;
+                  using(SupplyDbContext db = new SupplyDbContext())
+                  {
+                      order = db.Orders.Where(x => x.ID == _orderID).FirstOrDefault();
+                  }
+
+                  if(order!=null)
+                  {
+                      string error = string.Empty;
+                      if (OrdersCreation.BenefitCreation(_orderID, out error))
+                      {
+                          MessageBox.Show($"Приложение о льготе создано к договору №{order.OrderNumber}");
+                      }
+                      else
+                      {
+                          MessageBox.Show(error);
+                      }
+                  }
+                  else
+                  {
+                      MessageBox.Show("Договор не существует!");
+                  }
+
+
+              };
+            Invoke(action);
         }
     }
 }

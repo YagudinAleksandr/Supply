@@ -52,6 +52,7 @@ namespace Supply
             this.DG_Users.Name = "DG_Users";
             this.DG_Users.Size = new System.Drawing.Size(775, 379);
             this.DG_Users.TabIndex = 0;
+            this.DG_Users.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DG_Users_CellContentClick);
             // 
             // COL_ID
             // 

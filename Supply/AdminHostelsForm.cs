@@ -115,15 +115,7 @@ namespace Supply
                             db.SaveChanges();
                             MessageBox.Show("Общежитие удалено успешно и все данные связанные с ним удалены!");
 
-                            //Создаем LOG запись об удалении!
-                            Log logInfo = new Log();
-                            logInfo.ID = Guid.NewGuid();
-                            logInfo.UserID = _userID;
-                            logInfo.CreatedAt = DateTime.Now.ToString();
-                            logInfo.Type = "Удаление данных";
-                            logInfo.Caption = $"Удален объект из базы HOSTELS и все сопутстствующие объекты! Объект:{hostel.Name},название:{hostel.Name}";
-                            db.Logs.Add(logInfo);
-                            db.SaveChanges();
+                            
 
                             UpdateInfo();
                         }
