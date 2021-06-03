@@ -28,9 +28,11 @@ namespace Supply.Models
         [Required]
         public string UpdatedAt { get; set; }
         public ICollection<Benefit> Benefits { get; set; }
+        public ICollection<ChangeRoom> ChangeRooms { get; set; }
         public Order()
         {
             Benefits = new List<Benefit>();
+            ChangeRooms = new List<ChangeRoom>();
         }
     }
 }

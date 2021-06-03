@@ -1,11 +1,5 @@
 ﻿using Supply.Models;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 
 namespace Supply.Domain
 {
@@ -42,5 +36,6 @@ namespace Supply.Domain
         public DbSet<AdditionalInformation> AdditionalInformation { get; set; }
         public DbSet<BenefitType> BenefitTypes { get; set; }
         public DbSet<Benefit> Benefits { get; set; }
+        public DbSet<ChangeRoom> ChangeRooms { get; set; }
     }
 }

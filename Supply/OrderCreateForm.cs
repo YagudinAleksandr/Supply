@@ -123,6 +123,14 @@ namespace Supply
 
                                 if(template==string.Empty)
                                 {
+                                    Log logInfo = new Log();
+                                    logInfo.ID = Guid.NewGuid();
+                                    logInfo.Type = "WARNING";
+                                    logInfo.Caption = $"Class: OrderCreateForm. Method: BTN_Create_Click. Несуществующий тип договора";
+                                    logInfo.CreatedAt = DateTime.Now.ToString();
+                                    db.Logs.Add(logInfo);
+                                    db.SaveChanges();
+
                                     MessageBox.Show("Несуществующий тип договора!");
                                     continue;
                                 }
@@ -308,6 +316,15 @@ namespace Supply
                                 else
                                 {
                                     MessageBox.Show(errorMessage);
+
+                                    Log logInfo = new Log();
+                                    logInfo.ID = Guid.NewGuid();
+                                    logInfo.Type = "WARNING";
+                                    logInfo.Caption = $"Class: OrderCreateForm. Method: BTN_Create_Click.{errorMessage}";
+                                    logInfo.CreatedAt = DateTime.Now.ToString();
+                                    db.Logs.Add(logInfo);
+                                    db.SaveChanges();
+
                                     continue;
                                 }
                                 //Окончание блока создания word документа

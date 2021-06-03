@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Supply
 {
-    public partial class Preloader : Form
+    public partial class TenantChangeRoom : Form
     {
-        public Preloader()
+        public TenantChangeRoom()
         {
             InitializeComponent();
         }

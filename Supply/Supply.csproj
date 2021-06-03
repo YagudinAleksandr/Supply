@@ -213,6 +213,12 @@
     <Compile Include="AppSettingsForm.Designer.cs">
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DeclarationsBenefits.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeclarationsBenefits.Designer.cs">
+      <DependentUpon>DeclarationsBenefits.cs</DependentUpon>
+    </Compile>
     <Compile Include="Domain\AppSettings.cs" />
     <Compile Include="Domain\FirstStart.cs" />
     <Compile Include="Domain\SupplyDbContext.cs" />
@@ -234,12 +240,17 @@
     <Compile Include="Migrations\202105212153196_FirstMainMigation.designer.cs">
       <DependentUpon>202105212153196_FirstMainMigation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106032323039_ChangeRoomMgr.cs" />
+    <Compile Include="Migrations\202106032323039_ChangeRoomMgr.designer.cs">
+      <DependentUpon>202106032323039_ChangeRoomMgr.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdditionalInformation.cs" />
     <Compile Include="Models\AdditionalInformationType.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Benefit.cs" />
     <Compile Include="Models\BenefitType.cs" />
+    <Compile Include="Models\ChangeRoom.cs" />
     <Compile Include="Models\DocumentType.cs" />
     <Compile Include="Models\Enterance.cs" />
     <Compile Include="Models\Flat.cs" />
@@ -269,12 +280,6 @@
     <Compile Include="OrderCreateForm.Designer.cs">
       <DependentUpon>OrderCreateForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Preloader.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Preloader.Designer.cs">
-      <DependentUpon>Preloader.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TenantAdd.cs">
@@ -294,6 +299,12 @@
     </Compile>
     <Compile Include="TenantBenefitAdd.Designer.cs">
       <DependentUpon>TenantBenefitAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TenantChangeRoom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TenantChangeRoom.Designer.cs">
+      <DependentUpon>TenantChangeRoom.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="AdminAddressesForm.resx">
       <DependentUpon>AdminAddressesForm.cs</DependentUpon>
@@ -358,6 +369,9 @@
     <EmbeddedResource Include="AppSettingsForm.resx">
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DeclarationsBenefits.resx">
+      <DependentUpon>DeclarationsBenefits.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -367,14 +381,14 @@
     <EmbeddedResource Include="Migrations\202105212153196_FirstMainMigation.resx">
       <DependentUpon>202105212153196_FirstMainMigation.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106032323039_ChangeRoomMgr.resx">
+      <DependentUpon>202106032323039_ChangeRoomMgr.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OrderAddForm.resx">
       <DependentUpon>OrderAddForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderCreateForm.resx">
       <DependentUpon>OrderCreateForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Preloader.resx">
-      <DependentUpon>Preloader.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -393,6 +407,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TenantBenefitAdd.resx">
       <DependentUpon>TenantBenefitAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TenantChangeRoom.resx">
+      <DependentUpon>TenantChangeRoom.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

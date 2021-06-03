@@ -91,6 +91,16 @@ namespace Supply
             AdminOrders adminOrders = new AdminOrders();
             adminOrders.Show();
         }
+        private void BenefitsOrders_Click(object sender, EventArgs e)
+        {
+            DeclarationsBenefits declarationsBenefits = new DeclarationsBenefits();
+            declarationsBenefits.Show();
+        }
+
+        private void ChangeRoomOrder_Click(object sender,EventArgs e)
+        {
+
+        }
         private void Form1_Shown(object sender, EventArgs e)
         {
             LB_UserName.Text = _user.Name;
@@ -148,6 +158,14 @@ namespace Supply
                 ToolStripMenuItem mainOrder = new ToolStripMenuItem("Договора");
                 mainOrder.Click += MainOrders_Click;
                 declaration.DropDownItems.Add(mainOrder);
+
+                ToolStripMenuItem benefitsOrders = new ToolStripMenuItem("Отчеты по льготам");
+                benefitsOrders.Click += BenefitsOrders_Click;
+                declaration.DropDownItems.Add(benefitsOrders);
+
+                ToolStripMenuItem changeroomOrders = new ToolStripMenuItem("Отчеты по переселению жильцов");
+                changeroomOrders.Click += ChangeRoomOrder_Click;
+                declaration.DropDownItems.Add(changeroomOrders);
             }
 
             ToolStripMenuItem settingsWindow = new ToolStripMenuItem("Настройки");
@@ -340,6 +358,7 @@ namespace Supply
                 case "tenant":
                     contextMenu.MenuItems.Add("Изменить");
                     contextMenu.MenuItems.Add("Сформировать договор", AddHumanMainOrder);
+                    contextMenu.MenuItems.Add("Переселить жильца", ChangeRoomOrder);
                     contextMenu.MenuItems.Add("Создать льготу", AddBenefitHandler);
                     contextMenu.MenuItems.Add("Расторжение договора");
                     contextMenu.MenuItems.Add("Удалить", DisabledTenant);
@@ -438,7 +457,13 @@ namespace Supply
                 }
             }
         }
+        private void ChangeRoomOrder(object sender,EventArgs e)
+        {
+            TenantChangeRoom tenantChangeRoom = new TenantChangeRoom();
+            tenantChangeRoom.ShowDialog();
 
+            CreateTreeOnTreeView(_hostelID);
+        }
 
         #endregion
         #region Buttons functions

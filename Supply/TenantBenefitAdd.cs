@@ -2,8 +2,6 @@
 using Supply.Libs;
 using Supply.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -166,34 +164,28 @@ namespace Supply
 
         private void CreateBenefitOrder()
         {
-            Action action = () =>
-              {
-                  Order order;
-                  using(SupplyDbContext db = new SupplyDbContext())
-                  {
-                      order = db.Orders.Where(x => x.ID == _orderID).FirstOrDefault();
-                  }
+            Order order;
+            using (SupplyDbContext db = new SupplyDbContext())
+            {
+                order = db.Orders.Where(x => x.ID == _orderID).FirstOrDefault();
+            }
 
-                  if(order!=null)
-                  {
-                      string error = string.Empty;
-                      if (OrdersCreation.BenefitCreation(_orderID, out error))
-                      {
-                          MessageBox.Show($"Приложение о льготе создано к договору №{order.OrderNumber}");
-                      }
-                      else
-                      {
-                          MessageBox.Show(error);
-                      }
-                  }
-                  else
-                  {
-                      MessageBox.Show("Договор не существует!");
-                  }
-
-
-              };
-            Invoke(action);
+            if (order != null)
+            {
+                string error = string.Empty;
+                if (OrdersCreation.BenefitCreation(_orderID, out error))
+                {
+                    MessageBox.Show($"Приложение о льготе создано к договору №{order.OrderNumber}");
+                }
+                else
+                {
+                    MessageBox.Show(error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Договор не существует!");
+            }
         }
     }
 }
