@@ -37,5 +37,7 @@ namespace Supply.Domain
         public DbSet<BenefitType> BenefitTypes { get; set; }
         public DbSet<Benefit> Benefits { get; set; }
         public DbSet<ChangeRoom> ChangeRooms { get; set; }
+        public DbSet<ChangePassport> ChangePassports { get; set; }
+        public DbSet<Accounting> Accountings { get; set; }
     }
 }

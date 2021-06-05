@@ -283,7 +283,6 @@ namespace Supply.Libs
             }
             return false;
         }
-
         public static string AdditionalInf(int type, int tenantId)
         {
             using (SupplyDbContext db = new SupplyDbContext())
@@ -301,7 +300,6 @@ namespace Supply.Libs
             }
             return string.Empty;
         }
-
         public static bool BenefitCreation(int orderId, out string error)
         {
             using (SupplyDbContext db = new SupplyDbContext())
@@ -436,6 +434,226 @@ namespace Supply.Libs
                     }
                 }
                 
+            }
+            error = string.Empty;
+            GC.Collect();
+            return true;
+        }
+        public static bool ChangeRoomCreate(int changeID, out string error)
+        {
+            using (SupplyDbContext db = new SupplyDbContext())
+            {
+                ChangeRoom changeRoom = db.ChangeRooms.Where(x => x.ID == changeID).Include(or => or.Order).Include(r => r.Room).FirstOrDefault();
+                Order order = db.Orders.Where(x => x.ID == changeRoom.Order.ID).Include(l => l.License).FirstOrDefault();
+                Tenant tenant = db.Tenants.Where(x => x.ID == order.ID).Where(y => y.Status == true).Include(p => p.Payment).First();
+
+                Room room = db.Rooms.Where(x => x.ID == changeRoom.Room.ID).Include(t => t.RoomType).Include(p => p.Properties).FirstOrDefault();
+                Flat flat = db.Flats.Where(x => x.ID == room.FlatID).FirstOrDefault();
+                Enterance enterance = db.Enterances.Where(x => x.ID == flat.Enterance_ID).Include(f => f.Flats).FirstOrDefault();
+                Hostel hostel = db.Hostels.Where(x => x.ID == enterance.HostelId).Include(m => m.Manager).Include(h => h.Address).FirstOrDefault();
+                License license = db.Licenses.Where(x => x.ID == hostel.Manager.ID).First();
+
+                if (tenant == null)
+                {
+                    error = $"Жильца для договора №{order.OrderNumber} не найдено!";
+                    return false;
+                }
+
+                Identification identification = db.Identifications.Where(x => x.ID == tenant.ID).First();
+
+                var additionalInformation = db.AdditionalInformation.Where(x => x.TenantID == tenant.ID).ToList();
+
+                //Создание Word документа
+                string errorMessage = String.Empty;
+
+
+                WordDocument document = new WordDocument(AppSettings.GetTemplateSetting("template6"), AppSettings.GetTemplateSetting("outfileDir"), "Приложение(переселение) к договору №" + order.OrderNumber.ToString());
+
+                if (document.OpenWordTemplate(out errorMessage))
+                {
+                    Dictionary<string, string> replacements = new Dictionary<string, string>();
+
+                    /*Жилец*/
+                    replacements.Add("ID", order.OrderNumber.ToString());
+                    DateTime orderStartDate = Convert.ToDateTime(order.StartDate);
+                    replacements.Add("startOrder", order.StartDate);
+                    replacements.Add("OrderAdditionalDate", changeRoom.StartDate);
+
+                    DateTime orderEndDate = Convert.ToDateTime(order.EndDate);
+                    replacements.Add("EndOrder", order.EndDate);
+                    replacements.Add("yearEndDate", orderEndDate.Year.ToString());
+                    replacements.Add("surename", identification.Surename);
+                    replacements.Add("name", identification.Name);
+                    replacements.Add("ns", identification.Name[0].ToString());
+
+                    if (identification.Patronymic != string.Empty)
+                    {
+                        replacements.Add("patronymic", identification.Patronymic);
+                        replacements.Add("ps", identification.Patronymic[0].ToString());
+                    }
+                    else
+                    {
+                        replacements.Add("patronymic", "");
+                        replacements.Add("ps", "");
+                    }
+
+
+
+                    replacements.Add("DocSeries", identification.DocumentSeries);
+                    replacements.Add("DocNumber", identification.DocumentNumber);
+                    replacements.Add("DocGiven", identification.Issued);
+                    replacements.Add("DocDate", identification.GivenDate);
+                    if (identification.Code != null)
+                    {
+                        replacements.Add("DocCode", identification.Code);
+                    }
+                    else
+                    {
+                        replacements.Add("DocCode", "");
+                    }
+                    replacements.Add("HumanAddress", identification.Address);
+                    replacements.Add("humanCitizenship", identification.Cityzenship);
+
+
+
+
+
+                    //Общежитие
+                    replacements.Add("roomName", room.Name);
+                    replacements.Add("roomType", room.RoomType.Name);
+                    int flats = enterance.Flats.Count;
+                    replacements.Add("hostelName", hostel.Name);
+                    replacements.Add("hostelAddress", hostel.Address.ZipCode + ", " + hostel.Address.Country + ", " + hostel.Address.Region + ", "
+                        + hostel.Address.City + ", " + hostel.Address.Street + ", " + hostel.Address.House);
+                    replacements.Add("MainManager", order.License.Manager.Surename + " " + order.License.Manager.Name[0] + "." + order.License.Manager.Patronymic[0] + ".");
+                    replacements.Add("Manager", order.License.Manager.Surename + " " + order.License.Manager.Name + " " + order.License.Manager.Patronymic);
+                    replacements.Add("LicenseType", order.License.Type);
+                    replacements.Add("LicenseNumber", order.License.Name);
+                    replacements.Add("LicenseStart", order.License.StartDate);
+
+
+                    //Начинаем замену в шаблоне и сохраняем документ
+                    document.MakeReplacementInWordTemplate(replacements);
+                    //Закрываем документ
+                    document.CloseWordTemplate(out errorMessage);
+
+                }
+                else
+                {
+                    error = errorMessage;
+                    return false;
+                }
+
+            }
+            error = string.Empty;
+            GC.Collect();
+            return true;
+        }
+        public static bool ChangePassportCreate(int changePassportID, out string error)
+        {
+            using (SupplyDbContext db = new SupplyDbContext())
+            {
+                ChangePassport changePassport = db.ChangePassports.Where(id => id.ID == changePassportID).Include(t=>t.Tenant).FirstOrDefault();
+                Order order = db.Orders.Where(x => x.ID == changePassport.Tenant.ID).Include(l => l.License).FirstOrDefault();
+                Tenant tenant = db.Tenants.Where(x => x.ID == order.ID).Where(y => y.Status == true).Include(r => r.Room).First();
+
+                Room room = db.Rooms.Where(x => x.ID == tenant.Room.ID).Include(t => t.RoomType).Include(p => p.Properties).FirstOrDefault();
+                Flat flat = db.Flats.Where(x => x.ID == room.FlatID).FirstOrDefault();
+                Enterance enterance = db.Enterances.Where(x => x.ID == flat.Enterance_ID).Include(f => f.Flats).FirstOrDefault();
+                Hostel hostel = db.Hostels.Where(x => x.ID == enterance.HostelId).Include(m => m.Manager).Include(h => h.Address).FirstOrDefault();
+                License license = db.Licenses.Where(x => x.ID == hostel.Manager.ID).First();
+
+                if (tenant == null)
+                {
+                    error = $"Жильца для договора №{order.OrderNumber} не найдено!";
+                    return false;
+                }
+
+                Identification identification = db.Identifications.Where(x => x.ID == tenant.ID).First();
+
+                var additionalInformation = db.AdditionalInformation.Where(x => x.TenantID == tenant.ID).ToList();
+
+                //Создание Word документа
+                string errorMessage = String.Empty;
+
+
+                WordDocument document = new WordDocument(AppSettings.GetTemplateSetting("template7"), AppSettings.GetTemplateSetting("outfileDir"), "Приложение(смена паспорта) к договору №" + order.OrderNumber.ToString());
+
+                if (document.OpenWordTemplate(out errorMessage))
+                {
+                    Dictionary<string, string> replacements = new Dictionary<string, string>();
+
+                    /*Жилец*/
+                    replacements.Add("ID", order.OrderNumber.ToString());
+                    DateTime orderStartDate = Convert.ToDateTime(order.StartDate);
+                    replacements.Add("startOrder", order.StartDate);
+                    replacements.Add("OrderAdditionalDate", changePassport.StartDate);
+
+                    DateTime orderEndDate = Convert.ToDateTime(order.EndDate);
+                    replacements.Add("EndOrder", order.EndDate);
+                    replacements.Add("yearEndDate", orderEndDate.Year.ToString());
+                    replacements.Add("surename", changePassport.Surename);
+                    replacements.Add("name", changePassport.Name);
+                    replacements.Add("ns", changePassport.Name[0].ToString());
+
+                    if (identification.Patronymic != string.Empty)
+                    {
+                        replacements.Add("patronymic", changePassport.Patronymic);
+                        replacements.Add("ps", changePassport.Patronymic[0].ToString());
+                    }
+                    else
+                    {
+                        replacements.Add("patronymic", "");
+                        replacements.Add("ps", "");
+                    }
+
+
+
+                    replacements.Add("DocSeries", changePassport.Series);
+                    replacements.Add("DocNumber", changePassport.Number);
+                    replacements.Add("DocGiven", changePassport.Issued);
+                    replacements.Add("DocDate", changePassport.GivenDate);
+                    if (identification.Code != null)
+                    {
+                        replacements.Add("DocCode", changePassport.Code);
+                    }
+                    else
+                    {
+                        replacements.Add("DocCode", "");
+                    }
+                    replacements.Add("HumanAddress", changePassport.Address);
+                    replacements.Add("humanCitizenship", changePassport.Citizenship);
+
+
+
+
+
+                    //Общежитие
+                    replacements.Add("roomName", room.Name);
+                    replacements.Add("roomType", room.RoomType.Name);
+                    int flats = enterance.Flats.Count;
+                    replacements.Add("hostelName", hostel.Name);
+                    replacements.Add("hostelAddress", hostel.Address.ZipCode + ", " + hostel.Address.Country + ", " + hostel.Address.Region + ", "
+                        + hostel.Address.City + ", " + hostel.Address.Street + ", " + hostel.Address.House);
+                    replacements.Add("MainManager", order.License.Manager.Surename + " " + order.License.Manager.Name[0] + "." + order.License.Manager.Patronymic[0] + ".");
+                    replacements.Add("Manager", order.License.Manager.Surename + " " + order.License.Manager.Name + " " + order.License.Manager.Patronymic);
+                    replacements.Add("LicenseType", order.License.Type);
+                    replacements.Add("LicenseNumber", order.License.Name);
+                    replacements.Add("LicenseStart", order.License.StartDate);
+
+
+                    //Начинаем замену в шаблоне и сохраняем документ
+                    document.MakeReplacementInWordTemplate(replacements);
+                    //Закрываем документ
+                    document.CloseWordTemplate(out errorMessage);
+
+                }
+                else
+                {
+                    error = errorMessage;
+                    return false;
+                }
+
             }
             error = string.Empty;
             GC.Collect();

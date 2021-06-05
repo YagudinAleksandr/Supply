@@ -213,6 +213,18 @@
     <Compile Include="AppSettingsForm.Designer.cs">
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DeclarationChangePassport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeclarationChangePassport.Designer.cs">
+      <DependentUpon>DeclarationChangePassport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DeclarationChangeRoom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeclarationChangeRoom.Designer.cs">
+      <DependentUpon>DeclarationChangeRoom.cs</DependentUpon>
+    </Compile>
     <Compile Include="DeclarationsBenefits.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -220,6 +232,7 @@
       <DependentUpon>DeclarationsBenefits.cs</DependentUpon>
     </Compile>
     <Compile Include="Domain\AppSettings.cs" />
+    <Compile Include="Domain\AsyncProcesses.cs" />
     <Compile Include="Domain\FirstStart.cs" />
     <Compile Include="Domain\SupplyDbContext.cs" />
     <Compile Include="Form1.cs">
@@ -244,12 +257,30 @@
     <Compile Include="Migrations\202106032323039_ChangeRoomMgr.designer.cs">
       <DependentUpon>202106032323039_ChangeRoomMgr.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106041357465_updateChangeRoom.cs" />
+    <Compile Include="Migrations\202106041357465_updateChangeRoom.designer.cs">
+      <DependentUpon>202106041357465_updateChangeRoom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106051055226_ChangePasport.cs" />
+    <Compile Include="Migrations\202106051055226_ChangePasport.designer.cs">
+      <DependentUpon>202106051055226_ChangePasport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106051229239_ChangePasportUpdate.cs" />
+    <Compile Include="Migrations\202106051229239_ChangePasportUpdate.designer.cs">
+      <DependentUpon>202106051229239_ChangePasportUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106051628202_AddAccounting.cs" />
+    <Compile Include="Migrations\202106051628202_AddAccounting.designer.cs">
+      <DependentUpon>202106051628202_AddAccounting.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Accounting.cs" />
     <Compile Include="Models\AdditionalInformation.cs" />
     <Compile Include="Models\AdditionalInformationType.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Benefit.cs" />
     <Compile Include="Models\BenefitType.cs" />
+    <Compile Include="Models\ChangePassport.cs" />
     <Compile Include="Models\ChangeRoom.cs" />
     <Compile Include="Models\DocumentType.cs" />
     <Compile Include="Models\Enterance.cs" />
@@ -299,6 +330,12 @@
     </Compile>
     <Compile Include="TenantBenefitAdd.Designer.cs">
       <DependentUpon>TenantBenefitAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TenantChangePassport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TenantChangePassport.Designer.cs">
+      <DependentUpon>TenantChangePassport.cs</DependentUpon>
     </Compile>
     <Compile Include="TenantChangeRoom.cs">
       <SubType>Form</SubType>
@@ -369,6 +406,12 @@
     <EmbeddedResource Include="AppSettingsForm.resx">
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DeclarationChangePassport.resx">
+      <DependentUpon>DeclarationChangePassport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeclarationChangeRoom.resx">
+      <DependentUpon>DeclarationChangeRoom.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DeclarationsBenefits.resx">
       <DependentUpon>DeclarationsBenefits.cs</DependentUpon>
     </EmbeddedResource>
@@ -383,6 +426,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106032323039_ChangeRoomMgr.resx">
       <DependentUpon>202106032323039_ChangeRoomMgr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106041357465_updateChangeRoom.resx">
+      <DependentUpon>202106041357465_updateChangeRoom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106051055226_ChangePasport.resx">
+      <DependentUpon>202106051055226_ChangePasport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106051229239_ChangePasportUpdate.resx">
+      <DependentUpon>202106051229239_ChangePasportUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106051628202_AddAccounting.resx">
+      <DependentUpon>202106051628202_AddAccounting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderAddForm.resx">
       <DependentUpon>OrderAddForm.cs</DependentUpon>
@@ -407,6 +462,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TenantBenefitAdd.resx">
       <DependentUpon>TenantBenefitAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TenantChangePassport.resx">
+      <DependentUpon>TenantChangePassport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TenantChangeRoom.resx">
       <DependentUpon>TenantChangeRoom.cs</DependentUpon>

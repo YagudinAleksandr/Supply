@@ -19,5 +19,6 @@ namespace Supply.Models
         public string CreatedAt { get; set; }
         [Required]
         public string UpdatedAt { get; set; }
+        public bool Status { get; set; }
     }
 }

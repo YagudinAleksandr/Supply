@@ -99,7 +99,14 @@ namespace Supply
 
         private void ChangeRoomOrder_Click(object sender,EventArgs e)
         {
+            DeclarationChangeRoom declarationChangeRoom = new DeclarationChangeRoom();
+            declarationChangeRoom.Show();
+        }
 
+        private void ChangePassportOrder_Click(object sender, EventArgs e)
+        {
+            DeclarationChangePassport declarationChangePassport = new DeclarationChangePassport();
+            declarationChangePassport.Show();
         }
         private void Form1_Shown(object sender, EventArgs e)
         {
@@ -166,6 +173,10 @@ namespace Supply
                 ToolStripMenuItem changeroomOrders = new ToolStripMenuItem("Отчеты по переселению жильцов");
                 changeroomOrders.Click += ChangeRoomOrder_Click;
                 declaration.DropDownItems.Add(changeroomOrders);
+
+                ToolStripMenuItem changePassportOrders = new ToolStripMenuItem("Отчеты по смене паспартов");
+                changePassportOrders.Click += ChangePassportOrder_Click;
+                declaration.DropDownItems.Add(changePassportOrders);
             }
 
             ToolStripMenuItem settingsWindow = new ToolStripMenuItem("Настройки");
@@ -188,7 +199,21 @@ namespace Supply
 
             Thread comboBoxthread = new Thread(UpdateComboboxItems);
             comboBoxthread.Start();
+
+            LB_AsyncProcesses.Text = "Начаты фоновые процессы";
+            Thread thread = new Thread(AsyncProcessing);
+            thread.Start();
             
+        }
+
+        private void AsyncProcessing()
+        {
+            Action action = () =>
+            {
+                AsyncProcesses.UpdateChangeRoom();
+                LB_AsyncProcesses.Text = "Все готово!";
+            };
+            Invoke(action);
         }
         #endregion
         #region FunctionsForNodeTree
@@ -359,10 +384,49 @@ namespace Supply
                     contextMenu.MenuItems.Add("Изменить");
                     contextMenu.MenuItems.Add("Сформировать договор", AddHumanMainOrder);
                     contextMenu.MenuItems.Add("Переселить жильца", ChangeRoomOrder);
+                    contextMenu.MenuItems.Add("Смена паспорта", AddChangePassportHandler);
                     contextMenu.MenuItems.Add("Создать льготу", AddBenefitHandler);
                     contextMenu.MenuItems.Add("Расторжение договора");
                     contextMenu.MenuItems.Add("Удалить", DisabledTenant);
                     break;
+            }
+        }
+        private void AddChangePassportHandler(object sender, EventArgs e)
+        {
+            try
+            {
+                if (TV_HostelInformation.SelectedNode.Tag != null) 
+                {
+                    int tenantID = 0;
+                    if (int.TryParse(TV_HostelInformation.SelectedNode.Tag.ToString(), out tenantID))
+                    {
+                        if (tenantID != 0)
+                        {
+                            using(SupplyDbContext db = new SupplyDbContext())
+                            {
+                                Tenant tenant = db.Tenants.Where(id => id.ID == tenantID).FirstOrDefault();
+                                TenantChangePassport tenantChangePassport = new TenantChangePassport(tenant);
+                                tenantChangePassport.ShowDialog();
+                                CreateTreeOnTreeView(_hostelID);
+                            }
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                using (SupplyDbContext db = new SupplyDbContext())
+                {
+                    Log log = new Log();
+                    log.ID = Guid.NewGuid();
+                    log.Type = "ERROR";
+                    log.CreatedAt = DateTime.Now.ToString();
+                    log.Caption = $"Class: Form1. Method:AddChangePassportHandler. "+ex.Message+"."+ex.InnerException;
+
+                    db.Logs.Add(log);
+                    db.SaveChanges();
+                }
+                
             }
         }
         private void AddBenefitHandler(object sender, EventArgs e)
@@ -459,10 +523,22 @@ namespace Supply
         }
         private void ChangeRoomOrder(object sender,EventArgs e)
         {
-            TenantChangeRoom tenantChangeRoom = new TenantChangeRoom();
-            tenantChangeRoom.ShowDialog();
+            
+            try
+            {
+                if(TV_HostelInformation.SelectedNode.Tag!=null)
+                {
+                    int tenantID = Convert.ToInt32(TV_HostelInformation.SelectedNode.Tag);
+                    TenantChangeRoom tenantChangeRoom = new TenantChangeRoom(tenantID);
+                    tenantChangeRoom.ShowDialog();
 
-            CreateTreeOnTreeView(_hostelID);
+                    CreateTreeOnTreeView(_hostelID);
+                }
+            }
+            catch
+            {
+                return;
+            }
         }
 
         #endregion

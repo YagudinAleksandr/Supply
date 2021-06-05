@@ -39,16 +39,18 @@ namespace Supply
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.BTN_Save = new System.Windows.Forms.Button();
+            this.LB_TenantName = new System.Windows.Forms.Label();
+            this.LB_Hostel = new System.Windows.Forms.Label();
+            this.LB_Enterance = new System.Windows.Forms.Label();
+            this.LB_Flat = new System.Windows.Forms.Label();
+            this.LB_Room = new System.Windows.Forms.Label();
+            this.CB_Hostel = new System.Windows.Forms.ComboBox();
+            this.CB_Enterance = new System.Windows.Forms.ComboBox();
+            this.CB_Flat = new System.Windows.Forms.ComboBox();
+            this.CB_Room = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.TB_Date = new System.Windows.Forms.MaskedTextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -132,107 +134,132 @@ namespace Supply
             this.label9.TabIndex = 8;
             this.label9.Text = ", коината";
             // 
-            // button1
+            // BTN_Save
             // 
-            this.button1.Location = new System.Drawing.Point(685, 130);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "Сохранить";
-            this.button1.UseVisualStyleBackColor = true;
+            this.BTN_Save.Location = new System.Drawing.Point(685, 130);
+            this.BTN_Save.Name = "BTN_Save";
+            this.BTN_Save.Size = new System.Drawing.Size(75, 23);
+            this.BTN_Save.TabIndex = 9;
+            this.BTN_Save.Text = "Сохранить";
+            this.BTN_Save.UseVisualStyleBackColor = true;
+            this.BTN_Save.Click += new System.EventHandler(this.BTN_Save_Click);
+            // 
+            // LB_TenantName
+            // 
+            this.LB_TenantName.AutoSize = true;
+            this.LB_TenantName.Location = new System.Drawing.Point(64, 13);
+            this.LB_TenantName.Name = "LB_TenantName";
+            this.LB_TenantName.Size = new System.Drawing.Size(41, 13);
+            this.LB_TenantName.TabIndex = 10;
+            this.LB_TenantName.Text = "label10";
+            // 
+            // LB_Hostel
+            // 
+            this.LB_Hostel.AutoSize = true;
+            this.LB_Hostel.Location = new System.Drawing.Point(168, 41);
+            this.LB_Hostel.Name = "LB_Hostel";
+            this.LB_Hostel.Size = new System.Drawing.Size(41, 13);
+            this.LB_Hostel.TabIndex = 11;
+            this.LB_Hostel.Text = "label11";
+            // 
+            // LB_Enterance
+            // 
+            this.LB_Enterance.AutoSize = true;
+            this.LB_Enterance.Location = new System.Drawing.Point(315, 41);
+            this.LB_Enterance.Name = "LB_Enterance";
+            this.LB_Enterance.Size = new System.Drawing.Size(41, 13);
+            this.LB_Enterance.TabIndex = 12;
+            this.LB_Enterance.Text = "label12";
+            // 
+            // LB_Flat
+            // 
+            this.LB_Flat.AutoSize = true;
+            this.LB_Flat.Location = new System.Drawing.Point(471, 41);
+            this.LB_Flat.Name = "LB_Flat";
+            this.LB_Flat.Size = new System.Drawing.Size(41, 13);
+            this.LB_Flat.TabIndex = 13;
+            this.LB_Flat.Text = "label13";
+            // 
+            // LB_Room
+            // 
+            this.LB_Room.AutoSize = true;
+            this.LB_Room.Location = new System.Drawing.Point(658, 41);
+            this.LB_Room.Name = "LB_Room";
+            this.LB_Room.Size = new System.Drawing.Size(41, 13);
+            this.LB_Room.TabIndex = 14;
+            this.LB_Room.Text = "label14";
+            // 
+            // CB_Hostel
+            // 
+            this.CB_Hostel.FormattingEnabled = true;
+            this.CB_Hostel.Location = new System.Drawing.Point(158, 77);
+            this.CB_Hostel.Name = "CB_Hostel";
+            this.CB_Hostel.Size = new System.Drawing.Size(72, 21);
+            this.CB_Hostel.TabIndex = 15;
+            this.CB_Hostel.SelectedIndexChanged += new System.EventHandler(this.CB_Hostel_SelectedIndexChanged);
+            // 
+            // CB_Enterance
+            // 
+            this.CB_Enterance.FormattingEnabled = true;
+            this.CB_Enterance.Location = new System.Drawing.Point(298, 77);
+            this.CB_Enterance.Name = "CB_Enterance";
+            this.CB_Enterance.Size = new System.Drawing.Size(113, 21);
+            this.CB_Enterance.TabIndex = 16;
+            this.CB_Enterance.SelectedIndexChanged += new System.EventHandler(this.CB_Enterance_SelectedIndexChanged);
+            // 
+            // CB_Flat
+            // 
+            this.CB_Flat.FormattingEnabled = true;
+            this.CB_Flat.Location = new System.Drawing.Point(458, 77);
+            this.CB_Flat.Name = "CB_Flat";
+            this.CB_Flat.Size = new System.Drawing.Size(113, 21);
+            this.CB_Flat.TabIndex = 17;
+            this.CB_Flat.SelectedIndexChanged += new System.EventHandler(this.CB_Flat_SelectedIndexChanged);
+            // 
+            // CB_Room
+            // 
+            this.CB_Room.FormattingEnabled = true;
+            this.CB_Room.Location = new System.Drawing.Point(647, 77);
+            this.CB_Room.Name = "CB_Room";
+            this.CB_Room.Size = new System.Drawing.Size(113, 21);
+            this.CB_Room.TabIndex = 18;
+            this.CB_Room.SelectedIndexChanged += new System.EventHandler(this.CB_Room_SelectedIndexChanged);
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(64, 13);
+            this.label10.Location = new System.Drawing.Point(16, 113);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(41, 13);
-            this.label10.TabIndex = 10;
-            this.label10.Text = "label10";
+            this.label10.Size = new System.Drawing.Size(102, 13);
+            this.label10.TabIndex = 19;
+            this.label10.Text = "Дата переселения";
             // 
-            // label11
+            // TB_Date
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(168, 41);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(41, 13);
-            this.label11.TabIndex = 11;
-            this.label11.Text = "label11";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(315, 41);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(41, 13);
-            this.label12.TabIndex = 12;
-            this.label12.Text = "label12";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(471, 41);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(41, 13);
-            this.label13.TabIndex = 13;
-            this.label13.Text = "label13";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(658, 41);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(41, 13);
-            this.label14.TabIndex = 14;
-            this.label14.Text = "label14";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(158, 77);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(72, 21);
-            this.comboBox1.TabIndex = 15;
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(298, 77);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(113, 21);
-            this.comboBox2.TabIndex = 16;
-            // 
-            // comboBox3
-            // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(458, 77);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(113, 21);
-            this.comboBox3.TabIndex = 17;
-            // 
-            // comboBox4
-            // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(647, 77);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(113, 21);
-            this.comboBox4.TabIndex = 18;
+            this.TB_Date.Location = new System.Drawing.Point(124, 110);
+            this.TB_Date.Mask = "00/00/0000";
+            this.TB_Date.Name = "TB_Date";
+            this.TB_Date.Size = new System.Drawing.Size(100, 20);
+            this.TB_Date.TabIndex = 20;
+            this.TB_Date.ValidatingType = typeof(System.DateTime);
             // 
             // TenantChangeRoom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(774, 169);
-            this.Controls.Add(this.comboBox4);
-            this.Controls.Add(this.comboBox3);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.label14);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.label11);
+            this.Controls.Add(this.TB_Date);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.CB_Room);
+            this.Controls.Add(this.CB_Flat);
+            this.Controls.Add(this.CB_Enterance);
+            this.Controls.Add(this.CB_Hostel);
+            this.Controls.Add(this.LB_Room);
+            this.Controls.Add(this.LB_Flat);
+            this.Controls.Add(this.LB_Enterance);
+            this.Controls.Add(this.LB_Hostel);
+            this.Controls.Add(this.LB_TenantName);
+            this.Controls.Add(this.BTN_Save);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -246,6 +273,7 @@ namespace Supply
             this.Name = "TenantChangeRoom";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Переселить жильца";
+            this.Load += new System.EventHandler(this.TenantChangeRoom_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -262,15 +290,17 @@ namespace Supply
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button BTN_Save;
+        private System.Windows.Forms.Label LB_TenantName;
+        private System.Windows.Forms.Label LB_Hostel;
+        private System.Windows.Forms.Label LB_Enterance;
+        private System.Windows.Forms.Label LB_Flat;
+        private System.Windows.Forms.Label LB_Room;
+        private System.Windows.Forms.ComboBox CB_Hostel;
+        private System.Windows.Forms.ComboBox CB_Enterance;
+        private System.Windows.Forms.ComboBox CB_Flat;
+        private System.Windows.Forms.ComboBox CB_Room;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.MaskedTextBox TB_Date;
     }
 }
