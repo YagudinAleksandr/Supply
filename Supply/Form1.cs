@@ -382,6 +382,7 @@ namespace Supply
                     break;
                 case "tenant":
                     contextMenu.MenuItems.Add("Изменить");
+                    contextMenu.MenuItems.Add("Внести оплату", AddAccounting);
                     contextMenu.MenuItems.Add("Сформировать договор", AddHumanMainOrder);
                     contextMenu.MenuItems.Add("Переселить жильца", ChangeRoomOrder);
                     contextMenu.MenuItems.Add("Смена паспорта", AddChangePassportHandler);
@@ -533,6 +534,22 @@ namespace Supply
                     tenantChangeRoom.ShowDialog();
 
                     CreateTreeOnTreeView(_hostelID);
+                }
+            }
+            catch
+            {
+                return;
+            }
+        }
+        private void AddAccounting(object sender, EventArgs e)
+        {
+            try
+            {
+                if (TV_HostelInformation.SelectedNode.Tag != null)
+                {
+                    int tenantID = Convert.ToInt32(TV_HostelInformation.SelectedNode.Tag);
+                    TenantAccounting tenantAccounting = new TenantAccounting(tenantID);
+                    tenantAccounting.Show();
                 }
             }
             catch
