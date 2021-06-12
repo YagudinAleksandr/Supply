@@ -44,6 +44,9 @@ namespace Supply
             // DG_Rooms
             // 
             this.DG_Rooms.AllowUserToAddRows = false;
+            this.DG_Rooms.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.DG_Rooms.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DG_Rooms.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.COL_ID,
@@ -94,6 +97,7 @@ namespace Supply
             // 
             // BTN_OpenRoomAddForm
             // 
+            this.BTN_OpenRoomAddForm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BTN_OpenRoomAddForm.Location = new System.Drawing.Point(713, 415);
             this.BTN_OpenRoomAddForm.Name = "BTN_OpenRoomAddForm";
             this.BTN_OpenRoomAddForm.Size = new System.Drawing.Size(75, 23);

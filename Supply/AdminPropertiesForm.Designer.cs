@@ -61,6 +61,9 @@ namespace Supply
             // DG_Properties
             // 
             this.DG_Properties.AllowUserToAddRows = false;
+            this.DG_Properties.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.DG_Properties.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DG_Properties.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.COL_ID,
@@ -93,6 +96,7 @@ namespace Supply
             // 
             // BTN_OpenAddForm
             // 
+            this.BTN_OpenAddForm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BTN_OpenAddForm.Location = new System.Drawing.Point(713, 279);
             this.BTN_OpenAddForm.Name = "BTN_OpenAddForm";
             this.BTN_OpenAddForm.Size = new System.Drawing.Size(75, 23);

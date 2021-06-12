@@ -75,7 +75,7 @@ namespace Libraries.ExcelSystem
 
         public void Save()
         {
-            if(string.IsNullOrEmpty(_filePath))
+            if(!string.IsNullOrEmpty(_filePath))
             {
                 _workbook.SaveAs(_filePath);
                 _filePath = null;

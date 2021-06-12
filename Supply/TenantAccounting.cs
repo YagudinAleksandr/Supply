@@ -1,15 +1,10 @@
 ﻿using Supply.Domain;
 using Supply.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Supply
@@ -40,7 +35,7 @@ namespace Supply
                     ChangePassport changePassport = db.ChangePassports.Where(tid => tid.TenantID == tenant.ID).Where(s => s.Status == true).FirstOrDefault();
                     Order order = db.Orders.Where(id => id.ID == tenant.ID).FirstOrDefault();
                     Payment payment = db.Payments.Where(id => id.ID == tenant.PaymentID).FirstOrDefault();
-                    Benefit benefits = db.Benefits.Where(oid => oid.OrderID == order.ID).FirstOrDefault();
+                    Benefit benefit = db.Benefits.Where(oid => oid.OrderID == order.ID).FirstOrDefault();
                     var accountings = db.Accountings.Where(tid => tid.TenantID == tenant.ID).ToList();
 
                     if (changePassport != null) 
@@ -59,14 +54,35 @@ namespace Supply
                             LB_TenantName.Text += " " + tenant.Identification.Patronymic;
                         }
                     }
-
+                    //Payment part
                     DateTime orderStartDate = Convert.ToDateTime(order.StartDate);
                     DateTime orderEndDate = Convert.ToDateTime(order.EndDate);
 
                     int totalDate = Math.Abs((orderEndDate.Month - orderStartDate.Month) + 12 * (orderEndDate.Year - orderStartDate.Year));
 
-
                     _accountingTotal = payment.Rent * totalDate;
+
+                    DateTime benefitStart;//Benefit start date
+                    DateTime benefitEnd;//benefit end date
+
+                    if (benefit != null)
+                    {
+                        benefitStart = Convert.ToDateTime(benefit.StartDate);
+                        benefitEnd = Convert.ToDateTime(benefit.EndDate);
+
+                        int totalPeriodStart = Math.Abs((benefitStart.Month - orderStartDate.Month) + 12 * (benefitStart.Year - orderStartDate.Year));
+                        _accountingTotal = totalPeriodStart * payment.Rent;
+
+                        int totalPeriodEnd = Math.Abs((orderEndDate.Month - benefitEnd.Month) + 12 * (orderEndDate.Year - benefitEnd.Year));
+                        _accountingTotal += totalPeriodEnd * payment.Rent;
+
+                        int totalBenefitDate = Math.Abs((benefitEnd.Month - benefitStart.Month) + 12 * (benefitEnd.Year - benefitStart.Year));
+                        _accountingTotal += Convert.ToDecimal(benefit.Payment) * totalBenefitDate;
+                        
+                    }
+
+
+
 
                     foreach (var accounting in accountings)
                     {

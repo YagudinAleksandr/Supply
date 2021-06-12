@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using Libraries.ExcelSystem;
 using Supply.Domain;
 using Supply.Libs;
 using Supply.Models;
@@ -108,6 +109,31 @@ namespace Supply
             DeclarationChangePassport declarationChangePassport = new DeclarationChangePassport();
             declarationChangePassport.Show();
         }
+        private void AddLog(string errorMessage, string caption)
+        {
+            using (SupplyDbContext db = new SupplyDbContext())
+            {
+                Log logInfo = new Log();
+                logInfo.ID = Guid.NewGuid();
+                logInfo.Type = "ERROR";
+                logInfo.Caption = $"{caption}" + errorMessage;
+                logInfo.CreatedAt = DateTime.Now.ToString();
+                db.Logs.Add(logInfo);
+                db.SaveChanges();
+            }
+        }
+
+        private void DeclarationHostelsOrders(object sender, EventArgs e)
+        {
+            DeclarationHostels declarationHostels = new DeclarationHostels();
+            declarationHostels.Show();
+        }
+
+        private void CreateAccount_Click(object sender, EventArgs e)
+        {
+            DeclarationAccount declarationAccount = new DeclarationAccount();
+            declarationAccount.Show();
+        }
         private void Form1_Shown(object sender, EventArgs e)
         {
             LB_UserName.Text = _user.Name;
@@ -160,6 +186,7 @@ namespace Supply
                 settingItem.DropDownItems.Add(payments);
 
                 ToolStripMenuItem payOrder = new ToolStripMenuItem("Оплаты");
+                payOrder.Click += CreateAccount_Click;
                 declaration.DropDownItems.Add(payOrder);
 
                 ToolStripMenuItem mainOrder = new ToolStripMenuItem("Договора");
@@ -177,6 +204,10 @@ namespace Supply
                 ToolStripMenuItem changePassportOrders = new ToolStripMenuItem("Отчеты по смене паспартов");
                 changePassportOrders.Click += ChangePassportOrder_Click;
                 declaration.DropDownItems.Add(changePassportOrders);
+
+                ToolStripMenuItem declarationHostels = new ToolStripMenuItem("Отчет по общежитиям");
+                declarationHostels.Click += DeclarationHostelsOrders;
+                declaration.DropDownItems.Add(declarationHostels);
             }
 
             ToolStripMenuItem settingsWindow = new ToolStripMenuItem("Настройки");

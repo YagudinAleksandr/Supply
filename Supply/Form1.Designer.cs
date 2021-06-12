@@ -37,7 +37,6 @@ namespace Supply
             this.BTN_CreateOrders = new System.Windows.Forms.Button();
             this.BTN_CreatePaymentOrder = new System.Windows.Forms.Button();
             this.BTN_OrderToElectricity = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
             this.TV_HostelInformation = new System.Windows.Forms.TreeView();
             this.LB_AsyncProcesses = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -107,15 +106,6 @@ namespace Supply
             this.BTN_OrderToElectricity.UseVisualStyleBackColor = true;
             this.BTN_OrderToElectricity.Click += new System.EventHandler(this.BTN_OrderToElectricity_Click);
             // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(16, 319);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(183, 31);
-            this.button4.TabIndex = 8;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
             // TV_HostelInformation
             // 
             this.TV_HostelInformation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -142,7 +132,6 @@ namespace Supply
             this.ClientSize = new System.Drawing.Size(832, 485);
             this.Controls.Add(this.LB_AsyncProcesses);
             this.Controls.Add(this.TV_HostelInformation);
-            this.Controls.Add(this.button4);
             this.Controls.Add(this.BTN_OrderToElectricity);
             this.Controls.Add(this.BTN_CreatePaymentOrder);
             this.Controls.Add(this.BTN_CreateOrders);
@@ -172,7 +161,6 @@ namespace Supply
         private System.Windows.Forms.Button BTN_CreateOrders;
         private System.Windows.Forms.Button BTN_CreatePaymentOrder;
         private System.Windows.Forms.Button BTN_OrderToElectricity;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.TreeView TV_HostelInformation;
         private System.Windows.Forms.Label LB_AsyncProcesses;
     }

@@ -42,6 +42,9 @@ namespace Supply
             // DG_Hostels
             // 
             this.DG_Hostels.AllowUserToAddRows = false;
+            this.DG_Hostels.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.DG_Hostels.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DG_Hostels.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.COL_ID,
@@ -80,6 +83,7 @@ namespace Supply
             // 
             // BTN_OpenHostelAddWindow
             // 
+            this.BTN_OpenHostelAddWindow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BTN_OpenHostelAddWindow.Location = new System.Drawing.Point(713, 306);
             this.BTN_OpenHostelAddWindow.Name = "BTN_OpenHostelAddWindow";
             this.BTN_OpenHostelAddWindow.Size = new System.Drawing.Size(75, 23);

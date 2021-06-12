@@ -213,6 +213,12 @@
     <Compile Include="AppSettingsForm.Designer.cs">
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DeclarationAccount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeclarationAccount.Designer.cs">
+      <DependentUpon>DeclarationAccount.cs</DependentUpon>
+    </Compile>
     <Compile Include="DeclarationChangePassport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -224,6 +230,12 @@
     </Compile>
     <Compile Include="DeclarationChangeRoom.Designer.cs">
       <DependentUpon>DeclarationChangeRoom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DeclarationHostels.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeclarationHostels.Designer.cs">
+      <DependentUpon>DeclarationHostels.cs</DependentUpon>
     </Compile>
     <Compile Include="DeclarationsBenefits.cs">
       <SubType>Form</SubType>
@@ -412,11 +424,17 @@
     <EmbeddedResource Include="AppSettingsForm.resx">
       <DependentUpon>AppSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DeclarationAccount.resx">
+      <DependentUpon>DeclarationAccount.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DeclarationChangePassport.resx">
       <DependentUpon>DeclarationChangePassport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DeclarationChangeRoom.resx">
       <DependentUpon>DeclarationChangeRoom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeclarationHostels.resx">
+      <DependentUpon>DeclarationHostels.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DeclarationsBenefits.resx">
       <DependentUpon>DeclarationsBenefits.cs</DependentUpon>
