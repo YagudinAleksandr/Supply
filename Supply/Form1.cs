@@ -111,6 +111,7 @@ namespace Supply
         }
         private void AddLog(string errorMessage, string caption)
         {
+
             using (SupplyDbContext db = new SupplyDbContext())
             {
                 Log logInfo = new Log();
@@ -412,16 +413,59 @@ namespace Supply
                     contextMenu.MenuItems.Add("Добавить жильца",AddHumanHandler);
                     break;
                 case "tenant":
-                    contextMenu.MenuItems.Add("Изменить");
+                    contextMenu.MenuItems.Add("Изменить", UpdateTenantInformation);
                     contextMenu.MenuItems.Add("Внести оплату", AddAccounting);
                     contextMenu.MenuItems.Add("Сформировать договор", AddHumanMainOrder);
                     contextMenu.MenuItems.Add("Переселить жильца", ChangeRoomOrder);
                     contextMenu.MenuItems.Add("Смена паспорта", AddChangePassportHandler);
                     contextMenu.MenuItems.Add("Создать льготу", AddBenefitHandler);
-                    contextMenu.MenuItems.Add("Расторжение договора");
+                    contextMenu.MenuItems.Add("Расторжение договора", DestroyOrder);
                     contextMenu.MenuItems.Add("Удалить", DisabledTenant);
                     break;
             }
+        }
+
+        private void UpdateTenantInformation(object sender, EventArgs e)
+        {
+            try
+            {
+                if (TV_HostelInformation.SelectedNode.Tag != null)
+                {
+                    int tenantID = 0;
+                    if (int.TryParse(TV_HostelInformation.SelectedNode.Tag.ToString(), out tenantID)) 
+                    {
+                        if (tenantID == 0)
+                        {
+                            using (SupplyDbContext db = new SupplyDbContext()) 
+                            {
+                                Log logInfo = new Log();
+                                logInfo.ID = Guid.NewGuid();
+                                logInfo.Type = "WARNING";
+                                logInfo.Caption = $"Class: Form1.cs. Method:UpdateTenantInformation. Selected node tag equil 0 when update tenant";
+                                logInfo.CreatedAt = DateTime.Now.ToString();
+                                db.Logs.Add(logInfo);
+                                db.SaveChanges();
+                            }
+                            MessageBox.Show("ID жильца равен 0");
+                        }
+                        else
+                        {
+                            TenantUpdateInformation tenantUpdateInformation = new TenantUpdateInformation(tenantID);
+                            tenantUpdateInformation.ShowDialog();
+
+                            CreateTreeOnTreeView(_hostelID);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                return;
+            }
+        }
+        private void DestroyOrder(object sender, EventArgs e)
+        {
+
         }
         private void AddChangePassportHandler(object sender, EventArgs e)
         {
@@ -539,18 +583,25 @@ namespace Supply
         }
         private void AddHumanMainOrder(object sender, EventArgs e)
         {
-            if (TV_HostelInformation.SelectedNode.Tag != null) 
+            try
             {
-                string error = string.Empty;
-                int tenantID = int.Parse(TV_HostelInformation.SelectedNode.Tag.ToString());
-                if (OrdersCreation.CreateOrders(tenantID, out error) == false) 
+                if (TV_HostelInformation.SelectedNode.Tag != null)
                 {
-                    MessageBox.Show(error);
+                    string error = string.Empty;
+                    int tenantID = int.Parse(TV_HostelInformation.SelectedNode.Tag.ToString());
+                    if (OrdersCreation.CreateOrders(tenantID, out error) == false)
+                    {
+                        MessageBox.Show(error);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Договор сформирован");
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("Договор сформирован");
-                }
+            }
+            catch
+            {
+                return;
             }
         }
         private void ChangeRoomOrder(object sender,EventArgs e)

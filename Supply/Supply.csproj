@@ -361,6 +361,12 @@
     <Compile Include="TenantChangeRoom.Designer.cs">
       <DependentUpon>TenantChangeRoom.cs</DependentUpon>
     </Compile>
+    <Compile Include="TenantUpdateInformation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TenantUpdateInformation.Designer.cs">
+      <DependentUpon>TenantUpdateInformation.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AdminAddressesForm.resx">
       <DependentUpon>AdminAddressesForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -495,6 +501,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TenantChangeRoom.resx">
       <DependentUpon>TenantChangeRoom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TenantUpdateInformation.resx">
+      <DependentUpon>TenantUpdateInformation.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

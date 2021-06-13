@@ -39,8 +39,9 @@ namespace Supply.Domain
                         db.AdditionalInformationTypes.Add(new AdditionalInformationType() { ID = 4, Name = "Группа" });
                         db.AdditionalInformationTypes.Add(new AdditionalInformationType() { ID = 5, Name = "Форма обучения" });
                         db.AdditionalInformationTypes.Add(new AdditionalInformationType() { ID = 6, Name = "Ступень обучения" });
-                        db.AdditionalInformationTypes.Add(new AdditionalInformationType() { ID = 7, Name = "Период приезда" });
-                        db.AdditionalInformationTypes.Add(new AdditionalInformationType() { ID = 8, Name = "Доп.жилец" });
+                        db.AdditionalInformationTypes.Add(new AdditionalInformationType() { ID = 7, Name = "Основа обучения" });
+                        db.AdditionalInformationTypes.Add(new AdditionalInformationType() { ID = 8, Name = "Период приезда" });
+                        db.AdditionalInformationTypes.Add(new AdditionalInformationType() { ID = 9, Name = "Доп.жилец" });
                         db.SaveChanges();
                     }
 

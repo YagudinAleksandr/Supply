@@ -120,7 +120,18 @@ namespace Supply
                     }
                 }
             }
-            
+
+            if (e.ColumnIndex == 11)
+            {
+                int tenantIndex = int.Parse(DG_TenantsView.Rows[e.RowIndex].Cells[0].Value.ToString());
+
+                TenantUpdateInformation tenantUpdateInformation = new TenantUpdateInformation(tenantIndex);
+                tenantUpdateInformation.ShowDialog();
+
+                MessageBox.Show("Жилец изменен!");
+                Thread thread = new Thread(UpdateInfo);
+                thread.Start();
+            }
         }
     }
 }

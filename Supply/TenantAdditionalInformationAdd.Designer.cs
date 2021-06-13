@@ -32,9 +32,9 @@ namespace Supply
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TenantAdditionalInformationAdd));
             this.BTN_Save = new System.Windows.Forms.Button();
             this.DG_ViewAdditionalInformation = new System.Windows.Forms.DataGridView();
+            this.COL_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Type = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.COL_Information = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.COL_DeleteButton = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DG_ViewAdditionalInformation)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,14 +52,21 @@ namespace Supply
             // 
             this.DG_ViewAdditionalInformation.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DG_ViewAdditionalInformation.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.COL_ID,
             this.COL_Type,
-            this.COL_Information,
-            this.COL_DeleteButton});
+            this.COL_Information});
             this.DG_ViewAdditionalInformation.Location = new System.Drawing.Point(13, 13);
             this.DG_ViewAdditionalInformation.Name = "DG_ViewAdditionalInformation";
             this.DG_ViewAdditionalInformation.Size = new System.Drawing.Size(775, 396);
             this.DG_ViewAdditionalInformation.TabIndex = 13;
+            this.DG_ViewAdditionalInformation.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DG_ViewAdditionalInformation_CellMouseClick);
             this.DG_ViewAdditionalInformation.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.DG_ViewAdditionalInformation_UserAddedRow);
+            // 
+            // COL_ID
+            // 
+            this.COL_ID.HeaderText = "#";
+            this.COL_ID.Name = "COL_ID";
+            this.COL_ID.ReadOnly = true;
             // 
             // COL_Type
             // 
@@ -74,13 +81,6 @@ namespace Supply
             this.COL_Information.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.COL_Information.Width = 500;
             // 
-            // COL_DeleteButton
-            // 
-            this.COL_DeleteButton.HeaderText = "Удаление";
-            this.COL_DeleteButton.Name = "COL_DeleteButton";
-            this.COL_DeleteButton.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.COL_DeleteButton.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
             // TenantAdditionalInformationAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -93,6 +93,7 @@ namespace Supply
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Дополнительная информация о жильце";
             this.Load += new System.EventHandler(this.TenantAdditionalInformationAdd_Load);
+            this.Shown += new System.EventHandler(this.TenantAdditionalInformationAdd_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.DG_ViewAdditionalInformation)).EndInit();
             this.ResumeLayout(false);
 
@@ -101,8 +102,8 @@ namespace Supply
         #endregion
         private System.Windows.Forms.Button BTN_Save;
         private System.Windows.Forms.DataGridView DG_ViewAdditionalInformation;
+        private System.Windows.Forms.DataGridViewTextBoxColumn COL_ID;
         private System.Windows.Forms.DataGridViewComboBoxColumn COL_Type;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Information;
-        private System.Windows.Forms.DataGridViewButtonColumn COL_DeleteButton;
     }
 }
