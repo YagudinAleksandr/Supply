@@ -141,6 +141,24 @@
     <Compile Include="AdminOrders.Designer.cs">
       <DependentUpon>AdminOrders.cs</DependentUpon>
     </Compile>
+    <Compile Include="AdminPaymentsElectricity.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminPaymentsElectricity.Designer.cs">
+      <DependentUpon>AdminPaymentsElectricity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPaymentsElectricityElements.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminPaymentsElectricityElements.Designer.cs">
+      <DependentUpon>AdminPaymentsElectricityElements.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPaymentsElectricityPaymentAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminPaymentsElectricityPaymentAdd.Designer.cs">
+      <DependentUpon>AdminPaymentsElectricityPaymentAdd.cs</DependentUpon>
+    </Compile>
     <Compile Include="AdminPaymentsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -285,6 +303,18 @@
     <Compile Include="Migrations\202106051628202_AddAccounting.designer.cs">
       <DependentUpon>202106051628202_AddAccounting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106131234052_ElectricityPaymentAdd.cs" />
+    <Compile Include="Migrations\202106131234052_ElectricityPaymentAdd.designer.cs">
+      <DependentUpon>202106131234052_ElectricityPaymentAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106131242476_UpdateElectricityAndAddPayEl.cs" />
+    <Compile Include="Migrations\202106131242476_UpdateElectricityAndAddPayEl.designer.cs">
+      <DependentUpon>202106131242476_UpdateElectricityAndAddPayEl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106131327233_UpdateElectricityPayments.cs" />
+    <Compile Include="Migrations\202106131327233_UpdateElectricityPayments.designer.cs">
+      <DependentUpon>202106131327233_UpdateElectricityPayments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accounting.cs" />
     <Compile Include="Models\AdditionalInformation.cs" />
@@ -295,6 +325,8 @@
     <Compile Include="Models\ChangePassport.cs" />
     <Compile Include="Models\ChangeRoom.cs" />
     <Compile Include="Models\DocumentType.cs" />
+    <Compile Include="Models\ElectricityElement.cs" />
+    <Compile Include="Models\ElectricityPayment.cs" />
     <Compile Include="Models\Enterance.cs" />
     <Compile Include="Models\Flat.cs" />
     <Compile Include="Models\Hostel.cs" />
@@ -394,6 +426,15 @@
     <EmbeddedResource Include="AdminOrders.resx">
       <DependentUpon>AdminOrders.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AdminPaymentsElectricity.resx">
+      <DependentUpon>AdminPaymentsElectricity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminPaymentsElectricityElements.resx">
+      <DependentUpon>AdminPaymentsElectricityElements.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminPaymentsElectricityPaymentAdd.resx">
+      <DependentUpon>AdminPaymentsElectricityPaymentAdd.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AdminPaymentsForm.resx">
       <DependentUpon>AdminPaymentsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -468,6 +509,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106051628202_AddAccounting.resx">
       <DependentUpon>202106051628202_AddAccounting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106131234052_ElectricityPaymentAdd.resx">
+      <DependentUpon>202106131234052_ElectricityPaymentAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106131242476_UpdateElectricityAndAddPayEl.resx">
+      <DependentUpon>202106131242476_UpdateElectricityAndAddPayEl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106131327233_UpdateElectricityPayments.resx">
+      <DependentUpon>202106131327233_UpdateElectricityPayments.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderAddForm.resx">
       <DependentUpon>OrderAddForm.cs</DependentUpon>

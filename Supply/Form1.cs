@@ -109,20 +109,7 @@ namespace Supply
             DeclarationChangePassport declarationChangePassport = new DeclarationChangePassport();
             declarationChangePassport.Show();
         }
-        private void AddLog(string errorMessage, string caption)
-        {
-
-            using (SupplyDbContext db = new SupplyDbContext())
-            {
-                Log logInfo = new Log();
-                logInfo.ID = Guid.NewGuid();
-                logInfo.Type = "ERROR";
-                logInfo.Caption = $"{caption}" + errorMessage;
-                logInfo.CreatedAt = DateTime.Now.ToString();
-                db.Logs.Add(logInfo);
-                db.SaveChanges();
-            }
-        }
+        
 
         private void DeclarationHostelsOrders(object sender, EventArgs e)
         {
@@ -134,6 +121,11 @@ namespace Supply
         {
             DeclarationAccount declarationAccount = new DeclarationAccount();
             declarationAccount.Show();
+        }
+        private void PaymentElectr_Click(object sender, EventArgs e)
+        {
+            AdminPaymentsElectricity adminPaymentsElectricity = new AdminPaymentsElectricity();
+            adminPaymentsElectricity.Show();
         }
         private void Form1_Shown(object sender, EventArgs e)
         {
@@ -185,6 +177,10 @@ namespace Supply
                 ToolStripMenuItem payments = new ToolStripMenuItem("Тарифные планы");
                 payments.Click += Payments_Click;
                 settingItem.DropDownItems.Add(payments);
+
+                ToolStripMenuItem paymentsElectrycity = new ToolStripMenuItem("Тарифные планы эл.энергия");
+                paymentsElectrycity.Click += PaymentElectr_Click;
+                settingItem.DropDownItems.Add(paymentsElectrycity);
 
                 ToolStripMenuItem payOrder = new ToolStripMenuItem("Оплаты");
                 payOrder.Click += CreateAccount_Click;

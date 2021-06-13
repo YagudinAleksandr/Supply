@@ -41,6 +41,8 @@ namespace Supply
             this.CB_Enterances = new System.Windows.Forms.ComboBox();
             this.CB_Flat = new System.Windows.Forms.ComboBox();
             this.BTN_Save = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.CB_Electricity = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -131,7 +133,7 @@ namespace Supply
             // 
             // BTN_Save
             // 
-            this.BTN_Save.Location = new System.Drawing.Point(216, 107);
+            this.BTN_Save.Location = new System.Drawing.Point(359, 135);
             this.BTN_Save.Name = "BTN_Save";
             this.BTN_Save.Size = new System.Drawing.Size(75, 23);
             this.BTN_Save.TabIndex = 10;
@@ -139,11 +141,31 @@ namespace Supply
             this.BTN_Save.UseVisualStyleBackColor = true;
             this.BTN_Save.Click += new System.EventHandler(this.BTN_Save_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(16, 104);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(98, 13);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Эл.энергия тариф";
+            // 
+            // CB_Electricity
+            // 
+            this.CB_Electricity.FormattingEnabled = true;
+            this.CB_Electricity.Location = new System.Drawing.Point(120, 101);
+            this.CB_Electricity.Name = "CB_Electricity";
+            this.CB_Electricity.Size = new System.Drawing.Size(313, 21);
+            this.CB_Electricity.TabIndex = 12;
+            this.CB_Electricity.SelectedIndexChanged += new System.EventHandler(this.CB_Electricity_SelectedIndexChanged);
+            // 
             // AdminRoomsFormAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(305, 143);
+            this.ClientSize = new System.Drawing.Size(446, 170);
+            this.Controls.Add(this.CB_Electricity);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.BTN_Save);
             this.Controls.Add(this.CB_Flat);
             this.Controls.Add(this.CB_Enterances);
@@ -178,5 +200,7 @@ namespace Supply
         private System.Windows.Forms.ComboBox CB_Enterances;
         private System.Windows.Forms.ComboBox CB_Flat;
         private System.Windows.Forms.Button BTN_Save;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox CB_Electricity;
     }
 }

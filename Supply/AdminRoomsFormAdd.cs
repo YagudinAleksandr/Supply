@@ -17,6 +17,7 @@ namespace Supply
         private int _hostelID;
         private int _flatIndex;
         private int _roomType;
+        private int _electricityPaymentID;
         public AdminRoomsFormAdd(int hostelID)
         {
             InitializeComponent();
@@ -27,6 +28,7 @@ namespace Supply
         {
             _flatIndex = 0;
             _roomType = 0;
+            _electricityPaymentID = 0;
 
             using(SupplyDbContext db = new SupplyDbContext())
             {
@@ -37,6 +39,10 @@ namespace Supply
                 CB_Enterances.DataSource = db.Enterances.Where(x => x.HostelId == _hostelID).ToList();
                 CB_Enterances.DisplayMember = "Name";
                 CB_Enterances.ValueMember = "ID";
+
+                CB_Electricity.DataSource = db.ElectricityPayments.Where(hid => hid.HostelID == _hostelID).Where(st => st.Status == true).ToList();
+                CB_Electricity.ValueMember = "ID";
+                CB_Electricity.DisplayMember = "Name";
             }
         }
 
@@ -70,6 +76,7 @@ namespace Supply
                 room.Places = int.Parse(TB_Places.Text);
                 room.RoomTypeID = _roomType;
                 room.FlatID = _flatIndex;
+                room.ElectricityPaymentID = _electricityPaymentID;
 
                 db.Rooms.Add(room);
                 db.SaveChanges();
@@ -120,6 +127,18 @@ namespace Supply
             {
                 _flatIndex = (int)CB_Flat.SelectedValue;
 
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        private void CB_Electricity_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                _electricityPaymentID = (int)CB_Electricity.SelectedValue;
             }
             catch
             {

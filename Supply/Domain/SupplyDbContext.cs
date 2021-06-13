@@ -39,5 +39,7 @@ namespace Supply.Domain
         public DbSet<ChangeRoom> ChangeRooms { get; set; }
         public DbSet<ChangePassport> ChangePassports { get; set; }
         public DbSet<Accounting> Accountings { get; set; }
+        public DbSet<ElectricityPayment> ElectricityPayments { get; set; }
+        public DbSet<ElectricityElement> ElectricityElements { get; set; } 
     }
 }

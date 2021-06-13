@@ -95,6 +95,13 @@ namespace Supply
 
         private void BTN_Save_Click(object sender, EventArgs e)
         {
+            string validError = string.Empty;
+            if (ValidationCheck(out validError) != true) 
+            {
+                MessageBox.Show(validError);
+                return;
+            }
+
             Identification identification = new Identification();
             identification.Surename = TB_Surename.Text;
             identification.Name = TB_Name.Text;
@@ -169,6 +176,82 @@ namespace Supply
             {
                 return;
             }
+        }
+
+        private bool ValidationCheck(out string validerror)
+        {
+            validerror = string.Empty;
+            if(TB_Surename.Text=="")
+            {
+                validerror = "Заполните поле Фамилия!";
+                return false;
+            }
+
+            if(TB_Name.Text=="")
+            {
+                validerror = "Заполните поле Имя!";
+                return false;
+            }
+
+            string dateCheck = TB_DateOfBirth.Text.Replace(".","");
+
+            if(dateCheck=="")
+            {
+                validerror = "Заполните поле Дата рождения!";
+                return false;
+            }
+
+            if(_documentTypeID==0)
+            {
+                validerror = "Выбирите тип документа!";
+                return false;
+            }
+            if (TB_DocSeries.Text == "")
+            {
+                validerror = "Заполните поле Серия";
+                return false;
+            }
+            if (TB_DocNumber.Text == "")
+            {
+                validerror = "Заполните поле Номер!";
+                return false;
+            }
+
+            dateCheck = TB_GivenDate.Text.Replace(".", "");
+            if (dateCheck == "")
+            {
+                validerror = "Заполните дату выдачи документа!";
+                return false;
+            }
+
+            if(TB_Issued.Text=="")
+            {
+                validerror = "Заполните поле кем выдан документ!";
+                return false;
+            }
+
+            if(TB_Cityzenship.Text=="")
+            {
+                validerror = "Заполните поле гражданство!";
+                return false;
+            }
+            if(TB_Address.Text=="")
+            {
+                validerror = "Заполните поле Адрес!";
+                return false;
+            }
+            if (_paymentTypeID == 0)
+            {
+                validerror = "Выбирите тип тарифного плана!";
+                return false;
+            }
+            if (_tenantTypeID == 0)
+            {
+                validerror = "Выбирите тип жильца!";
+                return false;
+            }
+
+            return true;
         }
     }
 }
