@@ -23,7 +23,7 @@ namespace Supply
 
             TB_StudentOrder.Text = AppSettings.GetTemplateSetting("template1");
             TB_WorkerOrder.Text = AppSettings.GetTemplateSetting("template2");
-            TB_DatabaseConnectionString.Text = AppSettings.GetTemplateSetting("connectionString");
+            TB_DatabaseConnectionString.Text = Properties.Settings.Default.connect;
             
         }
 
