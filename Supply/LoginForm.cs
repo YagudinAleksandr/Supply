@@ -20,15 +20,25 @@ namespace Supply
             
 
             InitializeComponent();
-
-            if (File.Exists(directory + "UserSettingsFile.xml"))
+            if (Properties.Settings.Default.connect == "") 
             {
-                AppSettings.GetTemplateSetting("connectionString");
+                MessageBox.Show("Строка подключения к БД пустая!");
+                AppSettingsForm appSettingsForm = new AppSettingsForm();
+                appSettingsForm.ShowDialog();
             }
             else
             {
-                AppSettingsForm appSettingsForm = new AppSettingsForm();
-                appSettingsForm.ShowDialog();
+                using (SupplyDbContext db = new SupplyDbContext())
+                {
+                    if (!db.Database.Exists())
+                    {
+                        MessageBox.Show("Невозможно подключиться к базе данных!");
+                        AppSettingsForm appSettingsForm = new AppSettingsForm();
+                        appSettingsForm.ShowDialog();
+                        Application.Restart();
+                    }
+                }
+                    
             }
         }
 
@@ -48,14 +58,6 @@ namespace Supply
 
             using(SupplyDbContext db = new SupplyDbContext())
             {
-                //Проверка подключения к базе данных
-                if(!db.Database.Exists())
-                {
-                    MessageBox.Show("Невозможно подключиться к базе данных!");
-                    AppSettingsForm appSettingsForm = new AppSettingsForm();
-                    appSettingsForm.ShowDialog();
-                    Application.Restart();
-                }
 
                 string error = FirstStart.Start();
                 if(error!=string.Empty)
