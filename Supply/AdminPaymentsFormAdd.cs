@@ -1,13 +1,7 @@
 ﻿using Supply.Domain;
 using Supply.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Supply
@@ -68,6 +62,7 @@ namespace Supply
                 payment.UpdatedAt = DateTime.Now.ToString();
                 payment.Status = true;
                 payment.Rent = decimal.Parse(TB_Coast.Text);
+                payment.Service = decimal.Parse(TB_Service.Text);
                 payment.TenantTypeID = _tenantTypeID;
                 payment.PaymentType = CB_PeriodOfPayment.SelectedItem.ToString();
                 

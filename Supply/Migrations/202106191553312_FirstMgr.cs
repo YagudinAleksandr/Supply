@@ -3,10 +3,45 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class FirstMainMigation : DbMigration
+    public partial class FirstMgr : DbMigration
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.Accountings",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        TenantID = c.Int(nullable: false),
+                        CreatedAt = c.String(nullable: false),
+                        Coast = c.String(nullable: false),
+                        PeriodStart = c.String(nullable: false),
+                        PeriodEnd = c.String(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Tenants", t => t.TenantID, cascadeDelete: true)
+                .Index(t => t.TenantID);
+            
+            CreateTable(
+                "dbo.Tenants",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        Status = c.Boolean(nullable: false),
+                        CreatedAt = c.String(),
+                        UpdatedAt = c.String(),
+                        TenantTypeID = c.Int(),
+                        RoomID = c.Int(nullable: false),
+                        PaymentID = c.Int(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Payments", t => t.PaymentID)
+                .ForeignKey("dbo.Rooms", t => t.RoomID, cascadeDelete: true)
+                .ForeignKey("dbo.TenantTypes", t => t.TenantTypeID)
+                .Index(t => t.TenantTypeID)
+                .Index(t => t.RoomID)
+                .Index(t => t.PaymentID);
+            
             CreateTable(
                 "dbo.AdditionalInformations",
                 c => new
@@ -32,24 +67,42 @@
                 .PrimaryKey(t => t.ID);
             
             CreateTable(
-                "dbo.Tenants",
+                "dbo.ChangePassports",
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
+                        TenantID = c.Int(nullable: false),
+                        Surename = c.String(),
+                        Name = c.String(),
+                        Patronymic = c.String(),
+                        DocumentTypeID = c.Int(nullable: false),
+                        Code = c.String(nullable: false),
+                        Series = c.String(nullable: false),
+                        Number = c.String(nullable: false),
+                        GivenDate = c.String(nullable: false),
+                        Issued = c.String(nullable: false),
+                        Citizenship = c.String(),
+                        Address = c.String(),
+                        DateOfBirth = c.String(),
+                        StartDate = c.String(nullable: false),
                         Status = c.Boolean(nullable: false),
-                        CreatedAt = c.String(),
-                        UpdatedAt = c.String(),
-                        TenantTypeID = c.Int(),
-                        RoomID = c.Int(nullable: false),
-                        PaymentID = c.Int(),
+                        CreatedAt = c.String(nullable: false),
+                        UpdatedAt = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Payments", t => t.PaymentID)
-                .ForeignKey("dbo.Rooms", t => t.RoomID, cascadeDelete: true)
-                .ForeignKey("dbo.TenantTypes", t => t.TenantTypeID)
-                .Index(t => t.TenantTypeID)
-                .Index(t => t.RoomID)
-                .Index(t => t.PaymentID);
+                .ForeignKey("dbo.DocumentTypes", t => t.DocumentTypeID, cascadeDelete: true)
+                .ForeignKey("dbo.Tenants", t => t.TenantID, cascadeDelete: true)
+                .Index(t => t.TenantID)
+                .Index(t => t.DocumentTypeID);
+            
+            CreateTable(
+                "dbo.DocumentTypes",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                    })
+                .PrimaryKey(t => t.ID);
             
             CreateTable(
                 "dbo.Identifications",
@@ -76,15 +129,6 @@
                 .ForeignKey("dbo.Tenants", t => t.ID)
                 .Index(t => t.ID)
                 .Index(t => t.DocumentTypeID);
-            
-            CreateTable(
-                "dbo.DocumentTypes",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                    })
-                .PrimaryKey(t => t.ID);
             
             CreateTable(
                 "dbo.Orders",
@@ -184,6 +228,21 @@
                 .PrimaryKey(t => t.ID);
             
             CreateTable(
+                "dbo.ElectricityPayments",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        HostelID = c.Int(nullable: false),
+                        Name = c.String(nullable: false),
+                        Status = c.Boolean(nullable: false),
+                        CreatedAt = c.String(nullable: false),
+                        UpdatedAt = c.String(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Hostels", t => t.HostelID, cascadeDelete: true)
+                .Index(t => t.HostelID);
+            
+            CreateTable(
                 "dbo.Enterances",
                 c => new
                     {
@@ -215,12 +274,15 @@
                         Name = c.String(),
                         Places = c.Int(nullable: false),
                         RoomTypeID = c.Int(),
+                        ElectricityPaymentID = c.Int(),
                         FlatID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.ElectricityPayments", t => t.ElectricityPaymentID)
                 .ForeignKey("dbo.Flats", t => t.FlatID, cascadeDelete: true)
                 .ForeignKey("dbo.RoomTypes", t => t.RoomTypeID)
                 .Index(t => t.RoomTypeID)
+                .Index(t => t.ElectricityPaymentID)
                 .Index(t => t.FlatID);
             
             CreateTable(
@@ -250,11 +312,12 @@
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
+                        Name = c.String(nullable: false),
                         Rent = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        Description = c.String(),
+                        Service = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Description = c.String(nullable: false),
                         Status = c.Boolean(nullable: false),
-                        PaymentType = c.String(),
+                        PaymentType = c.String(nullable: false),
                         CreatedAt = c.String(),
                         UpdatedAt = c.String(),
                         UserID = c.Int(),
@@ -321,6 +384,40 @@
                 .Index(t => t.ManagerId);
             
             CreateTable(
+                "dbo.ChangeRooms",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        OrderID = c.Int(nullable: false),
+                        RoomID = c.Int(),
+                        StartDate = c.String(nullable: false),
+                        CreatedAt = c.String(nullable: false),
+                        UpdatedAt = c.String(nullable: false),
+                        Status = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Orders", t => t.OrderID, cascadeDelete: true)
+                .ForeignKey("dbo.Rooms", t => t.RoomID)
+                .Index(t => t.OrderID)
+                .Index(t => t.RoomID);
+            
+            CreateTable(
+                "dbo.ElectricityElements",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        ElectricityPaymentID = c.Int(nullable: false),
+                        Name = c.String(nullable: false),
+                        Capacity = c.Int(nullable: false),
+                        Payment = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        CreatedAt = c.String(nullable: false),
+                        UpdatedAt = c.String(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.ElectricityPayments", t => t.ElectricityPaymentID, cascadeDelete: true)
+                .Index(t => t.ElectricityPaymentID);
+            
+            CreateTable(
                 "dbo.Logs",
                 c => new
                     {
@@ -339,13 +436,16 @@
         public override void Down()
         {
             DropForeignKey("dbo.Logs", "UserID", "dbo.Users");
-            DropForeignKey("dbo.AdditionalInformations", "TenantID", "dbo.Tenants");
+            DropForeignKey("dbo.ElectricityElements", "ElectricityPaymentID", "dbo.ElectricityPayments");
+            DropForeignKey("dbo.Accountings", "TenantID", "dbo.Tenants");
             DropForeignKey("dbo.Tenants", "TenantTypeID", "dbo.TenantTypes");
             DropForeignKey("dbo.Tenants", "RoomID", "dbo.Rooms");
             DropForeignKey("dbo.Tenants", "PaymentID", "dbo.Payments");
             DropForeignKey("dbo.Orders", "ID", "dbo.Tenants");
             DropForeignKey("dbo.Orders", "RoomID", "dbo.Rooms");
             DropForeignKey("dbo.Orders", "LicenseID", "dbo.Licenses");
+            DropForeignKey("dbo.ChangeRooms", "RoomID", "dbo.Rooms");
+            DropForeignKey("dbo.ChangeRooms", "OrderID", "dbo.Orders");
             DropForeignKey("dbo.Benefits", "OrderID", "dbo.Orders");
             DropForeignKey("dbo.Benefits", "ManagerID", "dbo.Managers");
             DropForeignKey("dbo.Licenses", "ManagerId", "dbo.Managers");
@@ -359,13 +459,21 @@
             DropForeignKey("dbo.Rooms", "RoomTypeID", "dbo.RoomTypes");
             DropForeignKey("dbo.Properties", "RoomID", "dbo.Rooms");
             DropForeignKey("dbo.Rooms", "FlatID", "dbo.Flats");
+            DropForeignKey("dbo.Rooms", "ElectricityPaymentID", "dbo.ElectricityPayments");
             DropForeignKey("dbo.Flats", "Enterance_ID", "dbo.Enterances");
+            DropForeignKey("dbo.ElectricityPayments", "HostelID", "dbo.Hostels");
             DropForeignKey("dbo.Hostels", "AddressID", "dbo.Addresses");
             DropForeignKey("dbo.Benefits", "BenefitTypeID", "dbo.BenefitTypes");
+            DropForeignKey("dbo.ChangePassports", "TenantID", "dbo.Tenants");
+            DropForeignKey("dbo.ChangePassports", "DocumentTypeID", "dbo.DocumentTypes");
             DropForeignKey("dbo.Identifications", "ID", "dbo.Tenants");
             DropForeignKey("dbo.Identifications", "DocumentTypeID", "dbo.DocumentTypes");
+            DropForeignKey("dbo.AdditionalInformations", "TenantID", "dbo.Tenants");
             DropForeignKey("dbo.AdditionalInformations", "AdditionalInformationTypeID", "dbo.AdditionalInformationTypes");
             DropIndex("dbo.Logs", new[] { "UserID" });
+            DropIndex("dbo.ElectricityElements", new[] { "ElectricityPaymentID" });
+            DropIndex("dbo.ChangeRooms", new[] { "RoomID" });
+            DropIndex("dbo.ChangeRooms", new[] { "OrderID" });
             DropIndex("dbo.Licenses", new[] { "ManagerId" });
             DropIndex("dbo.Users", new[] { "RoleID" });
             DropIndex("dbo.Payments", new[] { "HostelID" });
@@ -374,9 +482,11 @@
             DropIndex("dbo.Payments", new[] { "UserID" });
             DropIndex("dbo.Properties", new[] { "RoomID" });
             DropIndex("dbo.Rooms", new[] { "FlatID" });
+            DropIndex("dbo.Rooms", new[] { "ElectricityPaymentID" });
             DropIndex("dbo.Rooms", new[] { "RoomTypeID" });
             DropIndex("dbo.Flats", new[] { "Enterance_ID" });
             DropIndex("dbo.Enterances", new[] { "HostelId" });
+            DropIndex("dbo.ElectricityPayments", new[] { "HostelID" });
             DropIndex("dbo.Hostels", new[] { "ManagerId" });
             DropIndex("dbo.Hostels", new[] { "AddressID" });
             DropIndex("dbo.Benefits", new[] { "ManagerID" });
@@ -387,12 +497,17 @@
             DropIndex("dbo.Orders", new[] { "ID" });
             DropIndex("dbo.Identifications", new[] { "DocumentTypeID" });
             DropIndex("dbo.Identifications", new[] { "ID" });
+            DropIndex("dbo.ChangePassports", new[] { "DocumentTypeID" });
+            DropIndex("dbo.ChangePassports", new[] { "TenantID" });
+            DropIndex("dbo.AdditionalInformations", new[] { "TenantID" });
+            DropIndex("dbo.AdditionalInformations", new[] { "AdditionalInformationTypeID" });
             DropIndex("dbo.Tenants", new[] { "PaymentID" });
             DropIndex("dbo.Tenants", new[] { "RoomID" });
             DropIndex("dbo.Tenants", new[] { "TenantTypeID" });
-            DropIndex("dbo.AdditionalInformations", new[] { "TenantID" });
-            DropIndex("dbo.AdditionalInformations", new[] { "AdditionalInformationTypeID" });
+            DropIndex("dbo.Accountings", new[] { "TenantID" });
             DropTable("dbo.Logs");
+            DropTable("dbo.ElectricityElements");
+            DropTable("dbo.ChangeRooms");
             DropTable("dbo.Licenses");
             DropTable("dbo.Roles");
             DropTable("dbo.Users");
@@ -403,17 +518,20 @@
             DropTable("dbo.Rooms");
             DropTable("dbo.Flats");
             DropTable("dbo.Enterances");
+            DropTable("dbo.ElectricityPayments");
             DropTable("dbo.Addresses");
             DropTable("dbo.Hostels");
             DropTable("dbo.Managers");
             DropTable("dbo.BenefitTypes");
             DropTable("dbo.Benefits");
             DropTable("dbo.Orders");
-            DropTable("dbo.DocumentTypes");
             DropTable("dbo.Identifications");
-            DropTable("dbo.Tenants");
+            DropTable("dbo.DocumentTypes");
+            DropTable("dbo.ChangePassports");
             DropTable("dbo.AdditionalInformationTypes");
             DropTable("dbo.AdditionalInformations");
+            DropTable("dbo.Tenants");
+            DropTable("dbo.Accountings");
         }
     }
 }

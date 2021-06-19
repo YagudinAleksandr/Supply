@@ -45,6 +45,8 @@ namespace Supply
             this.CB_TenantTypes = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.CB_PeriodOfPayment = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.TB_Service = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -70,14 +72,14 @@ namespace Supply
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(13, 94);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 13);
+            this.label3.Size = new System.Drawing.Size(123, 13);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Сумма";
+            this.label3.Text = "Сумма за койка-место";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(17, 183);
+            this.label4.Location = new System.Drawing.Point(16, 209);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(67, 13);
             this.label4.TabIndex = 3;
@@ -86,7 +88,7 @@ namespace Supply
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(195, 183);
+            this.label5.Location = new System.Drawing.Point(194, 209);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(74, 13);
             this.label5.TabIndex = 4;
@@ -108,7 +110,7 @@ namespace Supply
             // 
             // TB_Coast
             // 
-            this.TB_Coast.Location = new System.Drawing.Point(86, 91);
+            this.TB_Coast.Location = new System.Drawing.Point(142, 91);
             this.TB_Coast.Name = "TB_Coast";
             this.TB_Coast.Size = new System.Drawing.Size(112, 20);
             this.TB_Coast.TabIndex = 7;
@@ -116,7 +118,7 @@ namespace Supply
             // CB_Hostels
             // 
             this.CB_Hostels.FormattingEnabled = true;
-            this.CB_Hostels.Location = new System.Drawing.Point(90, 180);
+            this.CB_Hostels.Location = new System.Drawing.Point(89, 206);
             this.CB_Hostels.Name = "CB_Hostels";
             this.CB_Hostels.Size = new System.Drawing.Size(98, 21);
             this.CB_Hostels.TabIndex = 8;
@@ -125,7 +127,7 @@ namespace Supply
             // CB_RoomTypes
             // 
             this.CB_RoomTypes.FormattingEnabled = true;
-            this.CB_RoomTypes.Location = new System.Drawing.Point(275, 180);
+            this.CB_RoomTypes.Location = new System.Drawing.Point(274, 206);
             this.CB_RoomTypes.Name = "CB_RoomTypes";
             this.CB_RoomTypes.Size = new System.Drawing.Size(148, 21);
             this.CB_RoomTypes.TabIndex = 9;
@@ -144,7 +146,7 @@ namespace Supply
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(15, 143);
+            this.label6.Location = new System.Drawing.Point(14, 169);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(107, 13);
             this.label6.TabIndex = 11;
@@ -153,7 +155,7 @@ namespace Supply
             // CB_TenantTypes
             // 
             this.CB_TenantTypes.FormattingEnabled = true;
-            this.CB_TenantTypes.Location = new System.Drawing.Point(128, 139);
+            this.CB_TenantTypes.Location = new System.Drawing.Point(127, 165);
             this.CB_TenantTypes.Name = "CB_TenantTypes";
             this.CB_TenantTypes.Size = new System.Drawing.Size(209, 21);
             this.CB_TenantTypes.TabIndex = 12;
@@ -162,7 +164,7 @@ namespace Supply
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(218, 94);
+            this.label7.Location = new System.Drawing.Point(14, 132);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(85, 13);
             this.label7.TabIndex = 13;
@@ -175,16 +177,34 @@ namespace Supply
             "День",
             "Месяц",
             "Год"});
-            this.CB_PeriodOfPayment.Location = new System.Drawing.Point(309, 91);
+            this.CB_PeriodOfPayment.Location = new System.Drawing.Point(105, 129);
             this.CB_PeriodOfPayment.Name = "CB_PeriodOfPayment";
             this.CB_PeriodOfPayment.Size = new System.Drawing.Size(231, 21);
             this.CB_PeriodOfPayment.TabIndex = 14;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(271, 94);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(115, 13);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "Сумма за ком.услуги";
+            // 
+            // TB_Service
+            // 
+            this.TB_Service.Location = new System.Drawing.Point(392, 91);
+            this.TB_Service.Name = "TB_Service";
+            this.TB_Service.Size = new System.Drawing.Size(112, 20);
+            this.TB_Service.TabIndex = 16;
             // 
             // AdminPaymentsFormAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(559, 283);
+            this.Controls.Add(this.TB_Service);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.CB_PeriodOfPayment);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.CB_TenantTypes);
@@ -227,5 +247,7 @@ namespace Supply
         private System.Windows.Forms.ComboBox CB_TenantTypes;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox CB_PeriodOfPayment;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox TB_Service;
     }
 }

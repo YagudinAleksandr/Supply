@@ -32,6 +32,22 @@ namespace Supply
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppSettingsForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.button13 = new System.Windows.Forms.Button();
+            this.TB_OutFileDir = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.button12 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
@@ -46,12 +62,12 @@ namespace Supply
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.TB_ChangePassport = new System.Windows.Forms.TextBox();
+            this.TB_ChangeRoom = new System.Windows.Forms.TextBox();
+            this.TB_Benefit = new System.Windows.Forms.TextBox();
+            this.TB_RentOrder = new System.Windows.Forms.TextBox();
             this.TB_WorkerOrder = new System.Windows.Forms.TextBox();
+            this.TB_StidentsOrder2 = new System.Windows.Forms.TextBox();
             this.TB_StudentOrder = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.TB_DatabaseConnectionString = new System.Windows.Forms.TextBox();
@@ -59,22 +75,6 @@ namespace Supply
             this.BTN_Save = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label13 = new System.Windows.Forms.Label();
-            this.TB_OutFileDir = new System.Windows.Forms.TextBox();
-            this.button13 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -123,12 +123,12 @@ namespace Supply
             this.tabPage1.Controls.Add(this.textBox10);
             this.tabPage1.Controls.Add(this.textBox9);
             this.tabPage1.Controls.Add(this.textBox8);
-            this.tabPage1.Controls.Add(this.textBox7);
-            this.tabPage1.Controls.Add(this.textBox6);
-            this.tabPage1.Controls.Add(this.textBox5);
-            this.tabPage1.Controls.Add(this.textBox4);
-            this.tabPage1.Controls.Add(this.textBox3);
+            this.tabPage1.Controls.Add(this.TB_ChangePassport);
+            this.tabPage1.Controls.Add(this.TB_ChangeRoom);
+            this.tabPage1.Controls.Add(this.TB_Benefit);
+            this.tabPage1.Controls.Add(this.TB_RentOrder);
             this.tabPage1.Controls.Add(this.TB_WorkerOrder);
+            this.tabPage1.Controls.Add(this.TB_StidentsOrder2);
             this.tabPage1.Controls.Add(this.TB_StudentOrder);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
@@ -137,6 +137,150 @@ namespace Supply
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Шаблоны";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // button13
+            // 
+            this.button13.Location = new System.Drawing.Point(663, 290);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(75, 23);
+            this.button13.TabIndex = 37;
+            this.button13.Tag = "outDir";
+            this.button13.Text = "Обзор";
+            this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.BTN_Browse_Click);
+            // 
+            // TB_OutFileDir
+            // 
+            this.TB_OutFileDir.Location = new System.Drawing.Point(326, 292);
+            this.TB_OutFileDir.Name = "TB_OutFileDir";
+            this.TB_OutFileDir.Size = new System.Drawing.Size(315, 20);
+            this.TB_OutFileDir.TabIndex = 36;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 295);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(216, 13);
+            this.label13.TabIndex = 35;
+            this.label13.Text = "Папка для сохранения выходных файлов";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(663, 265);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 34;
+            this.button1.Tag = "t11";
+            this.button1.Text = "Обзор";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.BTN_Browse_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(6, 270);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(160, 13);
+            this.label12.TabIndex = 33;
+            this.label12.Text = "Шаблон платежных поручений";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(326, 267);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(315, 20);
+            this.textBox1.TabIndex = 32;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 244);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(198, 13);
+            this.label11.TabIndex = 31;
+            this.label11.Text = "Договор проживания студента (Очно)";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 218);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(123, 13);
+            this.label10.TabIndex = 30;
+            this.label10.Text = "Договор на доп услуги";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 192);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(214, 13);
+            this.label9.TabIndex = 29;
+            this.label9.Text = "Приложение к договору на расторжение";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 166);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(228, 13);
+            this.label8.TabIndex = 28;
+            this.label8.Text = "Приложение к договору на смену паспорта";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 140);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(213, 13);
+            this.label7.TabIndex = 27;
+            this.label7.Text = "Приложение к договору на переселение";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 114);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(180, 13);
+            this.label6.TabIndex = 26;
+            this.label6.Text = "Приложение к договору на льготу";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 88);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(181, 13);
+            this.label5.TabIndex = 25;
+            this.label5.Text = "Договор проживания инного лица\r\n";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 62);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(177, 13);
+            this.label4.TabIndex = 24;
+            this.label4.Text = "Договор проживания сотрудника";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 36);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(209, 13);
+            this.label3.TabIndex = 23;
+            this.label3.Text = "Договор проживания студента (Заочно)";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 10);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(198, 13);
+            this.label2.TabIndex = 22;
+            this.label2.Text = "Договор проживания студента (Очно)";
             // 
             // button12
             // 
@@ -280,47 +424,47 @@ namespace Supply
             this.textBox8.Size = new System.Drawing.Size(315, 20);
             this.textBox8.TabIndex = 7;
             // 
-            // textBox7
+            // TB_ChangePassport
             // 
-            this.textBox7.Location = new System.Drawing.Point(326, 163);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(315, 20);
-            this.textBox7.TabIndex = 6;
+            this.TB_ChangePassport.Location = new System.Drawing.Point(326, 163);
+            this.TB_ChangePassport.Name = "TB_ChangePassport";
+            this.TB_ChangePassport.Size = new System.Drawing.Size(315, 20);
+            this.TB_ChangePassport.TabIndex = 6;
             // 
-            // textBox6
+            // TB_ChangeRoom
             // 
-            this.textBox6.Location = new System.Drawing.Point(326, 137);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(315, 20);
-            this.textBox6.TabIndex = 5;
+            this.TB_ChangeRoom.Location = new System.Drawing.Point(326, 137);
+            this.TB_ChangeRoom.Name = "TB_ChangeRoom";
+            this.TB_ChangeRoom.Size = new System.Drawing.Size(315, 20);
+            this.TB_ChangeRoom.TabIndex = 5;
             // 
-            // textBox5
+            // TB_Benefit
             // 
-            this.textBox5.Location = new System.Drawing.Point(326, 111);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(315, 20);
-            this.textBox5.TabIndex = 4;
+            this.TB_Benefit.Location = new System.Drawing.Point(326, 111);
+            this.TB_Benefit.Name = "TB_Benefit";
+            this.TB_Benefit.Size = new System.Drawing.Size(315, 20);
+            this.TB_Benefit.TabIndex = 4;
             // 
-            // textBox4
+            // TB_RentOrder
             // 
-            this.textBox4.Location = new System.Drawing.Point(326, 85);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(315, 20);
-            this.textBox4.TabIndex = 3;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(326, 59);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(315, 20);
-            this.textBox3.TabIndex = 2;
+            this.TB_RentOrder.Location = new System.Drawing.Point(326, 85);
+            this.TB_RentOrder.Name = "TB_RentOrder";
+            this.TB_RentOrder.Size = new System.Drawing.Size(315, 20);
+            this.TB_RentOrder.TabIndex = 3;
             // 
             // TB_WorkerOrder
             // 
-            this.TB_WorkerOrder.Location = new System.Drawing.Point(326, 33);
+            this.TB_WorkerOrder.Location = new System.Drawing.Point(326, 59);
             this.TB_WorkerOrder.Name = "TB_WorkerOrder";
             this.TB_WorkerOrder.Size = new System.Drawing.Size(315, 20);
-            this.TB_WorkerOrder.TabIndex = 1;
+            this.TB_WorkerOrder.TabIndex = 2;
+            // 
+            // TB_StidentsOrder2
+            // 
+            this.TB_StidentsOrder2.Location = new System.Drawing.Point(326, 33);
+            this.TB_StidentsOrder2.Name = "TB_StidentsOrder2";
+            this.TB_StidentsOrder2.Size = new System.Drawing.Size(315, 20);
+            this.TB_StidentsOrder2.TabIndex = 1;
             // 
             // TB_StudentOrder
             // 
@@ -387,150 +531,6 @@ namespace Supply
             this.tabPage3.Text = "Персональные настройки";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 10);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(198, 13);
-            this.label2.TabIndex = 22;
-            this.label2.Text = "Договор проживания студента (Очно)";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 36);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(198, 13);
-            this.label3.TabIndex = 23;
-            this.label3.Text = "Договор проживания студента (Очно)";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 62);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(198, 13);
-            this.label4.TabIndex = 24;
-            this.label4.Text = "Договор проживания студента (Очно)";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 88);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(198, 13);
-            this.label5.TabIndex = 25;
-            this.label5.Text = "Договор проживания студента (Очно)";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 114);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(198, 13);
-            this.label6.TabIndex = 26;
-            this.label6.Text = "Договор проживания студента (Очно)";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 140);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(198, 13);
-            this.label7.TabIndex = 27;
-            this.label7.Text = "Договор проживания студента (Очно)";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 166);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(198, 13);
-            this.label8.TabIndex = 28;
-            this.label8.Text = "Договор проживания студента (Очно)";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 192);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(198, 13);
-            this.label9.TabIndex = 29;
-            this.label9.Text = "Договор проживания студента (Очно)";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 218);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(198, 13);
-            this.label10.TabIndex = 30;
-            this.label10.Text = "Договор проживания студента (Очно)";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 244);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(198, 13);
-            this.label11.TabIndex = 31;
-            this.label11.Text = "Договор проживания студента (Очно)";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(326, 267);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(315, 20);
-            this.textBox1.TabIndex = 32;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(6, 270);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(198, 13);
-            this.label12.TabIndex = 33;
-            this.label12.Text = "Договор проживания студента (Очно)";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(663, 265);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 34;
-            this.button1.Tag = "t11";
-            this.button1.Text = "Обзор";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.BTN_Browse_Click);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 295);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(198, 13);
-            this.label13.TabIndex = 35;
-            this.label13.Text = "Договор проживания студента (Очно)";
-            // 
-            // TB_OutFileDir
-            // 
-            this.TB_OutFileDir.Location = new System.Drawing.Point(326, 292);
-            this.TB_OutFileDir.Name = "TB_OutFileDir";
-            this.TB_OutFileDir.Size = new System.Drawing.Size(315, 20);
-            this.TB_OutFileDir.TabIndex = 36;
-            // 
-            // button13
-            // 
-            this.button13.Location = new System.Drawing.Point(663, 290);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(75, 23);
-            this.button13.TabIndex = 37;
-            this.button13.Tag = "outDir";
-            this.button13.Text = "Обзор";
-            this.button13.UseVisualStyleBackColor = true;
-            this.button13.Click += new System.EventHandler(this.BTN_Browse_Click);
-            // 
             // AppSettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -564,12 +564,12 @@ namespace Supply
         private System.Windows.Forms.TextBox textBox10;
         private System.Windows.Forms.TextBox textBox9;
         private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox TB_ChangePassport;
+        private System.Windows.Forms.TextBox TB_ChangeRoom;
+        private System.Windows.Forms.TextBox TB_Benefit;
+        private System.Windows.Forms.TextBox TB_RentOrder;
         private System.Windows.Forms.TextBox TB_WorkerOrder;
+        private System.Windows.Forms.TextBox TB_StidentsOrder2;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button9;

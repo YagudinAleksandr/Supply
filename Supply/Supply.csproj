@@ -285,41 +285,9 @@
     <Compile Include="LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202105212153196_FirstMainMigation.cs" />
-    <Compile Include="Migrations\202105212153196_FirstMainMigation.designer.cs">
-      <DependentUpon>202105212153196_FirstMainMigation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106032323039_ChangeRoomMgr.cs" />
-    <Compile Include="Migrations\202106032323039_ChangeRoomMgr.designer.cs">
-      <DependentUpon>202106032323039_ChangeRoomMgr.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106041357465_updateChangeRoom.cs" />
-    <Compile Include="Migrations\202106041357465_updateChangeRoom.designer.cs">
-      <DependentUpon>202106041357465_updateChangeRoom.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106051055226_ChangePasport.cs" />
-    <Compile Include="Migrations\202106051055226_ChangePasport.designer.cs">
-      <DependentUpon>202106051055226_ChangePasport.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106051229239_ChangePasportUpdate.cs" />
-    <Compile Include="Migrations\202106051229239_ChangePasportUpdate.designer.cs">
-      <DependentUpon>202106051229239_ChangePasportUpdate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106051628202_AddAccounting.cs" />
-    <Compile Include="Migrations\202106051628202_AddAccounting.designer.cs">
-      <DependentUpon>202106051628202_AddAccounting.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106131234052_ElectricityPaymentAdd.cs" />
-    <Compile Include="Migrations\202106131234052_ElectricityPaymentAdd.designer.cs">
-      <DependentUpon>202106131234052_ElectricityPaymentAdd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106131242476_UpdateElectricityAndAddPayEl.cs" />
-    <Compile Include="Migrations\202106131242476_UpdateElectricityAndAddPayEl.designer.cs">
-      <DependentUpon>202106131242476_UpdateElectricityAndAddPayEl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106131327233_UpdateElectricityPayments.cs" />
-    <Compile Include="Migrations\202106131327233_UpdateElectricityPayments.designer.cs">
-      <DependentUpon>202106131327233_UpdateElectricityPayments.cs</DependentUpon>
+    <Compile Include="Migrations\202106191553312_FirstMgr.cs" />
+    <Compile Include="Migrations\202106191553312_FirstMgr.designer.cs">
+      <DependentUpon>202106191553312_FirstMgr.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accounting.cs" />
@@ -498,32 +466,8 @@
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105212153196_FirstMainMigation.resx">
-      <DependentUpon>202105212153196_FirstMainMigation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106032323039_ChangeRoomMgr.resx">
-      <DependentUpon>202106032323039_ChangeRoomMgr.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106041357465_updateChangeRoom.resx">
-      <DependentUpon>202106041357465_updateChangeRoom.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106051055226_ChangePasport.resx">
-      <DependentUpon>202106051055226_ChangePasport.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106051229239_ChangePasportUpdate.resx">
-      <DependentUpon>202106051229239_ChangePasportUpdate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106051628202_AddAccounting.resx">
-      <DependentUpon>202106051628202_AddAccounting.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106131234052_ElectricityPaymentAdd.resx">
-      <DependentUpon>202106131234052_ElectricityPaymentAdd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106131242476_UpdateElectricityAndAddPayEl.resx">
-      <DependentUpon>202106131242476_UpdateElectricityAndAddPayEl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106131327233_UpdateElectricityPayments.resx">
-      <DependentUpon>202106131327233_UpdateElectricityPayments.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202106191553312_FirstMgr.resx">
+      <DependentUpon>202106191553312_FirstMgr.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderAddForm.resx">
       <DependentUpon>OrderAddForm.cs</DependentUpon>

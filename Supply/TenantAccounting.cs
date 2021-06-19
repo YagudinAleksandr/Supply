@@ -60,7 +60,7 @@ namespace Supply
 
                     int totalDate = Math.Abs((orderEndDate.Month - orderStartDate.Month) + 12 * (orderEndDate.Year - orderStartDate.Year));
 
-                    _accountingTotal = payment.Rent * totalDate;
+                    _accountingTotal = (tenant.Payment.Rent + tenant.Payment.Service) * totalDate;
 
                     DateTime benefitStart;//Benefit start date
                     DateTime benefitEnd;//benefit end date
@@ -71,10 +71,10 @@ namespace Supply
                         benefitEnd = Convert.ToDateTime(benefit.EndDate);
 
                         int totalPeriodStart = Math.Abs((benefitStart.Month - orderStartDate.Month) + 12 * (benefitStart.Year - orderStartDate.Year));
-                        _accountingTotal = totalPeriodStart * payment.Rent;
+                        _accountingTotal = totalPeriodStart * (tenant.Payment.Rent + tenant.Payment.Service);
 
                         int totalPeriodEnd = Math.Abs((orderEndDate.Month - benefitEnd.Month) + 12 * (orderEndDate.Year - benefitEnd.Year));
-                        _accountingTotal += totalPeriodEnd * payment.Rent;
+                        _accountingTotal += totalPeriodEnd * (tenant.Payment.Rent + tenant.Payment.Service);
 
                         int totalBenefitDate = Math.Abs((benefitEnd.Month - benefitStart.Month) + 12 * (benefitEnd.Year - benefitStart.Year));
                         _accountingTotal += Convert.ToDecimal(benefit.Payment) * totalBenefitDate;

@@ -76,36 +76,58 @@ namespace Supply.Domain
         
         public static string GetTemplateSetting(string field)
         {
-            AppDomain domain = AppDomain.CurrentDomain;
-            string directory = domain.BaseDirectory;
-
-            if(File.Exists(directory + "UserSettingsFile.xml"))
+            if (field != string.Empty) 
             {
-                foreach(XmlNode settingsNode in GetXmlElement())
+                string filedir = "";
+                switch(field)
                 {
-                    if(settingsNode.Name=="templates")
-                    {
-                        foreach(XmlNode childNode in settingsNode.ChildNodes)
-                        {
-                            if (childNode.Name == field)
-                            {
-                                return childNode.InnerText;
-                            }
-                        }
-                    }
-                    if (settingsNode.Name == "connectionString" && field == "connectionString") 
-                    {
-                        return settingsNode.InnerText;
-                    }
-                    
+                    case "template1":
+                        filedir = Properties.Settings.Default.template1;
+                        break;
+                    case "template2":
+                        filedir = Properties.Settings.Default.template2;
+                        break;
+                    case "template3":
+                        filedir = Properties.Settings.Default.template3;
+                        break;
+                    case "template4":
+                        filedir = Properties.Settings.Default.template4;
+                        break;
+                    case "template5":
+                        filedir = Properties.Settings.Default.template5;
+                        break;
+                    case "template6":
+                        filedir = Properties.Settings.Default.template6;
+                        break;
+                    case "template7":
+                        filedir = Properties.Settings.Default.template7;
+                        break;
+                    case "template8":
+                        filedir = Properties.Settings.Default.template8;
+                        break;
+                    case "template9":
+                        filedir = Properties.Settings.Default.template9;
+                        break;
+                    case "template10":
+                        filedir = Properties.Settings.Default.template10;
+                        break;
+                    case "template11":
+                        filedir = Properties.Settings.Default.template11;
+                        break;
+                    case "outfileDir":
+                        filedir = Properties.Settings.Default.outFileDir;
+                        break;
+                    default:
+                        return string.Empty;
+
                 }
+                return filedir;
             }
             else
             {
-                CreateXmlSettingsFile();
+                return string.Empty;
             }
-
-            return string.Empty;
+            
         }
         
     }

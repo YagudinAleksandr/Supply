@@ -96,7 +96,26 @@ namespace Supply
 
         private void DG_Rooms_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(e.ColumnIndex==6)
+            if (e.ColumnIndex == 7)
+            {
+                int roomID = 0;
+
+                int.TryParse(DG_Rooms.Rows[e.RowIndex].Cells[0].Value.ToString(), out roomID);
+
+                if (roomID != 0)
+                {
+                    AdminRoomsFormAdd adminRoomsFormAdd = new AdminRoomsFormAdd(roomID, true, _hostelId);
+                    adminRoomsFormAdd.ShowDialog();
+                    Thread thread = new Thread(UpdateInfo);
+                    thread.Start();
+                }
+                else
+                {
+                    MessageBox.Show("Значение ID не может быть равным 0");
+                }
+            }
+
+            if (e.ColumnIndex == 6) 
             {
 
                 int id = int.Parse(DG_Rooms.Rows[e.RowIndex].Cells[0].Value.ToString());

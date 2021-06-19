@@ -21,9 +21,7 @@ namespace Supply
 
         private void AppSettingsForm_Load(object sender, EventArgs e)
         {
-
-            TB_StudentOrder.Text = AppSettings.GetTemplateSetting("template1");
-            TB_WorkerOrder.Text = AppSettings.GetTemplateSetting("template2");
+            
             if(Properties.Settings.Default.connect!="")
             {
                 TB_DatabaseConnectionString.Text = Properties.Settings.Default.connect;
@@ -32,6 +30,10 @@ namespace Supply
             {
                 TB_DatabaseConnectionString.Text = "";
             }
+            TB_StudentOrder.Text = Properties.Settings.Default.template1;
+            TB_StidentsOrder2.Text = Properties.Settings.Default.template2;
+            TB_WorkerOrder.Text = Properties.Settings.Default.template3;
+            TB_RentOrder.Text = Properties.Settings.Default.template4;
             TB_OutFileDir.Text = Properties.Settings.Default.outFileDir;
         }
 
@@ -40,7 +42,18 @@ namespace Supply
             DialogResult result = MessageBox.Show("После сохранения приложение будет перезапущено!", "Предкпреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             Properties.Settings.Default.connect = TB_DatabaseConnectionString.Text;
+
+            Properties.Settings.Default.template1 = TB_StudentOrder.Text;
+            Properties.Settings.Default.template2 = TB_StidentsOrder2.Text;
+            Properties.Settings.Default.template3 = TB_WorkerOrder.Text;
+            Properties.Settings.Default.template4 = TB_RentOrder.Text;
+            Properties.Settings.Default.template5 = TB_Benefit.Text;
+            Properties.Settings.Default.template6 = TB_ChangeRoom.Text;
+            Properties.Settings.Default.template7 = TB_ChangePassport.Text;
+
             Properties.Settings.Default.outFileDir = TB_OutFileDir.Text;
+
+
             if (result==DialogResult.Yes)
             {
                 Properties.Settings.Default.Save();
@@ -55,13 +68,31 @@ namespace Supply
 
             if (buttonTag != "outDir")
             {
-                using (OpenFileDialog openDatabaseDirectory = new OpenFileDialog())
+                using (OpenFileDialog openFileDirectory = new OpenFileDialog())
                 {
-                    openDatabaseDirectory.Filter = "Microsoft Word (*.docx)|*.docx";
+                    openFileDirectory.Filter = "Microsoft Word (*.docx)|*.docx";
 
-                    if (openDatabaseDirectory.ShowDialog() == DialogResult.OK)
+                    if (openFileDirectory.ShowDialog() == DialogResult.OK)
                     {
-                        TB_StudentOrder.Text = openDatabaseDirectory.FileName;
+                        switch(buttonTag)
+                        {
+                            case "t1":
+                                TB_StudentOrder.Text = openFileDirectory.FileName;
+                                break;
+                            case "t2":
+                                TB_StidentsOrder2.Text = openFileDirectory.FileName;
+                                break;
+                            case "t3":
+                                TB_WorkerOrder.Text = openFileDirectory.FileName;
+                                break;
+                            case "t4":
+                                TB_RentOrder.Text = openFileDirectory.FileName;
+                                break;
+                            case "t5":
+                                TB_Benefit.Text = openFileDirectory.FileName;
+                                break;
+                        }
+
                     }
                 }
             }
@@ -73,8 +104,6 @@ namespace Supply
 
                     if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                     {
-                        
-
                         TB_OutFileDir.Text = fbd.SelectedPath;
                     }
                 }

@@ -7,13 +7,13 @@ namespace Supply.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class ChangePasport : IMigrationMetadata
+    public sealed partial class FirstMgr : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangePasport));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(FirstMgr));
         
         string IMigrationMetadata.Id
         {
-            get { return "202106051055226_ChangePasport"; }
+            get { return "202106191553312_FirstMgr"; }
         }
         
         string IMigrationMetadata.Source
