@@ -4,6 +4,7 @@ using Supply.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -75,7 +76,7 @@ namespace Supply.Libs
                     return false;
                 }
 
-                WordDocument document = new WordDocument(AppSettings.GetTemplateSetting(template), AppSettings.GetTemplateSetting("outfileDir"), "Договор №" + order.OrderNumber.ToString());
+                WordDocument document = new WordDocument(AppSettings.GetTemplateSetting(template), AppSettings.GetTemplateSetting("outfileDir")+@"\", "Договор №" + order.OrderNumber.ToString());
 
                 if (document.OpenWordTemplate(out errorMessage))
                 {
@@ -121,7 +122,7 @@ namespace Supply.Libs
                     replacements.Add("humanCitizenship", identification.Cityzenship);
 
                     replacements.Add("eduType", AdditionalInf(5, tenant.ID));
-                    replacements.Add("rent", AdditionalInf(7, tenant.ID));
+                    replacements.Add("rent", AdditionalInf(8, tenant.ID));
 
                     /*Льготы*/
                     Benefit benefit;
@@ -224,7 +225,7 @@ namespace Supply.Libs
 
                         case "template4":
 
-                            var tenantFamily1 = additionalInformation.Where(x => x.AdditionalInformationTypeID == 8).ToList();
+                            var tenantFamily1 = additionalInformation.Where(x => x.AdditionalInformationTypeID == 9).ToList();
                             if (tenantFamily1.Count != 0)
                             {
                                 string family = string.Empty;
@@ -330,7 +331,7 @@ namespace Supply.Libs
                     string errorMessage = String.Empty;
 
 
-                    WordDocument document = new WordDocument(AppSettings.GetTemplateSetting("template5"), AppSettings.GetTemplateSetting("outfileDir"), "Приложение(льгота) к договору №" + order.OrderNumber.ToString());
+                    WordDocument document = new WordDocument(AppSettings.GetTemplateSetting("template5"), AppSettings.GetTemplateSetting("outfileDir")+@"\", "Приложение(льгота) к договору №" + order.OrderNumber.ToString());
 
                     if (document.OpenWordTemplate(out errorMessage))
                     {
@@ -467,7 +468,7 @@ namespace Supply.Libs
                 string errorMessage = String.Empty;
 
 
-                WordDocument document = new WordDocument(AppSettings.GetTemplateSetting("template6"), AppSettings.GetTemplateSetting("outfileDir"), "Приложение(переселение) к договору №" + order.OrderNumber.ToString());
+                WordDocument document = new WordDocument(AppSettings.GetTemplateSetting("template6"), AppSettings.GetTemplateSetting("outfileDir")+@"\", "Приложение(переселение) к договору №" + order.OrderNumber.ToString());
 
                 if (document.OpenWordTemplate(out errorMessage))
                 {
@@ -577,7 +578,7 @@ namespace Supply.Libs
                 string errorMessage = String.Empty;
 
 
-                WordDocument document = new WordDocument(AppSettings.GetTemplateSetting("template7"), AppSettings.GetTemplateSetting("outfileDir"), "Приложение(смена паспорта) к договору №" + order.OrderNumber.ToString());
+                WordDocument document = new WordDocument(AppSettings.GetTemplateSetting("template7"), AppSettings.GetTemplateSetting("outfileDir")+@"\", "Приложение(смена паспорта) к договору №" + order.OrderNumber.ToString());
 
                 if (document.OpenWordTemplate(out errorMessage))
                 {
@@ -659,6 +660,7 @@ namespace Supply.Libs
             GC.Collect();
             return true;
         }
+        
     }
     
 }

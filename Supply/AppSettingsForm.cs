@@ -91,6 +91,12 @@ namespace Supply
                             case "t5":
                                 TB_Benefit.Text = openFileDirectory.FileName;
                                 break;
+                            case "t6":
+                                TB_ChangeRoom.Text = openFileDirectory.FileName;
+                                break;
+                            case "t7":
+                                TB_ChangePassport.Text = openFileDirectory.FileName;
+                                break;
                         }
 
                     }

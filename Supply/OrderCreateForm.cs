@@ -181,7 +181,7 @@ namespace Supply
                                     replacements.Add("humanCitizenship", identification.Cityzenship);
 
                                     replacements.Add("eduType", OrdersCreation.AdditionalInf(5, tenant.ID));
-                                    replacements.Add("rent", OrdersCreation.AdditionalInf(7, tenant.ID));
+                                    replacements.Add("rent", OrdersCreation.AdditionalInf(8, tenant.ID));
 
                                     /*Льготы*/
                                     Benefit benefit;
@@ -283,7 +283,7 @@ namespace Supply
                                             break;
 
                                         case "template4":
-                                            var tenantFamily1 = additionalInformation.Where(x => x.AdditionalInformationTypeID == 8).ToList();
+                                            var tenantFamily1 = additionalInformation.Where(x => x.AdditionalInformationTypeID == 9).ToList();
                                             if (tenantFamily1.Count != 0)
                                             {
                                                 string family = string.Empty;

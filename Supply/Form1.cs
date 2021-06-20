@@ -362,7 +362,7 @@ namespace Supply
                                     CreateConetxtMenuForNode("tenant", out contextMenuForNode);
                                     tenantNodes[l].ContextMenu = contextMenuForNode;
 
-                                    var adinften = tenants[l].AdditionalInformation.Where(x => x.AdditionalInformationTypeID == 8).ToList();
+                                    var adinften = tenants[l].AdditionalInformation.Where(x => x.AdditionalInformationTypeID == 9).ToList();
                                     TreeNode[] additionalInfNode = new TreeNode[adinften.Count()];
                                     for (int a = 0; a < adinften.Count; a++)
                                     {

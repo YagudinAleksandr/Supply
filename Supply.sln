@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Supply Admin", "Supply Admin\Supply Admin.csproj", "{E567160E-B1D6-4739-9786-B14E2ED3940F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Supply", "Supply\Supply.csproj", "{D431B2F5-BFAA-41CF-AE5E-347428D98CD8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libraries", "Libraries\Libraries.csproj", "{2960DAFF-8EC0-4694-8FCB-5782DEAD307C}"
@@ -17,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E567160E-B1D6-4739-9786-B14E2ED3940F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E567160E-B1D6-4739-9786-B14E2ED3940F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E567160E-B1D6-4739-9786-B14E2ED3940F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E567160E-B1D6-4739-9786-B14E2ED3940F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D431B2F5-BFAA-41CF-AE5E-347428D98CD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D431B2F5-BFAA-41CF-AE5E-347428D98CD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D431B2F5-BFAA-41CF-AE5E-347428D98CD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
