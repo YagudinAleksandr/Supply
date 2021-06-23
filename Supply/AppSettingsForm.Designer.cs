@@ -60,7 +60,7 @@ namespace Supply
             this.button2 = new System.Windows.Forms.Button();
             this.BTN_Browse = new System.Windows.Forms.Button();
             this.textBox10 = new System.Windows.Forms.TextBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.TB_Services = new System.Windows.Forms.TextBox();
             this.textBox8 = new System.Windows.Forms.TextBox();
             this.TB_ChangePassport = new System.Windows.Forms.TextBox();
             this.TB_ChangeRoom = new System.Windows.Forms.TextBox();
@@ -121,7 +121,7 @@ namespace Supply
             this.tabPage1.Controls.Add(this.button2);
             this.tabPage1.Controls.Add(this.BTN_Browse);
             this.tabPage1.Controls.Add(this.textBox10);
-            this.tabPage1.Controls.Add(this.textBox9);
+            this.tabPage1.Controls.Add(this.TB_Services);
             this.tabPage1.Controls.Add(this.textBox8);
             this.tabPage1.Controls.Add(this.TB_ChangePassport);
             this.tabPage1.Controls.Add(this.TB_ChangeRoom);
@@ -410,12 +410,12 @@ namespace Supply
             this.textBox10.Size = new System.Drawing.Size(315, 20);
             this.textBox10.TabIndex = 9;
             // 
-            // textBox9
+            // TB_Services
             // 
-            this.textBox9.Location = new System.Drawing.Point(326, 215);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(315, 20);
-            this.textBox9.TabIndex = 8;
+            this.TB_Services.Location = new System.Drawing.Point(326, 215);
+            this.TB_Services.Name = "TB_Services";
+            this.TB_Services.Size = new System.Drawing.Size(315, 20);
+            this.TB_Services.TabIndex = 8;
             // 
             // textBox8
             // 
@@ -562,7 +562,7 @@ namespace Supply
         private System.Windows.Forms.Button BTN_Save;
         private System.Windows.Forms.TextBox TB_StudentOrder;
         private System.Windows.Forms.TextBox textBox10;
-        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.TextBox TB_Services;
         private System.Windows.Forms.TextBox textBox8;
         private System.Windows.Forms.TextBox TB_ChangePassport;
         private System.Windows.Forms.TextBox TB_ChangeRoom;

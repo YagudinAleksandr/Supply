@@ -108,5 +108,13 @@ namespace Libraries.WordSystem
 
             return true;
         }
+
+        public bool MakeTableInWordDocument(int tableNumber, int row, int cell)
+        {
+            Word.Table table = _doc.Tables[tableNumber];
+
+            table.Rows.Add(_missing);
+            return true;
+        }
     }
 }

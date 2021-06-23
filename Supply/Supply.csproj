@@ -19,16 +19,22 @@
     <PublishUrl>D:\OneDrive\Внешний доступ\Supply\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateEnabled>false</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
+    <MapFileExtensions>false</MapFileExtensions>
+    <TargetCulture>ru</TargetCulture>
+    <ProductName>Supply</ProductName>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <DisallowUrlActivation>true</DisallowUrlActivation>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
+    <UseApplicationTrust>true</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <ExcludeDeploymentUrl>true</ExcludeDeploymentUrl>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -255,6 +261,12 @@
     <Compile Include="DeclarationChangeRoom.Designer.cs">
       <DependentUpon>DeclarationChangeRoom.cs</DependentUpon>
     </Compile>
+    <Compile Include="DeclarationElectricityPaymentOrders.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeclarationElectricityPaymentOrders.Designer.cs">
+      <DependentUpon>DeclarationElectricityPaymentOrders.cs</DependentUpon>
+    </Compile>
     <Compile Include="DeclarationHostels.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -289,6 +301,10 @@
     <Compile Include="Migrations\202106191553312_FirstMgr.designer.cs">
       <DependentUpon>202106191553312_FirstMgr.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106201757367_AddElectricityOrder.cs" />
+    <Compile Include="Migrations\202106201757367_AddElectricityOrder.designer.cs">
+      <DependentUpon>202106201757367_AddElectricityOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accounting.cs" />
     <Compile Include="Models\AdditionalInformation.cs" />
@@ -299,6 +315,7 @@
     <Compile Include="Models\ChangePassport.cs" />
     <Compile Include="Models\ChangeRoom.cs" />
     <Compile Include="Models\DocumentType.cs" />
+    <Compile Include="Models\ElecricityOrder.cs" />
     <Compile Include="Models\ElectricityElement.cs" />
     <Compile Include="Models\ElectricityPayment.cs" />
     <Compile Include="Models\Enterance.cs" />
@@ -328,6 +345,12 @@
     </Compile>
     <Compile Include="OrderCreateForm.Designer.cs">
       <DependentUpon>OrderCreateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OrderElectricityCreate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrderElectricityCreate.Designer.cs">
+      <DependentUpon>OrderElectricityCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -454,6 +477,9 @@
     <EmbeddedResource Include="DeclarationChangeRoom.resx">
       <DependentUpon>DeclarationChangeRoom.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DeclarationElectricityPaymentOrders.resx">
+      <DependentUpon>DeclarationElectricityPaymentOrders.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DeclarationHostels.resx">
       <DependentUpon>DeclarationHostels.cs</DependentUpon>
     </EmbeddedResource>
@@ -469,11 +495,17 @@
     <EmbeddedResource Include="Migrations\202106191553312_FirstMgr.resx">
       <DependentUpon>202106191553312_FirstMgr.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106201757367_AddElectricityOrder.resx">
+      <DependentUpon>202106201757367_AddElectricityOrder.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OrderAddForm.resx">
       <DependentUpon>OrderAddForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderCreateForm.resx">
       <DependentUpon>OrderCreateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderElectricityCreate.resx">
+      <DependentUpon>OrderElectricityCreate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -4,10 +4,7 @@ using Supply.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Supply.Libs
 {
@@ -660,7 +657,147 @@ namespace Supply.Libs
             GC.Collect();
             return true;
         }
-        
+        public static bool CreateServiceOrder(int tenantID, out string error)
+        {
+            using (SupplyDbContext db = new SupplyDbContext())
+            {
+                Tenant tenant = db.Tenants.Where(x => x.ID == tenantID).Where(s => s.Status == true).Include(r => r.Room).FirstOrDefault();
+                if(tenant!= null)
+                {
+
+                    ElectricityPayment electricityPayment = db.ElectricityPayments.Where(x => x.ID == tenant.Room.ElectricityPaymentID).FirstOrDefault();
+                    if (electricityPayment == null)
+                    {
+                        error = "Тарифный план не назначен!";
+                        return false;
+                    }
+                    ElecricityOrder elecricityOrder = db.ElecricityOrders.Where(x => x.TenantID == tenant.ID).Where(st => st.Status == true).FirstOrDefault();
+                    
+                    Order order = db.Orders.Where(x => x.ID == tenant.ID).Include(l => l.License).FirstOrDefault();
+                    Room room = db.Rooms.Where(x => x.ID == order.RoomID).Include(t => t.RoomType).Include(p => p.Properties).FirstOrDefault();
+                    Flat flat = db.Flats.Where(x => x.ID == room.FlatID).FirstOrDefault();
+                    Enterance enterance = db.Enterances.Where(x => x.ID == flat.Enterance_ID).Include(f => f.Flats).FirstOrDefault();
+                    Hostel hostel = db.Hostels.Where(x => x.ID == enterance.HostelId).Include(m => m.Manager).Include(h => h.Address).FirstOrDefault();
+                    License license = db.Licenses.Where(x => x.ID == hostel.Manager.ID).First();
+                    Identification identification = db.Identifications.Where(x => x.ID == tenant.ID).Include(dt => dt.DocumentType).FirstOrDefault();
+                    ChangePassport changePassport = db.ChangePassports.Where(x => x.TenantID == tenant.ID).Where(st => st.Status == true).FirstOrDefault();
+                    if(identification==null)
+                    {
+                        error = $"Any identification data for tenant with ID {tenant.ID}";
+                        return false;
+                    }
+
+                    WordDocument document;
+
+                    if (changePassport!=null)
+                    {
+                        document = new WordDocument(AppSettings.GetTemplateSetting("template9"), AppSettings.GetTemplateSetting("outfileDir") + @"\", $"Договор эл.энергия {changePassport.Surename} {changePassport.Name}" + order.OrderNumber.ToString());
+                    }
+                    else
+                    {
+                        document = new WordDocument(AppSettings.GetTemplateSetting("template9"), AppSettings.GetTemplateSetting("outfileDir") + @"\", $"Договор эл.энергия {identification.Surename} {identification.Name}" + order.OrderNumber.ToString());
+                    }
+
+                    if (document.OpenWordTemplate(out error))
+                    {
+                        Dictionary<string, string> replacements = new Dictionary<string, string>();
+
+                        /*Жилец*/
+                        
+                        DateTime orderStartDate = Convert.ToDateTime(elecricityOrder.StartDate);
+                        replacements.Add("startOrder", elecricityOrder.StartDate);
+                        DateTime orderEndDate = Convert.ToDateTime(elecricityOrder.EndDate);
+                        replacements.Add("EndOrder", elecricityOrder.EndDate);
+                        replacements.Add("yearEndDate", orderEndDate.Year.ToString());
+                        replacements.Add("surename", identification.Surename);
+                        replacements.Add("name", identification.Name);
+                        replacements.Add("ns", identification.Name[0].ToString());
+
+                        if (identification.Patronymic != string.Empty)
+                        {
+                            replacements.Add("patronymic", identification.Patronymic);
+                            replacements.Add("ps", identification.Patronymic[0].ToString());
+                        }
+                        else
+                        {
+                            replacements.Add("patronymic", "");
+                            replacements.Add("ps", "");
+                        }
+
+
+
+                        replacements.Add("DocSeries", identification.DocumentSeries);
+                        replacements.Add("DocNumber", identification.DocumentNumber);
+                        replacements.Add("DocGiven", identification.Issued);
+                        replacements.Add("DocDate", identification.GivenDate);
+                        if (identification.Code != null)
+                        {
+                            replacements.Add("DocCode", identification.Code);
+                        }
+                        else
+                        {
+                            replacements.Add("DocCode", "");
+                        }
+                        replacements.Add("HumanAddress", identification.Address);
+                        replacements.Add("humanCitizenship", identification.Cityzenship);
+
+                        replacements.Add("eduType", AdditionalInf(5, tenant.ID));
+                        replacements.Add("rent", AdditionalInf(8, tenant.ID));
+
+                       
+
+                        /*Данные по комнате*/
+                        replacements.Add("roomName", room.Name);
+                        
+
+                        //Общежитие
+                        int flats = enterance.Flats.Count;
+                        replacements.Add("hostelName", hostel.Name);
+                        replacements.Add("hostelAddress", hostel.Address.ZipCode + ", " + hostel.Address.Country + ", " + hostel.Address.Region + ", "
+                            + hostel.Address.City + ", " + hostel.Address.Street + ", " + hostel.Address.House);
+                        replacements.Add("hostelFlat", flat.Name);
+                        replacements.Add("hostelFlats", flats.ToString());
+                        replacements.Add("MainManager", order.License.Manager.Surename + " " + order.License.Manager.Name[0] + "." + order.License.Manager.Patronymic[0] + ".");
+                        replacements.Add("Manager", order.License.Manager.Surename + " " + order.License.Manager.Name + " " + order.License.Manager.Patronymic);
+                        replacements.Add("LicenseType", order.License.Type);
+                        replacements.Add("LicenseNumber", order.License.Name);
+                        replacements.Add("LicenseStart", order.License.StartDate);
+                        replacements.Add("supplySurename", hostel.Manager.Surename + " " + hostel.Manager.Name[0] + "." + hostel.Manager.Patronymic[0] + ".");
+                        replacements.Add("supply", hostel.Manager.Surename + " " + hostel.Manager.Name + " " + hostel.Manager.Patronymic);
+                        replacements.Add("supplyProxy", license.Name);
+                        replacements.Add("supplyProxyDate", license.StartDate);
+
+                        
+                        
+
+                        //Начинаем замену в шаблоне и сохраняем документ
+                        if(!document.MakeReplacementInWordTemplate(replacements))
+                        {
+                            return false;
+                        }
+                        //Закрываем документ
+
+                        if(!document.CloseWordTemplate(out error))
+                        {
+                            return false;
+                        }
+
+                    }
+                    else
+                    {
+                        
+                        return false;
+                    }
+                }
+                else
+                {
+                    error = "Не найден жилец в базе!";
+                    return false;
+                }
+            }
+            error = string.Empty;
+            return true;
+        }
     }
     
 }

@@ -35,11 +35,15 @@ namespace Supply
             TB_WorkerOrder.Text = Properties.Settings.Default.template3;
             TB_RentOrder.Text = Properties.Settings.Default.template4;
             TB_OutFileDir.Text = Properties.Settings.Default.outFileDir;
+            TB_ChangeRoom.Text = Properties.Settings.Default.template6;
+            TB_Benefit.Text = Properties.Settings.Default.template5;
+            TB_ChangePassport.Text = Properties.Settings.Default.template7;
+            TB_Services.Text = Properties.Settings.Default.template9;
         }
 
         private void BTN_Save_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("После сохранения приложение будет перезапущено!", "Предкпреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult result = MessageBox.Show("После сохранения приложение будет перезапущено!", "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             Properties.Settings.Default.connect = TB_DatabaseConnectionString.Text;
 
@@ -50,6 +54,8 @@ namespace Supply
             Properties.Settings.Default.template5 = TB_Benefit.Text;
             Properties.Settings.Default.template6 = TB_ChangeRoom.Text;
             Properties.Settings.Default.template7 = TB_ChangePassport.Text;
+
+            Properties.Settings.Default.template9 = TB_Services.Text;
 
             Properties.Settings.Default.outFileDir = TB_OutFileDir.Text;
 
@@ -96,6 +102,9 @@ namespace Supply
                                 break;
                             case "t7":
                                 TB_ChangePassport.Text = openFileDirectory.FileName;
+                                break;
+                            case "t9":
+                                TB_Services.Text = openFileDirectory.FileName;
                                 break;
                         }
 

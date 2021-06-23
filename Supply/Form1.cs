@@ -127,6 +127,12 @@ namespace Supply
             AdminPaymentsElectricity adminPaymentsElectricity = new AdminPaymentsElectricity();
             adminPaymentsElectricity.Show();
         }
+        private void DeclarationElectricityOrders_Click(object sender, EventArgs e)
+        {
+            DeclarationElectricityPaymentOrders declarationElectricityPaymentOrders = new DeclarationElectricityPaymentOrders();
+            declarationElectricityPaymentOrders.Show();
+        }
+        
         private void Form1_Shown(object sender, EventArgs e)
         {
             LB_UserName.Text = _user.Name;
@@ -170,6 +176,8 @@ namespace Supply
 
             if (_role.Name == "ADMINISTRATOR" || _role.Name == "MANAGER")
             {
+                
+
                 ToolStripMenuItem managers = new ToolStripMenuItem("Менеджеры");
                 managers.Click += managersToolStripMenuItem_Click;
                 settingItem.DropDownItems.Add(managers);
@@ -205,6 +213,10 @@ namespace Supply
                 ToolStripMenuItem declarationHostels = new ToolStripMenuItem("Отчет по общежитиям");
                 declarationHostels.Click += DeclarationHostelsOrders;
                 declaration.DropDownItems.Add(declarationHostels);
+
+                ToolStripMenuItem declarationElectricityPayment = new ToolStripMenuItem("Отчеты по договорам об оплате за эл.энергию");
+                declarationElectricityPayment.Click += DeclarationElectricityOrders_Click;
+                declaration.DropDownItems.Add(declarationElectricityPayment);
             }
 
             ToolStripMenuItem settingsWindow = new ToolStripMenuItem("Настройки");
@@ -651,7 +663,8 @@ namespace Supply
 
         private void BTN_OrderToElectricity_Click(object sender, EventArgs e)
         {
-
+            OrderElectricityCreate orderElectricityCreate = new OrderElectricityCreate();
+            orderElectricityCreate.Show();
         }
         #endregion
 
