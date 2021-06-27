@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace Libraries.WordSystem
@@ -109,7 +106,7 @@ namespace Libraries.WordSystem
             return true;
         }
 
-        public bool MakeTableInWordDocument(int tableNumber, int row, int cell)
+        public bool MakeTableInWordDocument(int tableNumber, int[] row, int[] cell, string[] data)
         {
             Word.Table table = _doc.Tables[tableNumber];
 
