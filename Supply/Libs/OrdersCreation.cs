@@ -691,11 +691,11 @@ namespace Supply.Libs
 
                     if (changePassport!=null)
                     {
-                        document = new WordDocument(AppSettings.GetTemplateSetting("template9"), AppSettings.GetTemplateSetting("outfileDir") + @"\", $"Договор эл.энергия {changePassport.Surename} {changePassport.Name}" + order.OrderNumber.ToString());
+                        document = new WordDocument(AppSettings.GetTemplateSetting("template9"), AppSettings.GetTemplateSetting("outfileDir") + @"\", $"Договор эл.энергия {changePassport.Surename} {changePassport.Name} " + order.OrderNumber.ToString());
                     }
                     else
                     {
-                        document = new WordDocument(AppSettings.GetTemplateSetting("template9"), AppSettings.GetTemplateSetting("outfileDir") + @"\", $"Договор эл.энергия {identification.Surename} {identification.Name}" + order.OrderNumber.ToString());
+                        document = new WordDocument(AppSettings.GetTemplateSetting("template9"), AppSettings.GetTemplateSetting("outfileDir") + @"\", $"Договор эл.энергия {identification.Surename} {identification.Name} " + order.OrderNumber.ToString());
                     }
 
                     if (document.OpenWordTemplate(out error))
@@ -709,42 +709,79 @@ namespace Supply.Libs
                         DateTime orderEndDate = Convert.ToDateTime(elecricityOrder.EndDate);
                         replacements.Add("EndOrder", elecricityOrder.EndDate);
                         replacements.Add("yearEndDate", orderEndDate.Year.ToString());
-                        replacements.Add("surename", identification.Surename);
-                        replacements.Add("name", identification.Name);
-                        replacements.Add("ns", identification.Name[0].ToString());
 
-                        if (identification.Patronymic != string.Empty)
+                        if (changePassport != null)
                         {
-                            replacements.Add("patronymic", identification.Patronymic);
-                            replacements.Add("ps", identification.Patronymic[0].ToString());
+                            replacements.Add("surename", changePassport.Surename);
+                            replacements.Add("name", changePassport.Name);
+                            replacements.Add("ns", changePassport.Name[0].ToString());
+
+                            if (identification.Patronymic != string.Empty)
+                            {
+                                replacements.Add("patronymic", changePassport.Patronymic);
+                                replacements.Add("ps", changePassport.Patronymic[0].ToString());
+                            }
+                            else
+                            {
+                                replacements.Add("patronymic", "");
+                                replacements.Add("ps", "");
+                            }
+
+
+
+                            replacements.Add("DocSeries", changePassport.Series);
+                            replacements.Add("DocNumber", changePassport.Number);
+                            replacements.Add("DocGiven", changePassport.Issued);
+                            replacements.Add("DocDate", changePassport.GivenDate);
+                            if (identification.Code != null)
+                            {
+                                replacements.Add("DocCode", changePassport.Code);
+                            }
+                            else
+                            {
+                                replacements.Add("DocCode", "");
+                            }
+                            replacements.Add("HumanAddress", changePassport.Address);
+                            replacements.Add("humanCitizenship", changePassport.Citizenship);
+
                         }
                         else
                         {
-                            replacements.Add("patronymic", "");
-                            replacements.Add("ps", "");
+                            replacements.Add("surename", identification.Surename);
+                            replacements.Add("name", identification.Name);
+                            replacements.Add("ns", identification.Name[0].ToString());
+
+                            if (identification.Patronymic != string.Empty)
+                            {
+                                replacements.Add("patronymic", identification.Patronymic);
+                                replacements.Add("ps", identification.Patronymic[0].ToString());
+                            }
+                            else
+                            {
+                                replacements.Add("patronymic", "");
+                                replacements.Add("ps", "");
+                            }
+
+
+
+                            replacements.Add("DocSeries", identification.DocumentSeries);
+                            replacements.Add("DocNumber", identification.DocumentNumber);
+                            replacements.Add("DocGiven", identification.Issued);
+                            replacements.Add("DocDate", identification.GivenDate);
+                            if (identification.Code != null)
+                            {
+                                replacements.Add("DocCode", identification.Code);
+                            }
+                            else
+                            {
+                                replacements.Add("DocCode", "");
+                            }
+                            replacements.Add("HumanAddress", identification.Address);
+                            replacements.Add("humanCitizenship", identification.Cityzenship);
+
                         }
 
-
-
-                        replacements.Add("DocSeries", identification.DocumentSeries);
-                        replacements.Add("DocNumber", identification.DocumentNumber);
-                        replacements.Add("DocGiven", identification.Issued);
-                        replacements.Add("DocDate", identification.GivenDate);
-                        if (identification.Code != null)
-                        {
-                            replacements.Add("DocCode", identification.Code);
-                        }
-                        else
-                        {
-                            replacements.Add("DocCode", "");
-                        }
-                        replacements.Add("HumanAddress", identification.Address);
-                        replacements.Add("humanCitizenship", identification.Cityzenship);
-
-                        replacements.Add("eduType", AdditionalInf(5, tenant.ID));
-                        replacements.Add("rent", AdditionalInf(8, tenant.ID));
-
-                       
+                        replacements.Add("telephone", AdditionalInf(1, tenant.ID));
 
                         /*Данные по комнате*/
                         replacements.Add("roomName", room.Name);
@@ -755,8 +792,6 @@ namespace Supply.Libs
                         replacements.Add("hostelName", hostel.Name);
                         replacements.Add("hostelAddress", hostel.Address.ZipCode + ", " + hostel.Address.Country + ", " + hostel.Address.Region + ", "
                             + hostel.Address.City + ", " + hostel.Address.Street + ", " + hostel.Address.House);
-                        replacements.Add("hostelFlat", flat.Name);
-                        replacements.Add("hostelFlats", flats.ToString());
                         replacements.Add("MainManager", order.License.Manager.Surename + " " + order.License.Manager.Name[0] + "." + order.License.Manager.Patronymic[0] + ".");
                         replacements.Add("Manager", order.License.Manager.Surename + " " + order.License.Manager.Name + " " + order.License.Manager.Patronymic);
                         replacements.Add("LicenseType", order.License.Type);
@@ -767,8 +802,45 @@ namespace Supply.Libs
                         replacements.Add("supplyProxy", license.Name);
                         replacements.Add("supplyProxyDate", license.StartDate);
 
-                        
-                        
+                        var electricitiesElements = db.ElectricityElements.Where(ep => ep.ElectricityPaymentID == electricityPayment.ID).ToList();
+
+                        List<string> electricitiesElementsString = new List<string>();
+
+                        //Первая заглавная строка таблицы
+                        electricitiesElementsString.Add("Перечень электроприборов, разрешенных к использованию в общежитиях Исполнителя");
+                        electricitiesElementsString.Add("Кол-во электроприборов");
+                        electricitiesElementsString.Add("Период использовани, кол-во месяцев");
+                        electricitiesElementsString.Add("Сумма платежа за месяц (с НДС, 18%) руб/чел");
+                        electricitiesElementsString.Add("Итого сумма платежа за период использования, (с НДС, 18%), руб/чел");
+
+                        //Платежи
+
+                        decimal totalPayment = 0;
+                        decimal totalPaymentInMonth = 0;
+
+                        foreach(ElectricityElement electricityElement in electricitiesElements)
+                        {
+                            int totalDate = 0;
+                            totalDate = Math.Abs((orderEndDate.Month - orderStartDate.Month) + 12 * (orderEndDate.Year - orderStartDate.Year));
+                            electricitiesElementsString.Add(electricityElement.Name);
+                            electricitiesElementsString.Add("1");
+                            electricitiesElementsString.Add(totalDate.ToString());
+                            totalPaymentInMonth += electricityElement.Payment;
+                            electricitiesElementsString.Add(electricityElement.Payment.ToString());
+                            totalPayment += (electricityElement.Payment * totalDate);
+                            electricitiesElementsString.Add((electricityElement.Payment * totalDate).ToString());
+                        }
+
+                        electricitiesElementsString.Add("Итого сумма платежа с НДС (18%), руб/чел");
+                        electricitiesElementsString.Add("");
+                        electricitiesElementsString.Add("");
+                        electricitiesElementsString.Add(totalPaymentInMonth.ToString());
+                        electricitiesElementsString.Add(totalPayment.ToString());
+
+                        if (!document.MakeTableInWordDocument("tablePayment", electricitiesElements.Count + 2, 5, electricitiesElementsString, out error)) 
+                        {
+                            return false;
+                        }
 
                         //Начинаем замену в шаблоне и сохраняем документ
                         if(!document.MakeReplacementInWordTemplate(replacements))
@@ -786,6 +858,159 @@ namespace Supply.Libs
                     else
                     {
                         
+                        return false;
+                    }
+                }
+                else
+                {
+                    error = "Не найден жилец в базе!";
+                    return false;
+                }
+            }
+            error = string.Empty;
+            return true;
+        }
+        public static bool CreatePaymentOrder(int tenantID, string periodStart, string periodEnd, string action, out string error)
+        {
+            using (SupplyDbContext db = new SupplyDbContext())
+            {
+                Tenant tenant = db.Tenants.Where(x => x.ID == tenantID).Where(s => s.Status == true).Include(r => r.Room).Include(p=>p.Payment).FirstOrDefault();
+                if (tenant != null)
+                {
+
+                    ElectricityPayment electricityPayment = db.ElectricityPayments.Where(x => x.ID == tenant.Room.ElectricityPaymentID).FirstOrDefault();
+                    if (electricityPayment == null)
+                    {
+                        error = "Тарифный план не назначен!";
+                        return false;
+                    }
+                    ElecricityOrder elecricityOrder = db.ElecricityOrders.Where(x => x.TenantID == tenant.ID).Where(st => st.Status == true).FirstOrDefault();
+
+                    Order order = db.Orders.Where(x => x.ID == tenant.ID).Include(l => l.License).FirstOrDefault();
+                    Room room = db.Rooms.Where(x => x.ID == order.RoomID).Include(t => t.RoomType).Include(p => p.Properties).FirstOrDefault();
+                    Flat flat = db.Flats.Where(x => x.ID == room.FlatID).FirstOrDefault();
+                    Enterance enterance = db.Enterances.Where(x => x.ID == flat.Enterance_ID).Include(f => f.Flats).FirstOrDefault();
+                    Hostel hostel = db.Hostels.Where(x => x.ID == enterance.HostelId).Include(m => m.Manager).Include(h => h.Address).FirstOrDefault();
+                    Identification identification = db.Identifications.Where(x => x.ID == tenant.ID).Include(dt => dt.DocumentType).FirstOrDefault();
+                    ChangePassport changePassport = db.ChangePassports.Where(x => x.TenantID == tenant.ID).Where(st => st.Status == true).FirstOrDefault();
+                    if (identification == null)
+                    {
+                        error = $"Any identification data for tenant with ID {tenant.ID}";
+                        return false;
+                    }
+
+                    WordDocument document;
+
+                    if (changePassport != null)
+                    {
+                        document = new WordDocument(AppSettings.GetTemplateSetting("template11"), AppSettings.GetTemplateSetting("outfileDir") + @"\", $"Платежное поручение {changePassport.Surename} {changePassport.Name} " + order.OrderNumber.ToString());
+                    }
+                    else
+                    {
+                        document = new WordDocument(AppSettings.GetTemplateSetting("template11"), AppSettings.GetTemplateSetting("outfileDir") + @"\", $"Платежное поручение {identification.Surename} {identification.Name} " + order.OrderNumber.ToString());
+                    }
+
+                    if (document.OpenWordTemplate(out error))
+                    {
+                        Dictionary<string, string> replacements = new Dictionary<string, string>();
+
+                        /*Жилец*/
+
+                        
+
+                        if (changePassport != null)
+                        {
+                            replacements.Add("surename", changePassport.Surename);
+                            replacements.Add("name", changePassport.Name);
+                            replacements.Add("ns", changePassport.Name[0].ToString());
+
+                            if (identification.Patronymic != string.Empty)
+                            {
+                                replacements.Add("patronymic", changePassport.Patronymic);
+                                replacements.Add("ps", changePassport.Patronymic[0].ToString());
+                            }
+                            else
+                            {
+                                replacements.Add("patronymic", "");
+                                replacements.Add("ps", "");
+                            }
+
+                        }
+                        else
+                        {
+                            replacements.Add("surename", identification.Surename);
+                            replacements.Add("name", identification.Name);
+                            replacements.Add("ns", identification.Name[0].ToString());
+
+                            if (identification.Patronymic != string.Empty)
+                            {
+                                replacements.Add("patronymic", identification.Patronymic);
+                                replacements.Add("ps", identification.Patronymic[0].ToString());
+                            }
+                            else
+                            {
+                                replacements.Add("patronymic", "");
+                                replacements.Add("ps", "");
+                            }
+
+                        }
+
+                        replacements.Add("faculty", AdditionalInf(3, tenant.ID));
+                        replacements.Add("group", AdditionalInf(4, tenant.ID));
+
+                        /*Данные по комнате*/
+                        replacements.Add("roomName", room.Name);
+
+
+                        //Общежитие
+                        replacements.Add("hostelName", hostel.Name);
+
+                        replacements.Add("periodStart", periodStart);
+                        replacements.Add("periodEnd", periodEnd);
+                        replacements.Add("paymentAct", action);
+
+                        var electricitiesElements = db.ElectricityElements.Where(ep => ep.ElectricityPaymentID == electricityPayment.ID).ToList();
+
+                        //Платежи
+                        DateTime orderStartDate = Convert.ToDateTime(periodStart);
+                        DateTime orderEndDate = Convert.ToDateTime(periodEnd);
+
+
+                        decimal totalPayment = 0;
+                        int totalDate = Math.Abs((orderEndDate.Month - orderStartDate.Month) + 12 * (orderEndDate.Year - orderStartDate.Year));
+
+                        foreach (ElectricityElement electricityElement in electricitiesElements)
+                        {
+                            totalPayment += (electricityElement.Payment * totalDate);
+                        }
+
+                        if (AdditionalInf(5, tenant.ID) != "Заочная")
+                        {
+                            replacements.Add("supplyEl", totalPayment.ToString());
+                        }
+                        else
+                        {
+                            replacements.Add("supplyEl", "");
+                        }
+                        replacements.Add("bed", (tenant.Payment.Rent * totalDate).ToString());
+                        replacements.Add("supply", (tenant.Payment.Service * totalDate).ToString());
+
+                        //Начинаем замену в шаблоне и сохраняем документ
+                        if (!document.MakeReplacementInWordTemplate(replacements))
+                        {
+                            return false;
+                        }
+                        //Закрываем документ
+
+                        if (!document.CloseWordTemplate(out error))
+                        {
+                            return false;
+                        }
+
+                    }
+                    else
+                    {
+
                         return false;
                     }
                 }

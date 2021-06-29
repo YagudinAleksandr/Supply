@@ -132,7 +132,16 @@ namespace Supply
             DeclarationElectricityPaymentOrders declarationElectricityPaymentOrders = new DeclarationElectricityPaymentOrders();
             declarationElectricityPaymentOrders.Show();
         }
-        
+        private void CreateAccountElectr_Click(object sender, EventArgs e)
+        {
+            DeclarationAccountElectricity declarationAccountElectricity = new DeclarationAccountElectricity();
+            declarationAccountElectricity.Show();
+        }
+        private void CreateTenantsInHostel_Click(object sender, EventArgs e)
+        {
+            DeclarationTenantsInHostels declarationTenantsInHostels = new DeclarationTenantsInHostels();
+            declarationTenantsInHostels.Show();
+        }
         private void Form1_Shown(object sender, EventArgs e)
         {
             LB_UserName.Text = _user.Name;
@@ -194,6 +203,10 @@ namespace Supply
                 payOrder.Click += CreateAccount_Click;
                 declaration.DropDownItems.Add(payOrder);
 
+                ToolStripMenuItem payOrderElectricity = new ToolStripMenuItem("Оплаты за эл.энергию");
+                payOrderElectricity.Click += CreateAccountElectr_Click;
+                declaration.DropDownItems.Add(payOrderElectricity);
+
                 ToolStripMenuItem mainOrder = new ToolStripMenuItem("Договора");
                 mainOrder.Click += MainOrders_Click;
                 declaration.DropDownItems.Add(mainOrder);
@@ -213,6 +226,10 @@ namespace Supply
                 ToolStripMenuItem declarationHostels = new ToolStripMenuItem("Отчет по общежитиям");
                 declarationHostels.Click += DeclarationHostelsOrders;
                 declaration.DropDownItems.Add(declarationHostels);
+
+                ToolStripMenuItem declarationHostelsTenants = new ToolStripMenuItem("Отчет по проживающим");
+                declarationHostelsTenants.Click += CreateTenantsInHostel_Click;
+                declaration.DropDownItems.Add(declarationHostelsTenants);
 
                 ToolStripMenuItem declarationElectricityPayment = new ToolStripMenuItem("Отчеты по договорам об оплате за эл.энергию");
                 declarationElectricityPayment.Click += DeclarationElectricityOrders_Click;
@@ -423,7 +440,9 @@ namespace Supply
                 case "tenant":
                     contextMenu.MenuItems.Add("Изменить", UpdateTenantInformation);
                     contextMenu.MenuItems.Add("Внести оплату", AddAccounting);
+                    contextMenu.MenuItems.Add("Внести оплату за эл.энергию", AddAccountingForElectricity);
                     contextMenu.MenuItems.Add("Сформировать договор", AddHumanMainOrder);
+                    contextMenu.MenuItems.Add("Сформировать платежное поручение", AddTenantAccountingForElectricity);
                     contextMenu.MenuItems.Add("Переселить жильца", ChangeRoomOrder);
                     contextMenu.MenuItems.Add("Смена паспорта", AddChangePassportHandler);
                     contextMenu.MenuItems.Add("Создать льготу", AddBenefitHandler);
@@ -647,7 +666,40 @@ namespace Supply
                 return;
             }
         }
+        private void AddAccountingForElectricity(object sender, EventArgs e)
+        {
+            try
+            {
+                if (TV_HostelInformation.SelectedNode.Tag != null)
+                {
+                    int tenantID = Convert.ToInt32(TV_HostelInformation.SelectedNode.Tag);
 
+                    TenantElectricityAccount tenantElectricityAccount = new TenantElectricityAccount(tenantID);
+                    tenantElectricityAccount.Show();
+                }
+            }
+            catch
+            {
+                return;
+            }
+        }
+        private void AddTenantAccountingForElectricity(object sender, EventArgs e)
+        {
+            try
+            {
+                if (TV_HostelInformation.SelectedNode.Tag != null)
+                {
+                    int tenantID = Convert.ToInt32(TV_HostelInformation.SelectedNode.Tag);
+
+                    DeclarationPaymentOrder declarationPaymentOrder = new DeclarationPaymentOrder(tenantID);
+                    declarationPaymentOrder.Show();
+                }
+            }
+            catch
+            {
+                return;
+            }
+        }
         #endregion
         #region Buttons functions
         private void BTN_CreateOrders_Click(object sender, EventArgs e)
@@ -658,7 +710,8 @@ namespace Supply
 
         private void BTN_CreatePaymentOrder_Click(object sender, EventArgs e)
         {
-
+            DeclarationPaymentOrder declarationPaymentOrder = new DeclarationPaymentOrder();
+            declarationPaymentOrder.Show();
         }
 
         private void BTN_OrderToElectricity_Click(object sender, EventArgs e)
@@ -666,6 +719,7 @@ namespace Supply
             OrderElectricityCreate orderElectricityCreate = new OrderElectricityCreate();
             orderElectricityCreate.Show();
         }
+        
         #endregion
 
 

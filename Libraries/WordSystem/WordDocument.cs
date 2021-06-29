@@ -106,11 +106,70 @@ namespace Libraries.WordSystem
             return true;
         }
 
-        public bool MakeTableInWordDocument(int tableNumber, int[] row, int[] cell, string[] data)
+        /// <summary>
+        /// Метод создания таблицы в Word документе по закладке tablePayment
+        /// </summary>
+        /// <param name="row">Кол-во рядов</param>
+        /// <param name="cell">Кол-во ячеек</param>
+        /// <param name="data">Данные</param>
+        /// <param name="error">Возвращает ошибку метода</param>
+        /// <returns></returns>
+        public bool MakeTableInWordDocument(string bookmark, int row, int cell, List<string> data, out string error)
         {
-            Word.Table table = _doc.Tables[tableNumber];
+            error = string.Empty;
 
-            table.Rows.Add(_missing);
+            object bookMark = (object)bookmark;
+            Word.Range rangeOfWord;
+            
+            try
+            {
+                rangeOfWord = _doc.Bookmarks.get_Item(ref bookMark).Range;
+            }
+            catch(Exception ex)
+            {
+                error = ex.Message + "." + ex.InnerException;
+
+                _doc.Close(false, _missing, _missing);
+                _app.Quit(false, false, false);
+
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(_app);
+                return false;
+            }
+
+            
+
+            try
+            {
+                Word.Table tableInWordDocument;
+                tableInWordDocument = _doc.Tables.Add(rangeOfWord, row, cell, ref _missing, ref _missing);
+                tableInWordDocument.Range.ParagraphFormat.SpaceAfter = 8;
+                tableInWordDocument.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+                tableInWordDocument.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+
+                int counter = 0;
+
+                for (int i = 1; i <= row; i++)
+                {
+                    for (int j = 1; j <= cell; j++)
+                    {
+                        tableInWordDocument.Cell(i, j).Range.Text = data[counter];
+                        counter++;
+                    }
+                }
+                tableInWordDocument.Rows[1].Range.Font.Bold = 1;
+                
+            }
+            catch(Exception ex)
+            {
+                error = ex.Message + "." + ex.InnerException;
+
+                _doc.Close(false, _missing, _missing);
+                _app.Quit(false, false, false);
+
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(_app);
+                return false;
+            }
+
             return true;
         }
     }

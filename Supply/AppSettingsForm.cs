@@ -39,6 +39,7 @@ namespace Supply
             TB_Benefit.Text = Properties.Settings.Default.template5;
             TB_ChangePassport.Text = Properties.Settings.Default.template7;
             TB_Services.Text = Properties.Settings.Default.template9;
+            TB_PaymentOrder.Text = Properties.Settings.Default.template11;
         }
 
         private void BTN_Save_Click(object sender, EventArgs e)
@@ -56,6 +57,8 @@ namespace Supply
             Properties.Settings.Default.template7 = TB_ChangePassport.Text;
 
             Properties.Settings.Default.template9 = TB_Services.Text;
+
+            Properties.Settings.Default.template11 = TB_PaymentOrder.Text;
 
             Properties.Settings.Default.outFileDir = TB_OutFileDir.Text;
 
@@ -105,6 +108,9 @@ namespace Supply
                                 break;
                             case "t9":
                                 TB_Services.Text = openFileDirectory.FileName;
+                                break;
+                            case "t11":
+                                TB_PaymentOrder.Text = openFileDirectory.FileName;
                                 break;
                         }
 

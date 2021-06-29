@@ -3,20 +3,36 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class FirstMgr : DbMigration
+    public partial class MainMigration : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.Accountings",
+                "dbo.AccountingElectricities",
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        TenantID = c.Int(nullable: false),
+                        ElecricityOrderID = c.Int(nullable: false),
                         CreatedAt = c.String(nullable: false),
                         Coast = c.String(nullable: false),
                         PeriodStart = c.String(nullable: false),
                         PeriodEnd = c.String(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.ElecricityOrders", t => t.ElecricityOrderID, cascadeDelete: true)
+                .Index(t => t.ElecricityOrderID);
+            
+            CreateTable(
+                "dbo.ElecricityOrders",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        StartDate = c.String(nullable: false),
+                        EndDate = c.String(nullable: false),
+                        TenantID = c.Int(nullable: false),
+                        Status = c.Boolean(nullable: false),
+                        CreatedAt = c.String(),
+                        UpdatedAt = c.String(),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Tenants", t => t.TenantID, cascadeDelete: true)
@@ -402,6 +418,21 @@
                 .Index(t => t.RoomID);
             
             CreateTable(
+                "dbo.Accountings",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        TenantID = c.Int(nullable: false),
+                        CreatedAt = c.String(nullable: false),
+                        Coast = c.String(nullable: false),
+                        PeriodStart = c.String(nullable: false),
+                        PeriodEnd = c.String(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Tenants", t => t.TenantID, cascadeDelete: true)
+                .Index(t => t.TenantID);
+            
+            CreateTable(
                 "dbo.ElectricityElements",
                 c => new
                     {
@@ -438,6 +469,8 @@
             DropForeignKey("dbo.Logs", "UserID", "dbo.Users");
             DropForeignKey("dbo.ElectricityElements", "ElectricityPaymentID", "dbo.ElectricityPayments");
             DropForeignKey("dbo.Accountings", "TenantID", "dbo.Tenants");
+            DropForeignKey("dbo.AccountingElectricities", "ElecricityOrderID", "dbo.ElecricityOrders");
+            DropForeignKey("dbo.ElecricityOrders", "TenantID", "dbo.Tenants");
             DropForeignKey("dbo.Tenants", "TenantTypeID", "dbo.TenantTypes");
             DropForeignKey("dbo.Tenants", "RoomID", "dbo.Rooms");
             DropForeignKey("dbo.Tenants", "PaymentID", "dbo.Payments");
@@ -472,6 +505,7 @@
             DropForeignKey("dbo.AdditionalInformations", "AdditionalInformationTypeID", "dbo.AdditionalInformationTypes");
             DropIndex("dbo.Logs", new[] { "UserID" });
             DropIndex("dbo.ElectricityElements", new[] { "ElectricityPaymentID" });
+            DropIndex("dbo.Accountings", new[] { "TenantID" });
             DropIndex("dbo.ChangeRooms", new[] { "RoomID" });
             DropIndex("dbo.ChangeRooms", new[] { "OrderID" });
             DropIndex("dbo.Licenses", new[] { "ManagerId" });
@@ -504,9 +538,11 @@
             DropIndex("dbo.Tenants", new[] { "PaymentID" });
             DropIndex("dbo.Tenants", new[] { "RoomID" });
             DropIndex("dbo.Tenants", new[] { "TenantTypeID" });
-            DropIndex("dbo.Accountings", new[] { "TenantID" });
+            DropIndex("dbo.ElecricityOrders", new[] { "TenantID" });
+            DropIndex("dbo.AccountingElectricities", new[] { "ElecricityOrderID" });
             DropTable("dbo.Logs");
             DropTable("dbo.ElectricityElements");
+            DropTable("dbo.Accountings");
             DropTable("dbo.ChangeRooms");
             DropTable("dbo.Licenses");
             DropTable("dbo.Roles");
@@ -531,7 +567,8 @@
             DropTable("dbo.AdditionalInformationTypes");
             DropTable("dbo.AdditionalInformations");
             DropTable("dbo.Tenants");
-            DropTable("dbo.Accountings");
+            DropTable("dbo.ElecricityOrders");
+            DropTable("dbo.AccountingElectricities");
         }
     }
 }

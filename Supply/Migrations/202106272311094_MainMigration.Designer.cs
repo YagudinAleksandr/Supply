@@ -7,13 +7,13 @@ namespace Supply.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class AddElectricityOrder : IMigrationMetadata
+    public sealed partial class MainMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddElectricityOrder));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(MainMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "202106201757367_AddElectricityOrder"; }
+            get { return "202106272311094_MainMigration"; }
         }
         
         string IMigrationMetadata.Source

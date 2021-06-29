@@ -88,7 +88,7 @@ namespace Supply
             {
                 using (ExcelHelper excelHelper = new ExcelHelper())
                 {
-                    if (excelHelper.Open(filePath: AppSettings.GetTemplateSetting("outfileDir"), name: "Отчеты по общежитиям.xlsx", out error))
+                    if (excelHelper.Open(filePath: AppSettings.GetTemplateSetting("outfileDir") + @"\", name: "Отчеты по общежитиям.xlsx", out error))
                     {
                         using (SupplyDbContext db = new SupplyDbContext())
                         {

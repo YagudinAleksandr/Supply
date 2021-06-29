@@ -23,10 +23,12 @@ namespace Supply.Models
         public Order Order { get; set; }
         public ICollection<AdditionalInformation> AdditionalInformation { get; set; }
         public ICollection<ChangePassport> ChangePassports { get; set; }
+        public ICollection<ElecricityOrder> ElecricityOrders { get; set; }
         public Tenant()
         {
             AdditionalInformation = new List<AdditionalInformation>();
             ChangePassports = new List<ChangePassport>();
+            ElecricityOrders = new List<ElecricityOrder>();
         }
 
     }

@@ -71,7 +71,24 @@ namespace Supply
                             {
                                 foreach(Tenant tenant in tenants)
                                 {
-                                    tenantsList.Add(tenant);
+                                    bool flag = false;
+                                    var additionalInformations = db.AdditionalInformation.Where(x => x.TenantID == tenant.ID).Include(t => t.AdditionalInformationType).ToList();
+                                    foreach(AdditionalInformation additionalInformation in additionalInformations)
+                                    {
+                                        if(additionalInformation.AdditionalInformationTypeID==5)
+                                        {
+                                            if (additionalInformation.Value == "Заочная")
+                                            {
+                                                flag = true;
+                                            }
+                                        }
+                                    }
+
+                                    if (flag == false)
+                                    {
+                                        tenantsList.Add(tenant);
+                                    }
+                                    
                                 }
                             }
                         }
@@ -132,7 +149,8 @@ namespace Supply
                     PB_Progress.PerformStep();
                 }
 
-
+                MessageBox.Show("Договора сформированы!");
+                this.Close();
             }
         }
         private void CB_Hostels_SelectedIndexChanged(object sender, EventArgs e)

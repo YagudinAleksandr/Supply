@@ -37,8 +37,8 @@ namespace Supply
             this.label13 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
+            this.TB_PaymentOrder = new System.Windows.Forms.TextBox();
+            this.TB_ChangeLive = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -98,8 +98,8 @@ namespace Supply
             this.tabPage1.Controls.Add(this.label13);
             this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.label12);
-            this.tabPage1.Controls.Add(this.textBox1);
-            this.tabPage1.Controls.Add(this.label11);
+            this.tabPage1.Controls.Add(this.TB_PaymentOrder);
+            this.tabPage1.Controls.Add(this.TB_ChangeLive);
             this.tabPage1.Controls.Add(this.label10);
             this.tabPage1.Controls.Add(this.label9);
             this.tabPage1.Controls.Add(this.label8);
@@ -185,21 +185,21 @@ namespace Supply
             this.label12.TabIndex = 33;
             this.label12.Text = "Шаблон платежных поручений";
             // 
-            // textBox1
+            // TB_PaymentOrder
             // 
-            this.textBox1.Location = new System.Drawing.Point(326, 267);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(315, 20);
-            this.textBox1.TabIndex = 32;
+            this.TB_PaymentOrder.Location = new System.Drawing.Point(326, 267);
+            this.TB_PaymentOrder.Name = "TB_PaymentOrder";
+            this.TB_PaymentOrder.Size = new System.Drawing.Size(315, 20);
+            this.TB_PaymentOrder.TabIndex = 32;
             // 
-            // label11
+            // TB_ChangeLive
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 244);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(198, 13);
-            this.label11.TabIndex = 31;
-            this.label11.Text = "Договор проживания студента (Очно)";
+            this.TB_ChangeLive.AutoSize = true;
+            this.TB_ChangeLive.Location = new System.Drawing.Point(6, 244);
+            this.TB_ChangeLive.Name = "TB_ChangeLive";
+            this.TB_ChangeLive.Size = new System.Drawing.Size(198, 13);
+            this.TB_ChangeLive.TabIndex = 31;
+            this.TB_ChangeLive.Text = "Договор проживания студента (Очно)";
             // 
             // label10
             // 
@@ -581,7 +581,7 @@ namespace Supply
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button BTN_Browse;
-        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label TB_ChangeLive;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
@@ -596,6 +596,6 @@ namespace Supply
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox TB_PaymentOrder;
     }
 }

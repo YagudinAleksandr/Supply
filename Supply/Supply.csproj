@@ -29,11 +29,10 @@
     <TargetCulture>ru</TargetCulture>
     <ProductName>Supply</ProductName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <DisallowUrlActivation>true</DisallowUrlActivation>
     <TrustUrlParameters>true</TrustUrlParameters>
     <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>true</UseApplicationTrust>
+    <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <ExcludeDeploymentUrl>true</ExcludeDeploymentUrl>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -68,7 +67,7 @@
     <ManifestKeyFile>Supply_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>false</GenerateManifests>
+    <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>false</SignManifests>
@@ -250,6 +249,12 @@
     <Compile Include="DeclarationAccount.Designer.cs">
       <DependentUpon>DeclarationAccount.cs</DependentUpon>
     </Compile>
+    <Compile Include="DeclarationAccountElectricity.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeclarationAccountElectricity.Designer.cs">
+      <DependentUpon>DeclarationAccountElectricity.cs</DependentUpon>
+    </Compile>
     <Compile Include="DeclarationChangePassport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -274,11 +279,23 @@
     <Compile Include="DeclarationHostels.Designer.cs">
       <DependentUpon>DeclarationHostels.cs</DependentUpon>
     </Compile>
+    <Compile Include="DeclarationPaymentOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeclarationPaymentOrder.Designer.cs">
+      <DependentUpon>DeclarationPaymentOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="DeclarationsBenefits.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DeclarationsBenefits.Designer.cs">
       <DependentUpon>DeclarationsBenefits.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DeclarationTenantsInHostels.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeclarationTenantsInHostels.Designer.cs">
+      <DependentUpon>DeclarationTenantsInHostels.cs</DependentUpon>
     </Compile>
     <Compile Include="Domain\AppSettings.cs" />
     <Compile Include="Domain\AsyncProcesses.cs" />
@@ -298,16 +315,13 @@
     <Compile Include="LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202106191553312_FirstMgr.cs" />
-    <Compile Include="Migrations\202106191553312_FirstMgr.designer.cs">
-      <DependentUpon>202106191553312_FirstMgr.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106201757367_AddElectricityOrder.cs" />
-    <Compile Include="Migrations\202106201757367_AddElectricityOrder.designer.cs">
-      <DependentUpon>202106201757367_AddElectricityOrder.cs</DependentUpon>
+    <Compile Include="Migrations\202106272311094_MainMigration.cs" />
+    <Compile Include="Migrations\202106272311094_MainMigration.designer.cs">
+      <DependentUpon>202106272311094_MainMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accounting.cs" />
+    <Compile Include="Models\AccountingElectricity.cs" />
     <Compile Include="Models\AdditionalInformation.cs" />
     <Compile Include="Models\AdditionalInformationType.cs" />
     <Compile Include="Models\Address.cs" />
@@ -391,6 +405,12 @@
     <Compile Include="TenantChangeRoom.Designer.cs">
       <DependentUpon>TenantChangeRoom.cs</DependentUpon>
     </Compile>
+    <Compile Include="TenantElectricityAccount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TenantElectricityAccount.Designer.cs">
+      <DependentUpon>TenantElectricityAccount.cs</DependentUpon>
+    </Compile>
     <Compile Include="TenantUpdateInformation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -472,6 +492,9 @@
     <EmbeddedResource Include="DeclarationAccount.resx">
       <DependentUpon>DeclarationAccount.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DeclarationAccountElectricity.resx">
+      <DependentUpon>DeclarationAccountElectricity.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DeclarationChangePassport.resx">
       <DependentUpon>DeclarationChangePassport.cs</DependentUpon>
     </EmbeddedResource>
@@ -484,8 +507,14 @@
     <EmbeddedResource Include="DeclarationHostels.resx">
       <DependentUpon>DeclarationHostels.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DeclarationPaymentOrder.resx">
+      <DependentUpon>DeclarationPaymentOrder.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DeclarationsBenefits.resx">
       <DependentUpon>DeclarationsBenefits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeclarationTenantsInHostels.resx">
+      <DependentUpon>DeclarationTenantsInHostels.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -493,11 +522,8 @@
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106191553312_FirstMgr.resx">
-      <DependentUpon>202106191553312_FirstMgr.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106201757367_AddElectricityOrder.resx">
-      <DependentUpon>202106201757367_AddElectricityOrder.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202106272311094_MainMigration.resx">
+      <DependentUpon>202106272311094_MainMigration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderAddForm.resx">
       <DependentUpon>OrderAddForm.cs</DependentUpon>
@@ -535,6 +561,9 @@
     <EmbeddedResource Include="TenantChangeRoom.resx">
       <DependentUpon>TenantChangeRoom.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="TenantElectricityAccount.resx">
+      <DependentUpon>TenantElectricityAccount.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TenantUpdateInformation.resx">
       <DependentUpon>TenantUpdateInformation.cs</DependentUpon>
     </EmbeddedResource>
@@ -559,11 +588,6 @@
     <Content Include="Supply.ico" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 и x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1</ProductName>
