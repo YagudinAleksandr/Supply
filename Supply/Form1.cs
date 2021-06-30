@@ -142,6 +142,12 @@ namespace Supply
             DeclarationTenantsInHostels declarationTenantsInHostels = new DeclarationTenantsInHostels();
             declarationTenantsInHostels.Show();
         }
+
+        private void CreateDeclarationForeignCitizenship_Click(object sender, EventArgs e)
+        {
+            DeclarationTenantsInHostels declarationTenantsInHostels = new DeclarationTenantsInHostels(true);
+            declarationTenantsInHostels.Show();
+        }
         private void Form1_Shown(object sender, EventArgs e)
         {
             LB_UserName.Text = _user.Name;
@@ -230,6 +236,10 @@ namespace Supply
                 ToolStripMenuItem declarationHostelsTenants = new ToolStripMenuItem("Отчет по проживающим");
                 declarationHostelsTenants.Click += CreateTenantsInHostel_Click;
                 declaration.DropDownItems.Add(declarationHostelsTenants);
+
+                ToolStripMenuItem declarationForeignCitizenship = new ToolStripMenuItem("Отчет по иностранным студентам");
+                declarationForeignCitizenship.Click += CreateDeclarationForeignCitizenship_Click;
+                declaration.DropDownItems.Add(declarationForeignCitizenship);
 
                 ToolStripMenuItem declarationElectricityPayment = new ToolStripMenuItem("Отчеты по договорам об оплате за эл.энергию");
                 declarationElectricityPayment.Click += DeclarationElectricityOrders_Click;

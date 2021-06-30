@@ -1,6 +1,7 @@
 ﻿using Supply.Domain;
 using Supply.Models;
 using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -12,10 +13,12 @@ namespace Supply
         private int _hostelID;
         private int _roomTypeID;
         private int _tenantTypeID;
-        public AdminPaymentsFormAdd(int userID)
+        private int _paymentID;
+        public AdminPaymentsFormAdd(int userID, int paymentID = 0)
         {
             InitializeComponent();
             _userID = userID;
+            _paymentID = paymentID;
         }
 
         private void AdminPaymentsFormAdd_Load(object sender, EventArgs e)
@@ -52,32 +55,79 @@ namespace Supply
             }
             using(SupplyDbContext db = new SupplyDbContext())
             {
-                Payment payment = new Payment();
-                payment.Name = TB_Name.Text;
-                payment.UserID = _userID;
-                payment.Description = TB_Description.Text;
-                payment.HostelID = _hostelID;
-                payment.RoomTypeID = _roomTypeID;
-                payment.CreatedAt = DateTime.Now.ToString();
-                payment.UpdatedAt = DateTime.Now.ToString();
-                payment.Status = true;
-                payment.Rent = decimal.Parse(TB_Coast.Text);
-                payment.Service = decimal.Parse(TB_Service.Text);
-                payment.TenantTypeID = _tenantTypeID;
-                payment.PaymentType = CB_PeriodOfPayment.SelectedItem.ToString();
-                
-                try
+                Payment payment;
+                if (_paymentID != 0)
                 {
-                    db.Payments.Add(payment);
-                    db.SaveChanges();
-                    MessageBox.Show("Тарифный план добавлен успешно!");
+                    payment = db.Payments.Where(x => x.ID == _paymentID).FirstOrDefault();
+                    payment.Name = TB_Name.Text;
+                    payment.Description = TB_Description.Text;
+                    payment.UserID = _userID;
+                    payment.HostelID = _hostelID;
+                    payment.RoomTypeID = _roomTypeID;
+                    payment.UpdatedAt = DateTime.Now.ToString();
+                    if(ChB_Status.Checked)
+                    {
+                        payment.Status = true;
+                    }
+                    else
+                    {
+                        payment.Status = false;
+                    }
+
+                    payment.Rent = decimal.Parse(TB_Coast.Text);
+                    payment.Service = decimal.Parse(TB_Service.Text);
+                    payment.TenantTypeID = _tenantTypeID;
+                    payment.PaymentType = CB_PeriodOfPayment.SelectedItem.ToString();
+                    try
+                    {
+                        db.Entry(payment).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                        MessageBox.Show("Тарифный план изменен успешно!");
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                        return;
+                    }
                     this.Close();
                 }
-                catch(Exception ex)
+                else
                 {
-                    MessageBox.Show(ex.Message);
-                    return;
+                    payment = new Payment();
+                    payment.Name = TB_Name.Text;
+                    payment.UserID = _userID;
+                    payment.Description = TB_Description.Text;
+                    payment.HostelID = _hostelID;
+                    payment.RoomTypeID = _roomTypeID;
+                    payment.CreatedAt = DateTime.Now.ToString();
+                    payment.UpdatedAt = DateTime.Now.ToString();
+                    if (ChB_Status.Checked)
+                    {
+                        payment.Status = true;
+                    }
+                    else
+                    {
+                        payment.Status = false;
+                    }
+                    payment.Rent = decimal.Parse(TB_Coast.Text);
+                    payment.Service = decimal.Parse(TB_Service.Text);
+                    payment.TenantTypeID = _tenantTypeID;
+                    payment.PaymentType = CB_PeriodOfPayment.SelectedItem.ToString();
+
+                    try
+                    {
+                        db.Payments.Add(payment);
+                        db.SaveChanges();
+                        MessageBox.Show("Тарифный план добавлен успешно!");
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                        return;
+                    }
                 }
+                
             }
             
         }
@@ -115,6 +165,30 @@ namespace Supply
             catch
             {
                 return;
+            }
+        }
+
+        private void AdminPaymentsFormAdd_Shown(object sender, EventArgs e)
+        {
+            if (_paymentID != 0)
+            {
+                using (SupplyDbContext db = new SupplyDbContext())
+                {
+                    Payment payment = db.Payments.Where(x => x.ID == _paymentID).FirstOrDefault();
+
+                    if (payment != null)
+                    {
+                        CB_Hostels.SelectedValue = _hostelID = (int)payment.HostelID;
+                        CB_PeriodOfPayment.SelectedItem = payment.PaymentType;
+                        CB_RoomTypes.SelectedValue = _roomTypeID = (int)payment.RoomTypeID;
+                        CB_TenantTypes.SelectedValue = _tenantTypeID= (int)payment.TenantTypeID;
+                        TB_Name.Text = payment.Name;
+                        TB_Description.Text = payment.Description;
+                        TB_Coast.Text = payment.Rent.ToString();
+                        TB_Service.Text = payment.Service.ToString();
+                        ChB_Status.Checked = payment.Status;
+                    }
+                }
             }
         }
     }

@@ -72,6 +72,7 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DeclarationTenantsInHostels";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Отчет по проживающим в общежитии";
             this.Shown += new System.EventHandler(this.DeclarationTenantsInHostels_Shown);
             this.ResumeLayout(false);

@@ -31,7 +31,6 @@ namespace Supply
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminPaymentsForm));
             this.DG_Payments = new System.Windows.Forms.DataGridView();
-            this.BTN_Add = new System.Windows.Forms.Button();
             this.COL_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Hostel = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -40,11 +39,15 @@ namespace Supply
             this.COL_UpdatedAt = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Manager = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BTN_Add = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DG_Payments)).BeginInit();
             this.SuspendLayout();
             // 
             // DG_Payments
             // 
+            this.DG_Payments.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.DG_Payments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DG_Payments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.COL_ID,
@@ -57,18 +60,9 @@ namespace Supply
             this.COL_Manager});
             this.DG_Payments.Location = new System.Drawing.Point(13, 13);
             this.DG_Payments.Name = "DG_Payments";
-            this.DG_Payments.Size = new System.Drawing.Size(775, 382);
+            this.DG_Payments.Size = new System.Drawing.Size(1085, 382);
             this.DG_Payments.TabIndex = 0;
-            // 
-            // BTN_Add
-            // 
-            this.BTN_Add.Location = new System.Drawing.Point(713, 415);
-            this.BTN_Add.Name = "BTN_Add";
-            this.BTN_Add.Size = new System.Drawing.Size(75, 23);
-            this.BTN_Add.TabIndex = 1;
-            this.BTN_Add.Text = "Добавить";
-            this.BTN_Add.UseVisualStyleBackColor = true;
-            this.BTN_Add.Click += new System.EventHandler(this.BTN_Add_Click);
+            this.DG_Payments.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DG_Payments_CellClick);
             // 
             // COL_ID
             // 
@@ -119,11 +113,22 @@ namespace Supply
             this.COL_Manager.Name = "COL_Manager";
             this.COL_Manager.ReadOnly = true;
             // 
+            // BTN_Add
+            // 
+            this.BTN_Add.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTN_Add.Location = new System.Drawing.Point(1023, 415);
+            this.BTN_Add.Name = "BTN_Add";
+            this.BTN_Add.Size = new System.Drawing.Size(75, 23);
+            this.BTN_Add.TabIndex = 1;
+            this.BTN_Add.Text = "Добавить";
+            this.BTN_Add.UseVisualStyleBackColor = true;
+            this.BTN_Add.Click += new System.EventHandler(this.BTN_Add_Click);
+            // 
             // AdminPaymentsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1115, 450);
             this.Controls.Add(this.BTN_Add);
             this.Controls.Add(this.DG_Payments);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

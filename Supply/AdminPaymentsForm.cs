@@ -24,6 +24,19 @@ namespace Supply
 
         private void AdminPaymentsForm_Load(object sender, EventArgs e)
         {
+            DataGridViewButtonColumn dataGridViewButtonColumn2 = new DataGridViewButtonColumn();
+            dataGridViewButtonColumn2.HeaderText = "Изменить";
+            dataGridViewButtonColumn2.Name = "COL_Settings";
+            dataGridViewButtonColumn2.Text = "Изменить";
+            dataGridViewButtonColumn2.UseColumnTextForButtonValue = true;
+            DG_Payments.Columns.Add(dataGridViewButtonColumn2);
+
+            DataGridViewButtonColumn dataGridViewButtonColumn3 = new DataGridViewButtonColumn();
+            dataGridViewButtonColumn3.HeaderText = "Удалить";
+            dataGridViewButtonColumn3.Name = "COL_Delete";
+            dataGridViewButtonColumn3.Text = "Удалить";
+            dataGridViewButtonColumn3.UseColumnTextForButtonValue = true;
+            DG_Payments.Columns.Add(dataGridViewButtonColumn3);
             UpdateInfo();
         }
 
@@ -59,6 +72,64 @@ namespace Supply
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private void DG_Payments_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 8) 
+            {
+                int paymentID = 0;
+                if (int.TryParse(DG_Payments.Rows[e.RowIndex].Cells[0].Value.ToString(), out paymentID)) 
+                {
+                    using (SupplyDbContext db = new SupplyDbContext())
+                    {
+                        AdminPaymentsFormAdd adminPaymentsFormAdd = new AdminPaymentsFormAdd(_userID, paymentID);
+                        adminPaymentsFormAdd.ShowDialog();
+                        UpdateInfo();
+                    }
+                }
+            }
+
+            if (e.ColumnIndex == 9)
+            {
+                int paymentID = 0;
+                if (int.TryParse(DG_Payments.Rows[e.RowIndex].Cells[0].Value.ToString(), out paymentID))
+                {
+                    DialogResult result = MessageBox.Show("Вы действительно хотите удалить тарифный план?", "Предупреждение!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    using (SupplyDbContext db = new SupplyDbContext())
+                    {
+                        if (paymentID != 0 && result == DialogResult.Yes) 
+                        {
+                            Payment payment = db.Payments.Where(x => x.ID == paymentID).FirstOrDefault();
+                            if (payment != null)
+                            {
+                                try
+                                {
+                                    db.Payments.Remove(payment);
+                                    db.SaveChanges();
+                                    MessageBox.Show("Тарифный план удален успешно!");
+                                    UpdateInfo();
+                                }
+                                catch (Exception ex)
+                                {
+                                    //Создаем LOG запись об удалении!
+                                    Log logInfo = new Log();
+                                    logInfo.ID = Guid.NewGuid();
+                                    logInfo.UserID = _userID;
+                                    logInfo.CreatedAt = DateTime.Now.ToString();
+                                    logInfo.Type = "ERROR";
+                                    logInfo.Caption = $"Class:AdminPaymentsForm. Method: DG_Payments_CellClick. {ex.Message}. {ex.InnerException}";
+                                    db.Logs.Add(logInfo);
+                                    db.SaveChanges();
+
+                                    MessageBox.Show(ex.Message);
+                                }
+                            }
+                        }
+                        UpdateInfo();
+                    }
                 }
             }
         }

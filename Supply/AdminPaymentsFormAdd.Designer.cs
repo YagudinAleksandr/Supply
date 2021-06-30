@@ -47,6 +47,7 @@ namespace Supply
             this.CB_PeriodOfPayment = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.TB_Service = new System.Windows.Forms.TextBox();
+            this.ChB_Status = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -135,7 +136,7 @@ namespace Supply
             // 
             // BTN_Save
             // 
-            this.BTN_Save.Location = new System.Drawing.Point(465, 248);
+            this.BTN_Save.Location = new System.Drawing.Point(465, 279);
             this.BTN_Save.Name = "BTN_Save";
             this.BTN_Save.Size = new System.Drawing.Size(75, 23);
             this.BTN_Save.TabIndex = 10;
@@ -198,11 +199,24 @@ namespace Supply
             this.TB_Service.Size = new System.Drawing.Size(112, 20);
             this.TB_Service.TabIndex = 16;
             // 
+            // ChB_Status
+            // 
+            this.ChB_Status.AutoSize = true;
+            this.ChB_Status.Checked = true;
+            this.ChB_Status.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ChB_Status.Location = new System.Drawing.Point(19, 248);
+            this.ChB_Status.Name = "ChB_Status";
+            this.ChB_Status.Size = new System.Drawing.Size(121, 17);
+            this.ChB_Status.TabIndex = 17;
+            this.ChB_Status.Text = "Статус активности";
+            this.ChB_Status.UseVisualStyleBackColor = true;
+            // 
             // AdminPaymentsFormAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(559, 283);
+            this.ClientSize = new System.Drawing.Size(559, 314);
+            this.Controls.Add(this.ChB_Status);
             this.Controls.Add(this.TB_Service);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.CB_PeriodOfPayment);
@@ -225,6 +239,7 @@ namespace Supply
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Тарифный план";
             this.Load += new System.EventHandler(this.AdminPaymentsFormAdd_Load);
+            this.Shown += new System.EventHandler(this.AdminPaymentsFormAdd_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -249,5 +264,6 @@ namespace Supply
         private System.Windows.Forms.ComboBox CB_PeriodOfPayment;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox TB_Service;
+        private System.Windows.Forms.CheckBox ChB_Status;
     }
 }
