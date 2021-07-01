@@ -6,6 +6,7 @@ using Supply.Domain;
 using Supply.Models;
 using System.Linq;
 using System.IO;
+using System.Threading;
 
 namespace Supply
 {
@@ -14,11 +15,6 @@ namespace Supply
         private User _user;
         public LoginForm()
         {
-            AppDomain domain = AppDomain.CurrentDomain;
-            string directory = domain.BaseDirectory;
-
-            
-
             InitializeComponent();
             if (Properties.Settings.Default.connect == "") 
             {
@@ -88,6 +84,9 @@ namespace Supply
                         return;
                     }
                     _user = user;
+
+                    Thread thread = new Thread(UpdateLastEnterOfUser);
+                    thread.Start();
                 }
                 catch(Exception ex)
                 {
@@ -137,6 +136,17 @@ namespace Supply
                 hash += string.Format("{0:x2}", b);
 
             return hash;
+        }
+
+        public void UpdateLastEnterOfUser()
+        {
+            using (SupplyDbContext db = new SupplyDbContext())
+            {
+                User user = db.Users.Where(x => x.ID == _user.ID).FirstOrDefault();
+                user.LastEnter = DateTime.Now.ToString();
+                db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
         }
     }
 }

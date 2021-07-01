@@ -16,5 +16,7 @@ namespace Supply.Models
         [ForeignKey("Role")]
         public int RoleID { get; set; }
         public Role Role { get; set; }
+
+        public string LastEnter { get; set; }
     }
 }

@@ -282,7 +282,7 @@ namespace Supply
 
                                                         if (changePassport != null)
                                                         {
-                                                            if(changePassport.Citizenship!="Россия" || changePassport.Citizenship != "РФ")
+                                                            if(changePassport.Citizenship!= "Россия" && changePassport.Citizenship != "РФ")
                                                             {
                                                                 excelHelper.Set(columnName: "A", rowNumber: rowCount, value: counter.ToString(), error: out error);
                                                                 excelHelper.Set(columnName: "B", rowNumber: rowCount, value: hostel.Name, error: out error);
@@ -326,7 +326,7 @@ namespace Supply
                                                         }
                                                         else
                                                         {
-                                                            if(identification.Cityzenship!="РФ" || identification.Cityzenship!="Россия")
+                                                            if(identification.Cityzenship!="РФ" && identification.Cityzenship!= "Россия")
                                                             {
                                                                 excelHelper.Set(columnName: "A", rowNumber: rowCount, value: counter.ToString(), error: out error);
                                                                 excelHelper.Set(columnName: "B", rowNumber: rowCount, value: hostel.Name, error: out error);

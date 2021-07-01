@@ -9,7 +9,34 @@ namespace Supply.Domain
     {
         public static void UpdateBenefits()
         {
+            using (SupplyDbContext db = new SupplyDbContext())
+            {
+                var benefits = db.Benefits.Where(s => s.Status == true).ToList();
+                foreach(Benefit benefit in benefits)
+                {
+                    if (Convert.ToDateTime(benefit.EndDate) <= Convert.ToDateTime(DateTime.Now.ToShortDateString()))
+                    {
+                        benefit.Status = false;
+                        benefit.UpdatedAt = DateTime.Now.ToString();
+                        try
+                        {
+                            db.Entry(benefit).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                        catch(Exception ex)
+                        {
+                            Log log = new Log();
+                            log.ID = Guid.NewGuid();
+                            log.Type = "ERROR";
+                            log.CreatedAt = DateTime.Now.ToString();
+                            log.Caption = $"Class: AsyncProcesses. Method: UpdateBenefits." + ex.Message + "." + ex.InnerException;
 
+                            db.Logs.Add(log);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+            }
         }
 
         public static void UpdateChangeRoom()
@@ -42,6 +69,39 @@ namespace Supply.Domain
                             log.Type = "ERROR";
                             log.CreatedAt = DateTime.Now.ToString();
                             log.Caption = $"Class: AsyncProcesses. Method: UpdateChangeRoom." + ex.Message + "." + ex.InnerException;
+
+                            db.Logs.Add(log);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+            }
+        }
+        public static void UpdateOrders()
+        {
+            using (SupplyDbContext db = new SupplyDbContext())
+            {
+                var tenants = db.Tenants.Where(s => s.Status == true).Include(r=>r.Order).ToList();
+
+                foreach(Tenant tenant in tenants)
+                {
+                    if (Convert.ToDateTime(tenant.Order.EndDate) <= Convert.ToDateTime(DateTime.Now.ToShortDateString())) 
+                    {
+                        tenant.Status = false;
+                        tenant.UpdatedAt = DateTime.Now.ToString();
+
+                        try
+                        {
+                            db.Entry(tenant).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                        catch(Exception ex)
+                        {
+                            Log log = new Log();
+                            log.ID = Guid.NewGuid();
+                            log.Type = "ERROR";
+                            log.CreatedAt = DateTime.Now.ToString();
+                            log.Caption = $"Class: AsyncProcesses. Method: UpdateOrders." + ex.Message + "." + ex.InnerException;
 
                             db.Logs.Add(log);
                             db.SaveChanges();

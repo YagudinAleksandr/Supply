@@ -25,13 +25,6 @@ namespace Supply
             dataGridViewButtonColumn1.UseColumnTextForButtonValue = true;
             DG_Hostels.Columns.Add(dataGridViewButtonColumn1);
 
-            DataGridViewButtonColumn dataGridViewButtonColumn2 = new DataGridViewButtonColumn();
-            dataGridViewButtonColumn2.HeaderText = "Настройки";
-            dataGridViewButtonColumn2.Name = "COL_Settings";
-            dataGridViewButtonColumn2.Text = "Изменить";
-            dataGridViewButtonColumn2.UseColumnTextForButtonValue = true;
-            DG_Hostels.Columns.Add(dataGridViewButtonColumn2);
-
             DataGridViewButtonColumn dataGridViewButtonColumn3 = new DataGridViewButtonColumn();
             dataGridViewButtonColumn3.HeaderText = "Удалить";
             dataGridViewButtonColumn3.Name = "COL_Delete";
@@ -99,7 +92,7 @@ namespace Supply
                 
             }
 
-            if (e.ColumnIndex == 6)//Удаление общежитий
+            if (e.ColumnIndex == 5)//Удаление общежитий
             {
                 using(SupplyDbContext db = new SupplyDbContext())
                 {

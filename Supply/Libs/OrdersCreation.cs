@@ -20,7 +20,7 @@ namespace Supply.Libs
                 Flat flat = db.Flats.Where(x => x.ID == room.FlatID).FirstOrDefault();
                 Enterance enterance = db.Enterances.Where(x => x.ID == flat.Enterance_ID).Include(f=>f.Flats).FirstOrDefault();
                 Hostel hostel = db.Hostels.Where(x => x.ID == enterance.HostelId).Include(m => m.Manager).Include(h=>h.Address).FirstOrDefault();
-                License license = db.Licenses.Where(x => x.ID == hostel.Manager.ID).First();
+                License license = db.Licenses.Where(x => x.ManagerId == hostel.Manager.ID).First();
 
                 if (tenant == null)
                 {
@@ -178,10 +178,10 @@ namespace Supply.Libs
 
                             replacements.Add("rate", (tenant.Payment.Rent + tenant.Payment.Service).ToString());
                             replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service)));
-                            replacements.Add("yearRate", (tenant.Payment.Rent * 12).ToString());
+                            replacements.Add("yearRate", ((tenant.Payment.Rent + tenant.Payment.Service) * 12).ToString());
                             replacements.Add("rateWordYear", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service) * 12));
                             totalDate = Math.Abs((orderEndDate.Month - orderStartDate.Month) + 12 * (orderEndDate.Year - orderStartDate.Year));
-                            replacements.Add("allTimeRate", ((int)tenant.Payment.Rent * totalDate).ToString());
+                            replacements.Add("allTimeRate", ((int)(tenant.Payment.Rent + tenant.Payment.Service) * totalDate).ToString());
                             replacements.Add("allTimeRateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service) * totalDate));
 
                             break;
@@ -191,7 +191,7 @@ namespace Supply.Libs
 
                             replacements.Add("rate", (tenant.Payment.Rent + tenant.Payment.Service).ToString());
                             replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service)));
-                            totalDate = Math.Abs((orderEndDate.Day - orderStartDate.Day) + (orderEndDate.Day - orderStartDate.Day));
+                            totalDate = Math.Abs((orderEndDate - orderStartDate).Days);
                             replacements.Add("allTimeRate", ((int)(tenant.Payment.Rent + tenant.Payment.Service) * totalDate).ToString());
                             replacements.Add("allTimeRateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service) * totalDate));
                             break;
@@ -312,7 +312,7 @@ namespace Supply.Libs
                     Flat flat = db.Flats.Where(x => x.ID == room.FlatID).FirstOrDefault();
                     Enterance enterance = db.Enterances.Where(x => x.ID == flat.Enterance_ID).Include(f => f.Flats).FirstOrDefault();
                     Hostel hostel = db.Hostels.Where(x => x.ID == enterance.HostelId).Include(m => m.Manager).Include(h => h.Address).FirstOrDefault();
-                    License license = db.Licenses.Where(x => x.ID == hostel.Manager.ID).First();
+                    License license = db.Licenses.Where(x => x.ManagerId == hostel.Manager.ID).First();
 
                     if (tenant == null)
                     {
@@ -678,7 +678,7 @@ namespace Supply.Libs
                     Flat flat = db.Flats.Where(x => x.ID == room.FlatID).FirstOrDefault();
                     Enterance enterance = db.Enterances.Where(x => x.ID == flat.Enterance_ID).Include(f => f.Flats).FirstOrDefault();
                     Hostel hostel = db.Hostels.Where(x => x.ID == enterance.HostelId).Include(m => m.Manager).Include(h => h.Address).FirstOrDefault();
-                    License license = db.Licenses.Where(x => x.ID == hostel.Manager.ID).First();
+                    License license = db.Licenses.Where(x => x.ManagerId == hostel.Manager.ID).First();
                     Identification identification = db.Identifications.Where(x => x.ID == tenant.ID).Include(dt => dt.DocumentType).FirstOrDefault();
                     ChangePassport changePassport = db.ChangePassports.Where(x => x.TenantID == tenant.ID).Where(st => st.Status == true).FirstOrDefault();
                     if(identification==null)
@@ -987,12 +987,14 @@ namespace Supply.Libs
                         if (AdditionalInf(5, tenant.ID) != "Заочная")
                         {
                             replacements.Add("supplyEl", totalPayment.ToString());
+                            replacements.Add("bed", (tenant.Payment.Rent * totalDate).ToString());
                         }
                         else
                         {
-                            replacements.Add("supplyEl", "");
+                            replacements.Add("supplyEl", "0,00");
+                            replacements.Add("bed", (tenant.Payment.Rent * (orderEndDate - orderStartDate).Days).ToString());
                         }
-                        replacements.Add("bed", (tenant.Payment.Rent * totalDate).ToString());
+                        
                         replacements.Add("supply", (tenant.Payment.Service * totalDate).ToString());
 
                         //Начинаем замену в шаблоне и сохраняем документ

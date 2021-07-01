@@ -58,7 +58,7 @@ namespace Supply
             using(SupplyDbContext db = new SupplyDbContext())
             {
                 Hostel hostel = db.Hostels.Where(x => x.ID == _hostelIndex).Include(y => y.Manager).Include(p=>p.Address).First();
-                License license = db.Licenses.Where(x => x.ID == hostel.Manager.ID).First();
+                License license = db.Licenses.Where(x => x.ManagerId == hostel.Manager.ID).First();
                 var enterances = db.Enterances.Where(x => x.HostelId == _hostelIndex).ToList();
 
                 PB_Creation.Minimum = 0;
@@ -253,7 +253,7 @@ namespace Supply
 
                                             replacements.Add("rate", (tenant.Payment.Rent + tenant.Payment.Service).ToString());
                                             replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service)));
-                                            totalDate = Math.Abs((orderEndDate.Day - orderStartDate.Day) + (orderEndDate.Day - orderStartDate.Day));
+                                            totalDate = Math.Abs((orderEndDate - orderStartDate).Days);
                                             replacements.Add("allTimeRate", ((int)tenant.Payment.Rent * totalDate).ToString());
                                             replacements.Add("allTimeRateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service)));
                                             break;

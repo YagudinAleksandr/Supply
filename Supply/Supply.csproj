@@ -30,7 +30,7 @@
     <ProductName>Supply</ProductName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -319,6 +319,10 @@
     <Compile Include="Migrations\202106272311094_MainMigration.designer.cs">
       <DependentUpon>202106272311094_MainMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107011431039_UpdateUsersTable.cs" />
+    <Compile Include="Migrations\202107011431039_UpdateUsersTable.designer.cs">
+      <DependentUpon>202107011431039_UpdateUsersTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accounting.cs" />
     <Compile Include="Models\AccountingElectricity.cs" />
@@ -524,6 +528,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106272311094_MainMigration.resx">
       <DependentUpon>202106272311094_MainMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107011431039_UpdateUsersTable.resx">
+      <DependentUpon>202107011431039_UpdateUsersTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderAddForm.resx">
       <DependentUpon>OrderAddForm.cs</DependentUpon>

@@ -267,18 +267,31 @@ namespace Supply
             Thread comboBoxthread = new Thread(UpdateComboboxItems);
             comboBoxthread.Start();
 
-            LB_AsyncProcesses.Text = "Начаты фоновые процессы";
+            
             Thread thread = new Thread(AsyncProcessing);
             thread.Start();
             
+            if(thread.IsAlive)
+            {
+                LB_AsyncProcesses.Text = "Начаты фоновые процессы";
+            }
+            else
+            {
+                LB_AsyncProcesses.Text = "Все готово!";
+            }
         }
 
         private void AsyncProcessing()
         {
+
+            
             Action action = () =>
             {
                 AsyncProcesses.UpdateChangeRoom();
-                LB_AsyncProcesses.Text = "Все готово!";
+                AsyncProcesses.UpdateBenefits();
+                AsyncProcesses.UpdateOrders();
+
+                LB_AsyncProcesses.Text = "Все процессы завершены!";
             };
             Invoke(action);
         }
