@@ -441,15 +441,31 @@ namespace Supply.Libs
         {
             using (SupplyDbContext db = new SupplyDbContext())
             {
-                ChangeRoom changeRoom = db.ChangeRooms.Where(x => x.ID == changeID).Include(or => or.Order).Include(r => r.Room).FirstOrDefault();
-                Order order = db.Orders.Where(x => x.ID == changeRoom.Order.ID).Include(l => l.License).FirstOrDefault();
-                Tenant tenant = db.Tenants.Where(x => x.ID == order.ID).Where(y => y.Status == true).Include(p => p.Payment).First();
+                ChangeRoom changeRoom;
+                Order order;
+                Tenant tenant;
+                Room room;
+                Flat flat;
+                Enterance enterance;
+                Hostel hostel;
+                License license;
+                try
+                {
+                    changeRoom = db.ChangeRooms.Where(x => x.ID == changeID).Include(or => or.Order).Include(r => r.Room).FirstOrDefault();
+                    order = db.Orders.Where(x => x.ID == changeRoom.Order.ID).Include(l => l.License).FirstOrDefault();
+                    tenant = db.Tenants.Where(x => x.ID == order.ID).Where(y => y.Status == true).Include(p => p.Payment).First();
 
-                Room room = db.Rooms.Where(x => x.ID == changeRoom.Room.ID).Include(t => t.RoomType).Include(p => p.Properties).FirstOrDefault();
-                Flat flat = db.Flats.Where(x => x.ID == room.FlatID).FirstOrDefault();
-                Enterance enterance = db.Enterances.Where(x => x.ID == flat.Enterance_ID).Include(f => f.Flats).FirstOrDefault();
-                Hostel hostel = db.Hostels.Where(x => x.ID == enterance.HostelId).Include(m => m.Manager).Include(h => h.Address).FirstOrDefault();
-                License license = db.Licenses.Where(x => x.ID == hostel.Manager.ID).First();
+                    room = db.Rooms.Where(x => x.ID == changeRoom.Room.ID).Include(t => t.RoomType).Include(p => p.Properties).FirstOrDefault();
+                    flat = db.Flats.Where(x => x.ID == room.FlatID).FirstOrDefault();
+                    enterance = db.Enterances.Where(x => x.ID == flat.Enterance_ID).Include(f => f.Flats).FirstOrDefault();
+                    hostel = db.Hostels.Where(x => x.ID == enterance.HostelId).Include(m => m.Manager).Include(h => h.Address).FirstOrDefault();
+                    license = db.Licenses.Where(x => x.ManagerId == hostel.Manager.ID).First();
+                }
+                catch(Exception ex)
+                {
+                    error = ex.Message+"."+ex.InnerException;
+                    return false;
+                }
 
                 if (tenant == null)
                 {
@@ -551,23 +567,42 @@ namespace Supply.Libs
         {
             using (SupplyDbContext db = new SupplyDbContext())
             {
-                ChangePassport changePassport = db.ChangePassports.Where(id => id.ID == changePassportID).Include(t=>t.Tenant).FirstOrDefault();
-                Order order = db.Orders.Where(x => x.ID == changePassport.Tenant.ID).Include(l => l.License).FirstOrDefault();
-                Tenant tenant = db.Tenants.Where(x => x.ID == order.ID).Where(y => y.Status == true).Include(r => r.Room).First();
+                ChangePassport changePassport;
+                Order order;
+                Tenant tenant;
+                Room room;
+                Flat flat;
+                Enterance enterance;
+                Hostel hostel;
+                License license;
+                Identification identification;
 
-                Room room = db.Rooms.Where(x => x.ID == tenant.Room.ID).Include(t => t.RoomType).Include(p => p.Properties).FirstOrDefault();
-                Flat flat = db.Flats.Where(x => x.ID == room.FlatID).FirstOrDefault();
-                Enterance enterance = db.Enterances.Where(x => x.ID == flat.Enterance_ID).Include(f => f.Flats).FirstOrDefault();
-                Hostel hostel = db.Hostels.Where(x => x.ID == enterance.HostelId).Include(m => m.Manager).Include(h => h.Address).FirstOrDefault();
-                License license = db.Licenses.Where(x => x.ID == hostel.Manager.ID).First();
+                try
+                {
+                    changePassport = db.ChangePassports.Where(id => id.ID == changePassportID).Include(t => t.Tenant).FirstOrDefault();
+                    order = db.Orders.Where(x => x.ID == changePassport.Tenant.ID).Include(l => l.License).FirstOrDefault();
+                    tenant = db.Tenants.Where(x => x.ID == order.ID).Where(y => y.Status == true).Include(r => r.Room).First();
+
+                    room = db.Rooms.Where(x => x.ID == tenant.Room.ID).Include(t => t.RoomType).Include(p => p.Properties).FirstOrDefault();
+                    flat = db.Flats.Where(x => x.ID == room.FlatID).FirstOrDefault();
+                    enterance = db.Enterances.Where(x => x.ID == flat.Enterance_ID).Include(f => f.Flats).FirstOrDefault();
+                    hostel = db.Hostels.Where(x => x.ID == enterance.HostelId).Include(m => m.Manager).Include(h => h.Address).FirstOrDefault();
+                    license = db.Licenses.Where(x => x.ID == hostel.Manager.ID).First();
+                    identification = db.Identifications.Where(x => x.ID == tenant.ID).First();
+                }
+                catch(Exception ex)
+                {
+                    error = ex.Message+"."+ex.InnerException;
+                    return false;
+                }
 
                 if (tenant == null)
                 {
                     error = $"Жильца для договора №{order.OrderNumber} не найдено!";
                     return false;
                 }
-
-                Identification identification = db.Identifications.Where(x => x.ID == tenant.ID).First();
+                
+                
 
                 var additionalInformation = db.AdditionalInformation.Where(x => x.TenantID == tenant.ID).ToList();
 

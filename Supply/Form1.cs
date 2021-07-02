@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -148,6 +149,34 @@ namespace Supply
             DeclarationTenantsInHostels declarationTenantsInHostels = new DeclarationTenantsInHostels(true);
             declarationTenantsInHostels.Show();
         }
+        private void CreateDeclarationLogs_Click(object sender, EventArgs e)
+        {
+            StreamWriter logStream = new StreamWriter(AppSettings.GetTemplateSetting("outfileDir") + @"\Отчет об ошибках " + DateTime.Now.ToShortDateString() + ".txt");
+
+            logStream.WriteLine("----------------------------------------------------------------------------");
+            logStream.WriteLine("Файл логирования приложения Supply");
+            logStream.WriteLine($"Дата создания:{DateTime.Now.ToString()}");
+            logStream.WriteLine("-----------------------------------------------------------------------------");
+
+            logStream.WriteLine("=============================================================================");
+            logStream.WriteLine("TYPE || DATE|| CAPTION  ");
+            logStream.WriteLine("=============================================================================");
+
+            using (SupplyDbContext db = new SupplyDbContext())
+            {
+                var logs = db.Logs.OrderBy(x => x.CreatedAt).ToList();
+                foreach(Log log in logs)
+                {
+                    logStream.WriteLine($"{log.Type} || {log.CreatedAt} || {log.Caption}");
+                }
+                
+            }
+
+            logStream.Close();
+            MessageBox.Show("Файл логов создан!");
+        }
+
+
         private void Form1_Shown(object sender, EventArgs e)
         {
             LB_UserName.Text = _user.Name;
@@ -187,6 +216,10 @@ namespace Supply
                 settingItem.DropDownItems.Add(roomType);
                 settingItem.DropDownItems.Add(tenant);
                 settingItem.DropDownItems.Add(users);
+
+                ToolStripMenuItem logDeclaration = new ToolStripMenuItem("Отчет ошибок");
+                logDeclaration.Click += CreateDeclarationLogs_Click;
+                declaration.DropDownItems.Add(logDeclaration);
             }
 
             if (_role.Name == "ADMINISTRATOR" || _role.Name == "MANAGER")
@@ -348,102 +381,139 @@ namespace Supply
         {
             Action action = () =>
             {
-                TV_HostelInformation.Nodes.Clear();
-
-                using (SupplyDbContext db = new SupplyDbContext())
+                try
                 {
-                    Hostel hostel = db.Hostels.Where(id => id.ID == (int)hostelIndex).First();
+                    TV_HostelInformation.Nodes.Clear();
 
-                    ContextMenu contextMenuForNode;//Variable for context menu
-
-                    if (hostel == null)
+                    using (SupplyDbContext db = new SupplyDbContext())
                     {
-                        MessageBox.Show("Не существует общежития!");
-                        Log log = new Log() { ID = Guid.NewGuid(), Caption = $"Ошибка выборки из общежитий, объект с индексом {hostelIndex} не существует", Type = "Ошибка выборки", CreatedAt = DateTime.Now.ToString(), UserID = _user.ID };
-                        db.Logs.Add(log);
-                        db.SaveChanges();
-                        return;
-                    }
+                        Hostel hostel = db.Hostels.Where(id => id.ID == (int)hostelIndex).First();
 
-                    TreeNode hostelNode = new TreeNode($"Общежитие {hostel.Name}");
+                        ContextMenu contextMenuForNode;//Variable for context menu
 
-                    var enterances = db.Enterances.Where(id => id.HostelId == hostel.ID).ToList();
-                    TreeNode[] enteranceNodes = new TreeNode[enterances.Count];
-
-                    for (int i = 0; i < enterances.Count; i++)
-                    {
-                        enteranceNodes[i] = new TreeNode();
-                        enteranceNodes[i].Text = $"Подъезд №{enterances[i].Name}";
-                        int enteranceIndex = enterances[i].ID;
-
-                        var flats = db.Flats.Where(id => id.Enterance_ID == enteranceIndex).ToList();
-                        TreeNode[] flatNodes = new TreeNode[flats.Count];
-
-                        for (int j = 0; j < flats.Count; j++)
+                        if (hostel == null)
                         {
-                            flatNodes[j] = new TreeNode();
-                            flatNodes[j].Text = $"Этаж №{flats[j].Name}";
+                            MessageBox.Show("Не существует общежития!");
+                            Log log = new Log() { ID = Guid.NewGuid(), Caption = $"Ошибка выборки из общежитий, объект с индексом {hostelIndex} не существует", Type = "Ошибка выборки", CreatedAt = DateTime.Now.ToString(), UserID = _user.ID };
+                            db.Logs.Add(log);
+                            db.SaveChanges();
+                            return;
+                        }
 
-                            int flatIndex = flats[j].ID;
+                        TreeNode hostelNode = new TreeNode($"Общежитие {hostel.Name}");
 
-                            var rooms = db.Rooms.Where(id => id.FlatID == flatIndex).OrderBy(x => x.Name).ToList();
-                            TreeNode[] roomNodes = new TreeNode[rooms.Count];
+                        var enterances = db.Enterances.Where(id => id.HostelId == hostel.ID).ToList();
+                        TreeNode[] enteranceNodes = new TreeNode[enterances.Count];
 
+                        for (int i = 0; i < enterances.Count; i++)
+                        {
+                            enteranceNodes[i] = new TreeNode();
+                            enteranceNodes[i].Text = $"Подъезд №{enterances[i].Name}";
+                            int enteranceIndex = enterances[i].ID;
 
+                            var flats = db.Flats.Where(id => id.Enterance_ID == enteranceIndex).ToList();
+                            TreeNode[] flatNodes = new TreeNode[flats.Count];
 
-                            for (int k = 0; k < rooms.Count; k++)
+                            for (int j = 0; j < flats.Count; j++)
                             {
-                                int roomId = rooms[k].ID;
-                                var tenants = db.Tenants.Where(x => x.RoomID == roomId)
-                                    .Where(y => y.Status == true)
-                                    .Include(p => p.Identification)
-                                    .Include(ai => ai.AdditionalInformation)
-                                    .ToList();
+                                flatNodes[j] = new TreeNode();
+                                flatNodes[j].Text = $"Этаж №{flats[j].Name}";
 
-                                roomNodes[k] = new TreeNode();
-                                roomNodes[k].Text = $"Комната № {rooms[k].Name} (Количество мест-{rooms[k].Places} / Использовано-{tenants.Count})";
-                                roomNodes[k].Tag = roomId;
+                                int flatIndex = flats[j].ID;
 
-                                TreeNode[] tenantNodes = new TreeNode[tenants.Count];
+                                var rooms = db.Rooms.Where(id => id.FlatID == flatIndex).OrderBy(x => x.Name).ToList();
+                                TreeNode[] roomNodes = new TreeNode[rooms.Count];
 
-                                for (int l = 0; l < tenants.Count; l++)
+
+
+                                for (int k = 0; k < rooms.Count; k++)
                                 {
-                                    tenantNodes[l] = new TreeNode();
-                                    tenantNodes[l].Text = tenants[l].Identification.Surename + " " + tenants[l].Identification.Name;
-                                    tenantNodes[l].Tag = tenants[l].ID;
-                                    CreateConetxtMenuForNode("tenant", out contextMenuForNode);
-                                    tenantNodes[l].ContextMenu = contextMenuForNode;
+                                    int roomId = rooms[k].ID;
+                                    var tenants = db.Tenants.Where(x => x.RoomID == roomId)
+                                        .Where(y => y.Status == true)
+                                        .Include(p => p.Identification)
+                                        .Include(ai => ai.AdditionalInformation)
+                                        .ToList();
 
-                                    var adinften = tenants[l].AdditionalInformation.Where(x => x.AdditionalInformationTypeID == 9).ToList();
-                                    TreeNode[] additionalInfNode = new TreeNode[adinften.Count()];
-                                    for (int a = 0; a < adinften.Count; a++)
+                                    roomNodes[k] = new TreeNode();
+                                    roomNodes[k].Text = $"Комната № {rooms[k].Name} (Количество мест-{rooms[k].Places} / Использовано-{tenants.Count})";
+                                    roomNodes[k].Tag = roomId;
+
+                                    TreeNode[] tenantNodes = new TreeNode[tenants.Count];
+
+                                    for (int l = 0; l < tenants.Count; l++)
                                     {
-                                        additionalInfNode[a] = new TreeNode();
-                                        additionalInfNode[a].Text = $"{adinften[a].Value}";
+                                        tenantNodes[l] = new TreeNode();
+
+                                        int tID = tenants[l].ID;
+                                        ChangePassport changePassport = db.ChangePassports.Where(x => x.TenantID == tID).Where(s => s.Status == true).FirstOrDefault();
+
+                                        if (changePassport != null)
+                                        {
+                                            tenantNodes[l].Text = changePassport.Surename + " " + changePassport.Name;
+                                            if (changePassport.Patronymic != null)
+                                            {
+                                                tenantNodes[l].Text += " " + changePassport.Patronymic;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            tenantNodes[l].Text = tenants[l].Identification.Surename + " " + tenants[l].Identification.Name;
+                                            if (tenants[l].Identification.Patronymic != null)
+                                            {
+                                                tenantNodes[l].Text += " " + tenants[l].Identification.Patronymic;
+                                            }
+                                        }
+
+                                        tenantNodes[l].Tag = tID;
+                                        CreateConetxtMenuForNode("tenant", out contextMenuForNode);
+                                        tenantNodes[l].ContextMenu = contextMenuForNode;
+
+                                        var adinften = tenants[l].AdditionalInformation.Where(x => x.AdditionalInformationTypeID == 9).ToList();
+                                        TreeNode[] additionalInfNode = new TreeNode[adinften.Count()];
+                                        for (int a = 0; a < adinften.Count; a++)
+                                        {
+                                            additionalInfNode[a] = new TreeNode();
+                                            additionalInfNode[a].Text = $"{adinften[a].Value}";
+                                        }
+
+                                        tenantNodes[l].Nodes.AddRange(additionalInfNode);
+
                                     }
 
-                                    tenantNodes[l].Nodes.AddRange(additionalInfNode);
+                                    roomNodes[k].Nodes.AddRange(tenantNodes);
+
+                                    if (tenants.Count != rooms[k].Places || tenants.Count < rooms[k].Places)
+                                    {
+                                        CreateConetxtMenuForNode("room", out contextMenuForNode);
+                                        roomNodes[k].ContextMenu = contextMenuForNode;
+                                    }
 
                                 }
-
-                                roomNodes[k].Nodes.AddRange(tenantNodes);
-
-                                if (tenants.Count != rooms[k].Places || tenants.Count < rooms[k].Places)
-                                {
-                                    CreateConetxtMenuForNode("room", out contextMenuForNode);
-                                    roomNodes[k].ContextMenu = contextMenuForNode;
-                                }
-
+                                flatNodes[j].Nodes.AddRange(roomNodes);
                             }
-                            flatNodes[j].Nodes.AddRange(roomNodes);
+                            enteranceNodes[i].Nodes.AddRange(flatNodes);
                         }
-                        enteranceNodes[i].Nodes.AddRange(flatNodes);
+
+                        hostelNode.Nodes.AddRange(enteranceNodes);
+
+                        TV_HostelInformation.Nodes.Add(hostelNode);
+                        TV_HostelInformation.ExpandAll();
                     }
-
-                    hostelNode.Nodes.AddRange(enteranceNodes);
-
-                    TV_HostelInformation.Nodes.Add(hostelNode);
-                    TV_HostelInformation.ExpandAll();
+                }
+                catch(Exception ex)
+                {
+                    Log log = new Log();
+                    log.ID = Guid.NewGuid();
+                    log.Type = "ERROR";
+                    log.CreatedAt = DateTime.Now.ToString();
+                    log.Caption = $"Class: Form1. Method:CreateTreeOnTreeView. " + ex.Message + "." + ex.InnerException;
+                    using (SupplyDbContext db = new SupplyDbContext())
+                    {
+                        db.Logs.Add(log);
+                        db.SaveChanges();
+                    }
+                    MessageBox.Show(ex.Message);
                 }
             };
 
@@ -573,12 +643,19 @@ namespace Supply
         }
         private void AddHumanHandler(object sender, EventArgs e)
         {
-            if (TV_HostelInformation.SelectedNode.Tag != null)
+            try
             {
-                int room_id = Convert.ToInt32(TV_HostelInformation.SelectedNode.Tag.ToString());
-                TenantAdd tenantAdd = new TenantAdd(room_id);
-                tenantAdd.ShowDialog();
-                CreateTreeOnTreeView(_hostelID);
+                if (TV_HostelInformation.SelectedNode.Tag != null)
+                {
+                    int room_id = Convert.ToInt32(TV_HostelInformation.SelectedNode.Tag.ToString());
+                    TenantAdd tenantAdd = new TenantAdd(room_id);
+                    tenantAdd.ShowDialog();
+                    CreateTreeOnTreeView(_hostelID);
+                }
+            }
+            catch
+            {
+                return;
             }
         }
 

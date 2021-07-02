@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DeclarationElectricityPaymentOrders));
             this.DG_View_ElectricityOrders = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
             this.COL_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Tenant = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Hostel = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -38,6 +37,7 @@
             this.COL_Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_StartDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_EndDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DG_View_ElectricityOrders)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,19 +58,9 @@
             this.COL_EndDate});
             this.DG_View_ElectricityOrders.Location = new System.Drawing.Point(13, 13);
             this.DG_View_ElectricityOrders.Name = "DG_View_ElectricityOrders";
-            this.DG_View_ElectricityOrders.Size = new System.Drawing.Size(775, 396);
+            this.DG_View_ElectricityOrders.Size = new System.Drawing.Size(986, 396);
             this.DG_View_ElectricityOrders.TabIndex = 0;
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(649, 415);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(139, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Сформировать";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Button1_Click);
+            this.DG_View_ElectricityOrders.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DG_View_ElectricityOrders_CellMouseClick);
             // 
             // COL_ID
             // 
@@ -115,11 +105,22 @@
             this.COL_EndDate.Name = "COL_EndDate";
             this.COL_EndDate.ReadOnly = true;
             // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(860, 415);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(139, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "Сформировать";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
+            // 
             // DeclarationElectricityPaymentOrders
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1011, 450);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.DG_View_ElectricityOrders);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
