@@ -149,6 +149,12 @@ namespace Supply
             DeclarationTenantsInHostels declarationTenantsInHostels = new DeclarationTenantsInHostels(true);
             declarationTenantsInHostels.Show();
         }
+
+        private void DeclarationTerminations_Click(object sender, EventArgs e)
+        {
+            DeclarationTerminations declarationTerminations = new DeclarationTerminations();
+            declarationTerminations.Show();
+        }
         private void CreateDeclarationLogs_Click(object sender, EventArgs e)
         {
             StreamWriter logStream = new StreamWriter(AppSettings.GetTemplateSetting("outfileDir") + @"\Отчет об ошибках " + DateTime.Now.ToShortDateString() + ".txt");
@@ -262,6 +268,10 @@ namespace Supply
                 changePassportOrders.Click += ChangePassportOrder_Click;
                 declaration.DropDownItems.Add(changePassportOrders);
 
+                ToolStripMenuItem declarationTerminations = new ToolStripMenuItem("Отчеты по расторжению договоров");
+                declarationTerminations.Click += DeclarationTerminations_Click;
+                declaration.DropDownItems.Add(declarationTerminations);
+
                 ToolStripMenuItem declarationHostels = new ToolStripMenuItem("Отчет по общежитиям");
                 declarationHostels.Click += DeclarationHostelsOrders;
                 declaration.DropDownItems.Add(declarationHostels);
@@ -323,6 +333,7 @@ namespace Supply
                 AsyncProcesses.UpdateChangeRoom();
                 AsyncProcesses.UpdateBenefits();
                 AsyncProcesses.UpdateOrders();
+                AsyncProcesses.UpdateTerminations();
 
                 LB_AsyncProcesses.Text = "Все процессы завершены!";
             };
@@ -585,7 +596,38 @@ namespace Supply
         }
         private void DestroyOrder(object sender, EventArgs e)
         {
+            try
+            {
+                if (TV_HostelInformation.SelectedNode.Tag != null)
+                {
+                    int tenantID = 0;
+                    if (int.TryParse(TV_HostelInformation.SelectedNode.Tag.ToString(), out tenantID))
+                    {
+                        if (tenantID != 0)
+                        {
+                            TenantTerminationForm terminationForm = new TenantTerminationForm(tenantID);
+                            terminationForm.ShowDialog();
 
+                            CreateTreeOnTreeView(_hostelID);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                using (SupplyDbContext db = new SupplyDbContext())
+                {
+                    Log log = new Log();
+                    log.ID = Guid.NewGuid();
+                    log.Type = "ERROR";
+                    log.CreatedAt = DateTime.Now.ToString();
+                    log.Caption = $"Class: Form1. Method:DestroyOrder. " + ex.Message + "." + ex.InnerException;
+
+                    db.Logs.Add(log);
+                    db.SaveChanges();
+                }
+
+            }
         }
         private void AddChangePassportHandler(object sender, EventArgs e)
         {

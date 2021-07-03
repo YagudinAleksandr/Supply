@@ -38,7 +38,6 @@ namespace Supply.Domain
                 }
             }
         }
-
         public static void UpdateChangeRoom()
         {
             using(SupplyDbContext db = new SupplyDbContext())
@@ -102,6 +101,47 @@ namespace Supply.Domain
                             log.Type = "ERROR";
                             log.CreatedAt = DateTime.Now.ToString();
                             log.Caption = $"Class: AsyncProcesses. Method: UpdateOrders." + ex.Message + "." + ex.InnerException;
+
+                            db.Logs.Add(log);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+            }
+        }
+        public static void UpdateTerminations()
+        {
+            using (SupplyDbContext db = new SupplyDbContext())
+            {
+                var terminations = db.Terminations.Where(s => s.Status == false).ToList();
+
+                foreach (Termination termination in terminations)
+                {
+                    if (Convert.ToDateTime(termination.Date) <= Convert.ToDateTime(DateTime.Now.ToShortDateString()))
+                    {
+                        Tenant tenant = db.Tenants.Where(x => x.ID == termination.OrderID).FirstOrDefault();
+
+                        termination.Status = true;
+                        termination.UpdatedAt = DateTime.Now.ToString();
+
+                        tenant.Status = false;
+                        tenant.UpdatedAt = DateTime.Now.ToString();
+
+                        try
+                        {
+                            db.Entry(termination).State = EntityState.Modified;
+                            db.SaveChanges();
+
+                            db.Entry(tenant).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                        catch (Exception ex)
+                        {
+                            Log log = new Log();
+                            log.ID = Guid.NewGuid();
+                            log.Type = "ERROR";
+                            log.CreatedAt = DateTime.Now.ToString();
+                            log.Caption = $"Class: AsyncProcesses. Method: UpdateTerminations." + ex.Message + "." + ex.InnerException;
 
                             db.Logs.Add(log);
                             db.SaveChanges();

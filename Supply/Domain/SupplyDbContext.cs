@@ -38,10 +38,12 @@ namespace Supply.Domain
         public DbSet<Benefit> Benefits { get; set; }
         public DbSet<ChangeRoom> ChangeRooms { get; set; }
         public DbSet<ChangePassport> ChangePassports { get; set; }
+        public DbSet<Termination> Terminations { get; set; }
         public DbSet<Accounting> Accountings { get; set; }
         public DbSet<ElectricityPayment> ElectricityPayments { get; set; }
         public DbSet<ElectricityElement> ElectricityElements { get; set; } 
         public DbSet<ElecricityOrder> ElecricityOrders { get; set; }
         public DbSet<AccountingElectricity> AccountingElectricities { get; set; }
+       
     }
 }

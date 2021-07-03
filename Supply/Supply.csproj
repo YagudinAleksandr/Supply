@@ -297,6 +297,12 @@
     <Compile Include="DeclarationTenantsInHostels.Designer.cs">
       <DependentUpon>DeclarationTenantsInHostels.cs</DependentUpon>
     </Compile>
+    <Compile Include="DeclarationTerminations.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeclarationTerminations.Designer.cs">
+      <DependentUpon>DeclarationTerminations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Domain\AppSettings.cs" />
     <Compile Include="Domain\AsyncProcesses.cs" />
     <Compile Include="Domain\FirstStart.cs" />
@@ -307,7 +313,6 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Libs\MainInfLibs.cs" />
     <Compile Include="Libs\OrdersCreation.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
@@ -322,6 +327,18 @@
     <Compile Include="Migrations\202107011431039_UpdateUsersTable.cs" />
     <Compile Include="Migrations\202107011431039_UpdateUsersTable.designer.cs">
       <DependentUpon>202107011431039_UpdateUsersTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107022058056_AddTerminationModel.cs" />
+    <Compile Include="Migrations\202107022058056_AddTerminationModel.designer.cs">
+      <DependentUpon>202107022058056_AddTerminationModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107031613598_UpdateTerminationModel.cs" />
+    <Compile Include="Migrations\202107031613598_UpdateTerminationModel.designer.cs">
+      <DependentUpon>202107031613598_UpdateTerminationModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107031623258_UpdateTerminationModel2.cs" />
+    <Compile Include="Migrations\202107031623258_UpdateTerminationModel2.designer.cs">
+      <DependentUpon>202107031623258_UpdateTerminationModel2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accounting.cs" />
@@ -352,6 +369,7 @@
     <Compile Include="Models\RoomType.cs" />
     <Compile Include="Models\Tenant.cs" />
     <Compile Include="Models\TenantType.cs" />
+    <Compile Include="Models\Termination.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="OrderAddForm.cs">
       <SubType>Form</SubType>
@@ -414,6 +432,12 @@
     </Compile>
     <Compile Include="TenantElectricityAccount.Designer.cs">
       <DependentUpon>TenantElectricityAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TenantTerminationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TenantTerminationForm.Designer.cs">
+      <DependentUpon>TenantTerminationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="TenantUpdateInformation.cs">
       <SubType>Form</SubType>
@@ -520,6 +544,9 @@
     <EmbeddedResource Include="DeclarationTenantsInHostels.resx">
       <DependentUpon>DeclarationTenantsInHostels.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DeclarationTerminations.resx">
+      <DependentUpon>DeclarationTerminations.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -531,6 +558,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107011431039_UpdateUsersTable.resx">
       <DependentUpon>202107011431039_UpdateUsersTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107022058056_AddTerminationModel.resx">
+      <DependentUpon>202107022058056_AddTerminationModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107031613598_UpdateTerminationModel.resx">
+      <DependentUpon>202107031613598_UpdateTerminationModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107031623258_UpdateTerminationModel2.resx">
+      <DependentUpon>202107031623258_UpdateTerminationModel2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderAddForm.resx">
       <DependentUpon>OrderAddForm.cs</DependentUpon>
@@ -570,6 +606,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TenantElectricityAccount.resx">
       <DependentUpon>TenantElectricityAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TenantTerminationForm.resx">
+      <DependentUpon>TenantTerminationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TenantUpdateInformation.resx">
       <DependentUpon>TenantUpdateInformation.cs</DependentUpon>
