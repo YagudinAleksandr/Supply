@@ -107,6 +107,34 @@ namespace Supply.Domain
                         }
                     }
                 }
+
+                var electricityOrders = db.ElecricityOrders.ToList();
+
+                foreach(ElecricityOrder elecricityOrder in electricityOrders)
+                {
+                    if (Convert.ToDateTime(elecricityOrder.EndDate) <= Convert.ToDateTime(DateTime.Now.ToShortDateString()))
+                    {
+                        elecricityOrder.Status = false;
+                        elecricityOrder.UpdatedAt = DateTime.Now.ToString();
+
+                        try
+                        {
+                            db.Entry(elecricityOrder).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                        catch(Exception ex)
+                        {
+                            Log log = new Log();
+                            log.ID = Guid.NewGuid();
+                            log.Type = "ERROR";
+                            log.CreatedAt = DateTime.Now.ToString();
+                            log.Caption = $"Class: AsyncProcesses. Method: UpdateOrders." + ex.Message + "." + ex.InnerException;
+
+                            db.Logs.Add(log);
+                            db.SaveChanges();
+                        }
+                    }
+                }
             }
         }
         public static void UpdateTerminations()
@@ -150,5 +178,6 @@ namespace Supply.Domain
                 }
             }
         }
+        
     }
 }

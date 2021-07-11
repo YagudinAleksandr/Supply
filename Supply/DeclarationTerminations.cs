@@ -23,6 +23,10 @@ namespace Supply
 
         private void DG_View_Terminations_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            if(e.ColumnIndex==7)
+            {
+                
+            }
             if(e.ColumnIndex==8)
             {
                 int terminationID = 0;
