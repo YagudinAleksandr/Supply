@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.IO;
@@ -85,7 +86,7 @@ namespace Supply
 
         private void AppSettings_Click(object sender, EventArgs e)
         {
-            AppSettingsForm appSettingsForm = new AppSettingsForm();
+            AppSettingsForm appSettingsForm = new AppSettingsForm(_user);
             appSettingsForm.ShowDialog();
         }
         private void MainOrders_Click(object sender,EventArgs e)
@@ -182,6 +183,11 @@ namespace Supply
             MessageBox.Show("Файл логов создан!");
         }
 
+        private void CreateNew_Click(object sender, EventArgs e)
+        {
+            AdminNewsForm adminNewsForm = new AdminNewsForm();
+            adminNewsForm.Show();
+        }
 
         private void Form1_Shown(object sender, EventArgs e)
         {
@@ -216,12 +222,16 @@ namespace Supply
                 ToolStripMenuItem users = new ToolStripMenuItem("Пользователи");
                 users.Click += Users_Click;
 
+                ToolStripMenuItem news = new ToolStripMenuItem("Новости");
+                news.Click += CreateNew_Click;
+
                 settingItem.DropDownItems.Add(addresses);
 
                 settingItem.DropDownItems.Add(hostels);
                 settingItem.DropDownItems.Add(roomType);
                 settingItem.DropDownItems.Add(tenant);
                 settingItem.DropDownItems.Add(users);
+                settingItem.DropDownItems.Add(news);
 
                 ToolStripMenuItem logDeclaration = new ToolStripMenuItem("Отчет ошибок");
                 logDeclaration.Click += CreateDeclarationLogs_Click;
@@ -313,31 +323,44 @@ namespace Supply
             
             Thread thread = new Thread(AsyncProcessing);
             thread.Start();
-            
-            if(thread.IsAlive)
-            {
-                LB_AsyncProcesses.Text = "Начаты фоновые процессы";
-            }
-            else
-            {
-                LB_AsyncProcesses.Text = "Все готово!";
-            }
+
+            ShowNews();
         }
 
         private void AsyncProcessing()
         {
+            AsyncProcesses.UpdateChangeRoom();
+            AsyncProcesses.UpdateBenefits();
+            AsyncProcesses.UpdateOrders();
+            AsyncProcesses.UpdateTerminations();
+        }
 
-            
-            Action action = () =>
+        private void ShowNews()
+        {
+            List<Information> news = new List<Information>();
+            using (SupplyDbContext db = new SupplyDbContext())
             {
-                AsyncProcesses.UpdateChangeRoom();
-                AsyncProcesses.UpdateBenefits();
-                AsyncProcesses.UpdateOrders();
-                AsyncProcesses.UpdateTerminations();
+                var infoNews = db.Informations.Where(s => s.Status == true).ToList();
+                foreach(Information information in infoNews)
+                {
+                    if (Convert.ToDateTime(information.StartInformation) == Convert.ToDateTime(DateTime.Now.ToShortDateString()) ||
+                        Convert.ToDateTime(information.StartInformation) >= Convert.ToDateTime(DateTime.Now.ToShortDateString()))  
+                    {
+                        if (Convert.ToDateTime(information.EndInformation) >= Convert.ToDateTime(DateTime.Now.ToShortDateString()))
+                        {
+                            news.Add(information);
+                        }
+                    }
+                }
+            }
 
-                LB_AsyncProcesses.Text = "Все процессы завершены!";
-            };
-            Invoke(action);
+            if (news.Count > 0) 
+            {
+                UsersInformationForm usersInformationForm = new UsersInformationForm(news);
+                usersInformationForm.Show();
+            }
+            
+            
         }
         #endregion
         #region FunctionsForNodeTree

@@ -44,6 +44,7 @@ namespace Supply.Domain
         public DbSet<ElectricityElement> ElectricityElements { get; set; } 
         public DbSet<ElecricityOrder> ElecricityOrders { get; set; }
         public DbSet<AccountingElectricity> AccountingElectricities { get; set; }
+        public DbSet<Information> Informations { get; set; }
        
     }
 }

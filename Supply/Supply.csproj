@@ -32,8 +32,8 @@
     <PublisherName>Aleksandr Yagudin</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <ExcludeDeploymentUrl>true</ExcludeDeploymentUrl>
@@ -72,7 +72,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
@@ -148,6 +148,12 @@
     </Compile>
     <Compile Include="AdminManagersLicensesAdd.Designer.cs">
       <DependentUpon>AdminManagersLicensesAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdminNewsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminNewsForm.Designer.cs">
+      <DependentUpon>AdminNewsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="AdminOrders.cs">
       <SubType>Form</SubType>
@@ -342,6 +348,10 @@
     <Compile Include="Migrations\202107031623258_UpdateTerminationModel2.designer.cs">
       <DependentUpon>202107031623258_UpdateTerminationModel2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107212006113_InformationModel.cs" />
+    <Compile Include="Migrations\202107212006113_InformationModel.designer.cs">
+      <DependentUpon>202107212006113_InformationModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accounting.cs" />
     <Compile Include="Models\AccountingElectricity.cs" />
@@ -360,6 +370,7 @@
     <Compile Include="Models\Flat.cs" />
     <Compile Include="Models\Hostel.cs" />
     <Compile Include="Models\Identification.cs" />
+    <Compile Include="Models\Information.cs" />
     <Compile Include="Models\License.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\Manager.cs" />
@@ -447,6 +458,12 @@
     <Compile Include="TenantUpdateInformation.Designer.cs">
       <DependentUpon>TenantUpdateInformation.cs</DependentUpon>
     </Compile>
+    <Compile Include="UsersInformationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UsersInformationForm.Designer.cs">
+      <DependentUpon>UsersInformationForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AdminAddressesForm.resx">
       <DependentUpon>AdminAddressesForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -470,6 +487,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AdminManagersLicensesAdd.resx">
       <DependentUpon>AdminManagersLicensesAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminNewsForm.resx">
+      <DependentUpon>AdminNewsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AdminOrders.resx">
       <DependentUpon>AdminOrders.cs</DependentUpon>
@@ -570,6 +590,9 @@
     <EmbeddedResource Include="Migrations\202107031623258_UpdateTerminationModel2.resx">
       <DependentUpon>202107031623258_UpdateTerminationModel2.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107212006113_InformationModel.resx">
+      <DependentUpon>202107212006113_InformationModel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OrderAddForm.resx">
       <DependentUpon>OrderAddForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -614,6 +637,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TenantUpdateInformation.resx">
       <DependentUpon>TenantUpdateInformation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UsersInformationForm.resx">
+      <DependentUpon>UsersInformationForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />

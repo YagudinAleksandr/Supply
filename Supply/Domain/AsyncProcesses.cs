@@ -84,28 +84,43 @@ namespace Supply.Domain
 
                 foreach(Tenant tenant in tenants)
                 {
-                    if (Convert.ToDateTime(tenant.Order.EndDate) <= Convert.ToDateTime(DateTime.Now.ToShortDateString())) 
+                    try
                     {
-                        tenant.Status = false;
-                        tenant.UpdatedAt = DateTime.Now.ToString();
-
-                        try
+                        if (Convert.ToDateTime(tenant.Order.EndDate) <= Convert.ToDateTime(DateTime.Now.ToShortDateString()))
                         {
-                            db.Entry(tenant).State = System.Data.Entity.EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                        catch(Exception ex)
-                        {
-                            Log log = new Log();
-                            log.ID = Guid.NewGuid();
-                            log.Type = "ERROR";
-                            log.CreatedAt = DateTime.Now.ToString();
-                            log.Caption = $"Class: AsyncProcesses. Method: UpdateOrders." + ex.Message + "." + ex.InnerException;
+                            tenant.Status = false;
+                            tenant.UpdatedAt = DateTime.Now.ToString();
 
-                            db.Logs.Add(log);
-                            db.SaveChanges();
+                            try
+                            {
+                                db.Entry(tenant).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            catch (Exception ex)
+                            {
+                                Log log = new Log();
+                                log.ID = Guid.NewGuid();
+                                log.Type = "ERROR";
+                                log.CreatedAt = DateTime.Now.ToString();
+                                log.Caption = $"Class: AsyncProcesses. Method: UpdateOrders." + ex.Message + "." + ex.InnerException;
+
+                                db.Logs.Add(log);
+                                db.SaveChanges();
+                            }
                         }
                     }
+                    catch(Exception ex)
+                    {
+                        Log log = new Log();
+                        log.ID = Guid.NewGuid();
+                        log.Type = "ERROR";
+                        log.CreatedAt = DateTime.Now.ToString();
+                        log.Caption = $"Class: AsyncProcesses. Method: UpdateOrders." + ex.Message + "." + ex.InnerException;
+
+                        db.Logs.Add(log);
+                        db.SaveChanges();
+                    }
+                    
                 }
 
                 var electricityOrders = db.ElecricityOrders.ToList();
@@ -178,6 +193,5 @@ namespace Supply.Domain
                 }
             }
         }
-        
     }
 }

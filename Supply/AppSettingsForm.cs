@@ -1,4 +1,5 @@
 ﻿using Supply.Domain;
+using Supply.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,9 +15,17 @@ namespace Supply
 {
     public partial class AppSettingsForm : Form
     {
+        private User _user;
         public AppSettingsForm()
         {
             InitializeComponent();
+            _user = null;
+        }
+
+        public AppSettingsForm(User user)
+        {
+            InitializeComponent();
+            _user = user;
         }
 
         private void AppSettingsForm_Load(object sender, EventArgs e)
@@ -40,6 +49,15 @@ namespace Supply
             TB_ChangePassport.Text = Properties.Settings.Default.template7;
             TB_Services.Text = Properties.Settings.Default.template9;
             TB_PaymentOrder.Text = Properties.Settings.Default.template11;
+
+
+            //User settings
+
+            if (_user != null)
+            {
+                LB_User.Text = _user.Name;
+                TB_LoginOld.Text = _user.Login;
+            }
         }
 
         private void BTN_Save_Click(object sender, EventArgs e)
@@ -66,8 +84,24 @@ namespace Supply
             if (result==DialogResult.Yes)
             {
                 Properties.Settings.Default.Save();
+
+                try
+                {
+                    if (TB_LoginNew.Text != "")
+                    {
+                        _user.Login = TB_LoginNew.Text;
+                    }
+                    
+                }
+                catch (Exception ex)
+                {
+
+                }
+
                 Application.Restart();
             }
+
+            
             
         }
 

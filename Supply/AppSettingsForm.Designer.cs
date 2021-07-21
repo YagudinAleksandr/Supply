@@ -75,9 +75,19 @@ namespace Supply
             this.BTN_Save = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.LB_User = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.TB_LoginOld = new System.Windows.Forms.TextBox();
+            this.button11 = new System.Windows.Forms.Button();
+            this.TB_LoginNew = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -197,9 +207,9 @@ namespace Supply
             this.TB_ChangeLive.AutoSize = true;
             this.TB_ChangeLive.Location = new System.Drawing.Point(6, 244);
             this.TB_ChangeLive.Name = "TB_ChangeLive";
-            this.TB_ChangeLive.Size = new System.Drawing.Size(198, 13);
+            this.TB_ChangeLive.Size = new System.Drawing.Size(201, 13);
             this.TB_ChangeLive.TabIndex = 31;
-            this.TB_ChangeLive.Text = "Договор проживания студента (Очно)";
+            this.TB_ChangeLive.Text = "Приложение к договору на продление";
             // 
             // label10
             // 
@@ -524,12 +534,100 @@ namespace Supply
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.TB_LoginNew);
+            this.tabPage3.Controls.Add(this.label17);
+            this.tabPage3.Controls.Add(this.button11);
+            this.tabPage3.Controls.Add(this.TB_LoginOld);
+            this.tabPage3.Controls.Add(this.label16);
+            this.tabPage3.Controls.Add(this.LB_User);
+            this.tabPage3.Controls.Add(this.label15);
+            this.tabPage3.Controls.Add(this.label14);
+            this.tabPage3.Controls.Add(this.label11);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(768, 366);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Персональные настройки";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(4, 16);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(37, 13);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "ФИО:";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(4, 141);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(84, 13);
+            this.label14.TabIndex = 1;
+            this.label14.Text = "Старый пароль";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(4, 170);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(80, 13);
+            this.label15.TabIndex = 2;
+            this.label15.Text = "Новый пароль";
+            // 
+            // LB_User
+            // 
+            this.LB_User.AutoSize = true;
+            this.LB_User.Location = new System.Drawing.Point(47, 16);
+            this.LB_User.Name = "LB_User";
+            this.LB_User.Size = new System.Drawing.Size(41, 13);
+            this.LB_User.TabIndex = 3;
+            this.LB_User.Text = "label16";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(7, 76);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(41, 13);
+            this.label16.TabIndex = 4;
+            this.label16.Text = "Логин:";
+            // 
+            // TB_LoginOld
+            // 
+            this.TB_LoginOld.Enabled = false;
+            this.TB_LoginOld.Location = new System.Drawing.Point(85, 73);
+            this.TB_LoginOld.Name = "TB_LoginOld";
+            this.TB_LoginOld.Size = new System.Drawing.Size(232, 20);
+            this.TB_LoginOld.TabIndex = 5;
+            // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(677, 331);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(75, 23);
+            this.button11.TabIndex = 8;
+            this.button11.Text = "Сохранить";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.BTN_Save_Click);
+            // 
+            // TB_LoginNew
+            // 
+            this.TB_LoginNew.Location = new System.Drawing.Point(85, 99);
+            this.TB_LoginNew.Name = "TB_LoginNew";
+            this.TB_LoginNew.Size = new System.Drawing.Size(232, 20);
+            this.TB_LoginNew.TabIndex = 10;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(7, 102);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(76, 13);
+            this.label17.TabIndex = 9;
+            this.label17.Text = "Логин новый:";
             // 
             // AppSettingsForm
             // 
@@ -546,6 +644,8 @@ namespace Supply
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -597,5 +697,14 @@ namespace Supply
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox TB_PaymentOrder;
+        private System.Windows.Forms.Label LB_User;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox TB_LoginNew;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.TextBox TB_LoginOld;
+        private System.Windows.Forms.Label label16;
     }
 }
