@@ -24,7 +24,7 @@ namespace Supply
         {
             foreach(Information inf in _news)
             {
-                RTB_News.Text += inf.Title + "\n";
+                RTB_News.Text += inf.Title + " ("+inf.StartInformation+")"+"-("+inf.EndInformation+")\n";
                 RTB_News.Text += inf.Topic + "\n";
                 RTB_News.Text += "\n";
             }

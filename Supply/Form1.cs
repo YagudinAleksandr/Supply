@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using Libraries.ExcelSystem;
 using Supply.Domain;
 using Supply.Libs;
 using Supply.Models;
@@ -343,14 +342,8 @@ namespace Supply
                 var infoNews = db.Informations.Where(s => s.Status == true).ToList();
                 foreach(Information information in infoNews)
                 {
-                    if (Convert.ToDateTime(information.StartInformation) == Convert.ToDateTime(DateTime.Now.ToShortDateString()) ||
-                        Convert.ToDateTime(information.StartInformation) >= Convert.ToDateTime(DateTime.Now.ToShortDateString()))  
-                    {
-                        if (Convert.ToDateTime(information.EndInformation) >= Convert.ToDateTime(DateTime.Now.ToShortDateString()))
-                        {
-                            news.Add(information);
-                        }
-                    }
+                    news.Add(information);
+                    
                 }
             }
 
@@ -715,13 +708,83 @@ namespace Supply
                     int room_id = Convert.ToInt32(TV_HostelInformation.SelectedNode.Tag.ToString());
                     TenantAdd tenantAdd = new TenantAdd(room_id);
                     tenantAdd.ShowDialog();
-                    CreateTreeOnTreeView(_hostelID);
+
+                    TV_HostelInformation.SelectedNode.Nodes.Clear();
+
+                    if(AddHumanToTree(room_id)!=null)
+                    {
+                        TV_HostelInformation.SelectedNode.Nodes.AddRange(AddHumanToTree(room_id));
+                    }
+
+                    TV_HostelInformation.SelectedNode.ExpandAll();
+                    
                 }
             }
             catch
             {
                 return;
             }
+        }
+
+        private TreeNode[] AddHumanToTree(int tag)
+        {
+            TreeNode[] tenantNodes;
+            using (SupplyDbContext db = new SupplyDbContext())
+            {
+                var tenants = db.Tenants.Where(x => x.RoomID == tag)
+                                        .Where(y => y.Status == true)
+                                        .Include(p => p.Identification)
+                                        .Include(ai => ai.AdditionalInformation)
+                                        .ToList();
+
+                if (tenants == null) 
+                {
+                    return null;
+                }
+
+                tenantNodes = new TreeNode[tenants.Count];
+                ContextMenu contextMenuForNode;
+                for (int l = 0; l < tenants.Count; l++)
+                {
+                    tenantNodes[l] = new TreeNode();
+
+                    int tID = tenants[l].ID;
+                    ChangePassport changePassport = db.ChangePassports.Where(x => x.TenantID == tID).Where(s => s.Status == true).FirstOrDefault();
+
+                    if (changePassport != null)
+                    {
+                        tenantNodes[l].Text = changePassport.Surename + " " + changePassport.Name;
+                        if (changePassport.Patronymic != null)
+                        {
+                            tenantNodes[l].Text += " " + changePassport.Patronymic;
+                        }
+                    }
+                    else
+                    {
+                        tenantNodes[l].Text = tenants[l].Identification.Surename + " " + tenants[l].Identification.Name;
+                        if (tenants[l].Identification.Patronymic != null)
+                        {
+                            tenantNodes[l].Text += " " + tenants[l].Identification.Patronymic;
+                        }
+                    }
+
+                    tenantNodes[l].Tag = tID;
+                    CreateConetxtMenuForNode("tenant", out contextMenuForNode);
+                    tenantNodes[l].ContextMenu = contextMenuForNode;
+
+                    var adinften = tenants[l].AdditionalInformation.Where(x => x.AdditionalInformationTypeID == 9).ToList();
+                    TreeNode[] additionalInfNode = new TreeNode[adinften.Count()];
+                    for (int a = 0; a < adinften.Count; a++)
+                    {
+                        additionalInfNode[a] = new TreeNode();
+                        additionalInfNode[a].Text = $"{adinften[a].Value}";
+                    }
+
+                    tenantNodes[l].Nodes.AddRange(additionalInfNode);
+
+                }
+            }
+            return tenantNodes;
         }
 
         private void DisabledTenant(object sender, EventArgs e)
@@ -744,7 +807,9 @@ namespace Supply
                                 db.Entry(tenant).State = System.Data.Entity.EntityState.Modified;
                                 db.SaveChanges();
                                 MessageBox.Show("Жилец удален!");
-                                CreateTreeOnTreeView(_hostelID);
+
+                                TV_HostelInformation.SelectedNode.Remove();
+                                
                             }
                             catch (Exception ex)
                             {
