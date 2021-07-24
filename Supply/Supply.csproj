@@ -430,6 +430,12 @@
     <Compile Include="TenantBenefitAdd.Designer.cs">
       <DependentUpon>TenantBenefitAdd.cs</DependentUpon>
     </Compile>
+    <Compile Include="TenantCard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TenantCard.Designer.cs">
+      <DependentUpon>TenantCard.cs</DependentUpon>
+    </Compile>
     <Compile Include="TenantChangePassport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -624,6 +630,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TenantBenefitAdd.resx">
       <DependentUpon>TenantBenefitAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TenantCard.resx">
+      <DependentUpon>TenantCard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TenantChangePassport.resx">
       <DependentUpon>TenantChangePassport.cs</DependentUpon>

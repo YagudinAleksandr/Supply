@@ -115,6 +115,7 @@ namespace Supply
             this.TV_HostelInformation.Name = "TV_HostelInformation";
             this.TV_HostelInformation.Size = new System.Drawing.Size(615, 385);
             this.TV_HostelInformation.TabIndex = 9;
+            this.TV_HostelInformation.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TV_HostelInformation_NodeMouseDoubleClick);
             // 
             // LB_AsyncProcesses
             // 

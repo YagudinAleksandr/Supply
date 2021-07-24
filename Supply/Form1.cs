@@ -298,6 +298,11 @@ namespace Supply
                 declaration.DropDownItems.Add(declarationElectricityPayment);
             }
 
+
+            ToolStripMenuItem orderLiveInHostels = new ToolStripMenuItem("Проживающие в общежитии по комнатам");
+            declaration.DropDownItems.Add(orderLiveInHostels);
+
+
             ToolStripMenuItem settingsWindow = new ToolStripMenuItem("Настройки");
             settingsWindow.Click += AppSettings_Click;
 
@@ -495,6 +500,8 @@ namespace Supply
                                         tenantNodes[l].Tag = tID;
                                         CreateConetxtMenuForNode("tenant", out contextMenuForNode);
                                         tenantNodes[l].ContextMenu = contextMenuForNode;
+                                        tenantNodes[l].Name = "Tenant";
+                                        
 
                                         var adinften = tenants[l].AdditionalInformation.Where(x => x.AdditionalInformationTypeID == 9).ToList();
                                         TreeNode[] additionalInfNode = new TreeNode[adinften.Count()];
@@ -525,6 +532,7 @@ namespace Supply
                         hostelNode.Nodes.AddRange(enteranceNodes);
 
                         TV_HostelInformation.Nodes.Add(hostelNode);
+                        
                         TV_HostelInformation.ExpandAll();
                     }
                 }
@@ -547,7 +555,32 @@ namespace Supply
             Invoke(action);
             
         }
-
+        private void TV_HostelInformation_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Node.Name == "Tenant") 
+            {
+                int tenantID = 0;
+                if(int.TryParse(e.Node.Tag.ToString(),out tenantID))
+                {
+                    TenantCard tenantCard = new TenantCard(tenantID);
+                    tenantCard.Show();
+                }
+                else
+                {
+                    using (SupplyDbContext db = new SupplyDbContext())
+                    {
+                        Log logInfo = new Log();
+                        logInfo.ID = Guid.NewGuid();
+                        logInfo.Type = "WARNING";
+                        logInfo.Caption = $"Class: Form1.cs. Method:TV_HostelInformation_NodeMouseDoubleClick. Selected node tag equil 0 when update tenant";
+                        logInfo.CreatedAt = DateTime.Now.ToString();
+                        db.Logs.Add(logInfo);
+                        db.SaveChanges();
+                    }
+                    MessageBox.Show("ID жильца равен 0");
+                }
+            }
+        }
         private void CreateConetxtMenuForNode(string menuType, out ContextMenu contextMenu)
         {
             contextMenu = new ContextMenu();
@@ -566,12 +599,17 @@ namespace Supply
                     contextMenu.MenuItems.Add("Переселить жильца", ChangeRoomOrder);
                     contextMenu.MenuItems.Add("Смена паспорта", AddChangePassportHandler);
                     contextMenu.MenuItems.Add("Создать льготу", AddBenefitHandler);
+                    contextMenu.MenuItems.Add("Продление договора", ContinueOrder);
                     contextMenu.MenuItems.Add("Расторжение договора", DestroyOrder);
                     contextMenu.MenuItems.Add("Удалить", DisabledTenant);
                     break;
             }
         }
 
+        private void ContinueOrder(object sender, EventArgs e)
+        {
+            
+        }
         private void UpdateTenantInformation(object sender, EventArgs e)
         {
             try
@@ -624,7 +662,7 @@ namespace Supply
                             TenantTerminationForm terminationForm = new TenantTerminationForm(tenantID);
                             terminationForm.ShowDialog();
 
-                            CreateTreeOnTreeView(_hostelID);
+                            //CreateTreeOnTreeView(_hostelID);
                         }
                     }
                 }
@@ -771,6 +809,7 @@ namespace Supply
                     tenantNodes[l].Tag = tID;
                     CreateConetxtMenuForNode("tenant", out contextMenuForNode);
                     tenantNodes[l].ContextMenu = contextMenuForNode;
+                    tenantNodes[l].Name = "Tenant";
 
                     var adinften = tenants[l].AdditionalInformation.Where(x => x.AdditionalInformationTypeID == 9).ToList();
                     TreeNode[] additionalInfNode = new TreeNode[adinften.Count()];
@@ -949,9 +988,11 @@ namespace Supply
             OrderElectricityCreate orderElectricityCreate = new OrderElectricityCreate();
             orderElectricityCreate.Show();
         }
-        
+
+
+
         #endregion
 
-
+        
     }
 }
