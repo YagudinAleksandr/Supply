@@ -187,7 +187,17 @@ namespace Supply
             AdminNewsForm adminNewsForm = new AdminNewsForm();
             adminNewsForm.Show();
         }
+        private void CreateHostelDeclaration_Click(object sender, EventArgs e)
+        {
+            if (_hostelID != 0) 
+            {
 
+            }
+            else
+            {
+                MessageBox.Show("Выбирите общежитие в списке!");
+            }
+        }
         private void Form1_Shown(object sender, EventArgs e)
         {
             LB_UserName.Text = _user.Name;
@@ -300,6 +310,7 @@ namespace Supply
 
 
             ToolStripMenuItem orderLiveInHostels = new ToolStripMenuItem("Проживающие в общежитии по комнатам");
+            orderLiveInHostels.Click += CreateHostelDeclaration_Click;
             declaration.DropDownItems.Add(orderLiveInHostels);
 
 
