@@ -34,7 +34,7 @@
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <AutorunEnabled>true</AutorunEnabled>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>23</ApplicationRevision>
+    <ApplicationRevision>25</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -369,6 +369,7 @@
     <Compile Include="Models\ElectricityElement.cs" />
     <Compile Include="Models\ElectricityPayment.cs" />
     <Compile Include="Models\Enterance.cs" />
+    <Compile Include="Models\Extension.cs" />
     <Compile Include="Models\Flat.cs" />
     <Compile Include="Models\Hostel.cs" />
     <Compile Include="Models\Identification.cs" />

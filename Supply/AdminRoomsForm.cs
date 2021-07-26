@@ -125,6 +125,41 @@ namespace Supply
 
                 UpdateInfo();
             }
+            if (e.ColumnIndex == 8)
+            {
+                int roomId = 0;
+                if (int.TryParse(DG_Rooms.Rows[e.RowIndex].Cells[0].Value.ToString(), out roomId))
+                {
+                    if (roomId != 0)
+                    {
+                        using(SupplyDbContext db = new SupplyDbContext())
+                        {
+                            Room room = db.Rooms.Where(x => x.ID == roomId).FirstOrDefault();
+                            if(room!=null)
+                            {
+                                try
+                                {
+                                    db.Rooms.Remove(room);
+                                    db.SaveChanges();
+                                    MessageBox.Show("Комната удалена успешно!");
+                                    DG_Rooms.Rows.Remove(DG_Rooms.Rows[e.RowIndex]);
+                                }
+                                catch(Exception ex)
+                                {
+                                    MessageBox.Show(ex.Message);
+                                    Log logInfo = new Log();
+                                    logInfo.ID = Guid.NewGuid();
+                                    logInfo.Type = "ERROR";
+                                    logInfo.Caption = "Class: AdminRoomsForm. Method: DG_Rooms_CellClick."+ex.Message+"."+ex.InnerException;
+                                    logInfo.CreatedAt = DateTime.Now.ToString();
+                                    db.Logs.Add(logInfo);
+                                    db.SaveChanges();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

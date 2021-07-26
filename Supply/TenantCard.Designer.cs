@@ -56,6 +56,18 @@ namespace Supply
             this.LB_EndDate = new System.Windows.Forms.Label();
             this.LB_Issued = new System.Windows.Forms.Label();
             this.LB_Address = new System.Windows.Forms.Label();
+            this.LB_OrderNumber = new System.Windows.Forms.Label();
+            this.LB_OrderStartDate = new System.Windows.Forms.Label();
+            this.LB_OrderEndDate = new System.Windows.Forms.Label();
+            this.LB_Phone = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.LB_Faculty = new System.Windows.Forms.Label();
+            this.LB_Group = new System.Windows.Forms.Label();
+            this.LB_Degree = new System.Windows.Forms.Label();
+            this.LB_EduType = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -292,11 +304,131 @@ namespace Supply
             this.LB_Address.TabIndex = 25;
             this.LB_Address.Text = "label15";
             // 
+            // LB_OrderNumber
+            // 
+            this.LB_OrderNumber.AutoSize = true;
+            this.LB_OrderNumber.Location = new System.Drawing.Point(91, 200);
+            this.LB_OrderNumber.Name = "LB_OrderNumber";
+            this.LB_OrderNumber.Size = new System.Drawing.Size(41, 13);
+            this.LB_OrderNumber.TabIndex = 26;
+            this.LB_OrderNumber.Text = "label15";
+            // 
+            // LB_OrderStartDate
+            // 
+            this.LB_OrderStartDate.AutoSize = true;
+            this.LB_OrderStartDate.Location = new System.Drawing.Point(367, 200);
+            this.LB_OrderStartDate.Name = "LB_OrderStartDate";
+            this.LB_OrderStartDate.Size = new System.Drawing.Size(41, 13);
+            this.LB_OrderStartDate.TabIndex = 27;
+            this.LB_OrderStartDate.Text = "label15";
+            // 
+            // LB_OrderEndDate
+            // 
+            this.LB_OrderEndDate.AutoSize = true;
+            this.LB_OrderEndDate.Location = new System.Drawing.Point(671, 200);
+            this.LB_OrderEndDate.Name = "LB_OrderEndDate";
+            this.LB_OrderEndDate.Size = new System.Drawing.Size(41, 13);
+            this.LB_OrderEndDate.TabIndex = 28;
+            this.LB_OrderEndDate.Text = "label15";
+            // 
+            // LB_Phone
+            // 
+            this.LB_Phone.AutoSize = true;
+            this.LB_Phone.Location = new System.Drawing.Point(687, 23);
+            this.LB_Phone.Name = "LB_Phone";
+            this.LB_Phone.Size = new System.Drawing.Size(41, 13);
+            this.LB_Phone.TabIndex = 29;
+            this.LB_Phone.Text = "label15";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(13, 268);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(66, 13);
+            this.label15.TabIndex = 30;
+            this.label15.Text = "Факультет:";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(228, 268);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(71, 13);
+            this.label16.TabIndex = 31;
+            this.label16.Text = "Курс,группа:";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(431, 268);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(97, 13);
+            this.label17.TabIndex = 32;
+            this.label17.Text = "Ступень обучения";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(671, 268);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(96, 13);
+            this.label18.TabIndex = 33;
+            this.label18.Text = "Форма обучения:";
+            // 
+            // LB_Faculty
+            // 
+            this.LB_Faculty.AutoSize = true;
+            this.LB_Faculty.Location = new System.Drawing.Point(85, 268);
+            this.LB_Faculty.Name = "LB_Faculty";
+            this.LB_Faculty.Size = new System.Drawing.Size(41, 13);
+            this.LB_Faculty.TabIndex = 34;
+            this.LB_Faculty.Text = "label19";
+            // 
+            // LB_Group
+            // 
+            this.LB_Group.AutoSize = true;
+            this.LB_Group.Location = new System.Drawing.Point(305, 268);
+            this.LB_Group.Name = "LB_Group";
+            this.LB_Group.Size = new System.Drawing.Size(41, 13);
+            this.LB_Group.TabIndex = 35;
+            this.LB_Group.Text = "label20";
+            // 
+            // LB_Degree
+            // 
+            this.LB_Degree.AutoSize = true;
+            this.LB_Degree.Location = new System.Drawing.Point(534, 268);
+            this.LB_Degree.Name = "LB_Degree";
+            this.LB_Degree.Size = new System.Drawing.Size(41, 13);
+            this.LB_Degree.TabIndex = 36;
+            this.LB_Degree.Text = "label21";
+            // 
+            // LB_EduType
+            // 
+            this.LB_EduType.AutoSize = true;
+            this.LB_EduType.Location = new System.Drawing.Point(774, 268);
+            this.LB_EduType.Name = "LB_EduType";
+            this.LB_EduType.Size = new System.Drawing.Size(41, 13);
+            this.LB_EduType.TabIndex = 37;
+            this.LB_EduType.Text = "label22";
+            // 
             // TenantCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(878, 450);
+            this.Controls.Add(this.LB_EduType);
+            this.Controls.Add(this.LB_Degree);
+            this.Controls.Add(this.LB_Group);
+            this.Controls.Add(this.LB_Faculty);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.LB_Phone);
+            this.Controls.Add(this.LB_OrderEndDate);
+            this.Controls.Add(this.LB_OrderStartDate);
+            this.Controls.Add(this.LB_OrderNumber);
             this.Controls.Add(this.LB_Address);
             this.Controls.Add(this.LB_Issued);
             this.Controls.Add(this.LB_EndDate);
@@ -360,5 +492,17 @@ namespace Supply
         private System.Windows.Forms.Label LB_EndDate;
         private System.Windows.Forms.Label LB_Issued;
         private System.Windows.Forms.Label LB_Address;
+        private System.Windows.Forms.Label LB_OrderNumber;
+        private System.Windows.Forms.Label LB_OrderStartDate;
+        private System.Windows.Forms.Label LB_OrderEndDate;
+        private System.Windows.Forms.Label LB_Phone;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label LB_Faculty;
+        private System.Windows.Forms.Label LB_Group;
+        private System.Windows.Forms.Label LB_Degree;
+        private System.Windows.Forms.Label LB_EduType;
     }
 }
