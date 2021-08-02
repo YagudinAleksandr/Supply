@@ -1000,10 +1000,30 @@ namespace Supply
             orderElectricityCreate.Show();
         }
 
+        private void BTN_Search_Click(object sender, EventArgs e)
+        {
+            throw new Exception();
+        }
 
+        private void BTN_Archive_Click(object sender, EventArgs e)
+        {
+            if(_hostelID==0)
+            {
+                MessageBox.Show("Выбирите общежитие!");
+                return;
+            }
+            else
+            {
+                HostelArchiveForm hostelArchiveForm = new HostelArchiveForm(_hostelID);
+                Hide();
+                hostelArchiveForm.ShowDialog();
+                Show();
+            }
+            
+        }
 
         #endregion
 
-        
+
     }
 }
