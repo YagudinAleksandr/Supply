@@ -47,6 +47,7 @@ namespace Supply
             // 
             // DG_View_Tenants
             // 
+            this.DG_View_Tenants.AllowUserToAddRows = false;
             this.DG_View_Tenants.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -158,6 +159,7 @@ namespace Supply
             this.BTN_Search.TabIndex = 2;
             this.BTN_Search.Text = "Поиск";
             this.BTN_Search.UseVisualStyleBackColor = true;
+            this.BTN_Search.Click += new System.EventHandler(this.BTN_Search_Click);
             // 
             // HostelArchiveForm
             // 

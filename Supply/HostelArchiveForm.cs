@@ -46,8 +46,13 @@ namespace Supply
                 {
                     try
                     {
-                        Hostel hostel = db.Hostels.Where(x => x.ID == _hostelID).FirstOrDefault();
+
                         List<int> roomsID = new List<int>();
+                        List<int> ordersID = new List<int>();
+
+
+                        Hostel hostel = db.Hostels.Where(x => x.ID == _hostelID).FirstOrDefault();
+                        
                         if (hostel != null)
                         {
                             var enterances = db.Enterances.Where(x => x.HostelId == hostel.ID).ToList();
@@ -84,48 +89,59 @@ namespace Supply
 
                         if (roomsID.Count() != 0) 
                         {
+                            
                             foreach(int roomID in roomsID)
                             {
+                                var orders = db.Orders
+                                                .Where(r => r.RoomID == roomID)
+                                                .Include(x => x.Room)
+                                                .Include(t => t.Tenant)
+                                                .ToList();
+
+
+                                foreach(Order order in orders)
+                                {
+                                    int rowNumber = DG_View_Tenants.Rows.Add();
+
+                                    ordersID.Add(order.ID);
+
+                                    DG_View_Tenants.Rows[rowNumber].Cells[COL_ID.Name].Value = order.ID;
+                                    DG_View_Tenants.Rows[rowNumber].Cells[COL_Order.Name].Value = order.OrderNumber;
+                                    DG_View_Tenants.Rows[rowNumber].Cells[COL_StartDate.Name].Value = order.StartDate;
+                                    if (order.EndDate != null)
+                                    {
+                                        DG_View_Tenants.Rows[rowNumber].Cells[COL_EndDate.Name].Value = order.EndDate;
+                                    }
+
+                                    Tenant tenant = db.Tenants
+                                                    .Where(x => x.ID == order.ID)
+                                                    .Include(p => p.Identification)
+                                                    .Include(r => r.Room)
+                                                    .FirstOrDefault();
+
+                                    DG_View_Tenants.Rows[rowNumber].Cells[COL_Room.Name].Value = tenant.Room.Name;
+
+                                    DG_View_Tenants.Rows[rowNumber].Cells[COL_Surename.Name].Value = tenant.Identification.Surename;
+                                    DG_View_Tenants.Rows[rowNumber].Cells[COL_Name.Name].Value = tenant.Identification.Name;
+                                    if (tenant.Identification.Patronymic != null)
+                                    {
+                                        DG_View_Tenants.Rows[rowNumber].Cells[COL_Patronymic.Name].Value = tenant.Identification.Patronymic;
+                                    }
+                                    DG_View_Tenants.Rows[rowNumber].Cells[COL_DateOfBirth.Name].Value = tenant.Identification.DateOfBirth;
+                                }
+
+
                                 var tenants = db.Tenants
-                                                .Where(x => x.RoomID == roomID)
-                                                .Include(p => p.Identification)
-                                                .Include(s => s.Order)
-                                                .Include(r=>r.Room)
+                                                .Where(r => r.RoomID == roomID)
+                                                .Include(x => x.Room)
+                                                .Include(i => i.Identification)
+                                                .Include(o => o.Order)
                                                 .ToList();
 
                                 foreach(Tenant tenant in tenants)
                                 {
-                                    if (tenant.Identification != null && tenant.Order != null) 
-                                    {
-                                        int rowNumber = DG_View_Tenants.Rows.Add();
-
-                                        DG_View_Tenants.Rows[rowNumber].Cells[COL_ID.Name].Value = tenant.ID;
-                                        DG_View_Tenants.Rows[rowNumber].Cells[COL_Surename.Name].Value = tenant.Identification.Surename;
-                                        DG_View_Tenants.Rows[rowNumber].Cells[COL_Name.Name].Value = tenant.Identification.Name;
-                                        DG_View_Tenants.Rows[rowNumber].Cells[COL_DateOfBirth.Name].Value = tenant.Identification.DateOfBirth;
-                                        if (tenant.Identification.Patronymic != null) 
-                                        {
-                                            DG_View_Tenants.Rows[rowNumber].Cells[COL_Patronymic.Name].Value = tenant.Identification.Patronymic;
-                                        }
-
-                                        if (tenant.Order != null)
-                                        {
-                                            DG_View_Tenants.Rows[rowNumber].Cells[COL_Order.Name].Value = tenant.Order.OrderNumber;
-                                            DG_View_Tenants.Rows[rowNumber].Cells[COL_StartDate.Name].Value = tenant.Order.StartDate;
-                                            if (tenant.Order.EndDate != null) 
-                                            {
-                                                DG_View_Tenants.Rows[rowNumber].Cells[COL_EndDate.Name].Value = tenant.Order.EndDate;
-                                            }
-                                        }
-
-                                        DG_View_Tenants.Rows[rowNumber].Cells[COL_Room.Name].Value = tenant.Room.Name;
-                                    }
-                                    
-
                                     
                                 }
-
-                                //var orders = db.Orders.Where(x => x.RoomID == roomID).ToList();
                             }
                         }
                         else
@@ -166,8 +182,31 @@ namespace Supply
 
         private void DG_View_Tenants_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.ColumnIndex == 8)
-                MessageBox.Show("Hi!");
+            if (e.ColumnIndex == 9)
+            {
+                int tenantID = 0;
+
+                if (int.TryParse(DG_View_Tenants.Rows[e.RowIndex].Cells[0].Value.ToString(), out tenantID)) 
+                {
+                    if (tenantID == 0)
+                    {
+                        Thread thread = new Thread(new ParameterizedThreadStart(LogInf));
+                        thread.Start($"Class:HostelArchiveForm. Method: DG_View_Tenants_CellMouseClick. Tenant ID equil 0");
+
+                        MessageBox.Show("Не существует данного жильца!");
+
+                        return;
+                    }
+
+                    TenantCard tenantCard = new TenantCard(tenantID);
+                    tenantCard.Show();
+                }
+            }
+        }
+
+        private void BTN_Search_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
