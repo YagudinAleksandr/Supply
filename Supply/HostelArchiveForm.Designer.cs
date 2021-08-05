@@ -31,8 +31,6 @@ namespace Supply
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HostelArchiveForm));
             this.DG_View_Tenants = new System.Windows.Forms.DataGridView();
-            this.TB_Search = new System.Windows.Forms.TextBox();
-            this.BTN_Search = new System.Windows.Forms.Button();
             this.COL_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Surename = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -42,6 +40,8 @@ namespace Supply
             this.COL_StartDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_EndDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Room = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TB_Search = new System.Windows.Forms.TextBox();
+            this.BTN_Search = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DG_View_Tenants)).BeginInit();
             this.SuspendLayout();
             // 
@@ -67,24 +67,7 @@ namespace Supply
             this.DG_View_Tenants.RowTemplate.Height = 24;
             this.DG_View_Tenants.Size = new System.Drawing.Size(1235, 502);
             this.DG_View_Tenants.TabIndex = 0;
-            // 
-            // TB_Search
-            // 
-            this.TB_Search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.TB_Search.Location = new System.Drawing.Point(781, 13);
-            this.TB_Search.Name = "TB_Search";
-            this.TB_Search.Size = new System.Drawing.Size(330, 22);
-            this.TB_Search.TabIndex = 1;
-            // 
-            // BTN_Search
-            // 
-            this.BTN_Search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTN_Search.Location = new System.Drawing.Point(1118, 12);
-            this.BTN_Search.Name = "BTN_Search";
-            this.BTN_Search.Size = new System.Drawing.Size(129, 24);
-            this.BTN_Search.TabIndex = 2;
-            this.BTN_Search.Text = "Поиск";
-            this.BTN_Search.UseVisualStyleBackColor = true;
+            this.DG_View_Tenants.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DG_View_Tenants_CellMouseClick);
             // 
             // COL_ID
             // 
@@ -157,6 +140,24 @@ namespace Supply
             this.COL_Room.Name = "COL_Room";
             this.COL_Room.ReadOnly = true;
             this.COL_Room.Width = 125;
+            // 
+            // TB_Search
+            // 
+            this.TB_Search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.TB_Search.Location = new System.Drawing.Point(781, 13);
+            this.TB_Search.Name = "TB_Search";
+            this.TB_Search.Size = new System.Drawing.Size(330, 22);
+            this.TB_Search.TabIndex = 1;
+            // 
+            // BTN_Search
+            // 
+            this.BTN_Search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTN_Search.Location = new System.Drawing.Point(1118, 12);
+            this.BTN_Search.Name = "BTN_Search";
+            this.BTN_Search.Size = new System.Drawing.Size(129, 24);
+            this.BTN_Search.TabIndex = 2;
+            this.BTN_Search.Text = "Поиск";
+            this.BTN_Search.UseVisualStyleBackColor = true;
             // 
             // HostelArchiveForm
             // 

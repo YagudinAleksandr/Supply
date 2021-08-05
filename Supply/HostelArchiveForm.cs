@@ -153,7 +153,7 @@ namespace Supply
         {
             using(SupplyDbContext db = new SupplyDbContext())
             {
-                //Создаем LOG запись об удалении!
+                
                 Log logInfo = new Log();
                 logInfo.ID = Guid.NewGuid();
                 logInfo.CreatedAt = DateTime.Now.ToString();
@@ -162,6 +162,12 @@ namespace Supply
                 db.Logs.Add(logInfo);
                 db.SaveChanges();
             }
+        }
+
+        private void DG_View_Tenants_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex == 8)
+                MessageBox.Show("Hi!");
         }
     }
 }
