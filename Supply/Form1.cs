@@ -1055,7 +1055,6 @@ namespace Supply
 
         private void SearchNodes(string searchText, TreeNode startNode)
         {
-            TreeNode node = null;
             while (startNode != null)
             {
                 if (startNode.Text.ToLower().Contains(searchText.ToLower()))

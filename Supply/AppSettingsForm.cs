@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -47,9 +48,10 @@ namespace Supply
             TB_ChangeRoom.Text = Properties.Settings.Default.template6;
             TB_Benefit.Text = Properties.Settings.Default.template5;
             TB_ChangePassport.Text = Properties.Settings.Default.template7;
+            TB_DestroyOrder.Text = Properties.Settings.Default.template8;
             TB_Services.Text = Properties.Settings.Default.template9;
+            TB_OrderContinue.Text = Properties.Settings.Default.template10;
             TB_PaymentOrder.Text = Properties.Settings.Default.template11;
-
 
             //User settings
 
@@ -73,9 +75,9 @@ namespace Supply
             Properties.Settings.Default.template5 = TB_Benefit.Text;
             Properties.Settings.Default.template6 = TB_ChangeRoom.Text;
             Properties.Settings.Default.template7 = TB_ChangePassport.Text;
-
+            Properties.Settings.Default.template8 = TB_DestroyOrder.Text;
             Properties.Settings.Default.template9 = TB_Services.Text;
-
+            Properties.Settings.Default.template10 = TB_OrderContinue.Text;
             Properties.Settings.Default.template11 = TB_PaymentOrder.Text;
 
             Properties.Settings.Default.outFileDir = TB_OutFileDir.Text;
@@ -87,18 +89,52 @@ namespace Supply
 
                 try
                 {
+
+                    bool flag = false;
+
                     if (TB_LoginNew.Text != "")
                     {
                         _user.Login = TB_LoginNew.Text;
+                        flag = true;
                     }
-                    
+
+                    if (TB_OldPassword.Text != string.Empty && TB_NewPassword.Text != string.Empty && TB_ConfirmNewPass.Text != string.Empty) 
+                    {
+                        if (GetHashPass(TB_OldPassword.Text) != _user.Password)
+                        {
+                            MessageBox.Show("Неверный старый пароль!");
+                            return;
+                        }
+
+                        if (TB_NewPassword.Text != TB_ConfirmNewPass.Text)
+                        {
+                            MessageBox.Show("Не совпадают пароли!");
+                            return;
+                        }
+
+                        _user.Password = GetHashPass(TB_ConfirmNewPass.Text);
+
+                        flag = true;
+                    }
+
+                    if (flag == true)
+                    {
+                        using (SupplyDbContext db = new SupplyDbContext())
+                        {
+                            db.Entry(_user).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                    }
+
+                    Application.Restart();
                 }
                 catch (Exception ex)
                 {
-
+                    MessageBox.Show(ex.Message);
+                    Application.Exit();
                 }
 
-                Application.Restart();
+                
             }
 
             
@@ -140,8 +176,14 @@ namespace Supply
                             case "t7":
                                 TB_ChangePassport.Text = openFileDirectory.FileName;
                                 break;
+                            case "t8":
+                                TB_DestroyOrder.Text = openFileDirectory.FileName;
+                                break;
                             case "t9":
                                 TB_Services.Text = openFileDirectory.FileName;
+                                break;
+                            case "t10":
+                                TB_OrderContinue.Text = openFileDirectory.FileName;
                                 break;
                             case "t11":
                                 TB_PaymentOrder.Text = openFileDirectory.FileName;
@@ -163,6 +205,26 @@ namespace Supply
                     }
                 }
             }
+        }
+        string GetHashPass(string password)
+        {
+            //переводим строку в байт-массим  
+            byte[] bytes = Encoding.Unicode.GetBytes(password);
+
+            //создаем объект для получения средст шифрования  
+            MD5CryptoServiceProvider CSP =
+                new MD5CryptoServiceProvider();
+
+            //вычисляем хеш-представление в байтах  
+            byte[] byteHash = CSP.ComputeHash(bytes);
+
+            string hash = string.Empty;
+
+            //формируем одну цельную строку из массива  
+            foreach (byte b in byteHash)
+                hash += string.Format("{0:x2}", b);
+
+            return hash;
         }
     }
 }
