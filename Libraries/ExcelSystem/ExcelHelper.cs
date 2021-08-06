@@ -73,6 +73,26 @@ namespace Libraries.ExcelSystem
             }
         }
 
+        public bool Merge(object nameOfCelsFirst, object nameOfCelsLast, string data, out string error)
+        {
+            error = string.Empty;
+
+            try
+            {
+                Excel.Worksheet _worksheet = (Excel.Worksheet)_excel.ActiveSheet;
+                Excel.Range _excelCel = (Excel.Range)_worksheet.get_Range(nameOfCelsFirst, nameOfCelsLast).Cells;
+                _excelCel.Merge(Type.Missing);
+                _worksheet.Cells[1, 8] = data;
+                
+                return true;
+            }
+            catch(Exception ex)
+            {
+                error = ex.Message + ". " + ex.InnerException;
+                return false;
+            }
+            
+        }
         public void Save()
         {
             if(!string.IsNullOrEmpty(_filePath))

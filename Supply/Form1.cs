@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using Libraries.ExcelSystem;
 using Supply.Domain;
 using Supply.Libs;
 using Supply.Models;
@@ -191,7 +192,95 @@ namespace Supply
         {
             if (_hostelID != 0) 
             {
+                string error = string.Empty;
 
+                using (ExcelHelper excel = new ExcelHelper())
+                {
+
+                    if (excel.Open(filePath: AppSettings.GetTemplateSetting("outfileDir") + @"\", name: $"Список общежития({DateTime.Now.ToShortDateString()}).xlsx", out error)) 
+                    {
+                        using(SupplyDbContext db = new SupplyDbContext())
+                        {
+
+                            try
+                            {
+                                Hostel hostel = db.Hostels.Where(x => x.ID == _hostelID).FirstOrDefault();
+
+                                if (hostel == null)
+                                {
+                                    Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                    thread.Start($"Class:Form1. Method: CreateHostelDeclaration_Click. Not found the hostel with ID:{_hostelID}");
+
+                                    MessageBox.Show("Не найдено общежития!");
+                                    return;
+                                }
+                                
+                                excel.Set("A", 1, "Комната", out error);
+                                excel.Set("B", 1, "Кол-во мест", out error);
+                                excel.Set("C", 1, "ФИО", out error);
+                                excel.Set("D", 1, "Договор", out error);
+                                excel.Set("E", 1, "Дата начала", out error);
+                                excel.Set("F", 1, "Дата окончания", out error);
+                                excel.Set("G", 1, "Телефон", out error);
+                                
+                                var enterances = db.Enterances.Where(x => x.HostelId == hostel.ID).ToList();
+
+                                if (enterances.Count == 0)
+                                {
+                                    MessageBox.Show("Не найдено подъездов!");
+                                    return;
+                                }
+
+                                List<Flat> flats = new List<Flat>();
+
+                                foreach (Enterance enterance in enterances)
+                                {
+                                    flats.AddRange(db.Flats.Where(x => x.Enterance_ID == enterance.ID).ToList());
+                                }
+
+                                List<Room> rooms = new List<Room>();
+                                foreach (Flat flat in flats)
+                                {
+                                    rooms.AddRange(db.Rooms.Where(x => x.FlatID == flat.ID).OrderBy(p => p.Name).ToList());
+                                }
+
+
+                                flats.Clear();
+
+
+                                int rowCounter = 2;
+                                
+                                foreach(Room room in rooms)
+                                {
+
+                                }
+
+                                
+                                rooms.Clear();
+
+                                excel.Save();
+
+                                MessageBox.Show("Файл сформирован успешно!");
+
+                            }
+                            catch(Exception ex)
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateHostelDeclaration_Click. {ex.Message}. {ex.InnerException}");
+
+                                MessageBox.Show(ex.Message);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                        thread.Start($"Class: Form1. Method: CreateHostelDeclaration_Click. {error}");
+
+                        MessageBox.Show(error);
+                        return;
+                    }
+                }
             }
             else
             {
@@ -1069,6 +1158,13 @@ namespace Supply
             };
         }
         #endregion
+        #region Private methods
 
+        private void Log(object information)
+        {
+
+        }
+
+        #endregion
     }
 }
