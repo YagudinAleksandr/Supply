@@ -31,17 +31,15 @@ namespace Supply
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HostelArchiveForm));
             this.DG_View_Tenants = new System.Windows.Forms.DataGridView();
+            this.TB_Search = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.COL_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Surename = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.COL_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.COL_Patronymic = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_DateOfBirth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Order = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_StartDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_EndDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Room = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TB_Search = new System.Windows.Forms.TextBox();
-            this.BTN_Search = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DG_View_Tenants)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,8 +53,6 @@ namespace Supply
             this.DG_View_Tenants.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.COL_ID,
             this.COL_Surename,
-            this.COL_Name,
-            this.COL_Patronymic,
             this.COL_DateOfBirth,
             this.COL_Order,
             this.COL_StartDate,
@@ -70,6 +66,25 @@ namespace Supply
             this.DG_View_Tenants.TabIndex = 0;
             this.DG_View_Tenants.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DG_View_Tenants_CellMouseClick);
             // 
+            // TB_Search
+            // 
+            this.TB_Search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.TB_Search.Location = new System.Drawing.Point(781, 13);
+            this.TB_Search.Name = "TB_Search";
+            this.TB_Search.Size = new System.Drawing.Size(466, 22);
+            this.TB_Search.TabIndex = 1;
+            this.TB_Search.TextChanged += new System.EventHandler(this.TB_Search_TextChanged);
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(727, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(48, 17);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Поиск";
+            // 
             // COL_ID
             // 
             this.COL_ID.HeaderText = "ID";
@@ -80,27 +95,11 @@ namespace Supply
             // 
             // COL_Surename
             // 
-            this.COL_Surename.HeaderText = "Фамилия";
+            this.COL_Surename.HeaderText = "Ф.И.О.";
             this.COL_Surename.MinimumWidth = 6;
             this.COL_Surename.Name = "COL_Surename";
             this.COL_Surename.ReadOnly = true;
-            this.COL_Surename.Width = 210;
-            // 
-            // COL_Name
-            // 
-            this.COL_Name.HeaderText = "Имя";
-            this.COL_Name.MinimumWidth = 6;
-            this.COL_Name.Name = "COL_Name";
-            this.COL_Name.ReadOnly = true;
-            this.COL_Name.Width = 210;
-            // 
-            // COL_Patronymic
-            // 
-            this.COL_Patronymic.HeaderText = "Отчество";
-            this.COL_Patronymic.MinimumWidth = 6;
-            this.COL_Patronymic.Name = "COL_Patronymic";
-            this.COL_Patronymic.ReadOnly = true;
-            this.COL_Patronymic.Width = 210;
+            this.COL_Surename.Width = 400;
             // 
             // COL_DateOfBirth
             // 
@@ -142,31 +141,12 @@ namespace Supply
             this.COL_Room.ReadOnly = true;
             this.COL_Room.Width = 125;
             // 
-            // TB_Search
-            // 
-            this.TB_Search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.TB_Search.Location = new System.Drawing.Point(781, 13);
-            this.TB_Search.Name = "TB_Search";
-            this.TB_Search.Size = new System.Drawing.Size(330, 22);
-            this.TB_Search.TabIndex = 1;
-            // 
-            // BTN_Search
-            // 
-            this.BTN_Search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTN_Search.Location = new System.Drawing.Point(1118, 12);
-            this.BTN_Search.Name = "BTN_Search";
-            this.BTN_Search.Size = new System.Drawing.Size(129, 24);
-            this.BTN_Search.TabIndex = 2;
-            this.BTN_Search.Text = "Поиск";
-            this.BTN_Search.UseVisualStyleBackColor = true;
-            this.BTN_Search.Click += new System.EventHandler(this.BTN_Search_Click);
-            // 
             // HostelArchiveForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1260, 597);
-            this.Controls.Add(this.BTN_Search);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.TB_Search);
             this.Controls.Add(this.DG_View_Tenants);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -185,11 +165,9 @@ namespace Supply
 
         private System.Windows.Forms.DataGridView DG_View_Tenants;
         private System.Windows.Forms.TextBox TB_Search;
-        private System.Windows.Forms.Button BTN_Search;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Surename;
-        private System.Windows.Forms.DataGridViewTextBoxColumn COL_Name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn COL_Patronymic;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_DateOfBirth;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Order;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_StartDate;

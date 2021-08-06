@@ -2,14 +2,10 @@
 using Supply.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Supply
@@ -121,11 +117,10 @@ namespace Supply
 
                                     DG_View_Tenants.Rows[rowNumber].Cells[COL_Room.Name].Value = tenant.Room.Name;
 
-                                    DG_View_Tenants.Rows[rowNumber].Cells[COL_Surename.Name].Value = tenant.Identification.Surename;
-                                    DG_View_Tenants.Rows[rowNumber].Cells[COL_Name.Name].Value = tenant.Identification.Name;
+                                    DG_View_Tenants.Rows[rowNumber].Cells[COL_Surename.Name].Value = tenant.Identification.Surename + " " + tenant.Identification.Name;
                                     if (tenant.Identification.Patronymic != null)
                                     {
-                                        DG_View_Tenants.Rows[rowNumber].Cells[COL_Patronymic.Name].Value = tenant.Identification.Patronymic;
+                                        DG_View_Tenants.Rows[rowNumber].Cells[COL_Surename.Name].Value += " " + tenant.Identification.Patronymic;
                                     }
                                     DG_View_Tenants.Rows[rowNumber].Cells[COL_DateOfBirth.Name].Value = tenant.Identification.DateOfBirth;
                                 }
@@ -140,7 +135,40 @@ namespace Supply
 
                                 foreach(Tenant tenant in tenants)
                                 {
-                                    
+                                    bool flag = false;
+                                    foreach(int orID in ordersID)
+                                    {
+                                        if (tenant.ID == orID)
+                                        {
+                                            flag = true;
+                                        }
+                                    }
+
+                                    if (flag == false)
+                                    {
+                                        int rowNumber = DG_View_Tenants.Rows.Add();
+
+                                        DG_View_Tenants.Rows[rowNumber].Cells[COL_ID.Name].Value = tenant.ID;
+                                        if (tenant.Identification != null) 
+                                        {
+                                            DG_View_Tenants.Rows[rowNumber].Cells[COL_Surename.Name].Value = tenant.Identification.Surename + " " + tenant.Identification.Name;
+                                            DG_View_Tenants.Rows[rowNumber].Cells[COL_DateOfBirth.Name].Value = tenant.Identification.DateOfBirth;
+                                            if (tenant.Identification.Name != null)
+                                            {
+                                                DG_View_Tenants.Rows[rowNumber].Cells[COL_Surename.Name].Value += " " + tenant.Identification.Patronymic;
+                                            }
+
+                                            DG_View_Tenants.Rows[rowNumber].Cells[COL_Order.Name].Value = tenant.Order.OrderNumber;
+                                            DG_View_Tenants.Rows[rowNumber].Cells[COL_StartDate.Name].Value = tenant.Order.StartDate;
+                                            if (tenant.Order.EndDate != null)
+                                            {
+                                                DG_View_Tenants.Rows[rowNumber].Cells[COL_EndDate.Name].Value = tenant.Order.EndDate;
+                                            }
+
+                                            DG_View_Tenants.Rows[rowNumber].Cells[COL_Room.Name].Value = tenant.Room.Name;
+                                        }
+                                        
+                                    }
                                 }
                             }
                         }
@@ -182,7 +210,7 @@ namespace Supply
 
         private void DG_View_Tenants_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.ColumnIndex == 9)
+            if (e.ColumnIndex == 7)
             {
                 int tenantID = 0;
 
@@ -204,9 +232,31 @@ namespace Supply
             }
         }
 
-        private void BTN_Search_Click(object sender, EventArgs e)
+        private void TB_Search_TextChanged(object sender, EventArgs e)
         {
-
+            if (TB_Search.Text != string.Empty)
+            {
+                for (int i = 0; i < DG_View_Tenants.RowCount; i++)
+                {
+                    DG_View_Tenants.Rows[i].Selected = false;
+                    for (int j = 0; j < DG_View_Tenants.ColumnCount; j++)
+                        if (DG_View_Tenants.Rows[i].Cells[j].Value != null)
+                            if (DG_View_Tenants.Rows[i].Cells[j].Value.ToString().Contains(TB_Search.Text))
+                            {
+                                DG_View_Tenants.Rows[i].Selected = true;
+                                break;
+                            }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < DG_View_Tenants.RowCount; i++)
+                {
+                    DG_View_Tenants.Rows[i].Selected = false;
+                    
+                }
+            }
+            
         }
     }
 }
