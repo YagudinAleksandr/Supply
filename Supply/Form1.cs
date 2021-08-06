@@ -1000,11 +1000,6 @@ namespace Supply
             orderElectricityCreate.Show();
         }
 
-        private void BTN_Search_Click(object sender, EventArgs e)
-        {
-            throw new Exception();
-        }
-
         private void BTN_Archive_Click(object sender, EventArgs e)
         {
             if(_hostelID==0)
@@ -1023,7 +1018,58 @@ namespace Supply
         }
 
         #endregion
+        #region Search
 
+        private List<TreeNode> _currentNodeMatches = new List<TreeNode>();
+
+        private int _lastNodeIndex = 0;
+
+        private string _lastSearchText;
+        private void BTN_Search_Click(object sender, EventArgs e)
+        {
+            string searchText = TB_Search.Text;
+
+            if(string.IsNullOrEmpty(searchText))
+            {
+                return;
+            }
+
+            if (_lastSearchText != searchText)
+            {
+                _currentNodeMatches.Clear();
+                _lastSearchText = searchText;
+                _lastNodeIndex = 0;
+                SearchNodes(searchText, TV_HostelInformation.Nodes[0]);
+            }
+
+            if (_lastNodeIndex >= 0 && _currentNodeMatches.Count > 0 && _lastNodeIndex < _currentNodeMatches.Count)
+            {
+                TreeNode selectedNode = _currentNodeMatches[_lastNodeIndex];
+                _lastNodeIndex++;
+
+                TV_HostelInformation.SelectedNode = selectedNode;
+                TV_HostelInformation.SelectedNode.Expand();
+                TV_HostelInformation.Select();
+            }
+        }
+
+        private void SearchNodes(string searchText, TreeNode startNode)
+        {
+            TreeNode node = null;
+            while (startNode != null)
+            {
+                if (startNode.Text.ToLower().Contains(searchText.ToLower()))
+                {
+                    _currentNodeMatches.Add(startNode);
+                };
+                if (startNode.Nodes.Count != 0)
+                {
+                    SearchNodes(searchText, startNode.Nodes[0]); 
+                };
+                startNode = startNode.NextNode;
+            };
+        }
+        #endregion
 
     }
 }
