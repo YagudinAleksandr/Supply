@@ -115,6 +115,30 @@
     <Compile Include="AdminAddressesFormAdd.Designer.cs">
       <DependentUpon>AdminAddressesFormAdd.cs</DependentUpon>
     </Compile>
+    <Compile Include="AdminEnteranceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminEnteranceForm.Designer.cs">
+      <DependentUpon>AdminEnteranceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdminEnteranceFormAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminEnteranceFormAdd.Designer.cs">
+      <DependentUpon>AdminEnteranceFormAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdminFlatsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminFlatsForm.Designer.cs">
+      <DependentUpon>AdminFlatsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdminFlatsFormAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminFlatsFormAdd.Designer.cs">
+      <DependentUpon>AdminFlatsFormAdd.cs</DependentUpon>
+    </Compile>
     <Compile Include="AdminHostelsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -484,6 +508,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AdminAddressesFormAdd.resx">
       <DependentUpon>AdminAddressesFormAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminEnteranceForm.resx">
+      <DependentUpon>AdminEnteranceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminEnteranceFormAdd.resx">
+      <DependentUpon>AdminEnteranceFormAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminFlatsForm.resx">
+      <DependentUpon>AdminFlatsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminFlatsFormAdd.resx">
+      <DependentUpon>AdminFlatsFormAdd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AdminHostelsForm.resx">
       <DependentUpon>AdminHostelsForm.cs</DependentUpon>
