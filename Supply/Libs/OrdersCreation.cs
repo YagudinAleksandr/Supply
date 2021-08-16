@@ -1069,7 +1069,6 @@ namespace Supply.Libs
                     .Where(x => x.ID == tenantID)
                     .Include(i => i.Identification)
                     .Include(o => o.Order)
-                    .Include(r => r.Room)
                     .FirstOrDefault();
 
                 if (tenant == null)
@@ -1084,9 +1083,58 @@ namespace Supply.Libs
                     .Where(s => s.Status == true)
                     .FirstOrDefault();
 
+                Flat flat = db.Flats
+                    .Where(x => x.ID == tenant.Room.FlatID)
+                    .FirstOrDefault();
+
+                if (flat == null)
+                {
+                    error = "Этаж не найден!";
+                    return false;
+                }
+
+                Enterance enterance = db.Enterances
+                    .Where(x => x.ID == flat.Enterance_ID)
+                    .FirstOrDefault();
+
+                if (enterance == null)
+                {
+                    error = "Подъезд не найден!";
+                    return false;
+                }
+
+                Hostel hostel = db.Hostels
+                    .Where(x => x.ID == enterance.HostelId)
+                    .Include(m => m.Manager)
+                    .FirstOrDefault();
+
+                if (enterance == null)
+                {
+                    error = "Общежитие не найдено!";
+                    return false;
+                }
+
+
                 Termination termination = db.Terminations
                     .Where(o => o.OrderID == tenant.Order.ID)
+                    .Include(l=>l.License)
                     .FirstOrDefault();
+
+                if (termination == null)
+                {
+                    error = "Не найдено данных по расторжению договора!";
+                    return false;
+                }
+
+                Manager manager = db.Managers
+                    .Where(x => x.ID == termination.License.ManagerId)
+                    .FirstOrDefault();
+
+                if (manager == null)
+                {
+                    error = "Не найдено данных по менеджеру!";
+                    return false;
+                }
 
                 WordDocument wordDocument;
 
@@ -1105,32 +1153,92 @@ namespace Supply.Libs
 
                     replacements.Add("ID", tenant.Order.ID.ToString());
                     replacements.Add("startOrder", tenant.Order.StartDate);
+                    replacements.Add("orderTermination", termination.Date);
 
                     if (changePassport != null)
                     {
                         replacements.Add("Surename", changePassport.Surename);
                         replacements.Add("Name", changePassport.Name);
-                        if(changePassport.Patronymic!=null)
+                        replacements.Add("ns", changePassport.Name[0].ToString());
+                        if (changePassport.Patronymic!=null)
                         {
                             replacements.Add("Patronymic", changePassport.Patronymic);
+                            replacements.Add("ps", changePassport.Patronymic[0].ToString());
                         }
                         else
                         {
-                            replacements.Add("Patronymic", " ");
+                            replacements.Add("Patronymic", "");
+                            replacements.Add("ps", "");
+                        }
+
+                        replacements.Add("DocSeries", changePassport.Series);
+                        replacements.Add("DocNumber", changePassport.Number);
+                        replacements.Add("DocGiven", changePassport.Issued);
+                        replacements.Add("DocDate", changePassport.GivenDate);
+                        replacements.Add("HumanAddress", changePassport.Address);
+
+                        if(changePassport.Code!=null)
+                        {
+                            replacements.Add("DocCode", changePassport.Code);
+                        }
+                        else
+                        {
+                            replacements.Add("DocCode", "");
                         }
                     }
                     else
                     {
+                        replacements.Add("Surename", tenant.Identification.Surename);
+                        replacements.Add("Name", tenant.Identification.Name);
+                        replacements.Add("ns", tenant.Identification.Name[0].ToString());
+                        if (tenant.Identification.Patronymic != null)
+                        {
+                            replacements.Add("Patronymic", tenant.Identification.Patronymic);
+                            replacements.Add("ps", tenant.Identification.Patronymic[0].ToString());
+                        }
+                        else
+                        {
+                            replacements.Add("Patronymic", "");
+                            replacements.Add("ps", "");
+                        }
 
+                        replacements.Add("DocSeries", tenant.Identification.DocumentSeries);
+                        replacements.Add("DocNumber", tenant.Identification.DocumentNumber);
+                        replacements.Add("DocGiven", tenant.Identification.Issued);
+                        replacements.Add("DocDate", tenant.Identification.GivenDate);
+                        replacements.Add("HumanAddress", tenant.Identification.Address);
+
+                        if (changePassport.Code != null)
+                        {
+                            replacements.Add("DocCode", tenant.Identification.Code);
+                        }
+                        else
+                        {
+                            replacements.Add("DocCode", "");
+                        }
                     }
 
+                    replacements.Add("MainManager", manager.Surename + " " + manager.Name[0] + "." + manager.Patronymic[0] + ".");
+                    replacements.Add("Manager", manager.Surename + " " + manager.Name + " " + manager.Patronymic);
+                    replacements.Add("LicenseNumber", termination.License.Name);
+                    replacements.Add("LicenseStart", termination.License.StartDate);
+
+                    wordDocument.MakeReplacementInWordTemplate(replacements);
+
                     
-                    return true;
                 }
                 else
                 {
                     return false;
                 }
+
+                if (!wordDocument.CloseWordTemplate(out error))
+                {
+                    return false;
+                }
+
+                GC.Collect();
+                return true;
             }
         }
     }

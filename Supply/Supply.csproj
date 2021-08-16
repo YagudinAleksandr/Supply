@@ -34,7 +34,7 @@
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <AutorunEnabled>true</AutorunEnabled>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>27</ApplicationRevision>
+    <ApplicationRevision>28</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -388,6 +388,10 @@
     <Compile Include="Migrations\202108160807309_changeTermination.designer.cs">
       <DependentUpon>202108160807309_changeTermination.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202108162020287_updateLicenseModel.cs" />
+    <Compile Include="Migrations\202108162020287_updateLicenseModel.designer.cs">
+      <DependentUpon>202108162020287_updateLicenseModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accounting.cs" />
     <Compile Include="Models\AccountingElectricity.cs" />
@@ -654,6 +658,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202108160807309_changeTermination.resx">
       <DependentUpon>202108160807309_changeTermination.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108162020287_updateLicenseModel.resx">
+      <DependentUpon>202108162020287_updateLicenseModel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderAddForm.resx">
       <DependentUpon>OrderAddForm.cs</DependentUpon>
