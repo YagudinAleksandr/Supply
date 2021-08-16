@@ -11,6 +11,7 @@ namespace Supply
     {
         private int _tenantID;
         private int _orderID;
+        private int _licenseID;
         public TenantTerminationForm(int tenantID)
         {
             InitializeComponent();
@@ -53,6 +54,16 @@ namespace Supply
                     }
 
                     LB_OrderNumber.Text = order.OrderNumber;
+
+                    var licenses = db.Licenses.Include(m => m.Manager).ToList();
+
+                    for (int i = 0; i < licenses.Count; i++)
+                    {
+                        licenses[i].Name= licenses[i].Manager.Surename + " " + licenses[i].Manager.Name + " " + licenses[i].Manager.Patronymic + $" ({licenses[i].Name})";
+                    }
+                    comboBox1.DataSource = licenses;
+                    comboBox1.ValueMember = "ID";
+                    comboBox1.DisplayMember = "Name";
                 }
             }
         }
@@ -69,6 +80,12 @@ namespace Supply
                 }
 
                 Order order = db.Orders.Where(x => x.ID == _orderID).FirstOrDefault();
+
+                if (order == null) 
+                {
+                    MessageBox.Show("Не найден договор!");
+                    this.Close();
+                }
 
                 DateTime date = DateTime.Now;
                 DateTime orderEndDate = DateTime.Now;
@@ -101,8 +118,9 @@ namespace Supply
                 termination.CreatedAt = DateTime.Now.ToString();
                 termination.UpdatedAt = DateTime.Now.ToString();
                 termination.Status = false;
-                termination.OrderID = _orderID;
+                termination.OrderID = order.ID;
                 termination.Date = TB_Date.Text;
+                termination.LicenceID = _licenseID;
 
                 if (date.ToShortDateString() == DateTime.Now.ToShortDateString())
                 {
@@ -137,6 +155,18 @@ namespace Supply
 
                     MessageBox.Show(ex.Message);
                 }
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                _licenseID = (int)comboBox1.SelectedValue;
+            }
+            catch
+            {
+                return;
             }
         }
     }

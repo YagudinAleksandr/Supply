@@ -8,22 +8,23 @@ using System.Threading.Tasks;
 
 namespace Supply.Models
 {
-    public class Termination
+    public class ContinueOrder
     {
         [Key]
         public int ID { get; set; }
         [ForeignKey("Order")]
         public int OrderID { get; set; }
         public Order Order { get; set; }
-        public int LicenceID { get; set; }
+        [ForeignKey("License")]
+        public int LicenseID { get; set; }
         public License License { get; set; }
+        [Required]
+        public string StartDate { get; set; }
+        [Required]
+        public string EndDate { get; set; }
         [Required]
         public string CreatedAt { get; set; }
         [Required]
         public string UpdatedAt { get; set; }
-        [Required]
-        public bool Status { get; set; }
-        [Required]
-        public string Date { get; set; }
     }
 }

@@ -34,7 +34,7 @@
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <AutorunEnabled>true</AutorunEnabled>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>26</ApplicationRevision>
+    <ApplicationRevision>27</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -384,6 +384,10 @@
     <Compile Include="Migrations\202107212006113_InformationModel.designer.cs">
       <DependentUpon>202107212006113_InformationModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202108160807309_changeTermination.cs" />
+    <Compile Include="Migrations\202108160807309_changeTermination.designer.cs">
+      <DependentUpon>202108160807309_changeTermination.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accounting.cs" />
     <Compile Include="Models\AccountingElectricity.cs" />
@@ -394,6 +398,7 @@
     <Compile Include="Models\BenefitType.cs" />
     <Compile Include="Models\ChangePassport.cs" />
     <Compile Include="Models\ChangeRoom.cs" />
+    <Compile Include="Models\ContinueOrder.cs" />
     <Compile Include="Models\DocumentType.cs" />
     <Compile Include="Models\ElecricityOrder.cs" />
     <Compile Include="Models\ElectricityElement.cs" />
@@ -646,6 +651,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107212006113_InformationModel.resx">
       <DependentUpon>202107212006113_InformationModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108160807309_changeTermination.resx">
+      <DependentUpon>202108160807309_changeTermination.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderAddForm.resx">
       <DependentUpon>OrderAddForm.cs</DependentUpon>

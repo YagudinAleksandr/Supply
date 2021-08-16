@@ -1060,6 +1060,79 @@ namespace Supply.Libs
             error = string.Empty;
             return true;
         }
+        public static bool CreateTerminationOrder(int tenantID, out string error)
+        {
+            error = string.Empty;
+            using(SupplyDbContext db = new SupplyDbContext())
+            {
+                Tenant tenant = db.Tenants
+                    .Where(x => x.ID == tenantID)
+                    .Include(i => i.Identification)
+                    .Include(o => o.Order)
+                    .Include(r => r.Room)
+                    .FirstOrDefault();
+
+                if (tenant == null)
+                {
+                    error = "Жилец не найден!";
+                    return false;
+                }
+
+
+                ChangePassport changePassport = db.ChangePassports
+                    .Where(x => x.TenantID == tenantID)
+                    .Where(s => s.Status == true)
+                    .FirstOrDefault();
+
+                Termination termination = db.Terminations
+                    .Where(o => o.OrderID == tenant.Order.ID)
+                    .FirstOrDefault();
+
+                WordDocument wordDocument;
+
+                if (changePassport != null)
+                {
+                    wordDocument = new WordDocument(AppSettings.GetTemplateSetting("template8"), AppSettings.GetTemplateSetting("outfileDir") + @"\", $"Расторжение договора {changePassport.Surename} {changePassport.Name} " + tenant.Order.OrderNumber.ToString());
+                }
+                else
+                {
+                    wordDocument = new WordDocument(AppSettings.GetTemplateSetting("template8"), AppSettings.GetTemplateSetting("outfileDir") + @"\", $"Расторжение договора {tenant.Identification.Surename} {tenant.Identification.Name} " + tenant.Order.OrderNumber.ToString());
+                }
+
+                if(wordDocument.OpenWordTemplate(out error))
+                {
+                    Dictionary<string, string> replacements = new Dictionary<string, string>();
+
+                    replacements.Add("ID", tenant.Order.ID.ToString());
+                    replacements.Add("startOrder", tenant.Order.StartDate);
+
+                    if (changePassport != null)
+                    {
+                        replacements.Add("Surename", changePassport.Surename);
+                        replacements.Add("Name", changePassport.Name);
+                        if(changePassport.Patronymic!=null)
+                        {
+                            replacements.Add("Patronymic", changePassport.Patronymic);
+                        }
+                        else
+                        {
+                            replacements.Add("Patronymic", " ");
+                        }
+                    }
+                    else
+                    {
+
+                    }
+
+                    
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
     }
     
 }
