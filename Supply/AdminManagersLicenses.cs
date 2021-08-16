@@ -39,6 +39,7 @@ namespace Supply
                         DG_Licenses.Rows[rowNumber].Cells[COL_Type.Name].Value = license.Type;
                         DG_Licenses.Rows[rowNumber].Cells[COL_StartDate.Name].Value = license.StartDate;
                         DG_Licenses.Rows[rowNumber].Cells[COL_EndDate.Name].Value = license.EndDate;
+                        DG_Licenses.Rows[rowNumber].Cells[COL_Status.Name].Value = license.Status;
                     }
                 }
                 catch (Exception ex)
@@ -82,7 +83,7 @@ namespace Supply
 
         private void DG_Licenses_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 6) 
+            if (e.ColumnIndex == 7) 
             {
                 DialogResult result = MessageBox.Show($"Удалить {DG_Licenses.Rows[e.RowIndex].Cells[2].Value.ToString()} {DG_Licenses.Rows[e.RowIndex].Cells[3].Value.ToString()}", "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.Yes)

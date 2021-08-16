@@ -1,4 +1,5 @@
 ﻿using Supply.Domain;
+using Supply.Libs;
 using Supply.Models;
 using System;
 using System.Data.Entity;
@@ -139,7 +140,26 @@ namespace Supply
                 {
                     db.Terminations.Add(termination);
                     db.SaveChanges();
-                    MessageBox.Show("Расторжение добавлно успешно!");
+
+                    string error = string.Empty;
+
+                    if(!OrdersCreation.CreateTerminationOrder(order.ID,out error))
+                    {
+                        Log logInfo = new Log();
+                        logInfo.ID = Guid.NewGuid();
+                        logInfo.CreatedAt = DateTime.Now.ToString();
+                        logInfo.Type = "ERROR";
+                        logInfo.Caption = $"Class:TenantTerminationForm. Method: BTN_Create_Click. {error}";
+
+                        db.Logs.Add(logInfo);
+                        db.SaveChanges();
+
+                        MessageBox.Show(error);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Расторжение добавлно успешно!");
+                    }
                     this.Close();
                 }
                 catch(Exception ex)
