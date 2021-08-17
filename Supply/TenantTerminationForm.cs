@@ -121,7 +121,7 @@ namespace Supply
                 termination.Status = false;
                 termination.OrderID = order.ID;
                 termination.Date = TB_Date.Text;
-                termination.LicenceID = _licenseID;
+                termination.LicenseID = _licenseID;
 
                 if (date.ToShortDateString() == DateTime.Now.ToShortDateString())
                 {

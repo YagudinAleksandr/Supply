@@ -1069,6 +1069,7 @@ namespace Supply.Libs
                     .Where(x => x.ID == tenantID)
                     .Include(i => i.Identification)
                     .Include(o => o.Order)
+                    .Include(r=>r.Room)
                     .FirstOrDefault();
 
                 if (tenant == null)
@@ -1151,7 +1152,7 @@ namespace Supply.Libs
                 {
                     Dictionary<string, string> replacements = new Dictionary<string, string>();
 
-                    replacements.Add("ID", tenant.Order.ID.ToString());
+                    replacements.Add("ID", tenant.Order.OrderNumber.ToString());
                     replacements.Add("startOrder", tenant.Order.StartDate);
                     replacements.Add("orderTermination", termination.Date);
 
@@ -1208,7 +1209,7 @@ namespace Supply.Libs
                         replacements.Add("DocDate", tenant.Identification.GivenDate);
                         replacements.Add("HumanAddress", tenant.Identification.Address);
 
-                        if (changePassport.Code != null)
+                        if (tenant.Identification.Code != null)
                         {
                             replacements.Add("DocCode", tenant.Identification.Code);
                         }

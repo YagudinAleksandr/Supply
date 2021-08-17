@@ -15,7 +15,8 @@ namespace Supply.Models
         [ForeignKey("Order")]
         public int OrderID { get; set; }
         public Order Order { get; set; }
-        public int LicenceID { get; set; }
+        [ForeignKey("License")]
+        public int LicenseID { get; set; }
         public License License { get; set; }
         [Required]
         public string CreatedAt { get; set; }
