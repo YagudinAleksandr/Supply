@@ -15,6 +15,7 @@ namespace Supply
 {
     public partial class Form1 : Form
     {
+        private Thread _serverThread;
         private User _user;
         private Role _role;
         private int _hostelID;
@@ -23,6 +24,8 @@ namespace Supply
             InitializeComponent();
             _user = user;
             _hostelID = 0;
+            _serverThread = new Thread(AsyncProcessing);
+            _serverThread.Name = "ServerThreadUpdateDatabase";
         }
 
         #region MainWindowMainFunctions
@@ -71,11 +74,19 @@ namespace Supply
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            //Application.Exit();
+            if(_serverThread.IsAlive)
+            {
+                _serverThread.Abort();
+            }
+            
         }
 
         private void CloseApp_Click(object sender, EventArgs e)
         {
+            if(_serverThread.IsAlive)
+            {
+                _serverThread.Abort();
+            }
             Application.Exit();
         }
         private void ChangeUser_Click(object sender, EventArgs e)
@@ -339,18 +350,33 @@ namespace Supply
             comboBoxthread.Start();
 
             
-            Thread thread = new Thread(AsyncProcessing);
-            thread.Start();
+            
+
+            if(Properties.Settings.Default.IsServer==true)
+            {
+                _serverThread.Start();
+            }
+            else
+            {
+                if(_serverThread.IsAlive)
+                {
+                    _serverThread.Abort();
+                }
+            }
 
             ShowNews();
         }
 
         private void AsyncProcessing()
         {
-            AsyncProcesses.UpdateChangeRoom();
-            AsyncProcesses.UpdateBenefits();
-            AsyncProcesses.UpdateOrders();
-            AsyncProcesses.UpdateTerminations();
+            while (true)
+            {
+                Thread.Sleep(TimeSpan.FromMinutes(380));
+                AsyncProcesses.UpdateChangeRoom();
+                AsyncProcesses.UpdateBenefits();
+                AsyncProcesses.UpdateOrders();
+                AsyncProcesses.UpdateTerminations();
+            }
         }
 
         private void ShowNews()
@@ -675,8 +701,6 @@ namespace Supply
                         {
                             TenantTerminationForm terminationForm = new TenantTerminationForm(tenantID);
                             terminationForm.ShowDialog();
-
-                            //CreateTreeOnTreeView(_hostelID);
                         }
                     }
                 }

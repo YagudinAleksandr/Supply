@@ -241,8 +241,7 @@ namespace Supply
                         {
                             using (SupplyDbContext db = new SupplyDbContext())
                             {
-
-
+                                
                                 try
                                 {
                                     excelHelper.Set(columnName: "A", rowNumber: 1, value: "№", error: out error);
@@ -278,96 +277,100 @@ namespace Supply
                                                     if (tenant.TenantTypeID != 2 || tenant.TenantTypeID != 3) 
                                                     {
                                                         Identification identification = db.Identifications.Where(x => x.ID == tenant.ID).FirstOrDefault();
-                                                        ChangePassport changePassport = db.ChangePassports.Where(x => x.TenantID == tenant.ID).Where(s => s.Status == true).FirstOrDefault();
-
-                                                        if (changePassport != null)
+                                                        if(identification!=null)
                                                         {
-                                                            if(changePassport.Citizenship!= "Россия" && changePassport.Citizenship != "РФ")
+                                                            ChangePassport changePassport = db.ChangePassports.Where(x => x.TenantID == tenant.ID).Where(s => s.Status == true).FirstOrDefault();
+
+                                                            if (changePassport != null)
                                                             {
-                                                                excelHelper.Set(columnName: "A", rowNumber: rowCount, value: counter.ToString(), error: out error);
-                                                                excelHelper.Set(columnName: "B", rowNumber: rowCount, value: hostel.Name, error: out error);
-                                                                excelHelper.Set(columnName: "C", rowNumber: rowCount, value: room.Name, error: out error);
-                                                                if (changePassport != null)
+                                                                if (changePassport.Citizenship != "Россия" && changePassport.Citizenship != "РФ")
                                                                 {
-                                                                    if (changePassport.Patronymic != null)
+                                                                    excelHelper.Set(columnName: "A", rowNumber: rowCount, value: counter.ToString(), error: out error);
+                                                                    excelHelper.Set(columnName: "B", rowNumber: rowCount, value: hostel.Name, error: out error);
+                                                                    excelHelper.Set(columnName: "C", rowNumber: rowCount, value: room.Name, error: out error);
+                                                                    if (changePassport != null)
                                                                     {
-                                                                        excelHelper.Set(columnName: "D", rowNumber: rowCount, value: changePassport.Surename + " " + changePassport.Name + " " + changePassport.Patronymic, error: out error);
+                                                                        if (changePassport.Patronymic != null)
+                                                                        {
+                                                                            excelHelper.Set(columnName: "D", rowNumber: rowCount, value: changePassport.Surename + " " + changePassport.Name + " " + changePassport.Patronymic, error: out error);
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            excelHelper.Set(columnName: "D", rowNumber: rowCount, value: changePassport.Surename + " " + changePassport.Name, error: out error);
+                                                                        }
+
+                                                                        excelHelper.Set(columnName: "E", rowNumber: rowCount, value: changePassport.Citizenship, error: out error);
                                                                     }
                                                                     else
                                                                     {
-                                                                        excelHelper.Set(columnName: "D", rowNumber: rowCount, value: changePassport.Surename + " " + changePassport.Name, error: out error);
-                                                                    }
+                                                                        if (identification.Patronymic != null)
+                                                                        {
+                                                                            excelHelper.Set(columnName: "D", rowNumber: rowCount, value: identification.Surename + " " + identification.Name + " " + identification.Patronymic, error: out error);
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            excelHelper.Set(columnName: "D", rowNumber: rowCount, value: identification.Surename + " " + identification.Name, error: out error);
+                                                                        }
 
-                                                                    excelHelper.Set(columnName: "E", rowNumber: rowCount, value: changePassport.Citizenship, error: out error);
+                                                                        excelHelper.Set(columnName: "E", rowNumber: rowCount, value: identification.Cityzenship, error: out error);
+                                                                    }
+                                                                    excelHelper.Set(columnName: "F", rowNumber: rowCount, value: OrdersCreation.AdditionalInf(6, tenant.ID), error: out error);
+                                                                    excelHelper.Set(columnName: "G", rowNumber: rowCount, value: tenant.Order.OrderNumber, error: out error);
+                                                                    excelHelper.Set(columnName: "H", rowNumber: rowCount, value: tenant.Order.StartDate, error: out error);
+                                                                    excelHelper.Set(columnName: "I", rowNumber: rowCount, value: tenant.Order.EndDate, error: out error);
+                                                                    excelHelper.Set(columnName: "J", rowNumber: rowCount, value: OrdersCreation.AdditionalInf(5, tenant.ID), error: out error);
+                                                                    excelHelper.Set(columnName: "K", rowNumber: rowCount, value: OrdersCreation.AdditionalInf(7, tenant.ID), error: out error);
+
+                                                                    rowCount++;
+                                                                    counter++;
                                                                 }
-                                                                else
+                                                            }
+                                                            else
+                                                            {
+                                                                if (identification.Cityzenship != "РФ" && identification.Cityzenship != "Россия")
                                                                 {
-                                                                    if (identification.Patronymic != null)
+                                                                    excelHelper.Set(columnName: "A", rowNumber: rowCount, value: counter.ToString(), error: out error);
+                                                                    excelHelper.Set(columnName: "B", rowNumber: rowCount, value: hostel.Name, error: out error);
+                                                                    excelHelper.Set(columnName: "C", rowNumber: rowCount, value: room.Name, error: out error);
+                                                                    if (changePassport != null)
                                                                     {
-                                                                        excelHelper.Set(columnName: "D", rowNumber: rowCount, value: identification.Surename + " " + identification.Name + " " + identification.Patronymic, error: out error);
+                                                                        if (changePassport.Patronymic != null)
+                                                                        {
+                                                                            excelHelper.Set(columnName: "D", rowNumber: rowCount, value: changePassport.Surename + " " + changePassport.Name + " " + changePassport.Patronymic, error: out error);
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            excelHelper.Set(columnName: "D", rowNumber: rowCount, value: changePassport.Surename + " " + changePassport.Name, error: out error);
+                                                                        }
+
+                                                                        excelHelper.Set(columnName: "E", rowNumber: rowCount, value: changePassport.Citizenship, error: out error);
                                                                     }
                                                                     else
                                                                     {
-                                                                        excelHelper.Set(columnName: "D", rowNumber: rowCount, value: identification.Surename + " " + identification.Name, error: out error);
+                                                                        if (identification.Patronymic != null)
+                                                                        {
+                                                                            excelHelper.Set(columnName: "D", rowNumber: rowCount, value: identification.Surename + " " + identification.Name + " " + identification.Patronymic, error: out error);
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            excelHelper.Set(columnName: "D", rowNumber: rowCount, value: identification.Surename + " " + identification.Name, error: out error);
+                                                                        }
+
+                                                                        excelHelper.Set(columnName: "E", rowNumber: rowCount, value: identification.Cityzenship, error: out error);
                                                                     }
+                                                                    excelHelper.Set(columnName: "F", rowNumber: rowCount, value: OrdersCreation.AdditionalInf(6, tenant.ID), error: out error);
+                                                                    excelHelper.Set(columnName: "G", rowNumber: rowCount, value: tenant.Order.OrderNumber, error: out error);
+                                                                    excelHelper.Set(columnName: "H", rowNumber: rowCount, value: tenant.Order.StartDate, error: out error);
+                                                                    excelHelper.Set(columnName: "I", rowNumber: rowCount, value: tenant.Order.EndDate, error: out error);
+                                                                    excelHelper.Set(columnName: "J", rowNumber: rowCount, value: OrdersCreation.AdditionalInf(5, tenant.ID), error: out error);
+                                                                    excelHelper.Set(columnName: "K", rowNumber: rowCount, value: OrdersCreation.AdditionalInf(7, tenant.ID), error: out error);
 
-                                                                    excelHelper.Set(columnName: "E", rowNumber: rowCount, value: identification.Cityzenship, error: out error);
+                                                                    rowCount++;
+                                                                    counter++;
                                                                 }
-                                                                excelHelper.Set(columnName: "F", rowNumber: rowCount, value: OrdersCreation.AdditionalInf(6, tenant.ID), error: out error);
-                                                                excelHelper.Set(columnName: "G", rowNumber: rowCount, value: tenant.Order.OrderNumber, error: out error);
-                                                                excelHelper.Set(columnName: "H", rowNumber: rowCount, value: tenant.Order.StartDate, error: out error);
-                                                                excelHelper.Set(columnName: "I", rowNumber: rowCount, value: tenant.Order.EndDate, error: out error);
-                                                                excelHelper.Set(columnName: "J", rowNumber: rowCount, value: OrdersCreation.AdditionalInf(5, tenant.ID), error: out error);
-                                                                excelHelper.Set(columnName: "K", rowNumber: rowCount, value: OrdersCreation.AdditionalInf(7, tenant.ID), error: out error);
-
-                                                                rowCount++;
-                                                                counter++;
                                                             }
                                                         }
-                                                        else
-                                                        {
-                                                            if(identification.Cityzenship!="РФ" && identification.Cityzenship!= "Россия")
-                                                            {
-                                                                excelHelper.Set(columnName: "A", rowNumber: rowCount, value: counter.ToString(), error: out error);
-                                                                excelHelper.Set(columnName: "B", rowNumber: rowCount, value: hostel.Name, error: out error);
-                                                                excelHelper.Set(columnName: "C", rowNumber: rowCount, value: room.Name, error: out error);
-                                                                if (changePassport != null)
-                                                                {
-                                                                    if (changePassport.Patronymic != null)
-                                                                    {
-                                                                        excelHelper.Set(columnName: "D", rowNumber: rowCount, value: changePassport.Surename + " " + changePassport.Name + " " + changePassport.Patronymic, error: out error);
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        excelHelper.Set(columnName: "D", rowNumber: rowCount, value: changePassport.Surename + " " + changePassport.Name, error: out error);
-                                                                    }
-
-                                                                    excelHelper.Set(columnName: "E", rowNumber: rowCount, value: changePassport.Citizenship, error: out error);
-                                                                }
-                                                                else
-                                                                {
-                                                                    if (identification.Patronymic != null)
-                                                                    {
-                                                                        excelHelper.Set(columnName: "D", rowNumber: rowCount, value: identification.Surename + " " + identification.Name + " " + identification.Patronymic, error: out error);
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        excelHelper.Set(columnName: "D", rowNumber: rowCount, value: identification.Surename + " " + identification.Name, error: out error);
-                                                                    }
-
-                                                                    excelHelper.Set(columnName: "E", rowNumber: rowCount, value: identification.Cityzenship, error: out error);
-                                                                }
-                                                                excelHelper.Set(columnName: "F", rowNumber: rowCount, value: OrdersCreation.AdditionalInf(6, tenant.ID), error: out error);
-                                                                excelHelper.Set(columnName: "G", rowNumber: rowCount, value: tenant.Order.OrderNumber, error: out error);
-                                                                excelHelper.Set(columnName: "H", rowNumber: rowCount, value: tenant.Order.StartDate, error: out error);
-                                                                excelHelper.Set(columnName: "I", rowNumber: rowCount, value: tenant.Order.EndDate, error: out error);
-                                                                excelHelper.Set(columnName: "J", rowNumber: rowCount, value: OrdersCreation.AdditionalInf(5, tenant.ID), error: out error);
-                                                                excelHelper.Set(columnName: "K", rowNumber: rowCount, value: OrdersCreation.AdditionalInf(7, tenant.ID), error: out error);
-
-                                                                rowCount++;
-                                                                counter++;
-                                                            }
-                                                        }
+                                                        
                                                         
                                                     }
                                                     
