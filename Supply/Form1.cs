@@ -214,7 +214,8 @@ namespace Supply
         }
         private void BenefitsPayments_Click(object sender, EventArgs e)
         {
-
+            AdminBenefitPayments adminBenefitPayments = new AdminBenefitPayments();
+            adminBenefitPayments.Show();
         }
         private void Form1_Shown(object sender, EventArgs e)
         {
@@ -656,7 +657,41 @@ namespace Supply
 
         private void ContinueOrder(object sender, EventArgs e)
         {
-            
+#if DEBUG
+            try
+            {
+                if (TV_HostelInformation.SelectedNode.Tag != null)
+                {
+                    int tenantID = 0;
+                    if (int.TryParse(TV_HostelInformation.SelectedNode.Tag.ToString(), out tenantID))
+                    {
+                        if (tenantID == 0)
+                        {
+                            using (SupplyDbContext db = new SupplyDbContext())
+                            {
+                                Log logInfo = new Log();
+                                logInfo.ID = Guid.NewGuid();
+                                logInfo.Type = "WARNING";
+                                logInfo.Caption = $"Class: Form1.cs. Method:ContinueOrder. Selected node tag equil 0 when update tenant";
+                                logInfo.CreatedAt = DateTime.Now.ToString();
+                                db.Logs.Add(logInfo);
+                                db.SaveChanges();
+                            }
+                            MessageBox.Show("ID жильца равен 0");
+                        }
+                        else
+                        {
+                          
+                            
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                return;
+            }
+#endif
         }
         private void UpdateTenantInformation(object sender, EventArgs e)
         {

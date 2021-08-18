@@ -10,6 +10,9 @@ namespace Supply.Models
         [ForeignKey("BenefitType")]
         public int BenefitTypeID { get; set; }
         public BenefitType BenefitType { get; set; }
+        [ForeignKey("Hostel")]
+        public int HostelID { get; set; }
+        public Hostel Hostel { get; set; }
         [Required]
         public decimal Price { get; set; }
         [Required]

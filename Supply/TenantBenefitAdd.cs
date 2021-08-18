@@ -16,11 +16,12 @@ namespace Supply
         private int _licenseID;
         private int _benefitTypeID;
         private int _orderID;
+        private int _hostelId;
         public TenantBenefitAdd(int tenantID)
         {
             InitializeComponent();
             _tenantID = tenantID;
-            _licenseID = _benefitTypeID = _orderID = 0;
+            _licenseID = _benefitTypeID = _orderID = _hostelId = 0;
         }
 
         private void TenantBenefitAdd_Load(object sender, EventArgs e)
@@ -29,7 +30,30 @@ namespace Supply
             {
                 try
                 {
-                    Tenant tenant = db.Tenants.Where(id => id.ID == _tenantID).Include(ident => ident.Identification).Include(order => order.Order).First();
+                    Tenant tenant = db.Tenants
+                        .Where(id => id.ID == _tenantID)
+                        .Include(ident => ident.Identification)
+                        .Include(r=>r.Room)
+                        .Include(order => order.Order)
+                        .FirstOrDefault();
+
+                    if (tenant == null)
+                    {
+                        MessageBox.Show("Жилец не найден!");
+                        this.Close();
+                    }
+
+                    Flat flat = db.Flats
+                        .Where(x => x.ID == tenant.Room.FlatID)
+                        .Include(ent => ent.Enterance)
+                        .FirstOrDefault();
+
+                    Hostel hostel = db.Hostels
+                        .Where(x => x.ID == flat.Enterance.HostelId)
+                        .FirstOrDefault();
+
+                    _hostelId = hostel.ID;
+
                     LB_TenantInf.Text = tenant.Identification.Surename + " " + tenant.Identification.Name;
                     if (tenant.Identification.Patronymic != null)
                     {
@@ -103,6 +127,9 @@ namespace Supply
             try
             {
                 _benefitTypeID = (int)CB_BenefitsTypes.SelectedValue;
+
+                Thread thread = new Thread(LoadPaymentBenefit);
+                thread.Start();
             }
             catch
             {
@@ -186,6 +213,30 @@ namespace Supply
             {
                 MessageBox.Show("Договор не существует!");
             }
+        }
+
+        private void LoadPaymentBenefit()
+        {
+            Action action = () =>
+              {
+                  if (_hostelId != 0 && _benefitTypeID != 0)
+                  {
+                      using(SupplyDbContext db = new SupplyDbContext())
+                      {
+                          BenefitPayment benefitPayment = db.BenefitPayments
+                          .Where(x => x.BenefitTypeID == _benefitTypeID)
+                          .Where(y => y.HostelID == _hostelId)
+                          .FirstOrDefault();
+
+                          if(benefitPayment!=null)
+                          {
+                              TB_Payment.Text = benefitPayment.Price.ToString();
+                          }
+                      }
+                  }
+              };
+            Invoke(action);
+            
         }
     }
 }

@@ -34,7 +34,7 @@
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <AutorunEnabled>true</AutorunEnabled>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -114,6 +114,18 @@
     </Compile>
     <Compile Include="AdminAddressesFormAdd.Designer.cs">
       <DependentUpon>AdminAddressesFormAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdminBenefitPaymentAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminBenefitPaymentAdd.Designer.cs">
+      <DependentUpon>AdminBenefitPaymentAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdminBenefitPayments.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminBenefitPayments.Designer.cs">
+      <DependentUpon>AdminBenefitPayments.cs</DependentUpon>
     </Compile>
     <Compile Include="AdminEnteranceForm.cs">
       <SubType>Form</SubType>
@@ -400,6 +412,10 @@
     <Compile Include="Migrations\202108181643361_BenefitPayment.designer.cs">
       <DependentUpon>202108181643361_BenefitPayment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202108182007248_updateBenefitPayment.cs" />
+    <Compile Include="Migrations\202108182007248_updateBenefitPayment.designer.cs">
+      <DependentUpon>202108182007248_updateBenefitPayment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accounting.cs" />
     <Compile Include="Models\AccountingElectricity.cs" />
@@ -526,6 +542,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AdminAddressesFormAdd.resx">
       <DependentUpon>AdminAddressesFormAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminBenefitPaymentAdd.resx">
+      <DependentUpon>AdminBenefitPaymentAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminBenefitPayments.resx">
+      <DependentUpon>AdminBenefitPayments.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AdminEnteranceForm.resx">
       <DependentUpon>AdminEnteranceForm.cs</DependentUpon>
@@ -676,6 +698,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202108181643361_BenefitPayment.resx">
       <DependentUpon>202108181643361_BenefitPayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108182007248_updateBenefitPayment.resx">
+      <DependentUpon>202108182007248_updateBenefitPayment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderAddForm.resx">
       <DependentUpon>OrderAddForm.cs</DependentUpon>
