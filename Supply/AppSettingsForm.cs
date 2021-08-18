@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -60,6 +61,16 @@ namespace Supply
                 LB_User.Text = _user.Name;
                 TB_LoginOld.Text = _user.Login;
             }
+
+            if (Properties.Settings.Default.IsServer == true)
+            {
+                ChB_IsItServer.Checked = true;
+            }
+            else
+            {
+                ChB_IsItServer.Checked = false;
+            }
+            
         }
 
         private void BTN_Save_Click(object sender, EventArgs e)
@@ -82,6 +93,14 @@ namespace Supply
 
             Properties.Settings.Default.outFileDir = TB_OutFileDir.Text;
 
+            if(ChB_IsItServer.Checked)
+            {
+                Properties.Settings.Default.IsServer = true;
+            }
+            else
+            {
+                Properties.Settings.Default.IsServer = false;
+            }
 
             if (result==DialogResult.Yes)
             {
@@ -226,5 +245,7 @@ namespace Supply
 
             return hash;
         }
+
+       
     }
 }
