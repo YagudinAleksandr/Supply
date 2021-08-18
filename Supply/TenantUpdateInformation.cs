@@ -288,7 +288,7 @@ namespace Supply
 
                                   CB_DocType.SelectedValue = _docTypeID = tenant.Identification.DocumentTypeID;
                                   CB_PaymentType.SelectedValue = _paymentTypeID = (int)tenant.PaymentID;
-                                  CB_TenantType.SelectedValue = _tenantTypeID = tenant.Identification.DocumentTypeID;
+                                  CB_TenantType.SelectedValue = _tenantTypeID = (int)tenant.TenantTypeID;
                               }
                               else
                               {

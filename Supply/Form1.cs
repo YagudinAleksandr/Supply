@@ -212,6 +212,10 @@ namespace Supply
                 MessageBox.Show("Выбирите общежитие в списке!");
             }
         }
+        private void BenefitsPayments_Click(object sender, EventArgs e)
+        {
+
+        }
         private void Form1_Shown(object sender, EventArgs e)
         {
             LB_UserName.Text = _user.Name;
@@ -272,6 +276,10 @@ namespace Supply
                 ToolStripMenuItem payments = new ToolStripMenuItem("Тарифные планы");
                 payments.Click += Payments_Click;
                 settingItem.DropDownItems.Add(payments);
+
+                ToolStripMenuItem benefitPayments = new ToolStripMenuItem("Тарифные планы для льготников");
+                benefitPayments.Click += BenefitsPayments_Click;
+                settingItem.DropDownItems.Add(benefitPayments);
 
                 ToolStripMenuItem paymentsElectrycity = new ToolStripMenuItem("Тарифные планы эл.энергия");
                 paymentsElectrycity.Click += PaymentElectr_Click;
@@ -371,11 +379,11 @@ namespace Supply
         {
             while (true)
             {
-                Thread.Sleep(TimeSpan.FromMinutes(380));
                 AsyncProcesses.UpdateChangeRoom();
                 AsyncProcesses.UpdateBenefits();
                 AsyncProcesses.UpdateOrders();
                 AsyncProcesses.UpdateTerminations();
+                Thread.Sleep(TimeSpan.FromMinutes(120));
             }
         }
 

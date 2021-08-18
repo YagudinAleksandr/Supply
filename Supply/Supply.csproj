@@ -34,8 +34,8 @@
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <AutorunEnabled>true</AutorunEnabled>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>29</ApplicationRevision>
-    <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <ExcludeDeploymentUrl>true</ExcludeDeploymentUrl>
@@ -396,6 +396,10 @@
     <Compile Include="Migrations\202108170721440_changeTermination2.designer.cs">
       <DependentUpon>202108170721440_changeTermination2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202108181643361_BenefitPayment.cs" />
+    <Compile Include="Migrations\202108181643361_BenefitPayment.designer.cs">
+      <DependentUpon>202108181643361_BenefitPayment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accounting.cs" />
     <Compile Include="Models\AccountingElectricity.cs" />
@@ -403,6 +407,7 @@
     <Compile Include="Models\AdditionalInformationType.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Benefit.cs" />
+    <Compile Include="Models\BenefitPayment.cs" />
     <Compile Include="Models\BenefitType.cs" />
     <Compile Include="Models\ChangePassport.cs" />
     <Compile Include="Models\ChangeRoom.cs" />
@@ -668,6 +673,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202108170721440_changeTermination2.resx">
       <DependentUpon>202108170721440_changeTermination2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108181643361_BenefitPayment.resx">
+      <DependentUpon>202108181643361_BenefitPayment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderAddForm.resx">
       <DependentUpon>OrderAddForm.cs</DependentUpon>

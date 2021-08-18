@@ -5,6 +5,7 @@ using System;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Supply
@@ -22,7 +23,7 @@ namespace Supply
         {
             using(SupplyDbContext db = new SupplyDbContext())
             {
-                Tenant tenant = db.Tenants.Where(x => x.ID == _tenantID).Include(i => i.Identification).FirstOrDefault();
+                Tenant tenant = db.Tenants.Where(x => x.ID == _tenantID).Include(i => i.Identification).Include(t=>t.TenantType).FirstOrDefault();
 
                 if (tenant != null) 
                 {
@@ -44,6 +45,7 @@ namespace Supply
                         LB_Series.Text = changePassport.Series;
                         LB_Issued.Text = changePassport.Issued;
                         LB_Address.Text = changePassport.Address;
+                        
                         if (changePassport.Code != null)
                         {
                             LB_Code.Text = changePassport.Code;
@@ -56,6 +58,8 @@ namespace Supply
                         DocumentType documentType = db.DocumentTypes.Where(x => x.ID == changePassport.DocumentTypeID).FirstOrDefault();
 
                         LB_DocType.Text = documentType.Name;
+
+                        
                     }
                     else
                     {
@@ -86,9 +90,9 @@ namespace Supply
 
                         LB_DocType.Text = documentType.Name;
                     }
-                    
 
-                    
+
+                    LB_TenantType.Text = tenant.TenantType.Name;
 
 
                     Order order = db.Orders.Where(x => x.ID == _tenantID).FirstOrDefault();
@@ -118,6 +122,9 @@ namespace Supply
                     LB_Group.Text = OrdersCreation.AdditionalInf(4, _tenantID);
                     LB_Degree.Text = OrdersCreation.AdditionalInf(6, _tenantID);
                     LB_EndDate.Text = "";
+
+                    Thread thread = new Thread(new ParameterizedThreadStart(LoadBenefitsCard));
+                    thread.Start(order.ID);
                 }
                 else
                 {
@@ -133,6 +140,33 @@ namespace Supply
                     this.Close();
                 }
             }
+        }
+
+        private void LoadBenefitsCard(object orderId)
+        {
+            Action action = () =>
+              {
+                  DG_View_Benefits.Rows.Clear();
+
+                  int id = (int)orderId;
+                  using(SupplyDbContext db = new SupplyDbContext())
+                  {
+                      var benefits = db.Benefits.Where(x => x.OrderID == id).ToList();
+
+                      foreach(Benefit benefit in benefits)
+                      {
+                          int rowNumber = DG_View_Benefits.Rows.Add();
+
+                          DG_View_Benefits.Rows[rowNumber].Cells[COL_ID.Name].Value = benefit.ID;
+                          DG_View_Benefits.Rows[rowNumber].Cells[COL_Status.Name].Value = benefit.Status;
+                          DG_View_Benefits.Rows[rowNumber].Cells[COL_Order.Name].Value = benefit.BasedOn + " №" + benefit.DecreeNumber + " от " + benefit.DecreeDate;
+                          DG_View_Benefits.Rows[rowNumber].Cells[COL_StartAt.Name].Value = benefit.StartDate;
+                          DG_View_Benefits.Rows[rowNumber].Cells[COL_EndAt.Name].Value = benefit.EndDate;
+                      }
+                  }
+              };
+
+            Invoke(action);
         }
     }
 }
