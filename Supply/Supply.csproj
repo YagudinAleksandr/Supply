@@ -313,6 +313,12 @@
     <Compile Include="DeclarationChangeRoom.Designer.cs">
       <DependentUpon>DeclarationChangeRoom.cs</DependentUpon>
     </Compile>
+    <Compile Include="DeclarationContinueOrders.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeclarationContinueOrders.Designer.cs">
+      <DependentUpon>DeclarationContinueOrders.cs</DependentUpon>
+    </Compile>
     <Compile Include="DeclarationElectricityPaymentOrders.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -513,6 +519,12 @@
     <Compile Include="TenantChangeRoom.Designer.cs">
       <DependentUpon>TenantChangeRoom.cs</DependentUpon>
     </Compile>
+    <Compile Include="TenantContinueOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TenantContinueOrder.Designer.cs">
+      <DependentUpon>TenantContinueOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="TenantElectricityAccount.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -642,6 +654,9 @@
     <EmbeddedResource Include="DeclarationChangeRoom.resx">
       <DependentUpon>DeclarationChangeRoom.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DeclarationContinueOrders.resx">
+      <DependentUpon>DeclarationContinueOrders.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DeclarationElectricityPaymentOrders.resx">
       <DependentUpon>DeclarationElectricityPaymentOrders.cs</DependentUpon>
     </EmbeddedResource>
@@ -740,6 +755,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TenantChangeRoom.resx">
       <DependentUpon>TenantChangeRoom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TenantContinueOrder.resx">
+      <DependentUpon>TenantContinueOrder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TenantElectricityAccount.resx">
       <DependentUpon>TenantElectricityAccount.cs</DependentUpon>

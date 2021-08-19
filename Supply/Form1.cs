@@ -129,7 +129,11 @@ namespace Supply
             DeclarationHostels declarationHostels = new DeclarationHostels();
             declarationHostels.Show();
         }
-
+        private void DeclarationContinueOrders_Click(object sender, EventArgs e)
+        {
+            DeclarationContinueOrders declarationContinueOrders = new DeclarationContinueOrders();
+            declarationContinueOrders.Show();
+        }
         private void CreateAccount_Click(object sender, EventArgs e)
         {
             DeclarationAccount declarationAccount = new DeclarationAccount();
@@ -313,6 +317,10 @@ namespace Supply
                 ToolStripMenuItem declarationTerminations = new ToolStripMenuItem("Отчеты по расторжению договоров");
                 declarationTerminations.Click += DeclarationTerminations_Click;
                 declaration.DropDownItems.Add(declarationTerminations);
+
+                ToolStripMenuItem declarationContinueOrders = new ToolStripMenuItem("Отчет по продлению договоров");
+                declarationContinueOrders.Click += DeclarationContinueOrders_Click;
+                declaration.DropDownItems.Add(declarationContinueOrders);
 
                 ToolStripMenuItem declarationHostels = new ToolStripMenuItem("Отчет по общежитиям");
                 declarationHostels.Click += DeclarationHostelsOrders;
@@ -657,7 +665,6 @@ namespace Supply
 
         private void ContinueOrder(object sender, EventArgs e)
         {
-#if DEBUG
             try
             {
                 if (TV_HostelInformation.SelectedNode.Tag != null)
@@ -681,8 +688,8 @@ namespace Supply
                         }
                         else
                         {
-                          
-                            
+                            TenantContinueOrder tenantContinueOrder = new TenantContinueOrder(tenantID);
+                            tenantContinueOrder.Show();
                         }
                     }
                 }
@@ -691,7 +698,6 @@ namespace Supply
             {
                 return;
             }
-#endif
         }
         private void UpdateTenantInformation(object sender, EventArgs e)
         {
