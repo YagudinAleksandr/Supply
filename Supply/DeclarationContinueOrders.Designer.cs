@@ -52,7 +52,7 @@ namespace Supply
             this.COL_Tenant,
             this.COL_OrderEndDate,
             this.COL_ContinueDate});
-            this.DG_View_ContinueOrders.Location = new System.Drawing.Point(13, 13);
+            this.DG_View_ContinueOrders.Location = new System.Drawing.Point(12, 12);
             this.DG_View_ContinueOrders.Name = "DG_View_ContinueOrders";
             this.DG_View_ContinueOrders.RowHeadersWidth = 51;
             this.DG_View_ContinueOrders.RowTemplate.Height = 24;
