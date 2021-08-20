@@ -1242,6 +1242,198 @@ namespace Supply.Libs
                 return true;
             }
         }
+        public static bool CreateContinueOrder(int continueOrderId, out string error)
+        {
+            error = string.Empty;
+            try
+            {
+                using (SupplyDbContext db = new SupplyDbContext())
+                {
+                    ContinueOrder continueOrder = db.ContinueOrders
+                        .Where(x => x.ID == continueOrderId)
+                        .Include(or => or.Order)
+                        .Include(l => l.License)
+                        .FirstOrDefault();
+
+                    if (continueOrder == null)
+                    {
+                        error = "Не найдено приложение на продление договора!";
+                        return false;
+                    }
+
+                    Manager manager = db.Managers
+                        .Where(x => x.ID == continueOrder.License.ManagerId)
+                        .FirstOrDefault();
+
+                    if (manager == null) 
+                    {
+                        error = "Не найдено ответственного лица!";
+                        return false;
+                    }
+
+                    Order order = db.Orders
+                        .Where(x => x.ID == continueOrder.OrderID)
+                        .FirstOrDefault();
+
+                    if (order == null)
+                    {
+                        error = "Не найдено договора!";
+                        return false;
+                    }
+
+                    Tenant tenant = db.Tenants
+                        .Where(x => x.ID == order.ID)
+                        .Include(r => r.Room)
+                        .Include(i => i.Identification)
+                        .FirstOrDefault();
+
+                    if (tenant == null)
+                    {
+                        error = "Не найдено жильца!";
+                        return false;
+                    }
+
+                    Flat flat = db.Flats
+                        .Where(x => x.ID == tenant.Room.FlatID)
+                        .Include(en => en.Enterance)
+                        .FirstOrDefault();
+
+                    if (flat == null)
+                    {
+                        error = "Не найдено этажа!";
+                        return false;
+                    }
+
+                    Hostel hostel = db.Hostels
+                        .Where(x => x.ID == flat.Enterance.HostelId)
+                        .FirstOrDefault();
+
+                    if (hostel == null)
+                    {
+                        error = "Не найдено общежития!";
+                        return false;
+                    }
+
+                    
+
+                    ChangePassport changePassport = db.ChangePassports
+                        .Where(x => x.TenantID == tenant.ID)
+                        .Where(s => s.Status == true)
+                        .FirstOrDefault();
+
+                    WordDocument wordDocument;
+
+                    if (changePassport != null)
+                    {
+                        wordDocument = new WordDocument(AppSettings.GetTemplateSetting("template10"), AppSettings.GetTemplateSetting("outfileDir") + @"\", $"Продление договора {changePassport.Surename} {changePassport.Name} " + order.OrderNumber.ToString());
+                    }
+                    else
+                    {
+                        wordDocument = new WordDocument(AppSettings.GetTemplateSetting("template10"), AppSettings.GetTemplateSetting("outfileDir") + @"\", $"Продление договора {tenant.Identification.Surename} {tenant.Identification.Name} " + order.OrderNumber.ToString());
+                    }
+
+                    Dictionary<string, string> replacements = new Dictionary<string, string>();
+
+                    replacements.Add("ID", order.OrderNumber);
+                    replacements.Add("startOrder", order.StartDate);
+
+                    DateTime createdFile;
+
+                    if (!DateTime.TryParse(continueOrder.StartDate, out createdFile))
+                    {
+                        throw new Exception("Невозможно перевести значение в формат даты!");
+                    }
+
+                    replacements.Add("orderContinue", createdFile.ToShortDateString());
+
+                    if (changePassport != null)
+                    {
+                        replacements.Add("Surename", changePassport.Surename);
+                        replacements.Add("Name", changePassport.Name);
+                        replacements.Add("ns", changePassport.Name[0].ToString());
+                        if (changePassport.Patronymic != null)
+                        {
+                            replacements.Add("Patronymic", changePassport.Patronymic);
+                            replacements.Add("ps", changePassport.Patronymic[0].ToString());
+                        }
+                        else
+                        {
+                            replacements.Add("Patronymic", "");
+                            replacements.Add("ps", "");
+                        }
+
+                        replacements.Add("DocSeries", changePassport.Series);
+                        replacements.Add("DocNumber", changePassport.Number);
+                        replacements.Add("DocGiven", changePassport.Issued);
+                        replacements.Add("DocDate", changePassport.GivenDate);
+                        replacements.Add("HumanAddress", changePassport.Address);
+
+                        if (changePassport.Code != null)
+                        {
+                            replacements.Add("DocCode", changePassport.Code);
+                        }
+                        else
+                        {
+                            replacements.Add("DocCode", "");
+                        }
+                    }
+                    else
+                    {
+                        replacements.Add("Surename", tenant.Identification.Surename);
+                        replacements.Add("Name", tenant.Identification.Name);
+                        replacements.Add("ns", tenant.Identification.Name[0].ToString());
+                        if (tenant.Identification.Patronymic != null)
+                        {
+                            replacements.Add("Patronymic", tenant.Identification.Patronymic);
+                            replacements.Add("ps", tenant.Identification.Patronymic[0].ToString());
+                        }
+                        else
+                        {
+                            replacements.Add("Patronymic", "");
+                            replacements.Add("ps", "");
+                        }
+
+                        replacements.Add("DocSeries", tenant.Identification.DocumentSeries);
+                        replacements.Add("DocNumber", tenant.Identification.DocumentNumber);
+                        replacements.Add("DocGiven", tenant.Identification.Issued);
+                        replacements.Add("DocDate", tenant.Identification.GivenDate);
+                        replacements.Add("HumanAddress", tenant.Identification.Address);
+
+                        if (tenant.Identification.Code != null)
+                        {
+                            replacements.Add("DocCode", tenant.Identification.Code);
+                        }
+                        else
+                        {
+                            replacements.Add("DocCode", "");
+                        }
+                    }
+
+                    replacements.Add("MainManager", manager.Surename + " " + manager.Name[0] + "." + manager.Patronymic[0] + ".");
+                    replacements.Add("Manager", manager.Surename + " " + manager.Name + " " + manager.Patronymic);
+                    replacements.Add("LicenseNumber", continueOrder.License.Name);
+                    replacements.Add("LicenseStart", continueOrder.License.StartDate);
+
+                    if (wordDocument.OpenWordTemplate(out error))
+                    {
+                        
+                    }
+                    else
+                    {
+                        throw new Exception(error);
+                    }
+
+                    return true;
+
+                }
+            }
+            catch(Exception ex)
+            {
+                error = $"Class: OrdersCreation. Method: CreateContinueOrder. {ex.Message}. {ex.InnerException}";
+                GC.Collect();
+                return false;
+            }            
+        }
     }
     
 }

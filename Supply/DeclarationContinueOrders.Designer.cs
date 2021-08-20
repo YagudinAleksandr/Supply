@@ -66,7 +66,7 @@ namespace Supply
             this.COL_ID.MinimumWidth = 6;
             this.COL_ID.Name = "COL_ID";
             this.COL_ID.ReadOnly = true;
-            this.COL_ID.Width = 125;
+            this.COL_ID.Width = 80;
             // 
             // COL_OrderNumber
             // 
@@ -82,7 +82,7 @@ namespace Supply
             this.COL_Tenant.MinimumWidth = 6;
             this.COL_Tenant.Name = "COL_Tenant";
             this.COL_Tenant.ReadOnly = true;
-            this.COL_Tenant.Width = 125;
+            this.COL_Tenant.Width = 350;
             // 
             // COL_OrderEndDate
             // 
@@ -109,6 +109,7 @@ namespace Supply
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DeclarationContinueOrders";
             this.Text = "Продление договоров";
+            this.Shown += new System.EventHandler(this.DeclarationContinueOrders_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.DG_View_ContinueOrders)).EndInit();
             this.ResumeLayout(false);
 
