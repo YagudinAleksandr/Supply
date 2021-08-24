@@ -49,6 +49,7 @@ namespace Supply.Libs
                             break;
                         case "Заочная":
                         case "заочная":
+
                             template = "template2";
                             break;
                         default:
@@ -176,24 +177,24 @@ namespace Supply.Libs
                     {
                         case "template1":
 
-                            replacements.Add("rate", (tenant.Payment.Rent + tenant.Payment.Service).ToString());
-                            replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service)));
-                            replacements.Add("yearRate", ((tenant.Payment.Rent + tenant.Payment.Service) * 12).ToString());
-                            replacements.Add("rateWordYear", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service) * 12));
+                            replacements.Add("rate", (tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House).ToString());
+                            replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House)));
+                            replacements.Add("yearRate", ((tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House) * 12).ToString());
+                            replacements.Add("rateWordYear", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House) * 12));
                             totalDate = Math.Abs((orderEndDate.Month - orderStartDate.Month) + 12 * (orderEndDate.Year - orderStartDate.Year));
-                            replacements.Add("allTimeRate", ((int)(tenant.Payment.Rent + tenant.Payment.Service) * totalDate).ToString());
-                            replacements.Add("allTimeRateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service) * totalDate));
+                            replacements.Add("allTimeRate", ((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House) * totalDate).ToString());
+                            replacements.Add("allTimeRateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House) * totalDate));
 
                             break;
 
 
                         case "template2":
 
-                            replacements.Add("rate", (tenant.Payment.Rent + tenant.Payment.Service).ToString());
-                            replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service)));
+                            replacements.Add("rate", (tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House).ToString());
+                            replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House)));
                             totalDate = Math.Abs((orderEndDate - orderStartDate).Days);
-                            replacements.Add("allTimeRate", ((int)(tenant.Payment.Rent + tenant.Payment.Service) * totalDate).ToString());
-                            replacements.Add("allTimeRateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service) * totalDate));
+                            replacements.Add("allTimeRate", ((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House) * totalDate).ToString());
+                            replacements.Add("allTimeRateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House) * totalDate));
                             break;
 
                         case "template3":
@@ -213,10 +214,10 @@ namespace Supply.Libs
                                 replacements.Add("family", "");
                             }
 
-                            replacements.Add("rate", (tenant.Payment.Rent + tenant.Payment.Service).ToString());
-                            replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service)));
-                            replacements.Add("yearRate", ((tenant.Payment.Rent + tenant.Payment.Service) * 12).ToString());
-                            replacements.Add("rateWordYear", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service) * 12));
+                            replacements.Add("rate", (tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House).ToString());
+                            replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House)));
+                            replacements.Add("yearRate", ((tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House) * 12).ToString());
+                            replacements.Add("rateWordYear", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House) * 12));
 
                             break;
 
@@ -237,11 +238,11 @@ namespace Supply.Libs
                                 replacements.Add("family", "");
                             }
 
-                            replacements.Add("rate", (tenant.Payment.Rent + tenant.Payment.Service).ToString());
-                            replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service)));
+                            replacements.Add("rate", (tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House).ToString());
+                            replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House)));
                             totalDate = Math.Abs((orderEndDate.Day - orderStartDate.Day) + (orderEndDate.Day - orderStartDate.Day));
-                            replacements.Add("allTimeRate", ((int)(tenant.Payment.Rent + tenant.Payment.Service) * totalDate).ToString());
-                            replacements.Add("allTimeRateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service) * totalDate));
+                            replacements.Add("allTimeRate", ((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House) * totalDate).ToString());
+                            replacements.Add("allTimeRateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House) * totalDate));
 
                             break;
 
