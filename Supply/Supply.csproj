@@ -422,6 +422,10 @@
     <Compile Include="Migrations\202108182007248_updateBenefitPayment.designer.cs">
       <DependentUpon>202108182007248_updateBenefitPayment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202108241906558_AddedHousePricePayments.cs" />
+    <Compile Include="Migrations\202108241906558_AddedHousePricePayments.designer.cs">
+      <DependentUpon>202108241906558_AddedHousePricePayments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accounting.cs" />
     <Compile Include="Models\AccountingElectricity.cs" />
@@ -716,6 +720,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202108182007248_updateBenefitPayment.resx">
       <DependentUpon>202108182007248_updateBenefitPayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108241906558_AddedHousePricePayments.resx">
+      <DependentUpon>202108241906558_AddedHousePricePayments.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderAddForm.resx">
       <DependentUpon>OrderAddForm.cs</DependentUpon>

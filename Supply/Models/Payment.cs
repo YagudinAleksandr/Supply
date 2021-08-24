@@ -14,6 +14,7 @@ namespace Supply.Models
         public decimal Rent { get; set; }
         [Required]
         public decimal Service { get; set; }
+        public decimal House { get; set; }
         [Required]
         public string Description { get; set; }
         [Required]

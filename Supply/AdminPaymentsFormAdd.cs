@@ -53,6 +53,50 @@ namespace Supply
                 MessageBox.Show("Выбирите общежитие!");
                 return;
             }
+
+            decimal rent = 0;
+            decimal house = 0;
+            decimal service = 0;
+
+            if (TB_Coast.Text != string.Empty)
+            {
+                if (!decimal.TryParse(TB_Coast.Text, out rent))
+                {
+                    MessageBox.Show("Значение поля суммы за койко место должно быть числом!");
+                    return;
+                }
+            }
+            else
+            {
+                rent = 0;
+            }
+
+            if (TB_Service.Text != string.Empty) 
+            {
+                if (!decimal.TryParse(TB_Service.Text, out service))
+                {
+                    MessageBox.Show("Значение поля суммы за коммунальные услуги должно быть числом!");
+                    return;
+                }
+            }
+            else
+            {
+                service = 0;
+            }
+
+            if (TB_House.Text != string.Empty)
+            {
+                if (!decimal.TryParse(TB_House.Text, out house))
+                {
+                    MessageBox.Show("Значение поля Сумма за содержание жилого помещения должно быть числом!");
+                    return;
+                }
+            }
+            else
+            {
+                house = 0;
+            }
+
             using(SupplyDbContext db = new SupplyDbContext())
             {
                 Payment payment;
@@ -74,8 +118,9 @@ namespace Supply
                         payment.Status = false;
                     }
 
-                    payment.Rent = decimal.Parse(TB_Coast.Text);
-                    payment.Service = decimal.Parse(TB_Service.Text);
+                    payment.Rent = rent;
+                    payment.Service = service;
+                    payment.House = house;
                     payment.TenantTypeID = _tenantTypeID;
                     payment.PaymentType = CB_PeriodOfPayment.SelectedItem.ToString();
                     try
@@ -109,8 +154,9 @@ namespace Supply
                     {
                         payment.Status = false;
                     }
-                    payment.Rent = decimal.Parse(TB_Coast.Text);
-                    payment.Service = decimal.Parse(TB_Service.Text);
+                    payment.Rent = rent;
+                    payment.Service = service;
+                    payment.House = house;
                     payment.TenantTypeID = _tenantTypeID;
                     payment.PaymentType = CB_PeriodOfPayment.SelectedItem.ToString();
 
@@ -186,9 +232,14 @@ namespace Supply
                         TB_Description.Text = payment.Description;
                         TB_Coast.Text = payment.Rent.ToString();
                         TB_Service.Text = payment.Service.ToString();
+                        TB_House.Text = payment.House.ToString();
                         ChB_Status.Checked = payment.Status;
                     }
                 }
+            }
+            else
+            {
+                TB_Coast.Text = TB_Service.Text = TB_House.Text = "0";
             }
         }
     }
