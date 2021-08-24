@@ -2,15 +2,10 @@
 using Supply.Libs;
 using Supply.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Supply
@@ -81,12 +76,40 @@ namespace Supply
                             {
                                 foreach (Room room in db.Rooms.Where(x => x.FlatID == flat.ID).ToList())
                                 {
-                                    foreach (Tenant tenant in db.Tenants.Where(x => x.RoomID == room.ID).ToList())
+                                    foreach (Tenant tenant in db.Tenants.Where(x => x.RoomID == room.ID).Include(p => p.Payment).ToList()) 
                                     {
                                         string error = string.Empty;
                                         if (!OrdersCreation.CreatePaymentOrder(tenant.ID, TB_StartDate.Text, TB_EndDate.Text, TB_Action.Text, out error))
                                         {
                                             MessageBox.Show(error);
+                                        }
+                                        else
+                                        {
+                                            Accounting accounting = new Accounting();
+                                            accounting.CreatedAt = DateTime.Now.ToString();
+                                            accounting.PeriodStart = TB_StartDate.Text;
+                                            accounting.PeriodEnd = TB_EndDate.Text;
+                                            accounting.TenantID = tenant.ID;
+                                            accounting.Coast = (tenant.Payment.House + tenant.Payment.Service + tenant.Payment.Rent).ToString();
+
+                                            try
+                                            {
+                                                db.Accountings.Add(accounting);
+                                                db.SaveChanges();
+                                            }
+                                            catch(Exception ex)
+                                            {
+                                                Log log = new Log();
+                                                log.Caption = "Class: DeclarationPaymentOrder. Method: CreatePayOrder. "+ex.Message+". "+ex.InnerException;
+                                                log.CreatedAt = DateTime.Now.ToString();
+                                                log.Type = "ERROR";
+                                                log.ID = Guid.NewGuid();
+
+                                                db.Logs.Add(log);
+                                                db.SaveChanges();
+
+                                                MessageBox.Show(ex.Message);
+                                            }
                                         }
                                     }
                                 }
@@ -111,6 +134,41 @@ namespace Supply
                 {
                     MessageBox.Show(error);
                 }
+                else
+                {
+                    using (SupplyDbContext db = new SupplyDbContext())
+                    {
+                        Tenant tenant = db.Tenants.Where(id => id.ID == _tenantID).Include(p => p.Payment).FirstOrDefault();
+
+                        Accounting accounting = new Accounting();
+                        accounting.CreatedAt = DateTime.Now.ToString();
+                        accounting.PeriodStart = TB_StartDate.Text;
+                        accounting.PeriodEnd = TB_EndDate.Text;
+                        accounting.TenantID = tenant.ID;
+                        accounting.Coast = (tenant.Payment.House + tenant.Payment.Service + tenant.Payment.Rent).ToString();
+
+                        try
+                        {
+                            db.Accountings.Add(accounting);
+                            db.SaveChanges();
+                        }
+                        catch (Exception ex)
+                        {
+                            Log log = new Log();
+                            log.Caption = "Class: DeclarationPaymentOrder. Method: CreatePayOrder. " + ex.Message + ". " + ex.InnerException;
+                            log.CreatedAt = DateTime.Now.ToString();
+                            log.Type = "ERROR";
+                            log.ID = Guid.NewGuid();
+
+                            db.Logs.Add(log);
+                            db.SaveChanges();
+
+                            MessageBox.Show(ex.Message);
+                        }
+                    }
+                }
+                
+                
 
                 MessageBox.Show("Платежное поручение создано!");
             }

@@ -649,10 +649,14 @@ namespace Supply
                     break;
                 case "tenant":
                     contextMenu.MenuItems.Add("Изменить", UpdateTenantInformation);
+#if DEBUG
                     contextMenu.MenuItems.Add("Внести оплату", AddAccounting);
                     contextMenu.MenuItems.Add("Внести оплату за эл.энергию", AddAccountingForElectricity);
+#endif
                     contextMenu.MenuItems.Add("Сформировать договор", AddHumanMainOrder);
+#if DEBUG
                     contextMenu.MenuItems.Add("Сформировать платежное поручение", AddTenantAccountingForElectricity);
+#endif
                     contextMenu.MenuItems.Add("Переселить жильца", ChangeRoomOrder);
                     contextMenu.MenuItems.Add("Смена паспорта", AddChangePassportHandler);
                     contextMenu.MenuItems.Add("Создать льготу", AddBenefitHandler);
@@ -1066,8 +1070,10 @@ namespace Supply
 
         private void BTN_CreatePaymentOrder_Click(object sender, EventArgs e)
         {
+#if DEBUG
             DeclarationPaymentOrder declarationPaymentOrder = new DeclarationPaymentOrder();
             declarationPaymentOrder.Show();
+#endif
         }
 
         private void BTN_OrderToElectricity_Click(object sender, EventArgs e)
