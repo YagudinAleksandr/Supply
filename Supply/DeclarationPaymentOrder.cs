@@ -85,31 +85,48 @@ namespace Supply
                                         }
                                         else
                                         {
-                                            Accounting accounting = new Accounting();
-                                            accounting.CreatedAt = DateTime.Now.ToString();
-                                            accounting.PeriodStart = TB_StartDate.Text;
-                                            accounting.PeriodEnd = TB_EndDate.Text;
-                                            accounting.TenantID = tenant.ID;
-                                            accounting.Coast = (tenant.Payment.House + tenant.Payment.Service + tenant.Payment.Rent).ToString();
+                                            DateTime periodStart = Convert.ToDateTime(TB_StartDate.Text);
+                                            DateTime periodEnd = Convert.ToDateTime(TB_EndDate.Text);
 
-                                            try
+                                            int totalDate = Math.Abs((periodEnd.Month - periodStart.Month) + 12 * (periodEnd.Year - periodStart.Year));
+
+                                            Accounting accounting = db.Accountings
+                                                .Where(t => t.TenantID == tenant.ID)
+                                                .Where(ps=>ps.PeriodStart==TB_StartDate.Text)
+                                                .Where(pe=>pe.PeriodEnd==TB_EndDate.Text)
+                                                .FirstOrDefault();
+
+                                            if (accounting == null)
                                             {
-                                                db.Accountings.Add(accounting);
-                                                db.SaveChanges();
-                                            }
-                                            catch(Exception ex)
-                                            {
-                                                Log log = new Log();
-                                                log.Caption = "Class: DeclarationPaymentOrder. Method: CreatePayOrder. "+ex.Message+". "+ex.InnerException;
-                                                log.CreatedAt = DateTime.Now.ToString();
-                                                log.Type = "ERROR";
-                                                log.ID = Guid.NewGuid();
+                                                accounting = new Accounting();
+                                                accounting.CreatedAt = DateTime.Now.ToString();
+                                                accounting.PeriodStart = TB_StartDate.Text;
+                                                accounting.PeriodEnd = TB_EndDate.Text;
+                                                accounting.TenantID = tenant.ID;
+                                                accounting.Coast = "0";
+                                                accounting.Debt = ((tenant.Payment.House + tenant.Payment.Service + tenant.Payment.Rent) * totalDate).ToString();
 
-                                                db.Logs.Add(log);
-                                                db.SaveChanges();
+                                                try
+                                                {
+                                                    db.Accountings.Add(accounting);
+                                                    db.SaveChanges();
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    Log log = new Log();
+                                                    log.Caption = "Class: DeclarationPaymentOrder. Method: CreatePayOrder. " + ex.Message + ". " + ex.InnerException;
+                                                    log.CreatedAt = DateTime.Now.ToString();
+                                                    log.Type = "ERROR";
+                                                    log.ID = Guid.NewGuid();
 
-                                                MessageBox.Show(ex.Message);
+                                                    db.Logs.Add(log);
+                                                    db.SaveChanges();
+
+                                                    MessageBox.Show(ex.Message);
+                                                }
                                             }
+
+                                            
                                         }
                                     }
                                 }
@@ -140,30 +157,45 @@ namespace Supply
                     {
                         Tenant tenant = db.Tenants.Where(id => id.ID == _tenantID).Include(p => p.Payment).FirstOrDefault();
 
-                        Accounting accounting = new Accounting();
-                        accounting.CreatedAt = DateTime.Now.ToString();
-                        accounting.PeriodStart = TB_StartDate.Text;
-                        accounting.PeriodEnd = TB_EndDate.Text;
-                        accounting.TenantID = tenant.ID;
-                        accounting.Coast = (tenant.Payment.House + tenant.Payment.Service + tenant.Payment.Rent).ToString();
+                        DateTime periodStart = Convert.ToDateTime(TB_StartDate.Text);
+                        DateTime periodEnd = Convert.ToDateTime(TB_EndDate.Text);
 
-                        try
+                        int totalDate = Math.Abs((periodEnd.Month - periodStart.Month) + 12 * (periodEnd.Year - periodStart.Year));
+
+                        Accounting accounting = db.Accountings
+                                                .Where(t => t.TenantID == tenant.ID)
+                                                .Where(ps => ps.PeriodStart == TB_StartDate.Text)
+                                                .Where(pe => pe.PeriodEnd == TB_EndDate.Text)
+                                                .FirstOrDefault();
+
+                        if (accounting == null)
                         {
-                            db.Accountings.Add(accounting);
-                            db.SaveChanges();
-                        }
-                        catch (Exception ex)
-                        {
-                            Log log = new Log();
-                            log.Caption = "Class: DeclarationPaymentOrder. Method: CreatePayOrder. " + ex.Message + ". " + ex.InnerException;
-                            log.CreatedAt = DateTime.Now.ToString();
-                            log.Type = "ERROR";
-                            log.ID = Guid.NewGuid();
+                            accounting = new Accounting();
+                            accounting.CreatedAt = DateTime.Now.ToString();
+                            accounting.PeriodStart = TB_StartDate.Text;
+                            accounting.PeriodEnd = TB_EndDate.Text;
+                            accounting.TenantID = tenant.ID;
+                            accounting.Coast = "0";
+                            accounting.Debt = ((tenant.Payment.House + tenant.Payment.Service + tenant.Payment.Rent) * totalDate).ToString();
 
-                            db.Logs.Add(log);
-                            db.SaveChanges();
+                            try
+                            {
+                                db.Accountings.Add(accounting);
+                                db.SaveChanges();
+                            }
+                            catch (Exception ex)
+                            {
+                                Log log = new Log();
+                                log.Caption = "Class: DeclarationPaymentOrder. Method: CreatePayOrder. " + ex.Message + ". " + ex.InnerException;
+                                log.CreatedAt = DateTime.Now.ToString();
+                                log.Type = "ERROR";
+                                log.ID = Guid.NewGuid();
 
-                            MessageBox.Show(ex.Message);
+                                db.Logs.Add(log);
+                                db.SaveChanges();
+
+                                MessageBox.Show(ex.Message);
+                            }
                         }
                     }
                 }

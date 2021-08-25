@@ -12,7 +12,6 @@ namespace Supply
     public partial class TenantAccounting : Form
     {
         private int _tenantID;
-        private decimal _accountingTotal;
         public TenantAccounting(int tenantID)
         {
             InitializeComponent();
@@ -31,125 +30,113 @@ namespace Supply
             {
                 using (SupplyDbContext db = new SupplyDbContext())
                 {
-                    Tenant tenant = db.Tenants.Where(id => id.ID == _tenantID).Include(ident => ident.Identification).FirstOrDefault();
-                    ChangePassport changePassport = db.ChangePassports.Where(tid => tid.TenantID == tenant.ID).Where(s => s.Status == true).FirstOrDefault();
-                    Order order = db.Orders.Where(id => id.ID == tenant.ID).FirstOrDefault();
-                    Payment payment = db.Payments.Where(id => id.ID == tenant.PaymentID).FirstOrDefault();
-                    Benefit benefit = db.Benefits.Where(oid => oid.OrderID == order.ID).FirstOrDefault();
-                    var accountings = db.Accountings.Where(tid => tid.TenantID == tenant.ID).ToList();
 
-                    if (changePassport != null) 
+                    Tenant tenant = db.Tenants
+                    .Where(id=>id.ID==_tenantID)
+                    .Include(ident => ident.Identification)
+                    .FirstOrDefault();
+
+                    if (tenant != null)
                     {
-                        LB_TenantName.Text = changePassport.Surename + " " + changePassport.Name;
-                        if(changePassport.Patronymic!=null)
+                        ChangePassport changePassport = db.ChangePassports.
+                        Where(tid => tid.TenantID == tenant.ID).
+                        Where(s => s.Status == true).
+                        FirstOrDefault();
+
+                        var accountings = db.Accountings
+                        .Where(tid => tid.TenantID == tenant.ID)
+                        .Where(d => d.Debt != "0,00")
+                        .ToList();
+
+                        if (changePassport != null)
                         {
-                            LB_TenantName.Text += " " + changePassport.Patronymic;
+                            LB_TenantName.Text = changePassport.Surename + " " + changePassport.Name;
+                            if (changePassport.Patronymic != null)
+                            {
+                                LB_TenantName.Text += " " + changePassport.Patronymic;
+                            }
                         }
+                        else
+                        {
+                            LB_TenantName.Text = tenant.Identification.Surename + " " + tenant.Identification.Name;
+                            if (tenant.Identification.Patronymic != null)
+                            {
+                                LB_TenantName.Text += " " + tenant.Identification.Patronymic;
+                            }
+                        }
+
+                        DG_View_Accounting.Rows.Clear();
+
+                        foreach(Accounting accounting in accountings)
+                        {
+                            int rowNumber = DG_View_Accounting.Rows.Add();
+
+                            DG_View_Accounting.Rows[rowNumber].Cells[COL_ID.Name].Value = accounting.ID;
+                            DG_View_Accounting.Rows[rowNumber].Cells[COL_StartDate.Name].Value = accounting.PeriodStart;
+                            DG_View_Accounting.Rows[rowNumber].Cells[COL_EndDate.Name].Value = accounting.PeriodEnd;
+                            DG_View_Accounting.Rows[rowNumber].Cells[COL_Debt.Name].Value = accounting.Debt;
+                        }
+
+                        
                     }
                     else
                     {
-                        LB_TenantName.Text = tenant.Identification.Surename + " " + tenant.Identification.Name;
-                        if (tenant.Identification.Patronymic != null)
-                        {
-                            LB_TenantName.Text += " " + tenant.Identification.Patronymic;
-                        }
+                        MessageBox.Show("Жилец не найден!");
+                        return;
                     }
-                    //Payment part
-                    DateTime orderStartDate = Convert.ToDateTime(order.StartDate);
-                    DateTime orderEndDate = Convert.ToDateTime(order.EndDate);
-
-                    int totalDate = Math.Abs((orderEndDate.Month - orderStartDate.Month) + 12 * (orderEndDate.Year - orderStartDate.Year));
-
-                    _accountingTotal = (tenant.Payment.Rent + tenant.Payment.Service) * totalDate;
-
-                    DateTime benefitStart;//Benefit start date
-                    DateTime benefitEnd;//benefit end date
-
-                    if (benefit != null)
-                    {
-                        benefitStart = Convert.ToDateTime(benefit.StartDate);
-                        benefitEnd = Convert.ToDateTime(benefit.EndDate);
-
-                        int totalPeriodStart = Math.Abs((benefitStart.Month - orderStartDate.Month) + 12 * (benefitStart.Year - orderStartDate.Year));
-                        _accountingTotal = totalPeriodStart * (tenant.Payment.Rent + tenant.Payment.Service);
-
-                        int totalPeriodEnd = Math.Abs((orderEndDate.Month - benefitEnd.Month) + 12 * (orderEndDate.Year - benefitEnd.Year));
-                        _accountingTotal += totalPeriodEnd * (tenant.Payment.Rent + tenant.Payment.Service);
-
-                        int totalBenefitDate = Math.Abs((benefitEnd.Month - benefitStart.Month) + 12 * (benefitEnd.Year - benefitStart.Year));
-                        _accountingTotal += Convert.ToDecimal(benefit.Payment) * totalBenefitDate;
-                        
-                    }
-
-
-
-
-                    foreach (var accounting in accountings)
-                    {
-                        _accountingTotal -= Convert.ToDecimal(accounting.Coast);
-                    }
-
-                    LB_TotalSum.Text = _accountingTotal.ToString();
                 }
+
             };
 
             Invoke(action);
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            if(TB_Payment.Text=="")
-            {
-                LB_TotalSum.Text = _accountingTotal.ToString();
-
-            }
-            else
-            {
-                LB_TotalSum.Text = (_accountingTotal - Convert.ToDecimal(TB_Payment.Text)).ToString();
-            }
-        }
-
         private void BTN_Add_Click(object sender, EventArgs e)
         {
-            if(TB_Payment.Text!="")
+            using(SupplyDbContext db = new SupplyDbContext())
             {
-                decimal sum = 0;
-                if (decimal.TryParse(TB_Payment.Text, out sum))
+                foreach (DataGridViewRow row in DG_View_Accounting.Rows)
                 {
-                    using (SupplyDbContext db = new SupplyDbContext())
+                    decimal coast = 0;
+
+                    if (row.Cells[0].Value != null && row.Cells[4].Value!=null && decimal.TryParse(row.Cells[4].Value.ToString(), out coast))
                     {
-                        Accounting accounting = new Accounting();
-                        accounting.Coast = sum.ToString();
-                        accounting.CreatedAt = DateTime.Now.ToString();
-                        accounting.TenantID = _tenantID;
-                        accounting.PeriodStart = TB_AccountingStartDate.Text;
-                        accounting.PeriodEnd = TB_AccountingEndDate.Text;
+                        int accountingId = int.Parse(row.Cells[0].Value.ToString());
 
+                        Accounting accounting = db.Accountings
+                            .Where(id => id.ID == accountingId)
+                            .FirstOrDefault();
 
+                        decimal debt = decimal.Parse(accounting.Debt);
+
+                        debt -= coast;
+
+                        accounting.Debt = debt.ToString();
+                        accounting.Coast = coast.ToString();
+                        
                         try
                         {
-                            db.Accountings.Add(accounting);
+                            db.Entry(accounting).State = System.Data.Entity.EntityState.Modified;
                             db.SaveChanges();
-
-                            MessageBox.Show("Платеж внесен успешно!");
-                            this.Close();
                         }
                         catch(Exception ex)
                         {
-                            Log log = new Log();
-                            log.ID = Guid.NewGuid();
-                            log.Type = "ERROR";
-                            log.CreatedAt = DateTime.Now.ToString();
-                            log.Caption = $"Class: TenantAccounting. Method: BTN_Add_Click." + ex.Message + "." + ex.InnerException;
-
-                            db.Logs.Add(log);
+                            Log logInfo = new Log();
+                            logInfo.ID = Guid.NewGuid();
+                            logInfo.Type = "ERROR";
+                            logInfo.Caption = "Class: TenantAccounting. Method: BTN_Add_Click. " + ex.Message + ". " + ex.InnerException;
+                            logInfo.CreatedAt = DateTime.Now.ToString();
+                            db.Logs.Add(logInfo);
                             db.SaveChanges();
-                            MessageBox.Show(ex.Message);
                         }
                     }
                 }
-                
+                MessageBox.Show("Данные внесены!");
+
+                Thread thread = new Thread(LoadInformation);
+                thread.Start();
             }
+            
         }
     }
 }

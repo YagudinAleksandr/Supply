@@ -15,6 +15,8 @@ namespace Supply.Models
         [Required]
         public string Coast { get; set; }
         [Required]
+        public string Debt { get; set; }
+        [Required]
         public string PeriodStart { get; set; }
         [Required]
         public string PeriodEnd { get; set; }
