@@ -649,6 +649,7 @@ namespace Supply
                     break;
                 case "tenant":
                     contextMenu.MenuItems.Add("Изменить", UpdateTenantInformation);
+                    contextMenu.MenuItems.Add("Специализированная оплата", AddSpecialRulesForPayment);
                     contextMenu.MenuItems.Add("Внести оплату", AddAccounting);
 #if DEBUG
                     contextMenu.MenuItems.Add("Внести оплату за эл.энергию", AddAccountingForElectricity);
@@ -1051,6 +1052,22 @@ namespace Supply
 
                     DeclarationPaymentOrder declarationPaymentOrder = new DeclarationPaymentOrder(tenantID);
                     declarationPaymentOrder.Show();
+                }
+            }
+            catch
+            {
+                return;
+            }
+        }
+        private void AddSpecialRulesForPayment(object sender, EventArgs e)
+        {
+            try
+            {
+                int tenantID = 0;
+                if (TV_HostelInformation.SelectedNode.Tag != null && int.TryParse(TV_HostelInformation.SelectedNode.Tag.ToString(), out tenantID))
+                {
+                    TenantSpecialPayments tenantSpecialPayments = new TenantSpecialPayments(tenantID);
+                    tenantSpecialPayments.Show();
                 }
             }
             catch
