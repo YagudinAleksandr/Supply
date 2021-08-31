@@ -1063,20 +1063,22 @@ namespace Supply
         {
             try
             {
+#if DEBUG
                 int tenantID = 0;
                 if (TV_HostelInformation.SelectedNode.Tag != null && int.TryParse(TV_HostelInformation.SelectedNode.Tag.ToString(), out tenantID))
                 {
                     TenantSpecialPayments tenantSpecialPayments = new TenantSpecialPayments(tenantID);
                     tenantSpecialPayments.Show();
                 }
+#endif
             }
             catch
             {
                 return;
             }
         }
-        #endregion
-        #region Buttons functions
+#endregion
+#region Buttons functions
         private void BTN_CreateOrders_Click(object sender, EventArgs e)
         {
             OrderCreateForm orderCreateForm = new OrderCreateForm();
@@ -1114,8 +1116,8 @@ namespace Supply
             
         }
 
-        #endregion
-        #region Search
+#endregion
+#region Search
 
         private List<TreeNode> _currentNodeMatches = new List<TreeNode>();
 
@@ -1165,8 +1167,8 @@ namespace Supply
                 startNode = startNode.NextNode;
             };
         }
-        #endregion
-        #region Private methods
+#endregion
+#region Private methods
         private void CreateDeclarationForHostel()
         {
             string error = string.Empty;
@@ -1354,6 +1356,6 @@ namespace Supply
             }
         }
 
-        #endregion
+#endregion
     }
 }

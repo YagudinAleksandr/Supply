@@ -148,5 +148,11 @@ namespace Supply
                 db.SaveChanges();
             }
         }
+
+        private void LL_OpenSettingsWindow_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            AppSettingsForm appSettingsForm = new AppSettingsForm();
+            appSettingsForm.ShowDialog();
+        }
     }
 }

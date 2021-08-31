@@ -70,6 +70,7 @@ namespace Supply
             this.TB_StidentsOrder2 = new System.Windows.Forms.TextBox();
             this.TB_StudentOrder = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.ChB_IsItServer = new System.Windows.Forms.CheckBox();
             this.TB_DatabaseConnectionString = new System.Windows.Forms.TextBox();
             this.BTN_Apply = new System.Windows.Forms.Button();
             this.BTN_Save = new System.Windows.Forms.Button();
@@ -88,7 +89,9 @@ namespace Supply
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.ChB_IsItServer = new System.Windows.Forms.CheckBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.TB_NGKOrder = new System.Windows.Forms.TextBox();
+            this.button14 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -109,6 +112,9 @@ namespace Supply
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.button14);
+            this.tabPage1.Controls.Add(this.TB_NGKOrder);
+            this.tabPage1.Controls.Add(this.label19);
             this.tabPage1.Controls.Add(this.button13);
             this.tabPage1.Controls.Add(this.TB_OutFileDir);
             this.tabPage1.Controls.Add(this.label13);
@@ -543,6 +549,16 @@ namespace Supply
             this.tabPage2.Text = "База данных";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // ChB_IsItServer
+            // 
+            this.ChB_IsItServer.AutoSize = true;
+            this.ChB_IsItServer.Location = new System.Drawing.Point(11, 48);
+            this.ChB_IsItServer.Name = "ChB_IsItServer";
+            this.ChB_IsItServer.Size = new System.Drawing.Size(308, 21);
+            this.ChB_IsItServer.TabIndex = 5;
+            this.ChB_IsItServer.Text = "Данное приложение является серверным";
+            this.ChB_IsItServer.UseVisualStyleBackColor = true;
+            // 
             // TB_DatabaseConnectionString
             // 
             this.TB_DatabaseConnectionString.Location = new System.Drawing.Point(159, 9);
@@ -723,15 +739,34 @@ namespace Supply
             this.label11.TabIndex = 0;
             this.label11.Text = "ФИО:";
             // 
-            // ChB_IsItServer
+            // label19
             // 
-            this.ChB_IsItServer.AutoSize = true;
-            this.ChB_IsItServer.Location = new System.Drawing.Point(11, 48);
-            this.ChB_IsItServer.Name = "ChB_IsItServer";
-            this.ChB_IsItServer.Size = new System.Drawing.Size(308, 21);
-            this.ChB_IsItServer.TabIndex = 5;
-            this.ChB_IsItServer.Text = "Данное приложение является серверным";
-            this.ChB_IsItServer.UseVisualStyleBackColor = true;
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(11, 403);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(122, 17);
+            this.label19.TabIndex = 38;
+            this.label19.Text = "Договор для НГК";
+            // 
+            // TB_NGKOrder
+            // 
+            this.TB_NGKOrder.Location = new System.Drawing.Point(435, 400);
+            this.TB_NGKOrder.Margin = new System.Windows.Forms.Padding(4);
+            this.TB_NGKOrder.Name = "TB_NGKOrder";
+            this.TB_NGKOrder.Size = new System.Drawing.Size(419, 22);
+            this.TB_NGKOrder.TabIndex = 39;
+            // 
+            // button14
+            // 
+            this.button14.Location = new System.Drawing.Point(884, 397);
+            this.button14.Margin = new System.Windows.Forms.Padding(4);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(100, 28);
+            this.button14.TabIndex = 40;
+            this.button14.Tag = "t12";
+            this.button14.Text = "Обзор";
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.BTN_Browse_Click);
             // 
             // AppSettingsForm
             // 
@@ -816,5 +851,8 @@ namespace Supply
         private System.Windows.Forms.TextBox TB_ConfirmNewPass;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.CheckBox ChB_IsItServer;
+        private System.Windows.Forms.Button button14;
+        private System.Windows.Forms.TextBox TB_NGKOrder;
+        private System.Windows.Forms.Label label19;
     }
 }

@@ -23,26 +23,28 @@ namespace Supply
             {
                 Tenant tenant = db.Tenants
                     .Where(id => id.ID == _tenantID)
-                    .Include(or => or.Order)
-                    .Include(ident => ident.Identification)
+                    .Include(ident=>ident.Identification)
                     .Include(r => r.Room)
+                    .Include(or => or.Order)
                     .FirstOrDefault();
 
-                if (tenant == null) 
+                if (tenant == null)
                 {
-                    MessageBox.Show("Жильца не найдено!");
+                    MessageBox.Show("Жилец не найден!");
                     this.Close();
                 }
                 else
                 {
                     ChangePassport changePassport = db.ChangePassports
-                    .Where(tid => tid.TenantID == tenant.ID)
-                    .Where(s => s.Status == true)
-                    .FirstOrDefault();
+                        .Where(x => x.TenantID == tenant.ID)
+                        .Where(s=>s.Status==true)
+                        .FirstOrDefault();
+
+                    LB_Order.Text = tenant.Order.OrderNumber;
 
                     if (changePassport != null)
                     {
-                        LB_Tenant.Text = changePassport.Surename + " " + changePassport.Name[0] + ".";
+                        LB_Tenant.Text = changePassport.Surename + " " + changePassport.Name[0]+".";
                         if (changePassport.Patronymic != null)
                         {
                             LB_Tenant.Text += " " + changePassport.Patronymic[0] + ".";
@@ -51,20 +53,12 @@ namespace Supply
                     else
                     {
                         LB_Tenant.Text = tenant.Identification.Surename + " " + tenant.Identification.Name[0] + ".";
-                        if (tenant.Identification.Patronymic != null) 
+                        if (tenant.Identification.Patronymic != null)
                         {
                             LB_Tenant.Text += " " + tenant.Identification.Patronymic[0] + ".";
                         }
                     }
-
-                    LB_Order.Text = tenant.Order.OrderNumber;
-
-                    TB_StartDate.Text = tenant.Order.StartDate;
-                    TB_EndDate.Text = tenant.Order.EndDate;
-                    TB_CountBeds.Text = tenant.Room.Places.ToString();
                 }
-
-                
 
             }
         }

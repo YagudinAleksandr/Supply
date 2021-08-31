@@ -47,5 +47,6 @@ namespace Supply.Domain
         public DbSet<Information> Informations { get; set; }
         public DbSet<ContinueOrder> ContinueOrders { get; set; }
         public DbSet<BenefitPayment> BenefitPayments { get; set; }
+        public DbSet<SpecialPayment> SpecialPayments { get; set; }
     }
 }

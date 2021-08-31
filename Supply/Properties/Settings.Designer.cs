@@ -191,5 +191,17 @@ namespace Supply.Properties {
                 this["IsServer"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ngkOrder {
+            get {
+                return ((string)(this["ngkOrder"]));
+            }
+            set {
+                this["ngkOrder"] = value;
+            }
+        }
     }
 }
