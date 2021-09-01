@@ -1,6 +1,7 @@
 ﻿using Supply.Domain;
 using Supply.Models;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -11,19 +12,60 @@ namespace Supply
     public partial class TenantSpecialPayments : Form
     {
         private int _tenantID;
+        private int _roomIDFirst, _roomIDSecond, _roomIDThird;
         public TenantSpecialPayments(int tenantID)
         {
             InitializeComponent();
             _tenantID = tenantID;
+            _roomIDFirst = _roomIDSecond = _roomIDThird = 0;
         }
 
-        private void TenantSpecialPayments_Shown(object sender, EventArgs e)
+        private void CB_Room_First_SelectedIndexChanged(object sender, EventArgs e)
         {
-            using(SupplyDbContext db = new SupplyDbContext())
+            try
+            {
+                _roomIDFirst = (int)CB_Room_First.SelectedValue;
+                TB_Room_First_Places.Text = LoadPlaces(_roomIDFirst).ToString();
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        private void CB_Room_Second_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                _roomIDSecond = (int)CB_Room_Second.SelectedValue;
+                TB_Room_Second_Places.Text = LoadPlaces(_roomIDSecond).ToString();
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        private void CB_Room_Third_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                _roomIDThird = (int)CB_Room_Third.SelectedValue;
+                TB_Room_Places_Third.Text = LoadPlaces(_roomIDThird).ToString();
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        private void TenantSpecialPayments_Load(object sender, EventArgs e)
+        {
+            using (SupplyDbContext db = new SupplyDbContext())
             {
                 Tenant tenant = db.Tenants
                     .Where(id => id.ID == _tenantID)
-                    .Include(ident=>ident.Identification)
+                    .Include(ident => ident.Identification)
                     .Include(r => r.Room)
                     .Include(or => or.Order)
                     .FirstOrDefault();
@@ -35,16 +77,21 @@ namespace Supply
                 }
                 else
                 {
+                    Flat flat = db.Flats.Where(x => x.ID == tenant.Room.FlatID).Include(enter => enter.Enterance).FirstOrDefault();
+                    Hostel hostel = db.Hostels.Where(x => x.ID == flat.Enterance.HostelId).FirstOrDefault();
+
+                    LoadRooms(hostel.ID);
+
                     ChangePassport changePassport = db.ChangePassports
                         .Where(x => x.TenantID == tenant.ID)
-                        .Where(s=>s.Status==true)
+                        .Where(s => s.Status == true)
                         .FirstOrDefault();
 
                     LB_Order.Text = tenant.Order.OrderNumber;
 
                     if (changePassport != null)
                     {
-                        LB_Tenant.Text = changePassport.Surename + " " + changePassport.Name[0]+".";
+                        LB_Tenant.Text = changePassport.Surename + " " + changePassport.Name[0] + ".";
                         if (changePassport.Patronymic != null)
                         {
                             LB_Tenant.Text += " " + changePassport.Patronymic[0] + ".";
@@ -58,8 +105,144 @@ namespace Supply
                             LB_Tenant.Text += " " + tenant.Identification.Patronymic[0] + ".";
                         }
                     }
+
+                    CB_Room_First.SelectedValue = _roomIDFirst = tenant.Room.ID;
                 }
 
+            }
+        }
+
+        private void BTN_Save_Click(object sender, EventArgs e)
+        {
+            SpecialPayment specialPayment;
+
+            int places = 0;
+            DateTime startDate, endDate;
+
+            if (_roomIDFirst != 0 && TB_Room_First_Places.Text != "" && int.TryParse(TB_Room_First_Places.Text, out places))
+            {
+                
+                if (places != 0 && DateTime.TryParse(TB_Room_First_StartDate.Text, out startDate) && DateTime.TryParse(TB_Room_First_EndDate.Text, out endDate)) 
+                {
+                    specialPayment = new SpecialPayment();
+                    specialPayment.CreatedAt = DateTime.Now.ToString();
+                    specialPayment.RoomID = _roomIDFirst;
+                    specialPayment.TenantID = _tenantID;
+                    specialPayment.Status = true;
+                    specialPayment.Places = places;
+                    specialPayment.StartDate = startDate.ToShortDateString();
+                    specialPayment.EndDate = endDate.ToShortDateString();
+                    
+                    using(SupplyDbContext db = new SupplyDbContext())
+                    {
+                        try
+                        {
+                            db.SpecialPayments.Add(specialPayment);
+                            db.SaveChanges();
+                        }
+                        catch(Exception ex)
+                        {
+                            Log logInfo = new Log();
+                            logInfo.ID = Guid.NewGuid();
+                            logInfo.Type = "ERROR";
+                            logInfo.Caption = $"Class: TenantSpecialPayments.cs. Method:BTN_Save_Click. {ex.Message}. {ex.InnerException}";
+                            logInfo.CreatedAt = DateTime.Now.ToString();
+                            db.Logs.Add(logInfo);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+            }
+
+            places = 0;
+            specialPayment = null;
+
+            if (_roomIDSecond != 0 && TB_Room_Second_Places.Text != "" && int.TryParse(TB_Room_Second_Places.Text, out places)) 
+            {
+                if (places != 0 && DateTime.TryParse(TB_Room_Second_StartDate.Text, out startDate) && DateTime.TryParse(TB_Room_Second_EndDate.Text, out endDate))
+                {
+                    specialPayment = new SpecialPayment();
+                    specialPayment.CreatedAt = DateTime.Now.ToString();
+                    specialPayment.RoomID = _roomIDSecond;
+                    specialPayment.Places = places;
+                    specialPayment.TenantID = _tenantID;
+                    specialPayment.StartDate = startDate.ToShortDateString();
+                    specialPayment.EndDate = endDate.ToShortDateString();
+                    specialPayment.Status = true;
+
+                    using (SupplyDbContext db = new SupplyDbContext())
+                    {
+                        try
+                        {
+                            db.SpecialPayments.Add(specialPayment);
+                            db.SaveChanges();
+                        }
+                        catch (Exception ex)
+                        {
+                            Log logInfo = new Log();
+                            logInfo.ID = Guid.NewGuid();
+                            logInfo.Type = "ERROR";
+                            logInfo.Caption = $"Class: TenantSpecialPayments.cs. Method:BTN_Save_Click. {ex.Message}. {ex.InnerException}";
+                            logInfo.CreatedAt = DateTime.Now.ToString();
+                            db.Logs.Add(logInfo);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+            }
+
+        }
+
+        private void LoadRooms(int hostelID)
+        {
+            List<Room> roomsToComboBoxes = new List<Room>();
+
+            using (SupplyDbContext db = new SupplyDbContext())
+            {
+                var enterances = db.Enterances
+                    .Where(hid => hid.HostelId == hostelID)
+                    .ToList();
+
+                foreach(Enterance enterance in enterances)
+                {
+                    var flats = db.Flats
+                        .Where(eid => eid.Enterance_ID == enterance.ID)
+                        .ToList();
+
+                    foreach(Flat flat in flats)
+                    {
+                        var rooms = db.Rooms.Where(fid => fid.FlatID == flat.ID).ToList();
+
+                        for (int i = 0; i < rooms.Count; i++) 
+                        {
+                            rooms[i].Name = rooms[i].Name + $" (мест:{rooms[i].Places})";
+                            roomsToComboBoxes.Add(rooms[i]);
+                        }
+                    }
+                }
+            }
+
+            CB_Room_First.DataSource = roomsToComboBoxes;
+            CB_Room_First.BindingContext = new BindingContext();
+            CB_Room_First.DisplayMember = "Name";
+            CB_Room_First.ValueMember = "ID";
+
+            CB_Room_Second.DataSource = roomsToComboBoxes;
+            CB_Room_Second.BindingContext = new BindingContext();
+            CB_Room_Second.DisplayMember = "Name";
+            CB_Room_Second.ValueMember = "ID";
+
+            CB_Room_Third.DataSource = roomsToComboBoxes;
+            CB_Room_Third.BindingContext = new BindingContext();
+            CB_Room_Third.DisplayMember = "Name";
+            CB_Room_Third.ValueMember = "ID";
+        }
+        private int LoadPlaces(int roomID)
+        {
+            using(SupplyDbContext db = new SupplyDbContext())
+            {
+                Room room = db.Rooms.Where(x => x.ID == roomID).FirstOrDefault();
+                return room.Places;
             }
         }
     }
