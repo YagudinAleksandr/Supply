@@ -20,8 +20,8 @@ namespace Supply.Models
         [ForeignKey("Order")]
         public int OrderID { get; set; }
         public Order Order { get; set; }
-        [ForeignKey("Manager")]
-        public int ManagerID { get; set; }
-        public Manager Manager { get; set; }
+        [ForeignKey("License")]
+        public int LicenseID { get; set; }
+        public License License { get; set; }
     }
 }

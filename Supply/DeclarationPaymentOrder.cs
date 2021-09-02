@@ -98,6 +98,9 @@ namespace Supply
 
                                             if (accounting == null)
                                             {
+
+                                                
+
                                                 accounting = new Accounting();
                                                 accounting.CreatedAt = DateTime.Now.ToString();
                                                 accounting.PeriodStart = TB_StartDate.Text;
@@ -205,6 +208,13 @@ namespace Supply
                 MessageBox.Show("Платежное поручение создано!");
             }
         }
+        private void SpecialPayments(int tenantID, out decimal rent,out decimal house, out decimal service)
+        {
+            rent = 0;
+            house = 0;
+            service = 0;
 
+
+        }
     }
 }

@@ -1023,12 +1023,12 @@ namespace Supply.Libs
                         if (AdditionalInf(5, tenant.ID) != "Заочная")
                         {
                             replacements.Add("supplyEl", totalPayment.ToString());
-                            replacements.Add("bed", (tenant.Payment.Rent * totalDate).ToString());
+                            replacements.Add("bed", ((tenant.Payment.Rent + tenant.Payment.House) * totalDate).ToString());
                         }
                         else
                         {
                             replacements.Add("supplyEl", "0,00");
-                            replacements.Add("bed", (tenant.Payment.Rent * (orderEndDate - orderStartDate).Days).ToString());
+                            replacements.Add("bed", ((tenant.Payment.Rent + tenant.Payment.House) * (orderEndDate - orderStartDate).Days).ToString());
                         }
                         
                         replacements.Add("supply", (tenant.Payment.Service * totalDate).ToString());

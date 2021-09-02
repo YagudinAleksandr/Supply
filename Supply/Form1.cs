@@ -363,6 +363,7 @@ namespace Supply
             menuStrip1.Items.Add(settingItem);
             menuStrip1.Items.Add(declaration);
 
+
             Thread comboBoxthread = new Thread(UpdateComboboxItems);
             comboBoxthread.Start();
 
@@ -649,7 +650,9 @@ namespace Supply
                     break;
                 case "tenant":
                     contextMenu.MenuItems.Add("Изменить", UpdateTenantInformation);
+#if DEBUG
                     contextMenu.MenuItems.Add("Специализированная оплата", AddSpecialRulesForPayment);
+#endif
                     contextMenu.MenuItems.Add("Внести оплату", AddAccounting);
 #if DEBUG
                     contextMenu.MenuItems.Add("Внести оплату за эл.энергию", AddAccountingForElectricity);

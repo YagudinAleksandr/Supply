@@ -51,14 +51,6 @@ namespace Supply
             this.label9 = new System.Windows.Forms.Label();
             this.CB_Room_Second = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.TB_Room_Third_EndDate = new System.Windows.Forms.MaskedTextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.TB_Room_Third_StartDate = new System.Windows.Forms.MaskedTextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.TB_Room_Places_Third = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.CB_Room_Third = new System.Windows.Forms.ComboBox();
-            this.label14 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -81,7 +73,7 @@ namespace Supply
             // 
             // BTN_Save
             // 
-            this.BTN_Save.Location = new System.Drawing.Point(740, 188);
+            this.BTN_Save.Location = new System.Drawing.Point(740, 133);
             this.BTN_Save.Name = "BTN_Save";
             this.BTN_Save.Size = new System.Drawing.Size(91, 27);
             this.BTN_Save.TabIndex = 5;
@@ -247,89 +239,11 @@ namespace Supply
             this.label10.TabIndex = 16;
             this.label10.Text = "Комната:";
             // 
-            // TB_Room_Third_EndDate
-            // 
-            this.TB_Room_Third_EndDate.Location = new System.Drawing.Point(731, 124);
-            this.TB_Room_Third_EndDate.Mask = "00/00/0000";
-            this.TB_Room_Third_EndDate.Name = "TB_Room_Third_EndDate";
-            this.TB_Room_Third_EndDate.Size = new System.Drawing.Size(100, 22);
-            this.TB_Room_Third_EndDate.TabIndex = 31;
-            this.TB_Room_Third_EndDate.ValidatingType = typeof(System.DateTime);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(697, 127);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(28, 17);
-            this.label11.TabIndex = 30;
-            this.label11.Text = "по:";
-            // 
-            // TB_Room_Third_StartDate
-            // 
-            this.TB_Room_Third_StartDate.Location = new System.Drawing.Point(591, 124);
-            this.TB_Room_Third_StartDate.Mask = "00/00/0000";
-            this.TB_Room_Third_StartDate.Name = "TB_Room_Third_StartDate";
-            this.TB_Room_Third_StartDate.Size = new System.Drawing.Size(100, 22);
-            this.TB_Room_Third_StartDate.TabIndex = 29;
-            this.TB_Room_Third_StartDate.ValidatingType = typeof(System.DateTime);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(512, 127);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(73, 17);
-            this.label12.TabIndex = 28;
-            this.label12.Text = "Период с:";
-            // 
-            // TB_Room_Places_Third
-            // 
-            this.TB_Room_Places_Third.Location = new System.Drawing.Point(406, 124);
-            this.TB_Room_Places_Third.Name = "TB_Room_Places_Third";
-            this.TB_Room_Places_Third.Size = new System.Drawing.Size(100, 22);
-            this.TB_Room_Places_Third.TabIndex = 27;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(227, 127);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(173, 17);
-            this.label13.TabIndex = 26;
-            this.label13.Text = "Кол-во занимаемых мест";
-            // 
-            // CB_Room_Third
-            // 
-            this.CB_Room_Third.FormattingEnabled = true;
-            this.CB_Room_Third.Location = new System.Drawing.Point(91, 124);
-            this.CB_Room_Third.Name = "CB_Room_Third";
-            this.CB_Room_Third.Size = new System.Drawing.Size(121, 24);
-            this.CB_Room_Third.TabIndex = 25;
-            this.CB_Room_Third.SelectedIndexChanged += new System.EventHandler(this.CB_Room_Third_SelectedIndexChanged);
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(16, 127);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(69, 17);
-            this.label14.TabIndex = 24;
-            this.label14.Text = "Комната:";
-            // 
             // TenantSpecialPayments
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(849, 227);
-            this.Controls.Add(this.TB_Room_Third_EndDate);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.TB_Room_Third_StartDate);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.TB_Room_Places_Third);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.CB_Room_Third);
-            this.Controls.Add(this.label14);
+            this.ClientSize = new System.Drawing.Size(849, 176);
             this.Controls.Add(this.TB_Room_Second_EndDate);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.TB_Room_Second_StartDate);
@@ -384,13 +298,5 @@ namespace Supply
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox CB_Room_Second;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.MaskedTextBox TB_Room_Third_EndDate;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.MaskedTextBox TB_Room_Third_StartDate;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox TB_Room_Places_Third;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.ComboBox CB_Room_Third;
-        private System.Windows.Forms.Label label14;
     }
 }

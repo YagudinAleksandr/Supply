@@ -12,12 +12,12 @@ namespace Supply
     public partial class TenantSpecialPayments : Form
     {
         private int _tenantID;
-        private int _roomIDFirst, _roomIDSecond, _roomIDThird;
+        private int _roomIDFirst, _roomIDSecond;
         public TenantSpecialPayments(int tenantID)
         {
             InitializeComponent();
             _tenantID = tenantID;
-            _roomIDFirst = _roomIDSecond = _roomIDThird = 0;
+            _roomIDFirst = _roomIDSecond = 0;
         }
 
         private void CB_Room_First_SelectedIndexChanged(object sender, EventArgs e)
@@ -46,18 +46,7 @@ namespace Supply
             }
         }
 
-        private void CB_Room_Third_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                _roomIDThird = (int)CB_Room_Third.SelectedValue;
-                TB_Room_Places_Third.Text = LoadPlaces(_roomIDThird).ToString();
-            }
-            catch
-            {
-                return;
-            }
-        }
+        
 
         private void TenantSpecialPayments_Load(object sender, EventArgs e)
         {
@@ -232,10 +221,6 @@ namespace Supply
             CB_Room_Second.DisplayMember = "Name";
             CB_Room_Second.ValueMember = "ID";
 
-            CB_Room_Third.DataSource = roomsToComboBoxes;
-            CB_Room_Third.BindingContext = new BindingContext();
-            CB_Room_Third.DisplayMember = "Name";
-            CB_Room_Third.ValueMember = "ID";
         }
         private int LoadPlaces(int roomID)
         {

@@ -145,7 +145,7 @@ namespace Supply
             benefit.UpdatedAt = DateTime.Now.ToString();
             benefit.Status = true;
             benefit.OrderID = _orderID;
-            benefit.ManagerID = _licenseID;
+            benefit.LicenseID = _licenseID;
             benefit.Payment = double.Parse(TB_Payment.Text);
             benefit.EndDate = TB_EndDate.Text;
             benefit.StartDate = TB_StartDate.Text;

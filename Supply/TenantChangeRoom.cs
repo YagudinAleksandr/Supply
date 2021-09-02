@@ -1,4 +1,5 @@
 ﻿using Supply.Domain;
+using Supply.Libs;
 using Supply.Models;
 using System;
 using System.Collections.Generic;
@@ -142,6 +143,9 @@ namespace Supply
 
                                 db.Entry(tenant).State = System.Data.Entity.EntityState.Modified;
                                 db.SaveChanges();
+                                
+
+                                
                             }
                             catch(Exception ex)
                             {
@@ -159,6 +163,17 @@ namespace Supply
                         
                         db.ChangeRooms.Add(changeRoom);
                         db.SaveChanges();
+
+                        string error = "";
+
+                        if (!OrdersCreation.ChangeRoomCreate(changeRoom.ID, out error))
+                        {
+                            throw new Exception(error);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Документ сформирован!");
+                        }
 
                         MessageBox.Show("Переселение назначено!");
                         this.Close();

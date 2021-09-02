@@ -88,7 +88,7 @@ namespace Supply
             {
                 using (SupplyDbContext db = new SupplyDbContext())
                 {
-                    ChangeRoom changeRoom = db.ChangeRooms.Where(x => x.ID == (int)idChangeRoom).Where(s => s.Status == true).Include(j => j.Order).FirstOrDefault();
+                    ChangeRoom changeRoom = db.ChangeRooms.Where(x => x.ID == (int)idChangeRoom).Include(j => j.Order).FirstOrDefault();
                     if (changeRoom != null)
                     {
                         string error = string.Empty;
@@ -137,6 +137,7 @@ namespace Supply
         {
             using (SupplyDbContext db = new SupplyDbContext())
             {
+                
                 var changeRooms = db.ChangeRooms.Where(x => x.Status == true).Include(o => o.Order).ToList();
 
                 if (changeRooms.Count > 0)

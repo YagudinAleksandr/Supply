@@ -34,7 +34,7 @@
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <AutorunEnabled>true</AutorunEnabled>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationRevision>8</ApplicationRevision>
     <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -434,6 +434,10 @@
     <Compile Include="Migrations\202108311909433_SpecialPayment.designer.cs">
       <DependentUpon>202108311909433_SpecialPayment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109022036211_UpdateBenefit.cs" />
+    <Compile Include="Migrations\202109022036211_UpdateBenefit.designer.cs">
+      <DependentUpon>202109022036211_UpdateBenefit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accounting.cs" />
     <Compile Include="Models\AccountingElectricity.cs" />
@@ -744,6 +748,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202108311909433_SpecialPayment.resx">
       <DependentUpon>202108311909433_SpecialPayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109022036211_UpdateBenefit.resx">
+      <DependentUpon>202109022036211_UpdateBenefit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderAddForm.resx">
       <DependentUpon>OrderAddForm.cs</DependentUpon>
