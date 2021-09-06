@@ -182,6 +182,7 @@ namespace Supply.Libs
                             replacements.Add("yearRate", ((tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House) * 12).ToString());
                             replacements.Add("rateWordYear", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House) * 12));
                             totalDate = Math.Abs((orderEndDate.Month - orderStartDate.Month) + 12 * (orderEndDate.Year - orderStartDate.Year));
+                            totalDate += 1;
                             replacements.Add("allTimeRate", ((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House) * totalDate).ToString());
                             replacements.Add("allTimeRateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House) * totalDate));
 
@@ -241,6 +242,7 @@ namespace Supply.Libs
                             replacements.Add("rate", (tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House).ToString());
                             replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House)));
                             totalDate = Math.Abs((orderEndDate.Day - orderStartDate.Day) + (orderEndDate.Day - orderStartDate.Day));
+                            totalDate += 1;
                             replacements.Add("allTimeRate", ((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House) * totalDate).ToString());
                             replacements.Add("allTimeRateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House) * totalDate));
 
@@ -282,162 +284,7 @@ namespace Supply.Libs
             }
             return false;
         }
-        public static string AdditionalInf(int type, int tenantId)
-        {
-            using (SupplyDbContext db = new SupplyDbContext())
-            {
-                var addinf = db.AdditionalInformation.Where(tenantid => tenantid.TenantID == tenantId)
-                    .Where(x => x.AdditionalInformationTypeID == type)
-                    .Include(t => t.AdditionalInformationType)
-                    .FirstOrDefault();
-
-                if (addinf != null)
-                {
-                    return addinf.Value;
-                }
-
-            }
-            return string.Empty;
-        }
-        public static bool BenefitCreation(int orderId, out string error)
-        {
-            using (SupplyDbContext db = new SupplyDbContext())
-            {
-                Order order = db.Orders.Where(x => x.ID == orderId).Include(l => l.License).FirstOrDefault();
-                Benefit benefit;
-                if (BenefitCheck(order, out benefit))
-                {
-                    Tenant tenant = db.Tenants.Where(x => x.ID == order.ID).Where(y => y.Status == true).Include(p => p.Payment).First();
-
-                    Room room = db.Rooms.Where(x => x.ID == order.RoomID).Include(t => t.RoomType).Include(p => p.Properties).FirstOrDefault();
-                    Flat flat = db.Flats.Where(x => x.ID == room.FlatID).FirstOrDefault();
-                    Enterance enterance = db.Enterances.Where(x => x.ID == flat.Enterance_ID).Include(f => f.Flats).FirstOrDefault();
-                    Hostel hostel = db.Hostels.Where(x => x.ID == enterance.HostelId).Include(m => m.Manager).Include(h => h.Address).FirstOrDefault();
-                    License license = db.Licenses.Where(x => x.ManagerId == hostel.Manager.ID).First();
-
-                    if (tenant == null)
-                    {
-                        error = $"Жильца для договора №{order.OrderNumber} не найдено!";
-                        return false;
-                    }
-
-                    Identification identification = db.Identifications.Where(x => x.ID == tenant.ID).First();
-
-                    var additionalInformation = db.AdditionalInformation.Where(x => x.TenantID == tenant.ID).ToList();
-
-                    //Создание Word документа
-                    string errorMessage = String.Empty;
-
-
-                    WordDocument document = new WordDocument(AppSettings.GetTemplateSetting("template5"), AppSettings.GetTemplateSetting("outfileDir")+@"\", "Приложение(льгота) к договору №" + order.OrderNumber.ToString());
-
-                    if (document.OpenWordTemplate(out errorMessage))
-                    {
-                        Dictionary<string, string> replacements = new Dictionary<string, string>();
-
-                        /*Жилец*/
-                        replacements.Add("ID", order.OrderNumber.ToString());
-                        DateTime orderStartDate = Convert.ToDateTime(order.StartDate);
-                        replacements.Add("startOrder", order.StartDate);
-
-                        DateTime orderEndDate = Convert.ToDateTime(order.EndDate);
-                        replacements.Add("EndOrder", order.EndDate);
-                        replacements.Add("yearEndDate", orderEndDate.Year.ToString());
-                        replacements.Add("surename", identification.Surename);
-                        replacements.Add("name", identification.Name);
-                        replacements.Add("ns", identification.Name[0].ToString());
-
-                        if (identification.Patronymic != string.Empty)
-                        {
-                            replacements.Add("patronymic", identification.Patronymic);
-                            replacements.Add("ps", identification.Patronymic[0].ToString());
-                        }
-                        else
-                        {
-                            replacements.Add("patronymic", "");
-                            replacements.Add("ps", "");
-                        }
-
-
-
-                        replacements.Add("DocSeries", identification.DocumentSeries);
-                        replacements.Add("DocNumber", identification.DocumentNumber);
-                        replacements.Add("DocGiven", identification.Issued);
-                        replacements.Add("DocDate", identification.GivenDate);
-                        if (identification.Code != null)
-                        {
-                            replacements.Add("DocCode", identification.Code);
-                        }
-                        else
-                        {
-                            replacements.Add("DocCode", "");
-                        }
-                        replacements.Add("HumanAddress", identification.Address);
-                        replacements.Add("humanCitizenship", identification.Cityzenship);
-
-                        replacements.Add("eduType", AdditionalInf(5, tenant.ID));
-                        replacements.Add("rent", AdditionalInf(7, tenant.ID));
-
-                        /*Льготы*/
-
-                        replacements.Add("benefit", "Да");
-                        replacements.Add("benefitCategory", benefit.BenefitType.Name);
-                        replacements.Add("benefitDecreeDate", benefit.DecreeDate);
-                        replacements.Add("benefitDecree", benefit.DecreeNumber);
-                        replacements.Add("benefitStartDate", benefit.StartDate);
-                        replacements.Add("benefitEndDate", benefit.EndDate);
-                        replacements.Add("OrderAdditionalDate", benefit.StartDate);
-
-
-
-
-                        //Общежитие
-                        int flats = enterance.Flats.Count;
-                        replacements.Add("hostelName", hostel.Name);
-                        replacements.Add("hostelAddress", hostel.Address.ZipCode + ", " + hostel.Address.Country + ", " + hostel.Address.Region + ", "
-                            + hostel.Address.City + ", " + hostel.Address.Street + ", " + hostel.Address.House);
-                        replacements.Add("hostelFlat", flat.Name);
-                        replacements.Add("hostelFlats", flats.ToString());
-                        replacements.Add("MainManager", order.License.Manager.Surename + " " + order.License.Manager.Name[0] + "." + order.License.Manager.Patronymic[0] + ".");
-                        replacements.Add("Manager", order.License.Manager.Surename + " " + order.License.Manager.Name + " " + order.License.Manager.Patronymic);
-                        replacements.Add("LicenseType", order.License.Type);
-                        replacements.Add("LicenseNumber", order.License.Name);
-                        replacements.Add("LicenseStart", order.License.StartDate);
-                        replacements.Add("supplySurename", hostel.Manager.Surename + " " + hostel.Manager.Name[0] + "." + hostel.Manager.Patronymic[0] + ".");
-                        replacements.Add("supply", hostel.Manager.Surename + " " + hostel.Manager.Name + " " + hostel.Manager.Patronymic);
-                        replacements.Add("supplyProxy", license.Name);
-                        replacements.Add("supplyProxyDate", license.StartDate);
-
-                        int totalDate = 0;
-                        /*Тарифный план*/
-                        DateTime benefitStartDate = Convert.ToDateTime(order.StartDate);
-                        DateTime benefitEndDate = Convert.ToDateTime(order.EndDate);
-                        replacements.Add("rate", benefit.Payment.ToString());
-                        replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)benefit.Payment));
-                        replacements.Add("yearRate", (benefit.Payment * 12).ToString());
-                        replacements.Add("rateWordYear", NumbersToString.NumbersToString.Str((int)benefit.Payment * 12));
-                        totalDate = Math.Abs((benefitEndDate.Month - benefitStartDate.Month) + 12 * (benefitEndDate.Year - benefitStartDate.Year));
-                        replacements.Add("allTimeRate", ((int)benefit.Payment * totalDate).ToString());
-                        replacements.Add("allTimeRateWord", NumbersToString.NumbersToString.Str((int)benefit.Payment * totalDate));
-
-                        //Начинаем замену в шаблоне и сохраняем документ
-                        document.MakeReplacementInWordTemplate(replacements);
-                        //Закрываем документ
-                        document.CloseWordTemplate(out errorMessage);
-
-                    }
-                    else
-                    {
-                        error = errorMessage;
-                        return false;
-                    }
-                }
-                
-            }
-            error = string.Empty;
-            GC.Collect();
-            return true;
-        }
+        
         public static bool ChangeRoomCreate(int changeID, out string error)
         {
             using (SupplyDbContext db = new SupplyDbContext())
@@ -858,6 +705,7 @@ namespace Supply.Libs
                         {
                             int totalDate = 0;
                             totalDate = Math.Abs((orderEndDate.Month - orderStartDate.Month) + 12 * (orderEndDate.Year - orderStartDate.Year));
+                            totalDate += 1;
                             electricitiesElementsString.Add(electricityElement.Name);
                             electricitiesElementsString.Add("1");
                             electricitiesElementsString.Add(totalDate.ToString());
@@ -1005,33 +853,40 @@ namespace Supply.Libs
                         replacements.Add("periodEnd", periodEnd);
                         replacements.Add("paymentAct", action);
 
-                        var electricitiesElements = db.ElectricityElements.Where(ep => ep.ElectricityPaymentID == electricityPayment.ID).ToList();
+                        //var electricitiesElements = db.ElectricityElements.Where(ep => ep.ElectricityPaymentID == electricityPayment.ID).ToList();
 
                         //Платежи
                         DateTime orderStartDate = Convert.ToDateTime(periodStart);
                         DateTime orderEndDate = Convert.ToDateTime(periodEnd);
 
 
-                        decimal totalPayment = 0;
+                        
                         int totalDate = Math.Abs((orderEndDate.Month - orderStartDate.Month) + 12 * (orderEndDate.Year - orderStartDate.Year));
-
+                        /*
+                        decimal totalPayment = 0;
                         foreach (ElectricityElement electricityElement in electricitiesElements)
                         {
                             totalPayment += (electricityElement.Payment * totalDate);
                         }
+                        */
+
+                        decimal rent, house, service;
+                        SpecialPayments(tenantID, out rent, out house, out service);
 
                         if (AdditionalInf(5, tenant.ID) != "Заочная")
                         {
-                            replacements.Add("supplyEl", totalPayment.ToString());
-                            replacements.Add("bed", ((tenant.Payment.Rent + tenant.Payment.House) * totalDate).ToString());
+                            decimal electricityPay = 0;
+                            SpecialPaymentsElectricity(tenantID, out electricityPay);
+                            replacements.Add("supplyEl", (electricityPay * totalDate).ToString());
+                            replacements.Add("bed", ((rent + house) * totalDate).ToString());
                         }
                         else
                         {
                             replacements.Add("supplyEl", "0,00");
-                            replacements.Add("bed", ((tenant.Payment.Rent + tenant.Payment.House) * (orderEndDate - orderStartDate).Days).ToString());
+                            replacements.Add("bed", ((rent + house) * (orderEndDate - orderStartDate).Days).ToString());
                         }
                         
-                        replacements.Add("supply", (tenant.Payment.Service * totalDate).ToString());
+                        replacements.Add("supply", (service * totalDate).ToString());
 
                         //Начинаем замену в шаблоне и сохраняем документ
                         if (!document.MakeReplacementInWordTemplate(replacements))
@@ -1307,6 +1162,7 @@ namespace Supply.Libs
 
                     Hostel hostel = db.Hostels
                         .Where(x => x.ID == flat.Enterance.HostelId)
+                        .Include(a=>a.Address)
                         .FirstOrDefault();
 
                     if (hostel == null)
@@ -1377,6 +1233,8 @@ namespace Supply.Libs
                         {
                             replacements.Add("DocCode", "");
                         }
+
+                        replacements.Add("Citizenship", changePassport.Citizenship);
                     }
                     else
                     {
@@ -1398,6 +1256,7 @@ namespace Supply.Libs
                         replacements.Add("DocNumber", tenant.Identification.DocumentNumber);
                         replacements.Add("DocGiven", tenant.Identification.Issued);
                         replacements.Add("DocDate", tenant.Identification.GivenDate);
+                        
                         replacements.Add("HumanAddress", tenant.Identification.Address);
 
                         if (tenant.Identification.Code != null)
@@ -1408,7 +1267,16 @@ namespace Supply.Libs
                         {
                             replacements.Add("DocCode", "");
                         }
+
+                        replacements.Add("Citizenship", tenant.Identification.Cityzenship);
                     }
+
+                    replacements.Add("roomName", tenant.Room.Name);
+                    replacements.Add("hostelName", hostel.Name);
+                    replacements.Add("hostelAddress", hostel.Address.ZipCode + ", " + hostel.Address.Country + ", " + hostel.Address.Region + ", "
+                        + hostel.Address.City + ", " + hostel.Address.Street + ", " + hostel.Address.House);
+
+                    replacements.Add("orderContinueEnd", continueOrder.EndDate);
 
                     replacements.Add("MainManager", manager.Surename + " " + manager.Name[0] + "." + manager.Patronymic[0] + ".");
                     replacements.Add("Manager", manager.Surename + " " + manager.Name + " " + manager.Patronymic);
@@ -1417,7 +1285,10 @@ namespace Supply.Libs
 
                     if (wordDocument.OpenWordTemplate(out error))
                     {
-                        
+                        if (!wordDocument.MakeReplacementInWordTemplate(replacements))
+                        {
+                            throw new Exception("Ошибка во внесении значений в доп.соглашение!");
+                        }
                     }
                     else
                     {
@@ -1434,6 +1305,231 @@ namespace Supply.Libs
                 GC.Collect();
                 return false;
             }            
+        }
+        public static string AdditionalInf(int type, int tenantId)
+        {
+            using (SupplyDbContext db = new SupplyDbContext())
+            {
+                var addinf = db.AdditionalInformation.Where(tenantid => tenantid.TenantID == tenantId)
+                    .Where(x => x.AdditionalInformationTypeID == type)
+                    .Include(t => t.AdditionalInformationType)
+                    .FirstOrDefault();
+
+                if (addinf != null)
+                {
+                    return addinf.Value;
+                }
+
+            }
+            return string.Empty;
+        }
+        public static bool BenefitCreation(int orderId, out string error)
+        {
+            using (SupplyDbContext db = new SupplyDbContext())
+            {
+                Order order = db.Orders.Where(x => x.ID == orderId).Include(l => l.License).FirstOrDefault();
+                Benefit benefit;
+                if (BenefitCheck(order, out benefit))
+                {
+                    Tenant tenant = db.Tenants.Where(x => x.ID == order.ID).Where(y => y.Status == true).Include(p => p.Payment).First();
+
+                    Room room = db.Rooms.Where(x => x.ID == order.RoomID).Include(t => t.RoomType).Include(p => p.Properties).FirstOrDefault();
+                    Flat flat = db.Flats.Where(x => x.ID == room.FlatID).FirstOrDefault();
+                    Enterance enterance = db.Enterances.Where(x => x.ID == flat.Enterance_ID).Include(f => f.Flats).FirstOrDefault();
+                    Hostel hostel = db.Hostels.Where(x => x.ID == enterance.HostelId).Include(m => m.Manager).Include(h => h.Address).FirstOrDefault();
+                    License license = db.Licenses.Where(x => x.ManagerId == hostel.Manager.ID).First();
+
+                    if (tenant == null)
+                    {
+                        error = $"Жильца для договора №{order.OrderNumber} не найдено!";
+                        return false;
+                    }
+
+                    Identification identification = db.Identifications.Where(x => x.ID == tenant.ID).First();
+
+                    var additionalInformation = db.AdditionalInformation.Where(x => x.TenantID == tenant.ID).ToList();
+
+                    //Создание Word документа
+                    string errorMessage = String.Empty;
+
+
+                    WordDocument document = new WordDocument(AppSettings.GetTemplateSetting("template5"), AppSettings.GetTemplateSetting("outfileDir") + @"\", "Приложение(льгота) к договору №" + order.OrderNumber.ToString());
+
+                    if (document.OpenWordTemplate(out errorMessage))
+                    {
+                        Dictionary<string, string> replacements = new Dictionary<string, string>();
+
+                        /*Жилец*/
+                        replacements.Add("ID", order.OrderNumber.ToString());
+                        DateTime orderStartDate = Convert.ToDateTime(order.StartDate);
+                        replacements.Add("startOrder", order.StartDate);
+
+                        DateTime orderEndDate = Convert.ToDateTime(order.EndDate);
+                        replacements.Add("EndOrder", order.EndDate);
+                        replacements.Add("yearEndDate", orderEndDate.Year.ToString());
+                        replacements.Add("surename", identification.Surename);
+                        replacements.Add("name", identification.Name);
+                        replacements.Add("ns", identification.Name[0].ToString());
+
+                        if (identification.Patronymic != string.Empty)
+                        {
+                            replacements.Add("patronymic", identification.Patronymic);
+                            replacements.Add("ps", identification.Patronymic[0].ToString());
+                        }
+                        else
+                        {
+                            replacements.Add("patronymic", "");
+                            replacements.Add("ps", "");
+                        }
+
+
+
+                        replacements.Add("DocSeries", identification.DocumentSeries);
+                        replacements.Add("DocNumber", identification.DocumentNumber);
+                        replacements.Add("DocGiven", identification.Issued);
+                        replacements.Add("DocDate", identification.GivenDate);
+                        if (identification.Code != null)
+                        {
+                            replacements.Add("DocCode", identification.Code);
+                        }
+                        else
+                        {
+                            replacements.Add("DocCode", "");
+                        }
+                        replacements.Add("HumanAddress", identification.Address);
+                        replacements.Add("humanCitizenship", identification.Cityzenship);
+
+                        replacements.Add("eduType", AdditionalInf(5, tenant.ID));
+                        replacements.Add("rent", AdditionalInf(7, tenant.ID));
+
+                        /*Льготы*/
+
+                        replacements.Add("benefit", "Да");
+                        replacements.Add("benefitCategory", benefit.BenefitType.Name);
+                        replacements.Add("benefitDecreeDate", benefit.DecreeDate);
+                        replacements.Add("benefitDecree", benefit.DecreeNumber);
+                        replacements.Add("benefitStartDate", benefit.StartDate);
+                        replacements.Add("benefitEndDate", benefit.EndDate);
+                        replacements.Add("OrderAdditionalDate", benefit.StartDate);
+
+
+
+
+                        //Общежитие
+                        int flats = enterance.Flats.Count;
+                        replacements.Add("hostelName", hostel.Name);
+                        replacements.Add("hostelAddress", hostel.Address.ZipCode + ", " + hostel.Address.Country + ", " + hostel.Address.Region + ", "
+                            + hostel.Address.City + ", " + hostel.Address.Street + ", " + hostel.Address.House);
+                        replacements.Add("hostelFlat", flat.Name);
+                        replacements.Add("hostelFlats", flats.ToString());
+                        replacements.Add("MainManager", order.License.Manager.Surename + " " + order.License.Manager.Name[0] + "." + order.License.Manager.Patronymic[0] + ".");
+                        replacements.Add("Manager", order.License.Manager.Surename + " " + order.License.Manager.Name + " " + order.License.Manager.Patronymic);
+                        replacements.Add("LicenseType", order.License.Type);
+                        replacements.Add("LicenseNumber", order.License.Name);
+                        replacements.Add("LicenseStart", order.License.StartDate);
+                        replacements.Add("supplySurename", hostel.Manager.Surename + " " + hostel.Manager.Name[0] + "." + hostel.Manager.Patronymic[0] + ".");
+                        replacements.Add("supply", hostel.Manager.Surename + " " + hostel.Manager.Name + " " + hostel.Manager.Patronymic);
+                        replacements.Add("supplyProxy", license.Name);
+                        replacements.Add("supplyProxyDate", license.StartDate);
+
+                        int totalDate = 0;
+                        /*Тарифный план*/
+                        DateTime benefitStartDate = Convert.ToDateTime(order.StartDate);
+                        DateTime benefitEndDate = Convert.ToDateTime(order.EndDate);
+                        replacements.Add("rate", benefit.Payment.ToString());
+                        replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)benefit.Payment));
+                        replacements.Add("yearRate", (benefit.Payment * 12).ToString());
+                        replacements.Add("rateWordYear", NumbersToString.NumbersToString.Str((int)benefit.Payment * 12));
+                        totalDate = Math.Abs((benefitEndDate.Month - benefitStartDate.Month) + 12 * (benefitEndDate.Year - benefitStartDate.Year));
+                        replacements.Add("allTimeRate", ((int)benefit.Payment * totalDate).ToString());
+                        replacements.Add("allTimeRateWord", NumbersToString.NumbersToString.Str((int)benefit.Payment * totalDate));
+
+                        //Начинаем замену в шаблоне и сохраняем документ
+                        document.MakeReplacementInWordTemplate(replacements);
+                        //Закрываем документ
+                        document.CloseWordTemplate(out errorMessage);
+
+                    }
+                    else
+                    {
+                        error = errorMessage;
+                        return false;
+                    }
+                }
+
+            }
+            error = string.Empty;
+            GC.Collect();
+            return true;
+        }
+        public static void SpecialPayments(int tenantID, out decimal rent, out decimal house, out decimal service)
+        {
+            rent = 0;
+            house = 0;
+            service = 0;
+
+            using (SupplyDbContext db = new SupplyDbContext())
+            {
+                var specialPayments = db.SpecialPayments
+                    .Where(tid => tid.TenantID == tenantID)
+                    .Where(s => s.Status == true)
+                    .ToList();
+
+                Tenant tenant = db.Tenants
+                        .Where(x => x.ID == tenantID)
+                        .Include(p => p.Payment)
+                        .FirstOrDefault();
+
+                foreach (SpecialPayment specialPayment in specialPayments)
+                {
+                    rent += specialPayment.Places * tenant.Payment.Rent;
+                    house += specialPayment.Places * tenant.Payment.House;
+                    service += specialPayment.Places * tenant.Payment.Service;
+                }
+
+                if (rent == 0 && house == 0 && service == 0)
+                {
+                    rent = tenant.Payment.Rent;
+                    service = tenant.Payment.Service;
+                    house = tenant.Payment.House;
+                }
+            }
+
+
+        }
+        public static void SpecialPaymentsElectricity(int tenantID, out decimal electricityPay)
+        {
+            electricityPay = 0;
+            using(SupplyDbContext db = new SupplyDbContext())
+            {
+                var specialPayments = db.SpecialPayments
+                    .Where(tid => tid.TenantID == tenantID)
+                    .Where(s => s.Status == true)
+                    .ToList();
+
+
+                foreach (SpecialPayment specialPayment in specialPayments)
+                {
+                    Room room = db.Rooms.Where(id => id.ID == specialPayment.RoomID).Include(el => el.ElectricityPayment).FirstOrDefault();
+                    var electricityElements = db.ElectricityElements.Where(ep => ep.ElectricityPaymentID == room.ElectricityPayment.ID).ToList();
+                    foreach(ElectricityElement electricityElement in electricityElements)
+                    {
+                        electricityPay += electricityElement.Payment;
+                    }
+                    electricityPay *= specialPayment.Places;
+                }
+
+                if (electricityPay==0)
+                {
+                    Tenant tenant = db.Tenants.Where(x => x.ID == tenantID).Include(r => r.Room).FirstOrDefault();
+                    ElectricityPayment electricityPayment = db.ElectricityPayments.Where(x => x.ID == tenant.Room.ElectricityPaymentID).FirstOrDefault();
+                    var electricityElements = db.ElectricityElements.Where(ep => ep.ElectricityPaymentID == electricityPayment.ID).ToList();
+                    foreach (ElectricityElement electricityElement in electricityElements)
+                    {
+                        electricityPay += electricityElement.Payment;
+                    }
+                }
+            }
         }
     }
     

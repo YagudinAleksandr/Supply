@@ -107,7 +107,13 @@ namespace Supply
                                                 accounting.PeriodEnd = TB_EndDate.Text;
                                                 accounting.TenantID = tenant.ID;
                                                 accounting.Coast = "0";
-                                                accounting.Debt = ((tenant.Payment.House + tenant.Payment.Service + tenant.Payment.Rent) * totalDate).ToString();
+
+                                                decimal rent, house, service;
+
+                                                OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
+
+                                                accounting.Debt = ((house + service + rent) * totalDate).ToString();
+                                                
 
                                                 try
                                                 {
@@ -179,7 +185,12 @@ namespace Supply
                             accounting.PeriodEnd = TB_EndDate.Text;
                             accounting.TenantID = tenant.ID;
                             accounting.Coast = "0";
-                            accounting.Debt = ((tenant.Payment.House + tenant.Payment.Service + tenant.Payment.Rent) * totalDate).ToString();
+
+                            decimal rent, house, service;
+
+                            OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
+
+                            accounting.Debt = ((house + service + rent) * totalDate).ToString();
 
                             try
                             {
@@ -208,13 +219,6 @@ namespace Supply
                 MessageBox.Show("Платежное поручение создано!");
             }
         }
-        private void SpecialPayments(int tenantID, out decimal rent,out decimal house, out decimal service)
-        {
-            rent = 0;
-            house = 0;
-            service = 0;
-
-
-        }
+        
     }
 }

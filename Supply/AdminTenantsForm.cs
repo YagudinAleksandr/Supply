@@ -114,8 +114,7 @@ namespace Supply
                             db.Tenants.Remove(tenant);
                             db.SaveChanges();
                             MessageBox.Show("Жилец удален!");
-                            Thread thread = new Thread(UpdateInfo);
-                            thread.Start();
+                            DG_TenantsView.Rows.Remove(DG_TenantsView.Rows[e.RowIndex]);
                         }
                     }
                 }

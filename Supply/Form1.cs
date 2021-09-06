@@ -650,14 +650,13 @@ namespace Supply
                     break;
                 case "tenant":
                     contextMenu.MenuItems.Add("Изменить", UpdateTenantInformation);
-#if DEBUG
                     contextMenu.MenuItems.Add("Специализированная оплата", AddSpecialRulesForPayment);
-#endif
                     contextMenu.MenuItems.Add("Внести оплату", AddAccounting);
 #if DEBUG
                     contextMenu.MenuItems.Add("Внести оплату за эл.энергию", AddAccountingForElectricity);
 #endif
                     contextMenu.MenuItems.Add("Сформировать договор", AddHumanMainOrder);
+                    contextMenu.MenuItems.Add("Сформировать договор на эл.энергию", CreateOrderForElectricity);
                     contextMenu.MenuItems.Add("Сформировать платежное поручение", AddTenantAccountingForElectricity);
                     contextMenu.MenuItems.Add("Переселить жильца", ChangeRoomOrder);
                     contextMenu.MenuItems.Add("Смена паспорта", AddChangePassportHandler);
@@ -1078,6 +1077,39 @@ namespace Supply
             catch
             {
                 return;
+            }
+        }
+        private void CreateOrderForElectricity(object sender, EventArgs e)
+        {
+            try
+            {
+                if (TV_HostelInformation.SelectedNode.Tag != null)
+                {
+                    int tenantID = 0;
+                    if (int.TryParse(TV_HostelInformation.SelectedNode.Tag.ToString(), out tenantID))
+                    {
+                        if (tenantID != 0)
+                        {
+                            OrderElectricityCreate orderElectricityCreate = new OrderElectricityCreate(tenantID);
+                            orderElectricityCreate.Show();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                using (SupplyDbContext db = new SupplyDbContext())
+                {
+                    Log log = new Log();
+                    log.ID = Guid.NewGuid();
+                    log.Type = "ERROR";
+                    log.CreatedAt = DateTime.Now.ToString();
+                    log.Caption = $"Class: Form1. Method:CreateOrderForElectricity. " + ex.Message + "." + ex.InnerException;
+
+                    db.Logs.Add(log);
+                    db.SaveChanges();
+                }
+
             }
         }
 #endregion
