@@ -771,7 +771,7 @@ namespace Supply.Libs
                     ElecricityOrder elecricityOrder = db.ElecricityOrders.Where(x => x.TenantID == tenant.ID).Where(st => st.Status == true).FirstOrDefault();
 
                     Order order = db.Orders.Where(x => x.ID == tenant.ID).Include(l => l.License).FirstOrDefault();
-                    Room room = db.Rooms.Where(x => x.ID == order.RoomID).Include(t => t.RoomType).Include(p => p.Properties).FirstOrDefault();
+                    Room room = db.Rooms.Where(x => x.ID == tenant.Room.ID).Include(t => t.RoomType).Include(p => p.Properties).FirstOrDefault();
                     Flat flat = db.Flats.Where(x => x.ID == room.FlatID).FirstOrDefault();
                     Enterance enterance = db.Enterances.Where(x => x.ID == flat.Enterance_ID).Include(f => f.Flats).FirstOrDefault();
                     Hostel hostel = db.Hostels.Where(x => x.ID == enterance.HostelId).Include(m => m.Manager).Include(h => h.Address).FirstOrDefault();
@@ -843,7 +843,7 @@ namespace Supply.Libs
                         replacements.Add("group", AdditionalInf(4, tenant.ID));
 
                         /*Данные по комнате*/
-                        replacements.Add("roomName", room.Name);
+                        replacements.Add("roomName", tenant.Room.Name);
 
 
                         //Общежитие
@@ -853,40 +853,76 @@ namespace Supply.Libs
                         replacements.Add("periodEnd", periodEnd);
                         replacements.Add("paymentAct", action);
 
-                        //var electricitiesElements = db.ElectricityElements.Where(ep => ep.ElectricityPaymentID == electricityPayment.ID).ToList();
+                        
 
                         //Платежи
                         DateTime orderStartDate = Convert.ToDateTime(periodStart);
                         DateTime orderEndDate = Convert.ToDateTime(periodEnd);
 
-
                         
-                        int totalDate = Math.Abs((orderEndDate.Month - orderStartDate.Month) + 12 * (orderEndDate.Year - orderStartDate.Year));
-                        /*
-                        decimal totalPayment = 0;
-                        foreach (ElectricityElement electricityElement in electricitiesElements)
-                        {
-                            totalPayment += (electricityElement.Payment * totalDate);
-                        }
-                        */
 
                         decimal rent, house, service;
                         SpecialPayments(tenantID, out rent, out house, out service);
+                        decimal electricityPay = 0;
+                        SpecialPaymentsElectricity(tenantID, out electricityPay);
+
+                        
+
+                        
 
                         if (AdditionalInf(5, tenant.ID) != "Заочная")
                         {
-                            decimal electricityPay = 0;
-                            SpecialPaymentsElectricity(tenantID, out electricityPay);
-                            replacements.Add("supplyEl", (electricityPay * totalDate).ToString());
-                            replacements.Add("bed", ((rent + house) * totalDate).ToString());
+
+                            int days, month, daysInMonth;
+
+                            if (orderStartDate.Month == orderEndDate.Month && orderStartDate.Year == orderEndDate.Year)
+                            {
+                                days = orderEndDate.Day;
+                                daysInMonth = DateTime.DaysInMonth(orderEndDate.Year, orderEndDate.Month);
+
+                                rent = (rent / daysInMonth) * days;
+                                house = (house / daysInMonth) * days;
+                                service = (service / daysInMonth) * days;
+                                electricityPay = (electricityPay / daysInMonth) * days;
+
+                            }
+                            else
+                            {
+                                SpecialDateCheck(orderStartDate, orderEndDate, out days, out month, out daysInMonth);
+
+                                if (days != 0)
+                                {
+                                    decimal tempHouse, tempService, tempRent, tempElPay;
+
+                                    tempHouse = house * month;
+                                    tempRent = rent * month;
+                                    tempService = service * month;
+                                    tempElPay = electricityPay * month;
+
+                                    house = (house / daysInMonth) * days + tempHouse;
+                                    rent = (rent / daysInMonth) * days + tempRent;
+                                    service = (service / daysInMonth) * days + tempService;
+                                    electricityPay = (electricityPay / daysInMonth) * days + tempElPay;
+                                }
+                                else
+                                {
+                                    rent *= month;
+                                    house *= month;
+                                    service *= month;
+                                    electricityPay *= month;
+                                }
+                            }
+
+                            replacements.Add("supplyEl", Math.Round(electricityPay, 2).ToString());
+                            replacements.Add("bed", Math.Round((rent + house),2).ToString());
                         }
                         else
                         {
                             replacements.Add("supplyEl", "0,00");
-                            replacements.Add("bed", ((rent + house) * (orderEndDate - orderStartDate).Days).ToString());
+                            replacements.Add("bed", Math.Round((rent + house) * (orderEndDate - orderStartDate).Days, 2).ToString());
                         }
-                        
-                        replacements.Add("supply", (service * totalDate).ToString());
+
+                        replacements.Add("supply", Math.Round(service, 2).ToString());
 
                         //Начинаем замену в шаблоне и сохраняем документ
                         if (!document.MakeReplacementInWordTemplate(replacements))
@@ -1529,6 +1565,29 @@ namespace Supply.Libs
                         electricityPay += electricityElement.Payment;
                     }
                 }
+            }
+        }
+        public static void SpecialDateCheck(DateTime dt1, DateTime dt2, out int days, out int monthes, out int daysInMonth)
+        {
+            days = 0;
+            monthes = 0;
+            daysInMonth = 0;
+            /*
+            var m = ((dt2.Year - dt1.Year) * 12) + dt2.Month - dt1.Month
+                            + (dt2.Day >= dt1.Day - 1 ? 0 : -1)//поправка на числа
+                            + ((dt1.Day == 1 && DateTime.DaysInMonth(dt2.Year, dt2.Month) == dt2.Day) ? 1 : 0);//если начальная дата - 1-е число меяца, а конечная - последнее число, добавляется 1 месяц
+            */
+
+            monthes = ((dt2.Year - dt1.Year) * 12) + dt2.Month - dt1.Month;
+            monthes += (dt2.Day >= dt1.Day - 1 ? 0 : -1);
+            if (dt1.Day == 1 && DateTime.DaysInMonth(dt2.Year, dt2.Month) == dt2.Day)
+            {
+                monthes += 1;
+            }
+            else
+            {
+                daysInMonth = DateTime.DaysInMonth(dt2.Year, dt2.Month);
+                days = dt2.Day;
             }
         }
     }

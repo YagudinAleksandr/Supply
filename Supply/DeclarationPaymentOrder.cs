@@ -112,7 +112,50 @@ namespace Supply
 
                                                 OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
 
-                                                accounting.Debt = ((house + service + rent) * totalDate).ToString();
+                                                if(OrdersCreation.AdditionalInf(5, tenant.ID) != "Заочная")
+                                                {
+                                                    int days, month, daysInMonth;
+
+                                                    if (periodEnd.Month == periodStart.Month && periodEnd.Year == periodStart.Year)
+                                                    {
+                                                        days = periodEnd.Day;
+                                                        daysInMonth = DateTime.DaysInMonth(periodEnd.Year, periodEnd.Month);
+
+                                                        rent = (rent / daysInMonth) * days;
+                                                        house = (house / daysInMonth) * days;
+                                                        service = (service / daysInMonth) * days;
+
+                                                    }
+                                                    else
+                                                    {
+                                                        OrdersCreation.SpecialDateCheck(periodStart, periodEnd, out days, out month, out daysInMonth);
+
+                                                        if (days != 0)
+                                                        {
+                                                            decimal tempHouse, tempService, tempRent;
+
+                                                            tempHouse = house * month;
+                                                            tempRent = rent * month;
+                                                            tempService = service * month;
+
+                                                            house = (house / daysInMonth) * days + tempHouse;
+                                                            rent = (rent / daysInMonth) * days + tempRent;
+                                                            service = (service / daysInMonth) * days + tempService;
+                                                        }
+                                                        else
+                                                        {
+                                                            rent *= month;
+                                                            house *= month;
+                                                            service *= month;
+                                                        }
+                                                    }
+
+                                                    accounting.Debt = ((Math.Round(house, 2) + Math.Round(service, 2) + Math.Round(rent, 2))).ToString();
+                                                }
+                                                else
+                                                {
+                                                    accounting.Debt = ((rent + service + house) * (periodEnd - periodStart).Days).ToString();
+                                                }
                                                 
 
                                                 try
@@ -190,7 +233,51 @@ namespace Supply
 
                             OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
 
-                            accounting.Debt = ((house + service + rent) * totalDate).ToString();
+                            if (OrdersCreation.AdditionalInf(5, tenant.ID) != "Заочная")
+                            {
+                                int days, month, daysInMonth;
+
+                                if (periodEnd.Month == periodStart.Month && periodEnd.Year == periodStart.Year)
+                                {
+                                    days = periodEnd.Day;
+                                    daysInMonth = DateTime.DaysInMonth(periodEnd.Year, periodEnd.Month);
+
+                                    rent = (rent / daysInMonth) * days;
+                                    house = (house / daysInMonth) * days;
+                                    service = (service / daysInMonth) * days;
+
+                                }
+                                else
+                                {
+                                    OrdersCreation.SpecialDateCheck(periodStart, periodEnd, out days, out month, out daysInMonth);
+
+                                    if (days != 0)
+                                    {
+                                        decimal tempHouse, tempService, tempRent;
+
+                                        tempHouse = house * month;
+                                        tempRent = rent * month;
+                                        tempService = service * month;
+
+                                        house = (house / daysInMonth) * days + tempHouse;
+                                        rent = (rent / daysInMonth) * days + tempRent;
+                                        service = (service / daysInMonth) * days + tempService;
+                                    }
+                                    else
+                                    {
+                                        rent *= month;
+                                        house *= month;
+                                        service *= month;
+                                    }
+                                }
+
+                                accounting.Debt = ((Math.Round(house, 2) + Math.Round(service, 2) + Math.Round(rent, 2))).ToString();
+                            }
+                            else
+                            {
+                                accounting.Debt = ((rent + service + house) * (periodEnd - periodStart).Days).ToString();
+                            }
+
 
                             try
                             {
