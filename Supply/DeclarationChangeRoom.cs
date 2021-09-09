@@ -189,7 +189,9 @@ namespace Supply
                             int rowNumber = DG_View_ChangeRooms.Rows.Add();
 
                             DG_View_ChangeRooms.Rows[rowNumber].Cells[COL_ID.Name].Value = changeRoom.ID;
-                            DG_View_ChangeRooms.Rows[rowNumber].Cells[COL_NewRoom.Name].Value = changeRoom.Room.Name;
+                            Flat flat = db.Flats.Where(x => x.ID == changeRoom.Room.FlatID).Include(e => e.Enterance).FirstOrDefault();
+                            Hostel hostel = db.Hostels.Where(x => x.ID == flat.Enterance.HostelId).FirstOrDefault();
+                            DG_View_ChangeRooms.Rows[rowNumber].Cells[COL_NewRoom.Name].Value = changeRoom.Room.Name + " (Общежитие №:" + hostel.Name + ")";
                             DG_View_ChangeRooms.Rows[rowNumber].Cells[COL_StartDate.Name].Value = changeRoom.StartDate;
                             DG_View_ChangeRooms.Rows[rowNumber].Cells[COL_Order.Name].Value = changeRoom.Order.OrderNumber;
                             if(changeRoom.Status == true)
@@ -201,8 +203,9 @@ namespace Supply
                                 DG_View_ChangeRooms.Rows[rowNumber].Cells[COL_Status.Name].Value = "Переселен";
                             }
 
-                            Room room = db.Rooms.Where(x => x.ID == changeRoom.Order.RoomID).FirstOrDefault();
-                            DG_View_ChangeRooms.Rows[rowNumber].Cells[COL_OldRoom.Name].Value = room.Name;
+                            Room room = db.Rooms.Where(x => x.ID == changeRoom.Order.RoomID).Include(f => f.Flat).FirstOrDefault();
+                            Enterance enterance = db.Enterances.Where(x => x.ID == room.Flat.Enterance_ID).Include(h => h.Hostel).FirstOrDefault();
+                            DG_View_ChangeRooms.Rows[rowNumber].Cells[COL_OldRoom.Name].Value = room.Name + " (Общежитие №:" + enterance.Hostel.Name + ")";
 
                             Tenant tenant = db.Tenants.Where(x => x.ID == changeRoom.Order.ID).Include(ident => ident.Identification).FirstOrDefault();
                             string tenantName = tenant.Identification.Surename + " " + tenant.Identification.Name;

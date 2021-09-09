@@ -18,7 +18,7 @@ namespace Supply
     public partial class TenantChangeRoom : Form
     {
         private int _tenantID;
-        private int _hostelID, _enteranceID, _flatID, _roomID;
+        private int _hostelID, _enteranceID, _flatID, _roomID, _licenseID;
         public TenantChangeRoom(int tenantID)
         {
             InitializeComponent();
@@ -96,6 +96,18 @@ namespace Supply
             }
         }
 
+        private void CB_Licenses_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                _licenseID = (int)CB_Licenses.SelectedValue;
+            }
+            catch
+            {
+                return;
+            }
+        }
+
         private void CB_Room_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -111,6 +123,11 @@ namespace Supply
 
         private void BTN_Save_Click(object sender, EventArgs e)
         {
+            if(_licenseID==0)
+            {
+                MessageBox.Show("Выбирите ответственного за договор!");
+                return;
+            }
             if(_roomID!=0)
             {
                 using(SupplyDbContext db = new SupplyDbContext())
@@ -126,7 +143,7 @@ namespace Supply
                     changeRoom.RoomID = _roomID;
                     changeRoom.UpdatedAt = DateTime.Now.ToString();
                     changeRoom.Status = true;
-                    
+                    changeRoom.LicenseID = _licenseID;
 
                     try
                     {
@@ -226,6 +243,16 @@ namespace Supply
                     CB_Hostel.DataSource = hostels;
                     CB_Hostel.ValueMember = "ID";
                     CB_Hostel.DisplayMember = "Name";
+
+                    var licenses = db.Licenses.Include(m => m.Manager).ToList();
+
+                    for (int i = 0; i < licenses.Count(); i++)
+                    {
+                        licenses[i].Name = licenses[i].Manager.Surename + " " + licenses[i].Manager.Name + " " + licenses[i].Manager.Patronymic + " (" + licenses[i].Name + ")";
+                    }
+                    CB_Licenses.DataSource = licenses;
+                    CB_Licenses.ValueMember = "ID";
+                    CB_Licenses.DisplayMember = "Name";
                 }
             };
             Invoke(action);

@@ -296,10 +296,10 @@ namespace Supply.Libs
                 Flat flat;
                 Enterance enterance;
                 Hostel hostel;
-                License license;
+                Manager manager;
                 try
                 {
-                    changeRoom = db.ChangeRooms.Where(x => x.ID == changeID).Include(or => or.Order).Include(r => r.Room).FirstOrDefault();
+                    changeRoom = db.ChangeRooms.Where(x => x.ID == changeID).Include(or => or.Order).Include(r => r.Room).Include(m=>m.License).FirstOrDefault();
                     order = db.Orders.Where(x => x.ID == changeRoom.Order.ID).Include(l => l.License).FirstOrDefault();
                     tenant = db.Tenants.Where(x => x.ID == order.ID).Where(y => y.Status == true).Include(p => p.Payment).First();
 
@@ -307,7 +307,7 @@ namespace Supply.Libs
                     flat = db.Flats.Where(x => x.ID == room.FlatID).FirstOrDefault();
                     enterance = db.Enterances.Where(x => x.ID == flat.Enterance_ID).Include(f => f.Flats).FirstOrDefault();
                     hostel = db.Hostels.Where(x => x.ID == enterance.HostelId).Include(m => m.Manager).Include(h => h.Address).FirstOrDefault();
-                    license = db.Licenses.Where(x => x.ManagerId == hostel.Manager.ID).First();
+                    manager = db.Managers.Where(x => x.ID == changeRoom.License.ManagerId).FirstOrDefault();
                 }
                 catch(Exception ex)
                 {
@@ -387,11 +387,11 @@ namespace Supply.Libs
                     replacements.Add("hostelName", hostel.Name);
                     replacements.Add("hostelAddress", hostel.Address.ZipCode + ", " + hostel.Address.Country + ", " + hostel.Address.Region + ", "
                         + hostel.Address.City + ", " + hostel.Address.Street + ", " + hostel.Address.House);
-                    replacements.Add("MainManager", order.License.Manager.Surename + " " + order.License.Manager.Name[0] + "." + order.License.Manager.Patronymic[0] + ".");
-                    replacements.Add("Manager", order.License.Manager.Surename + " " + order.License.Manager.Name + " " + order.License.Manager.Patronymic);
-                    replacements.Add("LicenseType", order.License.Type);
-                    replacements.Add("LicenseNumber", order.License.Name);
-                    replacements.Add("LicenseStart", order.License.StartDate);
+                    replacements.Add("MainManager", manager.Surename + " " + manager.Name[0] + "." + manager.Patronymic[0] + ".");
+                    replacements.Add("Manager", manager.Surename + " " + manager.Name + " " + manager.Patronymic);
+                    replacements.Add("LicenseType", changeRoom.License.Type);
+                    replacements.Add("LicenseNumber", changeRoom.License.Name);
+                    replacements.Add("LicenseStart", changeRoom.License.StartDate);
 
 
                     //Начинаем замену в шаблоне и сохраняем документ

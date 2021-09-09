@@ -13,6 +13,8 @@ namespace Supply.Models
         [ForeignKey("Room")]
         public int? RoomID { get; set; }
         public Room Room { get; set; }
+        public int? LicenseID { get; set; }
+        public License License { get; set; }
         [Required]
         public string StartDate { get; set; }
         [Required]
