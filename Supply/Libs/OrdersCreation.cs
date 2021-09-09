@@ -800,7 +800,8 @@ namespace Supply.Libs
 
                         /*Жилец*/
 
-                        
+                        replacements.Add("ID", order.OrderNumber);
+                        replacements.Add("StartOrder", order.StartDate);
 
                         if (changePassport != null)
                         {

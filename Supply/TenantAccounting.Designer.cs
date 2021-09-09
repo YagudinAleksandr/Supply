@@ -35,6 +35,7 @@ namespace Supply
             this.BTN_Add = new System.Windows.Forms.Button();
             this.DG_View_Accounting = new System.Windows.Forms.DataGridView();
             this.COL_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.COL_CreatedAt = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_StartDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_EndDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Debt = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -65,7 +66,7 @@ namespace Supply
             // BTN_Add
             // 
             this.BTN_Add.Location = new System.Drawing.Point(888, 317);
-            this.BTN_Add.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BTN_Add.Margin = new System.Windows.Forms.Padding(4);
             this.BTN_Add.Name = "BTN_Add";
             this.BTN_Add.Size = new System.Drawing.Size(100, 28);
             this.BTN_Add.TabIndex = 10;
@@ -79,6 +80,7 @@ namespace Supply
             this.DG_View_Accounting.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DG_View_Accounting.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.COL_ID,
+            this.COL_CreatedAt,
             this.COL_StartDate,
             this.COL_EndDate,
             this.COL_Debt,
@@ -89,6 +91,7 @@ namespace Supply
             this.DG_View_Accounting.RowTemplate.Height = 24;
             this.DG_View_Accounting.Size = new System.Drawing.Size(960, 256);
             this.DG_View_Accounting.TabIndex = 11;
+            this.DG_View_Accounting.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DG_View_Accounting_CellMouseClick);
             // 
             // COL_ID
             // 
@@ -97,6 +100,14 @@ namespace Supply
             this.COL_ID.Name = "COL_ID";
             this.COL_ID.ReadOnly = true;
             this.COL_ID.Width = 125;
+            // 
+            // COL_CreatedAt
+            // 
+            this.COL_CreatedAt.HeaderText = "Дата создания платежа";
+            this.COL_CreatedAt.MinimumWidth = 6;
+            this.COL_CreatedAt.Name = "COL_CreatedAt";
+            this.COL_CreatedAt.ReadOnly = true;
+            this.COL_CreatedAt.Width = 125;
             // 
             // COL_StartDate
             // 
@@ -139,7 +150,7 @@ namespace Supply
             this.Controls.Add(this.LB_TenantName);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "TenantAccounting";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Внесение оплаты";
@@ -157,6 +168,7 @@ namespace Supply
         private System.Windows.Forms.Button BTN_Add;
         private System.Windows.Forms.DataGridView DG_View_Accounting;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn COL_CreatedAt;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_StartDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_EndDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Debt;
