@@ -1065,14 +1065,12 @@ namespace Supply
         {
             try
             {
-#if DEBUG
                 int tenantID = 0;
                 if (TV_HostelInformation.SelectedNode.Tag != null && int.TryParse(TV_HostelInformation.SelectedNode.Tag.ToString(), out tenantID))
                 {
                     TenantSpecialPayments tenantSpecialPayments = new TenantSpecialPayments(tenantID);
                     tenantSpecialPayments.Show();
                 }
-#endif
             }
             catch
             {

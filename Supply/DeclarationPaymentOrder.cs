@@ -112,7 +112,10 @@ namespace Supply
 
                                                 OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
 
-                                                if(OrdersCreation.AdditionalInf(5, tenant.ID) != "Заочная")
+                                                decimal electricityPay = 0;
+                                                OrdersCreation.SpecialPaymentsElectricity(tenant.ID, out electricityPay);
+
+                                                if (OrdersCreation.AdditionalInf(5, tenant.ID) != "Заочная")
                                                 {
                                                     int days, month, daysInMonth;
 
@@ -124,7 +127,7 @@ namespace Supply
                                                         rent = (rent / daysInMonth) * days;
                                                         house = (house / daysInMonth) * days;
                                                         service = (service / daysInMonth) * days;
-
+                                                        electricityPay = (electricityPay / daysInMonth) * days;
                                                     }
                                                     else
                                                     {
@@ -132,25 +135,28 @@ namespace Supply
 
                                                         if (days != 0)
                                                         {
-                                                            decimal tempHouse, tempService, tempRent;
+                                                            decimal tempHouse, tempService, tempRent, tempElPay;
 
                                                             tempHouse = house * month;
                                                             tempRent = rent * month;
                                                             tempService = service * month;
+                                                            tempElPay = electricityPay * month;
 
                                                             house = (house / daysInMonth) * days + tempHouse;
                                                             rent = (rent / daysInMonth) * days + tempRent;
                                                             service = (service / daysInMonth) * days + tempService;
+                                                            electricityPay = (electricityPay / daysInMonth) * days + tempElPay;
                                                         }
                                                         else
                                                         {
                                                             rent *= month;
                                                             house *= month;
                                                             service *= month;
+                                                            electricityPay *= month;
                                                         }
                                                     }
 
-                                                    accounting.Debt = ((Math.Round(house, 2) + Math.Round(service, 2) + Math.Round(rent, 2))).ToString();
+                                                    accounting.Debt = ((Math.Round(house, 2) + Math.Round(service, 2) + Math.Round(rent, 2)+Math.Round(electricityPay,2))).ToString();
                                                 }
                                                 else
                                                 {
@@ -233,6 +239,9 @@ namespace Supply
 
                             OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
 
+                            decimal electricityPay = 0;
+                            OrdersCreation.SpecialPaymentsElectricity(tenant.ID, out electricityPay);
+
                             if (OrdersCreation.AdditionalInf(5, tenant.ID) != "Заочная")
                             {
                                 int days, month, daysInMonth;
@@ -245,7 +254,7 @@ namespace Supply
                                     rent = (rent / daysInMonth) * days;
                                     house = (house / daysInMonth) * days;
                                     service = (service / daysInMonth) * days;
-
+                                    electricityPay = (electricityPay / daysInMonth) * days;
                                 }
                                 else
                                 {
@@ -253,25 +262,28 @@ namespace Supply
 
                                     if (days != 0)
                                     {
-                                        decimal tempHouse, tempService, tempRent;
+                                        decimal tempHouse, tempService, tempRent, tempElPay;
 
                                         tempHouse = house * month;
                                         tempRent = rent * month;
                                         tempService = service * month;
+                                        tempElPay = electricityPay * month;
 
                                         house = (house / daysInMonth) * days + tempHouse;
                                         rent = (rent / daysInMonth) * days + tempRent;
                                         service = (service / daysInMonth) * days + tempService;
+                                        electricityPay = (electricityPay / daysInMonth) * days + tempElPay;
                                     }
                                     else
                                     {
                                         rent *= month;
                                         house *= month;
                                         service *= month;
+                                        electricityPay *= month;
                                     }
                                 }
 
-                                accounting.Debt = ((Math.Round(house, 2) + Math.Round(service, 2) + Math.Round(rent, 2))).ToString();
+                                accounting.Debt = ((Math.Round(house, 2) + Math.Round(service, 2) + Math.Round(rent, 2) + Math.Round(electricityPay, 2))).ToString();
                             }
                             else
                             {

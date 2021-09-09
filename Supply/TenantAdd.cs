@@ -1,6 +1,8 @@
 ﻿using Supply.Domain;
+using Supply.Libs;
 using Supply.Models;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
@@ -110,7 +112,7 @@ namespace Supply
             identification.DocumentTypeID = _documentTypeID;
             identification.DocumentSeries = TB_DocSeries.Text;
             identification.DocumentNumber = TB_DocNumber.Text;
-            identification.Cityzenship = TB_Cityzenship.Text;
+            identification.Cityzenship = TB_Citizenship.Text;
             identification.Issued = TB_Issued.Text;
             identification.Address = TB_Address.Text;
             identification.CreatedAt = DateTime.Now.ToString();
@@ -230,11 +232,6 @@ namespace Supply
                 return false;
             }
 
-            if(TB_Cityzenship.Text=="")
-            {
-                validerror = "Заполните поле гражданство!";
-                return false;
-            }
             if(TB_Address.Text=="")
             {
                 validerror = "Заполните поле Адрес!";

@@ -42,7 +42,6 @@ namespace Supply
             this.label6 = new System.Windows.Forms.Label();
             this.CB_DocType = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.TB_Cityzenship = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.TB_DocSeries = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -61,6 +60,7 @@ namespace Supply
             this.TB_Code = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.CB_PaymentType = new System.Windows.Forms.ComboBox();
+            this.TB_Citizenship = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -96,7 +96,7 @@ namespace Supply
             // TB_Surename
             // 
             this.TB_Surename.Location = new System.Drawing.Point(95, 12);
-            this.TB_Surename.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TB_Surename.Margin = new System.Windows.Forms.Padding(4);
             this.TB_Surename.Name = "TB_Surename";
             this.TB_Surename.Size = new System.Drawing.Size(132, 22);
             this.TB_Surename.TabIndex = 3;
@@ -104,7 +104,7 @@ namespace Supply
             // TB_Name
             // 
             this.TB_Name.Location = new System.Drawing.Point(367, 12);
-            this.TB_Name.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TB_Name.Margin = new System.Windows.Forms.Padding(4);
             this.TB_Name.Name = "TB_Name";
             this.TB_Name.Size = new System.Drawing.Size(132, 22);
             this.TB_Name.TabIndex = 4;
@@ -112,7 +112,7 @@ namespace Supply
             // TB_Patronymic
             // 
             this.TB_Patronymic.Location = new System.Drawing.Point(645, 12);
-            this.TB_Patronymic.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TB_Patronymic.Margin = new System.Windows.Forms.Padding(4);
             this.TB_Patronymic.Name = "TB_Patronymic";
             this.TB_Patronymic.Size = new System.Drawing.Size(132, 22);
             this.TB_Patronymic.TabIndex = 5;
@@ -141,7 +141,7 @@ namespace Supply
             // TB_DateOfBirth
             // 
             this.TB_DateOfBirth.Location = new System.Drawing.Point(147, 58);
-            this.TB_DateOfBirth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TB_DateOfBirth.Margin = new System.Windows.Forms.Padding(4);
             this.TB_DateOfBirth.Mask = "00/00/0000";
             this.TB_DateOfBirth.Name = "TB_DateOfBirth";
             this.TB_DateOfBirth.Size = new System.Drawing.Size(132, 22);
@@ -162,7 +162,7 @@ namespace Supply
             // 
             this.CB_DocType.FormattingEnabled = true;
             this.CB_DocType.Location = new System.Drawing.Point(147, 138);
-            this.CB_DocType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CB_DocType.Margin = new System.Windows.Forms.Padding(4);
             this.CB_DocType.Name = "CB_DocType";
             this.CB_DocType.Size = new System.Drawing.Size(160, 24);
             this.CB_DocType.TabIndex = 10;
@@ -178,14 +178,6 @@ namespace Supply
             this.label7.TabIndex = 11;
             this.label7.Text = "Гражданство";
             // 
-            // TB_Cityzenship
-            // 
-            this.TB_Cityzenship.Location = new System.Drawing.Point(464, 138);
-            this.TB_Cityzenship.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.TB_Cityzenship.Name = "TB_Cityzenship";
-            this.TB_Cityzenship.Size = new System.Drawing.Size(132, 22);
-            this.TB_Cityzenship.TabIndex = 12;
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -199,7 +191,7 @@ namespace Supply
             // TB_DocSeries
             // 
             this.TB_DocSeries.Location = new System.Drawing.Point(95, 187);
-            this.TB_DocSeries.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TB_DocSeries.Margin = new System.Windows.Forms.Padding(4);
             this.TB_DocSeries.Name = "TB_DocSeries";
             this.TB_DocSeries.Size = new System.Drawing.Size(160, 22);
             this.TB_DocSeries.TabIndex = 14;
@@ -217,7 +209,7 @@ namespace Supply
             // TB_DocNumber
             // 
             this.TB_DocNumber.Location = new System.Drawing.Point(367, 187);
-            this.TB_DocNumber.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TB_DocNumber.Margin = new System.Windows.Forms.Padding(4);
             this.TB_DocNumber.Name = "TB_DocNumber";
             this.TB_DocNumber.Size = new System.Drawing.Size(160, 22);
             this.TB_DocNumber.TabIndex = 16;
@@ -235,7 +227,7 @@ namespace Supply
             // TB_GivenDate
             // 
             this.TB_GivenDate.Location = new System.Drawing.Point(645, 187);
-            this.TB_GivenDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TB_GivenDate.Margin = new System.Windows.Forms.Padding(4);
             this.TB_GivenDate.Mask = "00/00/0000";
             this.TB_GivenDate.Name = "TB_GivenDate";
             this.TB_GivenDate.Size = new System.Drawing.Size(132, 22);
@@ -255,7 +247,7 @@ namespace Supply
             // TB_Issued
             // 
             this.TB_Issued.Location = new System.Drawing.Point(147, 239);
-            this.TB_Issued.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TB_Issued.Margin = new System.Windows.Forms.Padding(4);
             this.TB_Issued.Name = "TB_Issued";
             this.TB_Issued.Size = new System.Drawing.Size(631, 72);
             this.TB_Issued.TabIndex = 20;
@@ -274,7 +266,7 @@ namespace Supply
             // TB_Address
             // 
             this.TB_Address.Location = new System.Drawing.Point(147, 337);
-            this.TB_Address.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TB_Address.Margin = new System.Windows.Forms.Padding(4);
             this.TB_Address.Name = "TB_Address";
             this.TB_Address.Size = new System.Drawing.Size(631, 72);
             this.TB_Address.TabIndex = 22;
@@ -283,7 +275,7 @@ namespace Supply
             // BTN_Save
             // 
             this.BTN_Save.Location = new System.Drawing.Point(661, 553);
-            this.BTN_Save.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BTN_Save.Margin = new System.Windows.Forms.Padding(4);
             this.BTN_Save.Name = "BTN_Save";
             this.BTN_Save.Size = new System.Drawing.Size(117, 28);
             this.BTN_Save.TabIndex = 23;
@@ -305,7 +297,7 @@ namespace Supply
             // 
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(147, 417);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(204, 24);
             this.comboBox1.TabIndex = 25;
@@ -314,7 +306,7 @@ namespace Supply
             // BTN_AdditionalInformation
             // 
             this.BTN_AdditionalInformation.Location = new System.Drawing.Point(367, 415);
-            this.BTN_AdditionalInformation.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BTN_AdditionalInformation.Margin = new System.Windows.Forms.Padding(4);
             this.BTN_AdditionalInformation.Name = "BTN_AdditionalInformation";
             this.BTN_AdditionalInformation.Size = new System.Drawing.Size(272, 28);
             this.BTN_AdditionalInformation.TabIndex = 26;
@@ -335,7 +327,7 @@ namespace Supply
             // TB_Code
             // 
             this.TB_Code.Location = new System.Drawing.Point(648, 138);
-            this.TB_Code.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TB_Code.Margin = new System.Windows.Forms.Padding(4);
             this.TB_Code.Name = "TB_Code";
             this.TB_Code.Size = new System.Drawing.Size(132, 22);
             this.TB_Code.TabIndex = 28;
@@ -354,17 +346,26 @@ namespace Supply
             // 
             this.CB_PaymentType.FormattingEnabled = true;
             this.CB_PaymentType.Location = new System.Drawing.Point(191, 475);
-            this.CB_PaymentType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CB_PaymentType.Margin = new System.Windows.Forms.Padding(4);
             this.CB_PaymentType.Name = "CB_PaymentType";
             this.CB_PaymentType.Size = new System.Drawing.Size(587, 24);
             this.CB_PaymentType.TabIndex = 30;
             this.CB_PaymentType.SelectedIndexChanged += new System.EventHandler(this.CB_PaymentType_SelectedIndexChanged);
+            // 
+            // TB_Citizenship
+            // 
+            this.TB_Citizenship.Location = new System.Drawing.Point(453, 138);
+            this.TB_Citizenship.Margin = new System.Windows.Forms.Padding(4);
+            this.TB_Citizenship.Name = "TB_Citizenship";
+            this.TB_Citizenship.Size = new System.Drawing.Size(132, 22);
+            this.TB_Citizenship.TabIndex = 32;
             // 
             // TenantAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 596);
+            this.Controls.Add(this.TB_Citizenship);
             this.Controls.Add(this.CB_PaymentType);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.TB_Code);
@@ -383,7 +384,6 @@ namespace Supply
             this.Controls.Add(this.label9);
             this.Controls.Add(this.TB_DocSeries);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.TB_Cityzenship);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.CB_DocType);
             this.Controls.Add(this.label6);
@@ -397,7 +397,7 @@ namespace Supply
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "TenantAdd";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Добавить жильца";
@@ -421,7 +421,6 @@ namespace Supply
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox CB_DocType;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox TB_Cityzenship;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox TB_DocSeries;
         private System.Windows.Forms.Label label9;
@@ -440,5 +439,6 @@ namespace Supply
         private System.Windows.Forms.TextBox TB_Code;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ComboBox CB_PaymentType;
+        private System.Windows.Forms.TextBox TB_Citizenship;
     }
 }

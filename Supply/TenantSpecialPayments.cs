@@ -107,6 +107,7 @@ namespace Supply
 
             int places = 0;
             DateTime startDate, endDate;
+            List<SpecialPayment> specialPayments = new List<SpecialPayment>();
 
             if (_roomIDFirst != 0 && TB_Room_First_Places.Text != "" && int.TryParse(TB_Room_First_Places.Text, out places))
             {
@@ -121,25 +122,8 @@ namespace Supply
                     specialPayment.Places = places;
                     specialPayment.StartDate = startDate.ToShortDateString();
                     specialPayment.EndDate = endDate.ToShortDateString();
-                    
-                    using(SupplyDbContext db = new SupplyDbContext())
-                    {
-                        try
-                        {
-                            db.SpecialPayments.Add(specialPayment);
-                            db.SaveChanges();
-                        }
-                        catch(Exception ex)
-                        {
-                            Log logInfo = new Log();
-                            logInfo.ID = Guid.NewGuid();
-                            logInfo.Type = "ERROR";
-                            logInfo.Caption = $"Class: TenantSpecialPayments.cs. Method:BTN_Save_Click. {ex.Message}. {ex.InnerException}";
-                            logInfo.CreatedAt = DateTime.Now.ToString();
-                            db.Logs.Add(logInfo);
-                            db.SaveChanges();
-                        }
-                    }
+
+                    specialPayments.Add(specialPayment);
                 }
             }
 
@@ -159,27 +143,35 @@ namespace Supply
                     specialPayment.EndDate = endDate.ToShortDateString();
                     specialPayment.Status = true;
 
-                    using (SupplyDbContext db = new SupplyDbContext())
-                    {
-                        try
-                        {
-                            db.SpecialPayments.Add(specialPayment);
-                            db.SaveChanges();
-                        }
-                        catch (Exception ex)
-                        {
-                            Log logInfo = new Log();
-                            logInfo.ID = Guid.NewGuid();
-                            logInfo.Type = "ERROR";
-                            logInfo.Caption = $"Class: TenantSpecialPayments.cs. Method:BTN_Save_Click. {ex.Message}. {ex.InnerException}";
-                            logInfo.CreatedAt = DateTime.Now.ToString();
-                            db.Logs.Add(logInfo);
-                            db.SaveChanges();
-                        }
-                    }
+                    specialPayments.Add(specialPayment);
                 }
             }
 
+            if (specialPayments.Count > 0) 
+            {
+                using (SupplyDbContext db = new SupplyDbContext())
+                {
+                    try
+                    {
+                        db.SpecialPayments.AddRange(specialPayments);
+                        db.SaveChanges();
+                        MessageBox.Show("Специализированная оплата добавлена успешно!");
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        Log logInfo = new Log();
+                        logInfo.ID = Guid.NewGuid();
+                        logInfo.Type = "ERROR";
+                        logInfo.Caption = $"Class: TenantSpecialPayments.cs. Method:BTN_Save_Click. {ex.Message}. {ex.InnerException}";
+                        logInfo.CreatedAt = DateTime.Now.ToString();
+                        db.Logs.Add(logInfo);
+                        db.SaveChanges();
+
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
         }
 
         private void LoadRooms(int hostelID)
