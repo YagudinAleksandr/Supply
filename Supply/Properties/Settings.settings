@@ -44,7 +44,7 @@
     <Setting Name="IsServer" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="ngkOrder" Type="System.String" Scope="User">
+    <Setting Name="template12" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

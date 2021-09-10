@@ -1,4 +1,5 @@
 ﻿using Supply.Domain;
+using Supply.Libs;
 using Supply.Models;
 using System;
 using System.Data;
@@ -85,7 +86,16 @@ namespace Supply
                                 DG_TenantsView.Rows[rowNumber].Cells[COL_Series.Name].Value = "-";
                                 DG_TenantsView.Rows[rowNumber].Cells[COL_DocNumb.Name].Value = "-";
                             }
-
+                            DG_TenantsView.Rows[rowNumber].Cells[COL_Faculty.Name].Value = OrdersCreation.AdditionalInf(3, tenant.ID);
+                            if(OrdersCreation.AdditionalInf(10, tenant.ID)==string.Empty)
+                            {
+                                DG_TenantsView.Rows[rowNumber].Cells[COL_Institute.Name].Value = "НИМИ";
+                            }
+                            else
+                            {
+                                DG_TenantsView.Rows[rowNumber].Cells[COL_Institute.Name].Value = "Стороннее";
+                            }
+                            
                         }
                     }
                     catch (Exception ex)
@@ -99,7 +109,7 @@ namespace Supply
 
         private void DG_TenantsView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 12)
+            if (e.ColumnIndex == 14)
             {
                 int tenantIndex = int.Parse(DG_TenantsView.Rows[e.RowIndex].Cells[0].Value.ToString());
                 DialogResult result = MessageBox.Show("Удалить жильца?", "Удалить жильца", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -120,7 +130,7 @@ namespace Supply
                 }
             }
 
-            if (e.ColumnIndex == 11)
+            if (e.ColumnIndex == 13)
             {
                 int tenantIndex = int.Parse(DG_TenantsView.Rows[e.RowIndex].Cells[0].Value.ToString());
 
@@ -128,8 +138,6 @@ namespace Supply
                 tenantUpdateInformation.ShowDialog();
 
                 MessageBox.Show("Жилец изменен!");
-                Thread thread = new Thread(UpdateInfo);
-                thread.Start();
             }
         }
     }

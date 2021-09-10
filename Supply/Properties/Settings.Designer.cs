@@ -195,12 +195,12 @@ namespace Supply.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ngkOrder {
+        public string template12 {
             get {
-                return ((string)(this["ngkOrder"]));
+                return ((string)(this["template12"]));
             }
             set {
-                this["ngkOrder"] = value;
+                this["template12"] = value;
             }
         }
     }

@@ -53,7 +53,7 @@ namespace Supply
             TB_Services.Text = Properties.Settings.Default.template9;
             TB_OrderContinue.Text = Properties.Settings.Default.template10;
             TB_PaymentOrder.Text = Properties.Settings.Default.template11;
-            TB_NGKOrder.Text = Properties.Settings.Default.ngkOrder;
+            TB_NGKOrder.Text = Properties.Settings.Default.template12;
 
             //User settings
 
@@ -91,7 +91,7 @@ namespace Supply
             Properties.Settings.Default.template9 = TB_Services.Text;
             Properties.Settings.Default.template10 = TB_OrderContinue.Text;
             Properties.Settings.Default.template11 = TB_PaymentOrder.Text;
-            Properties.Settings.Default.ngkOrder = TB_NGKOrder.Text;
+            Properties.Settings.Default.template12 = TB_NGKOrder.Text;
 
             Properties.Settings.Default.outFileDir = TB_OutFileDir.Text;
 

@@ -43,6 +43,9 @@
                     case "template11":
                         filedir = Properties.Settings.Default.template11;
                         break;
+                    case "template12":
+                        filedir = Properties.Settings.Default.template12;
+                        break;
                     case "outfileDir":
                         filedir = Properties.Settings.Default.outFileDir;
                         break;

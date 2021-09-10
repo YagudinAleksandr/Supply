@@ -113,7 +113,14 @@ namespace Supply
                                                 OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
 
                                                 decimal electricityPay = 0;
-                                                OrdersCreation.SpecialPaymentsElectricity(tenant.ID, out electricityPay);
+                                                if (tenant.TenantTypeID != 2 || tenant.TenantTypeID != 3)
+                                                {
+                                                    OrdersCreation.SpecialPaymentsElectricity(tenant.ID, out electricityPay);
+                                                }
+                                                if (OrdersCreation.AdditionalInf(10, tenant.ID) != string.Empty)
+                                                {
+                                                    electricityPay = 0;
+                                                }
 
                                                 if (OrdersCreation.AdditionalInf(5, tenant.ID) != "Заочная")
                                                 {
@@ -240,7 +247,15 @@ namespace Supply
                             OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
 
                             decimal electricityPay = 0;
-                            OrdersCreation.SpecialPaymentsElectricity(tenant.ID, out electricityPay);
+                            if (tenant.TenantTypeID != 2 || tenant.TenantTypeID != 3)
+                            {
+                                OrdersCreation.SpecialPaymentsElectricity(tenant.ID, out electricityPay);
+                            }
+                            if (OrdersCreation.AdditionalInf(10, tenant.ID) != string.Empty)
+                            {
+                                electricityPay = 0;
+                            }
+                            
 
                             if (OrdersCreation.AdditionalInf(5, tenant.ID) != "Заочная")
                             {

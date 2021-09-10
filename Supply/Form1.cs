@@ -555,6 +555,15 @@ namespace Supply
                                             }
                                         }
 
+                                        if(OrdersCreation.AdditionalInf(10,tenants[l].ID)==string.Empty)
+                                        {
+                                            tenantNodes[l].Text += " (НИМИ)";
+                                        }
+                                        else
+                                        {
+                                            tenantNodes[l].Text += " (Сторонняя)";
+                                        }
+
                                         tenantNodes[l].Tag = tID;
                                         CreateConetxtMenuForNode("tenant", out contextMenuForNode);
                                         tenantNodes[l].ContextMenu = contextMenuForNode;

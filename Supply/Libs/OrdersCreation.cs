@@ -56,6 +56,10 @@ namespace Supply.Libs
                             template = "";
                             break;
                     }
+                    if (AdditionalInf(10, tenant.ID) != string.Empty)
+                    {
+                        template = "template12";
+                    }
                 }
                 
                 if (tenant.TenantTypeID == 2)
@@ -66,6 +70,10 @@ namespace Supply.Libs
                 if (tenant.TenantTypeID == 3)
                 {
                     template = "template4";
+                    if (AdditionalInf(10, tenant.ID) != string.Empty)
+                    {
+                        template = "ngkOrder";
+                    }
                 }
 
                 if (template == string.Empty)
@@ -176,6 +184,7 @@ namespace Supply.Libs
                     switch (template)
                     {
                         case "template1":
+                        case "template12":
 
                             replacements.Add("rate", (tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House).ToString());
                             replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House)));
@@ -865,11 +874,15 @@ namespace Supply.Libs
                         decimal rent, house, service;
                         SpecialPayments(tenantID, out rent, out house, out service);
                         decimal electricityPay = 0;
-                        SpecialPaymentsElectricity(tenantID, out electricityPay);
+                        if (tenant.TenantTypeID != 2 && tenant.TenantTypeID != 3)
+                        {
+                            SpecialPaymentsElectricity(tenantID, out electricityPay);
+                        }
 
-                        
-
-                        
+                        if (AdditionalInf(10, tenantID) != string.Empty)
+                        {
+                            electricityPay = 0;
+                        }
 
                         if (AdditionalInf(5, tenant.ID) != "Заочная")
                         {
@@ -1573,11 +1586,7 @@ namespace Supply.Libs
             days = 0;
             monthes = 0;
             daysInMonth = 0;
-            /*
-            var m = ((dt2.Year - dt1.Year) * 12) + dt2.Month - dt1.Month
-                            + (dt2.Day >= dt1.Day - 1 ? 0 : -1)//поправка на числа
-                            + ((dt1.Day == 1 && DateTime.DaysInMonth(dt2.Year, dt2.Month) == dt2.Day) ? 1 : 0);//если начальная дата - 1-е число меяца, а конечная - последнее число, добавляется 1 месяц
-            */
+            
 
             monthes = ((dt2.Year - dt1.Year) * 12) + dt2.Month - dt1.Month;
             monthes += (dt2.Day >= dt1.Day - 1 ? 0 : -1);
