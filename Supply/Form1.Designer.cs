@@ -42,6 +42,7 @@ namespace Supply
             this.TB_Search = new System.Windows.Forms.TextBox();
             this.BTN_Search = new System.Windows.Forms.Button();
             this.BTN_Archive = new System.Windows.Forms.Button();
+            this.BTN_PaymentOrders = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -49,7 +50,7 @@ namespace Supply
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1109, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1109, 30);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -86,7 +87,7 @@ namespace Supply
             // 
             // BTN_CreateOrders
             // 
-            this.BTN_CreateOrders.Location = new System.Drawing.Point(19, 278);
+            this.BTN_CreateOrders.Location = new System.Drawing.Point(19, 245);
             this.BTN_CreateOrders.Margin = new System.Windows.Forms.Padding(4);
             this.BTN_CreateOrders.Name = "BTN_CreateOrders";
             this.BTN_CreateOrders.Size = new System.Drawing.Size(244, 38);
@@ -97,7 +98,7 @@ namespace Supply
             // 
             // BTN_CreatePaymentOrder
             // 
-            this.BTN_CreatePaymentOrder.Location = new System.Drawing.Point(19, 324);
+            this.BTN_CreatePaymentOrder.Location = new System.Drawing.Point(19, 291);
             this.BTN_CreatePaymentOrder.Margin = new System.Windows.Forms.Padding(4);
             this.BTN_CreatePaymentOrder.Name = "BTN_CreatePaymentOrder";
             this.BTN_CreatePaymentOrder.Size = new System.Drawing.Size(244, 70);
@@ -108,7 +109,7 @@ namespace Supply
             // 
             // BTN_OrderToElectricity
             // 
-            this.BTN_OrderToElectricity.Location = new System.Drawing.Point(19, 402);
+            this.BTN_OrderToElectricity.Location = new System.Drawing.Point(21, 431);
             this.BTN_OrderToElectricity.Margin = new System.Windows.Forms.Padding(4);
             this.BTN_OrderToElectricity.Name = "BTN_OrderToElectricity";
             this.BTN_OrderToElectricity.Size = new System.Drawing.Size(244, 68);
@@ -168,11 +169,22 @@ namespace Supply
             this.BTN_Archive.UseVisualStyleBackColor = true;
             this.BTN_Archive.Click += new System.EventHandler(this.BTN_Archive_Click);
             // 
+            // BTN_PaymentOrders
+            // 
+            this.BTN_PaymentOrders.Location = new System.Drawing.Point(19, 368);
+            this.BTN_PaymentOrders.Name = "BTN_PaymentOrders";
+            this.BTN_PaymentOrders.Size = new System.Drawing.Size(243, 56);
+            this.BTN_PaymentOrders.TabIndex = 14;
+            this.BTN_PaymentOrders.Text = "Платежные поручения по общежитию";
+            this.BTN_PaymentOrders.UseVisualStyleBackColor = true;
+            this.BTN_PaymentOrders.Click += new System.EventHandler(this.BTN_PaymentOrders_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1109, 597);
+            this.Controls.Add(this.BTN_PaymentOrders);
             this.Controls.Add(this.BTN_Archive);
             this.Controls.Add(this.BTN_Search);
             this.Controls.Add(this.TB_Search);
@@ -213,6 +225,7 @@ namespace Supply
         private System.Windows.Forms.TextBox TB_Search;
         private System.Windows.Forms.Button BTN_Search;
         private System.Windows.Forms.Button BTN_Archive;
+        private System.Windows.Forms.Button BTN_PaymentOrders;
     }
 }
 

@@ -76,7 +76,7 @@ namespace Supply
                             {
                                 foreach (Room room in db.Rooms.Where(x => x.FlatID == flat.ID).ToList())
                                 {
-                                    foreach (Tenant tenant in db.Tenants.Where(x => x.RoomID == room.ID).Include(p => p.Payment).ToList()) 
+                                    foreach (Tenant tenant in db.Tenants.Where(x => x.RoomID == room.ID).Include(p => p.Payment).Include(o => o.Order).ToList()) 
                                     {
                                         string error = string.Empty;
                                         if (!OrdersCreation.CreatePaymentOrder(tenant.ID, TB_StartDate.Text, TB_EndDate.Text, TB_Action.Text, out error))
@@ -95,6 +95,8 @@ namespace Supply
                                                 .Where(ps=>ps.PeriodStart==TB_StartDate.Text)
                                                 .Where(pe=>pe.PeriodEnd==TB_EndDate.Text)
                                                 .FirstOrDefault();
+
+                                            
 
                                             if (accounting == null)
                                             {
@@ -163,7 +165,15 @@ namespace Supply
                                                         }
                                                     }
 
-                                                    accounting.Debt = ((Math.Round(house, 2) + Math.Round(service, 2) + Math.Round(rent, 2)+Math.Round(electricityPay,2))).ToString();
+                                                    decimal payment = 0;
+                                                    if (OrdersCreation.BenefitCheck(tenant.ID, house + service, periodStart, periodEnd, out payment))
+                                                    {
+                                                        accounting.Debt = ((Math.Round(payment, 2) + Math.Round(service, 2) + Math.Round(electricityPay, 2))).ToString();
+                                                    }
+                                                    else
+                                                    {
+                                                        accounting.Debt = ((Math.Round(house, 2) + Math.Round(rent, 2) + Math.Round(service, 2) + Math.Round(electricityPay, 2))).ToString();
+                                                    }
                                                 }
                                                 else
                                                 {
@@ -297,8 +307,15 @@ namespace Supply
                                         electricityPay *= month;
                                     }
                                 }
-
-                                accounting.Debt = ((Math.Round(house, 2) + Math.Round(service, 2) + Math.Round(rent, 2) + Math.Round(electricityPay, 2))).ToString();
+                                decimal payment = 0;
+                                if (OrdersCreation.BenefitCheck(tenant.ID, house + service, periodStart, periodEnd, out payment))
+                                {
+                                    accounting.Debt = ((Math.Round(payment, 2) + Math.Round(service, 2) + Math.Round(electricityPay, 2))).ToString();
+                                }
+                                else
+                                {
+                                    accounting.Debt = ((Math.Round(house, 2) + Math.Round(rent, 2) + Math.Round(service, 2) + Math.Round(electricityPay, 2))).ToString();
+                                }
                             }
                             else
                             {

@@ -12,7 +12,7 @@ namespace Supply
     public partial class TenantSpecialPayments : Form
     {
         private int _tenantID;
-        private int _roomIDFirst, _roomIDSecond;
+        private int _roomIDFirst, _roomIDSecond, _electricityPlan,_electricityPlanSecond;
         public TenantSpecialPayments(int tenantID)
         {
             InitializeComponent();
@@ -26,6 +26,7 @@ namespace Supply
             {
                 _roomIDFirst = (int)CB_Room_First.SelectedValue;
                 TB_Room_First_Places.Text = LoadPlaces(_roomIDFirst).ToString();
+                TB_ElCiti_Places_First.Text = LoadPlaces(_roomIDFirst).ToString();
             }
             catch
             {
@@ -39,6 +40,7 @@ namespace Supply
             {
                 _roomIDSecond = (int)CB_Room_Second.SelectedValue;
                 TB_Room_Second_Places.Text = LoadPlaces(_roomIDSecond).ToString();
+                TB_ElCiti_Places_Second.Text = LoadPlaces(_roomIDSecond).ToString();
             }
             catch
             {
@@ -96,6 +98,14 @@ namespace Supply
                     }
 
                     CB_Room_First.SelectedValue = _roomIDFirst = tenant.Room.ID;
+
+                    CB_ElectricityPlan_First.DataSource = db.ElectricityPayments.Where(hid => hid.HostelID == hostel.ID).ToList();
+                    CB_ElectricityPlan_First.DisplayMember = "Name";
+                    CB_ElectricityPlan_First.ValueMember = "ID";
+
+                    CB_ElectricityPlan_Second.DataSource= db.ElectricityPayments.Where(hid => hid.HostelID == hostel.ID).ToList();
+                    CB_ElectricityPlan_Second.DisplayMember = "Name";
+                    CB_ElectricityPlan_Second.ValueMember = "ID";
                 }
 
             }
@@ -114,6 +124,17 @@ namespace Supply
                 
                 if (places != 0 && DateTime.TryParse(TB_Room_First_StartDate.Text, out startDate) && DateTime.TryParse(TB_Room_First_EndDate.Text, out endDate)) 
                 {
+                    if (_electricityPlan == 0)
+                    {
+                        MessageBox.Show("Выбирите тарифный план эл.энергии!");
+                        return;
+                    }
+                    int specElPlace = 0;
+                    if(!int.TryParse(TB_ElCiti_Places_First.Text,out specElPlace))
+                    {
+                        MessageBox.Show("Укажите кол-во мест эл.энергии");
+                        return;
+                    }
                     specialPayment = new SpecialPayment();
                     specialPayment.CreatedAt = DateTime.Now.ToString();
                     specialPayment.RoomID = _roomIDFirst;
@@ -122,6 +143,8 @@ namespace Supply
                     specialPayment.Places = places;
                     specialPayment.StartDate = startDate.ToShortDateString();
                     specialPayment.EndDate = endDate.ToShortDateString();
+                    specialPayment.ElectricityPaymentID = _electricityPlan;
+                    specialPayment.ElectricityPaymentPlaces = specElPlace;
 
                     specialPayments.Add(specialPayment);
                 }
@@ -132,8 +155,21 @@ namespace Supply
 
             if (_roomIDSecond != 0 && TB_Room_Second_Places.Text != "" && int.TryParse(TB_Room_Second_Places.Text, out places)) 
             {
+                
                 if (places != 0 && DateTime.TryParse(TB_Room_Second_StartDate.Text, out startDate) && DateTime.TryParse(TB_Room_Second_EndDate.Text, out endDate))
                 {
+                    if (_electricityPlanSecond == 0)
+                    {
+                        MessageBox.Show("Выбирите тарифный план эл.энергии!");
+                        return;
+                    }
+
+                    int specElPlace = 0;
+                    if (!int.TryParse(TB_ElCiti_Places_Second.Text, out specElPlace))
+                    {
+                        MessageBox.Show("Укажите кол-во мест эл.энергии");
+                        return;
+                    }
                     specialPayment = new SpecialPayment();
                     specialPayment.CreatedAt = DateTime.Now.ToString();
                     specialPayment.RoomID = _roomIDSecond;
@@ -142,6 +178,8 @@ namespace Supply
                     specialPayment.StartDate = startDate.ToShortDateString();
                     specialPayment.EndDate = endDate.ToShortDateString();
                     specialPayment.Status = true;
+                    specialPayment.ElectricityPaymentID = _electricityPlanSecond;
+                    specialPayment.ElectricityPaymentPlaces = specElPlace;
 
                     specialPayments.Add(specialPayment);
                 }
@@ -173,6 +211,8 @@ namespace Supply
                 }
             }
         }
+
+        
 
         private void LoadRooms(int hostelID)
         {
@@ -213,6 +253,29 @@ namespace Supply
             CB_Room_Second.DisplayMember = "Name";
             CB_Room_Second.ValueMember = "ID";
 
+        }
+
+        private void CB_ElectricityPlan_First_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                _electricityPlan= (int)CB_ElectricityPlan_First.SelectedValue;
+            }
+            catch
+            {
+                return;
+            }
+        }
+        private void CB_ElectricityPlan_Second_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                _electricityPlanSecond = (int)CB_ElectricityPlan_Second.SelectedValue;
+            }
+            catch
+            {
+                return;
+            }
         }
         private int LoadPlaces(int roomID)
         {

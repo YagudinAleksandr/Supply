@@ -34,7 +34,7 @@
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <AutorunEnabled>true</AutorunEnabled>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>16</ApplicationRevision>
+    <ApplicationRevision>17</ApplicationRevision>
     <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -199,6 +199,12 @@
     <Compile Include="AdminOrders.Designer.cs">
       <DependentUpon>AdminOrders.cs</DependentUpon>
     </Compile>
+    <Compile Include="AdminPaymentsDeclarations.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminPaymentsDeclarations.Designer.cs">
+      <DependentUpon>AdminPaymentsDeclarations.cs</DependentUpon>
+    </Compile>
     <Compile Include="AdminPaymentsElectricity.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -337,6 +343,12 @@
     <Compile Include="DeclarationPaymentOrder.Designer.cs">
       <DependentUpon>DeclarationPaymentOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="DeclarationPaymentOrdersForHostel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeclarationPaymentOrdersForHostel.Designer.cs">
+      <DependentUpon>DeclarationPaymentOrdersForHostel.cs</DependentUpon>
+    </Compile>
     <Compile Include="DeclarationsBenefits.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -442,6 +454,10 @@
     <Compile Include="Migrations\202109092107122_editLicenseForChangeRoom.cs" />
     <Compile Include="Migrations\202109092107122_editLicenseForChangeRoom.designer.cs">
       <DependentUpon>202109092107122_editLicenseForChangeRoom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109140018214_electricitySpecialPayment.cs" />
+    <Compile Include="Migrations\202109140018214_electricitySpecialPayment.designer.cs">
+      <DependentUpon>202109140018214_electricitySpecialPayment.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accounting.cs" />
@@ -625,6 +641,9 @@
     <EmbeddedResource Include="AdminOrders.resx">
       <DependentUpon>AdminOrders.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AdminPaymentsDeclarations.resx">
+      <DependentUpon>AdminPaymentsDeclarations.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AdminPaymentsElectricity.resx">
       <DependentUpon>AdminPaymentsElectricity.cs</DependentUpon>
     </EmbeddedResource>
@@ -694,6 +713,9 @@
     <EmbeddedResource Include="DeclarationPaymentOrder.resx">
       <DependentUpon>DeclarationPaymentOrder.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DeclarationPaymentOrdersForHostel.resx">
+      <DependentUpon>DeclarationPaymentOrdersForHostel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DeclarationsBenefits.resx">
       <DependentUpon>DeclarationsBenefits.cs</DependentUpon>
     </EmbeddedResource>
@@ -759,6 +781,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109092107122_editLicenseForChangeRoom.resx">
       <DependentUpon>202109092107122_editLicenseForChangeRoom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109140018214_electricitySpecialPayment.resx">
+      <DependentUpon>202109140018214_electricitySpecialPayment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderAddForm.resx">
       <DependentUpon>OrderAddForm.cs</DependentUpon>

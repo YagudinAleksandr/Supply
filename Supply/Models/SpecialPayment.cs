@@ -15,6 +15,10 @@ namespace Supply.Models
         public Room Room { get; set; }
         [Required]
         public int Places { get; set; }
+        [ForeignKey("ElectricityPayment")]
+        public int? ElectricityPaymentID { get; set; }
+        public ElectricityPayment ElectricityPayment { get; set; }
+        public int? ElectricityPaymentPlaces { get; set; }
         public string StartDate { get; set; }
         [Required]
         public string EndDate { get; set; }

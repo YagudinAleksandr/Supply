@@ -51,6 +51,14 @@ namespace Supply
             this.label9 = new System.Windows.Forms.Label();
             this.CB_Room_Second = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.CB_ElectricityPlan_First = new System.Windows.Forms.ComboBox();
+            this.CB_ElectricityPlan_Second = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.TB_ElCiti_Places_First = new System.Windows.Forms.TextBox();
+            this.TB_ElCiti_Places_Second = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -73,7 +81,8 @@ namespace Supply
             // 
             // BTN_Save
             // 
-            this.BTN_Save.Location = new System.Drawing.Point(740, 133);
+            this.BTN_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTN_Save.Location = new System.Drawing.Point(1283, 137);
             this.BTN_Save.Name = "BTN_Save";
             this.BTN_Save.Size = new System.Drawing.Size(91, 27);
             this.BTN_Save.TabIndex = 5;
@@ -239,11 +248,87 @@ namespace Supply
             this.label10.TabIndex = 16;
             this.label10.Text = "Комната:";
             // 
+            // CB_ElectricityPlan_First
+            // 
+            this.CB_ElectricityPlan_First.FormattingEnabled = true;
+            this.CB_ElectricityPlan_First.Location = new System.Drawing.Point(907, 57);
+            this.CB_ElectricityPlan_First.Name = "CB_ElectricityPlan_First";
+            this.CB_ElectricityPlan_First.Size = new System.Drawing.Size(301, 24);
+            this.CB_ElectricityPlan_First.TabIndex = 24;
+            this.CB_ElectricityPlan_First.SelectedIndexChanged += new System.EventHandler(this.CB_ElectricityPlan_First_SelectedIndexChanged);
+            // 
+            // CB_ElectricityPlan_Second
+            // 
+            this.CB_ElectricityPlan_Second.FormattingEnabled = true;
+            this.CB_ElectricityPlan_Second.Location = new System.Drawing.Point(907, 90);
+            this.CB_ElectricityPlan_Second.Name = "CB_ElectricityPlan_Second";
+            this.CB_ElectricityPlan_Second.Size = new System.Drawing.Size(301, 24);
+            this.CB_ElectricityPlan_Second.TabIndex = 25;
+            this.CB_ElectricityPlan_Second.SelectedIndexChanged += new System.EventHandler(this.CB_ElectricityPlan_Second_SelectedIndexChanged);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(837, 60);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(69, 17);
+            this.label11.TabIndex = 26;
+            this.label11.Text = "Эл.энерг.";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(837, 93);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(69, 17);
+            this.label12.TabIndex = 27;
+            this.label12.Text = "Эл.энерг.";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(1215, 60);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(86, 17);
+            this.label13.TabIndex = 28;
+            this.label13.Text = "кол-во мест";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(1215, 93);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(86, 17);
+            this.label14.TabIndex = 29;
+            this.label14.Text = "кол-во мест";
+            // 
+            // TB_ElCiti_Places_First
+            // 
+            this.TB_ElCiti_Places_First.Location = new System.Drawing.Point(1307, 57);
+            this.TB_ElCiti_Places_First.Name = "TB_ElCiti_Places_First";
+            this.TB_ElCiti_Places_First.Size = new System.Drawing.Size(69, 22);
+            this.TB_ElCiti_Places_First.TabIndex = 30;
+            // 
+            // TB_ElCiti_Places_Second
+            // 
+            this.TB_ElCiti_Places_Second.Location = new System.Drawing.Point(1307, 90);
+            this.TB_ElCiti_Places_Second.Name = "TB_ElCiti_Places_Second";
+            this.TB_ElCiti_Places_Second.Size = new System.Drawing.Size(69, 22);
+            this.TB_ElCiti_Places_Second.TabIndex = 31;
+            // 
             // TenantSpecialPayments
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(849, 176);
+            this.ClientSize = new System.Drawing.Size(1386, 176);
+            this.Controls.Add(this.TB_ElCiti_Places_Second);
+            this.Controls.Add(this.TB_ElCiti_Places_First);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.CB_ElectricityPlan_Second);
+            this.Controls.Add(this.CB_ElectricityPlan_First);
             this.Controls.Add(this.TB_Room_Second_EndDate);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.TB_Room_Second_StartDate);
@@ -298,5 +383,13 @@ namespace Supply
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox CB_Room_Second;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ComboBox CB_ElectricityPlan_First;
+        private System.Windows.Forms.ComboBox CB_ElectricityPlan_Second;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox TB_ElCiti_Places_First;
+        private System.Windows.Forms.TextBox TB_ElCiti_Places_Second;
     }
 }

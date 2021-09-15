@@ -103,6 +103,13 @@ namespace Supply
 
                 }
             }
+            if (e.ColumnIndex == 6) 
+            {
+                int id = int.Parse(DG_Licenses.Rows[e.RowIndex].Cells[0].Value.ToString());
+                AdminManagersLicensesAdd adminManagersLicensesAdd = new AdminManagersLicensesAdd(id, true);
+                adminManagersLicensesAdd.ShowDialog();
+                UpdateInfo();
+            }
         }
     }
 }

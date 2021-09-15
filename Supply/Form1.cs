@@ -221,6 +221,13 @@ namespace Supply
             AdminBenefitPayments adminBenefitPayments = new AdminBenefitPayments();
             adminBenefitPayments.Show();
         }
+        private void PaymentsDeclarationOrders_Click(object sender, EventArgs e)
+        {
+            AdminPaymentsDeclarations adminPaymentsDeclarations = new AdminPaymentsDeclarations();
+            this.Hide();
+            adminPaymentsDeclarations.ShowDialog();
+            this.Show();
+        }
         private void Form1_Shown(object sender, EventArgs e)
         {
             LB_UserName.Text = _user.Name;
@@ -301,6 +308,10 @@ namespace Supply
                 ToolStripMenuItem mainOrder = new ToolStripMenuItem("Договора");
                 mainOrder.Click += MainOrders_Click;
                 declaration.DropDownItems.Add(mainOrder);
+
+                ToolStripMenuItem paymentDeclarations = new ToolStripMenuItem("Отчеты по платежным поручениям");
+                paymentDeclarations.Click += PaymentsDeclarationOrders_Click;
+                declaration.DropDownItems.Add(paymentDeclarations);
 
                 ToolStripMenuItem benefitsOrders = new ToolStripMenuItem("Отчеты по льготам");
                 benefitsOrders.Click += BenefitsOrders_Click;
@@ -1157,9 +1168,15 @@ namespace Supply
             }
             
         }
-
-#endregion
-#region Search
+        private void BTN_PaymentOrders_Click(object sender, EventArgs e)
+        {
+            DeclarationPaymentOrdersForHostel declarationPaymentOrdersForHostel = new DeclarationPaymentOrdersForHostel(_hostelID);
+            this.Hide();
+            declarationPaymentOrdersForHostel.ShowDialog();
+            this.Show();
+        }
+        #endregion
+        #region Search
 
         private List<TreeNode> _currentNodeMatches = new List<TreeNode>();
 
@@ -1398,6 +1415,8 @@ namespace Supply
             }
         }
 
-#endregion
+        #endregion
+
+        
     }
 }

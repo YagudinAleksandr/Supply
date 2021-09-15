@@ -874,10 +874,25 @@ namespace Supply.Libs
                         decimal rent, house, service;
                         SpecialPayments(tenantID, out rent, out house, out service);
                         decimal electricityPay = 0;
+
+                        string typeOfPayment = string.Empty;
+
+
                         if (tenant.TenantTypeID != 2 && tenant.TenantTypeID != 3)
                         {
                             SpecialPaymentsElectricity(tenantID, out electricityPay);
+                            
                         }
+                        if (tenant.TenantTypeID == 1)
+                        {
+                            typeOfPayment = "электроэнергию";
+                        }
+                        else
+                        {
+                            typeOfPayment = "содержание жилого помещения";
+                        }
+
+                        replacements.Add("forWhat", typeOfPayment);
 
                         if (AdditionalInf(10, tenantID) != string.Empty)
                         {
@@ -927,8 +942,33 @@ namespace Supply.Libs
                                 }
                             }
 
-                            replacements.Add("supplyEl", Math.Round(electricityPay, 2).ToString());
-                            replacements.Add("bed", Math.Round((rent + house),2).ToString());
+                            if(tenant.TenantTypeID==2 || tenant.TenantTypeID==3)
+                            {
+                                replacements.Add("supplyEl", Math.Round(house, 2).ToString());
+                            }
+                            else
+                            {
+                                replacements.Add("supplyEl", Math.Round(electricityPay, 2).ToString());
+                            }
+                            
+
+                            decimal payment = 0;
+                            if (BenefitCheck(tenant.ID, rent + house, orderStartDate, orderEndDate, out payment)) 
+                            {
+                                replacements.Add("bed", Math.Round(payment, 2).ToString());
+                            }
+                            else
+                            {
+                                if (tenant.TenantTypeID == 2 || tenant.TenantTypeID == 3)
+                                {
+                                    replacements.Add("bed", Math.Round(rent, 2).ToString());
+                                }
+                                else
+                                {
+                                    replacements.Add("bed", Math.Round(rent + house, 2).ToString());
+                                }
+                                
+                            }
                         }
                         else
                         {
@@ -937,6 +977,10 @@ namespace Supply.Libs
                         }
 
                         replacements.Add("supply", Math.Round(service, 2).ToString());
+                        replacements.Add("house", Math.Round(house, 2).ToString());
+                        replacements.Add("rent", Math.Round(rent, 2).ToString());
+
+                        
 
                         //Начинаем замену в шаблоне и сохраняем документ
                         if (!document.MakeReplacementInWordTemplate(replacements))
@@ -1560,13 +1604,13 @@ namespace Supply.Libs
 
                 foreach (SpecialPayment specialPayment in specialPayments)
                 {
-                    Room room = db.Rooms.Where(id => id.ID == specialPayment.RoomID).Include(el => el.ElectricityPayment).FirstOrDefault();
-                    var electricityElements = db.ElectricityElements.Where(ep => ep.ElectricityPaymentID == room.ElectricityPayment.ID).ToList();
+                    
+                    var electricityElements = db.ElectricityElements.Where(ep => ep.ElectricityPaymentID == specialPayment.ElectricityPaymentID).ToList();
                     foreach(ElectricityElement electricityElement in electricityElements)
                     {
                         electricityPay += electricityElement.Payment;
                     }
-                    electricityPay *= specialPayment.Places;
+                    electricityPay *= (int)specialPayment.ElectricityPaymentPlaces;
                 }
 
                 if (electricityPay==0)
@@ -1599,6 +1643,127 @@ namespace Supply.Libs
                 daysInMonth = DateTime.DaysInMonth(dt2.Year, dt2.Month);
                 days = dt2.Day;
             }
+        }
+        public static bool BenefitCheck(int orderID, decimal payForHouse, DateTime startDate, DateTime endDate, out decimal payment)
+        {
+            payment = 0;
+
+            int days, monthes, daysInMonth = 0;
+
+            using(SupplyDbContext db = new SupplyDbContext())
+            {
+                Benefit benefit = db.Benefits.Where(x => x.OrderID == orderID).Where(s => s.Status == true).FirstOrDefault();
+
+                if (benefit != null)
+                {
+
+                    Tenant tenant = db.Tenants.Where(x => x.ID == orderID).Include(p => p.Payment).FirstOrDefault();
+
+                    decimal paymentHouse, paymentRent;
+
+                    paymentHouse = tenant.Payment.House;
+                    paymentRent = tenant.Payment.Rent;
+
+                    DateTime startBenefit, endBenefit;
+
+                    DateTime.TryParse(benefit.StartDate, out startBenefit);
+                    DateTime.TryParse(benefit.EndDate, out endBenefit);
+
+                    if (endBenefit < endDate && startBenefit < startDate) 
+                    {
+                        SpecialDateCheck(startDate, endBenefit, out days, out monthes, out daysInMonth);
+                        
+
+                        payment += (Convert.ToDecimal(benefit.Payment) / daysInMonth) * days + (Convert.ToDecimal(benefit.Payment) * monthes);
+                        int tempDays = days;
+
+                        SpecialDateCheck(endBenefit, endDate, out days, out monthes, out daysInMonth);
+
+                        payment = (tenant.Payment.House / daysInMonth) * (days - tempDays) + tenant.Payment.House * monthes + (tenant.Payment.Rent / daysInMonth) * (days - tempDays) + tenant.Payment.Rent * monthes + payment;
+                    }
+
+                    if (startBenefit > startDate && endBenefit > endDate)
+                    {
+                        SpecialDateCheck(startDate, startBenefit, out days, out monthes, out daysInMonth);
+
+                        if (days != 0)
+                        {
+                            payment += (tenant.Payment.House / daysInMonth) * days + tenant.Payment.House * monthes;
+                            payment += (tenant.Payment.Rent / daysInMonth) * days + tenant.Payment.Rent * monthes;
+                        }
+                        else
+                        {
+                            payment += tenant.Payment.House * monthes;
+                            payment += tenant.Payment.Rent * monthes;
+                        }
+
+                        SpecialDateCheck(startBenefit, endDate, out days, out monthes, out daysInMonth);
+
+                        if (days != 0)
+                        {
+                            payment += Convert.ToDecimal(benefit.Payment) / daysInMonth * days + Convert.ToDecimal(benefit.Payment) + monthes;
+                        }
+                        else
+                        {
+                            payment += Convert.ToDecimal(benefit.Payment) + monthes;
+                        }
+                    }
+
+                    if ((endBenefit == endDate && startDate == startBenefit) || (startBenefit > startDate && endBenefit < endDate))
+                    {
+                        SpecialDateCheck(startDate, endDate, out days, out monthes, out daysInMonth);
+                        if(days!=0)
+                        {
+                            payment += ((tenant.Payment.House / daysInMonth) * days + tenant.Payment.House * monthes)
+                            + ((tenant.Payment.Rent / daysInMonth) * days + tenant.Payment.Rent * monthes);
+                        }
+                        else
+                        {
+                            payment += tenant.Payment.House * monthes
+                            + tenant.Payment.Rent * monthes;
+                        }
+                        
+
+                        SpecialDateCheck(startBenefit, endBenefit, out days, out monthes, out daysInMonth);
+                        if(days!=0)
+                        {
+                            payment = payment - (((tenant.Payment.House / daysInMonth) * days + tenant.Payment.House * monthes)
+                            + ((tenant.Payment.Rent / daysInMonth) * days + tenant.Payment.Rent));
+
+                            payment += (Convert.ToDecimal(benefit.Payment) / daysInMonth) * days + Convert.ToDecimal(benefit.Payment) * monthes;
+                        }
+                        else
+                        {
+                            payment = payment - ((tenant.Payment.House * monthes)
+                            + tenant.Payment.Rent * monthes);
+
+                            payment += Convert.ToDecimal(benefit.Payment) * monthes;
+                        }
+                        
+                    }
+
+                    if (startDate > startBenefit && endBenefit > endDate)
+                    {
+                        SpecialDateCheck(startDate, endDate, out days, out monthes, out daysInMonth);
+                        if (days != 0)
+                        {
+                            payment += Convert.ToDecimal(benefit.Payment) / daysInMonth * days;
+                            payment += Convert.ToDecimal(benefit.Payment) * monthes;
+                        }
+                        else
+                        {
+                            payment += Convert.ToDecimal(benefit.Payment) * monthes;
+                        }
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return true;
+            
         }
     }
     
