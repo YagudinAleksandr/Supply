@@ -32,12 +32,6 @@ namespace Supply
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminPaymentsDeclarations));
             this.label1 = new System.Windows.Forms.Label();
             this.DG_View_PaymentDeclarations = new System.Windows.Forms.DataGridView();
-            this.BTN_SelectAll = new System.Windows.Forms.Button();
-            this.CB_Hostels = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.BTN_CreateDeclaration = new System.Windows.Forms.Button();
-            this.BTN_Save = new System.Windows.Forms.Button();
-            this.BTN_Delete = new System.Windows.Forms.Button();
             this.COL_Check = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.COL_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Tenant = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,6 +42,12 @@ namespace Supply
             this.COL_Debt = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Payment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_CreatedAt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BTN_SelectAll = new System.Windows.Forms.Button();
+            this.CB_Hostels = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.BTN_CreateDeclaration = new System.Windows.Forms.Button();
+            this.BTN_Save = new System.Windows.Forms.Button();
+            this.BTN_Delete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DG_View_PaymentDeclarations)).BeginInit();
             this.SuspendLayout();
             // 
@@ -84,67 +84,6 @@ namespace Supply
             this.DG_View_PaymentDeclarations.RowTemplate.Height = 24;
             this.DG_View_PaymentDeclarations.Size = new System.Drawing.Size(1348, 285);
             this.DG_View_PaymentDeclarations.TabIndex = 1;
-            // 
-            // BTN_SelectAll
-            // 
-            this.BTN_SelectAll.Location = new System.Drawing.Point(16, 45);
-            this.BTN_SelectAll.Name = "BTN_SelectAll";
-            this.BTN_SelectAll.Size = new System.Drawing.Size(121, 37);
-            this.BTN_SelectAll.TabIndex = 2;
-            this.BTN_SelectAll.Text = "Выбрать все";
-            this.BTN_SelectAll.UseVisualStyleBackColor = true;
-            this.BTN_SelectAll.Click += new System.EventHandler(this.BTN_SelectAll_Click);
-            // 
-            // CB_Hostels
-            // 
-            this.CB_Hostels.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CB_Hostels.FormattingEnabled = true;
-            this.CB_Hostels.Location = new System.Drawing.Point(1243, 13);
-            this.CB_Hostels.Name = "CB_Hostels";
-            this.CB_Hostels.Size = new System.Drawing.Size(121, 24);
-            this.CB_Hostels.TabIndex = 3;
-            this.CB_Hostels.SelectionChangeCommitted += new System.EventHandler(this.CB_Hostels_SelectionChangeCommitted);
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1151, 16);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 17);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Общежитие";
-            // 
-            // BTN_CreateDeclaration
-            // 
-            this.BTN_CreateDeclaration.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTN_CreateDeclaration.Location = new System.Drawing.Point(1243, 396);
-            this.BTN_CreateDeclaration.Name = "BTN_CreateDeclaration";
-            this.BTN_CreateDeclaration.Size = new System.Drawing.Size(121, 31);
-            this.BTN_CreateDeclaration.TabIndex = 5;
-            this.BTN_CreateDeclaration.Text = "Отчет";
-            this.BTN_CreateDeclaration.UseVisualStyleBackColor = true;
-            // 
-            // BTN_Save
-            // 
-            this.BTN_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTN_Save.Location = new System.Drawing.Point(1116, 396);
-            this.BTN_Save.Name = "BTN_Save";
-            this.BTN_Save.Size = new System.Drawing.Size(121, 31);
-            this.BTN_Save.TabIndex = 6;
-            this.BTN_Save.Text = "Внесни";
-            this.BTN_Save.UseVisualStyleBackColor = true;
-            // 
-            // BTN_Delete
-            // 
-            this.BTN_Delete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTN_Delete.Location = new System.Drawing.Point(989, 396);
-            this.BTN_Delete.Name = "BTN_Delete";
-            this.BTN_Delete.Size = new System.Drawing.Size(121, 31);
-            this.BTN_Delete.TabIndex = 7;
-            this.BTN_Delete.Text = "Удалить";
-            this.BTN_Delete.UseVisualStyleBackColor = true;
-            this.BTN_Delete.Click += new System.EventHandler(this.BTN_Delete_Click);
             // 
             // COL_Check
             // 
@@ -226,6 +165,68 @@ namespace Supply
             this.COL_CreatedAt.Name = "COL_CreatedAt";
             this.COL_CreatedAt.ReadOnly = true;
             this.COL_CreatedAt.Width = 125;
+            // 
+            // BTN_SelectAll
+            // 
+            this.BTN_SelectAll.Location = new System.Drawing.Point(16, 45);
+            this.BTN_SelectAll.Name = "BTN_SelectAll";
+            this.BTN_SelectAll.Size = new System.Drawing.Size(121, 37);
+            this.BTN_SelectAll.TabIndex = 2;
+            this.BTN_SelectAll.Text = "Выбрать все";
+            this.BTN_SelectAll.UseVisualStyleBackColor = true;
+            this.BTN_SelectAll.Click += new System.EventHandler(this.BTN_SelectAll_Click);
+            // 
+            // CB_Hostels
+            // 
+            this.CB_Hostels.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CB_Hostels.FormattingEnabled = true;
+            this.CB_Hostels.Location = new System.Drawing.Point(1243, 13);
+            this.CB_Hostels.Name = "CB_Hostels";
+            this.CB_Hostels.Size = new System.Drawing.Size(121, 24);
+            this.CB_Hostels.TabIndex = 3;
+            this.CB_Hostels.SelectionChangeCommitted += new System.EventHandler(this.CB_Hostels_SelectionChangeCommitted);
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(1151, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(86, 17);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Общежитие";
+            // 
+            // BTN_CreateDeclaration
+            // 
+            this.BTN_CreateDeclaration.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTN_CreateDeclaration.Location = new System.Drawing.Point(1243, 396);
+            this.BTN_CreateDeclaration.Name = "BTN_CreateDeclaration";
+            this.BTN_CreateDeclaration.Size = new System.Drawing.Size(121, 31);
+            this.BTN_CreateDeclaration.TabIndex = 5;
+            this.BTN_CreateDeclaration.Text = "Отчет";
+            this.BTN_CreateDeclaration.UseVisualStyleBackColor = true;
+            // 
+            // BTN_Save
+            // 
+            this.BTN_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTN_Save.Location = new System.Drawing.Point(1116, 396);
+            this.BTN_Save.Name = "BTN_Save";
+            this.BTN_Save.Size = new System.Drawing.Size(121, 31);
+            this.BTN_Save.TabIndex = 6;
+            this.BTN_Save.Text = "Внесни";
+            this.BTN_Save.UseVisualStyleBackColor = true;
+            this.BTN_Save.Click += new System.EventHandler(this.BTN_Save_Click);
+            // 
+            // BTN_Delete
+            // 
+            this.BTN_Delete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTN_Delete.Location = new System.Drawing.Point(989, 396);
+            this.BTN_Delete.Name = "BTN_Delete";
+            this.BTN_Delete.Size = new System.Drawing.Size(121, 31);
+            this.BTN_Delete.TabIndex = 7;
+            this.BTN_Delete.Text = "Удалить";
+            this.BTN_Delete.UseVisualStyleBackColor = true;
+            this.BTN_Delete.Click += new System.EventHandler(this.BTN_Delete_Click);
             // 
             // AdminPaymentsDeclarations
             // 

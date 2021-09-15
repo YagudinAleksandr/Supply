@@ -22,6 +22,7 @@ namespace Supply
         {
             InitializeComponent();
             _hostelID = 0;
+            BTN_CreateDeclaration.Enabled = false;
         }
 
 
@@ -83,7 +84,10 @@ namespace Supply
 
                                   foreach (Tenant tenant in tenants)
                                   {
-                                      var accountings = db.Accountings.Where(tid => tid.TenantID == tenant.ID).Where(d => d.Debt != "0,00").ToList();
+                                      var accountings = db.Accountings
+                                      .Where(tid => tid.TenantID == tenant.ID)
+                                      .Where(d => d.Debt != "0,00")
+                                      .ToList();
                                       foreach (Accounting accounting in accountings)
                                       {
                                           int rowNumber = DG_View_PaymentDeclarations.Rows.Add();
@@ -152,6 +156,11 @@ namespace Supply
             List<Accounting> accountings = new List<Accounting>();
             using(SupplyDbContext db = new SupplyDbContext())
             {
+                DialogResult dialogResult = MessageBox.Show("Вы действительно хотите удалить выбранные платежные счета?", "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dialogResult == DialogResult.No) 
+                {
+                    return;
+                }
                 foreach (DataGridViewRow row in DG_View_PaymentDeclarations.Rows)
                 {
                     DataGridViewCheckBoxCell chk = (DataGridViewCheckBoxCell)row.Cells[0];
@@ -168,11 +177,72 @@ namespace Supply
                                 db.SaveChanges();
                                 DG_View_PaymentDeclarations.Rows.Remove(row);
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 MessageBox.Show(ex.Message);
+                                Log logInfo = new Log();
+                                logInfo.ID = Guid.NewGuid();
+                                logInfo.Type = "ERROR";
+                                logInfo.Caption = "Class: AdminPaymentsDeclarations. Method: BTN_Delete_Click. " + ex.Message + ". " + ex.InnerException;
+                                logInfo.CreatedAt = DateTime.Now.ToString();
+                                db.Logs.Add(logInfo);
+                                db.SaveChanges();
                             }
 
+                        }
+                    }
+                }
+            }
+            
+        }
+
+        private void BTN_Save_Click(object sender, EventArgs e)
+        {
+            using (SupplyDbContext db = new SupplyDbContext()) 
+            {
+                foreach (DataGridViewRow row in DG_View_PaymentDeclarations.Rows)
+                {
+                    decimal payment = 0;
+                    int accountingID = 0;
+                    if (row.Cells[8].Value.ToString() != "" && decimal.TryParse(row.Cells[8].Value.ToString(), out payment))
+                    {
+                        if (int.TryParse(row.Cells[1].Value.ToString(), out accountingID))
+                        {
+                            Accounting accounting = db.Accountings.Where(id => id.ID == accountingID).FirstOrDefault();
+                            if (accounting != null)
+                            {
+                                decimal debt = decimal.Parse(accounting.Debt);
+                                debt -= payment;
+
+                                accounting.Debt = debt.ToString();
+                                accounting.Coast = payment.ToString();
+
+                                try
+                                {
+                                    db.Entry(accounting).State = System.Data.Entity.EntityState.Modified;
+                                    db.SaveChanges();
+                                }
+                                catch (Exception ex)
+                                {
+                                    Log logInfo = new Log();
+                                    logInfo.ID = Guid.NewGuid();
+                                    logInfo.Type = "ERROR";
+                                    logInfo.Caption = "Class: AdminPaymentsDeclarations. Method: BTN_Save_Click. " + ex.Message + ". " + ex.InnerException;
+                                    logInfo.CreatedAt = DateTime.Now.ToString();
+                                    db.Logs.Add(logInfo);
+                                    db.SaveChanges();
+                                }
+
+                                if(debt==0)
+                                {
+                                    DG_View_PaymentDeclarations.Rows.Remove(row);
+                                }
+                                else
+                                {
+                                    row.Cells[7].Value = debt;
+                                    row.Cells[8].Value = "";
+                                }
+                            }
                         }
                     }
                 }

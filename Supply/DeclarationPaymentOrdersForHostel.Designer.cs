@@ -31,7 +31,6 @@ namespace Supply
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DeclarationPaymentOrdersForHostel));
             this.DG_View_PaymentActiveOrders = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
             this.COL_Check = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.COL_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Tenant = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -41,6 +40,8 @@ namespace Supply
             this.COL_Order = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_StartDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_EndOrder = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BTN_CheckAll = new System.Windows.Forms.Button();
+            this.BTN_Create = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DG_View_PaymentActiveOrders)).BeginInit();
             this.SuspendLayout();
             // 
@@ -67,15 +68,6 @@ namespace Supply
             this.DG_View_PaymentActiveOrders.RowTemplate.Height = 24;
             this.DG_View_PaymentActiveOrders.Size = new System.Drawing.Size(1450, 424);
             this.DG_View_PaymentActiveOrders.TabIndex = 1;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(16, 13);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(128, 40);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Выбрать все";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // COL_Check
             // 
@@ -150,12 +142,34 @@ namespace Supply
             this.COL_EndOrder.ReadOnly = true;
             this.COL_EndOrder.Width = 125;
             // 
+            // BTN_CheckAll
+            // 
+            this.BTN_CheckAll.Location = new System.Drawing.Point(16, 13);
+            this.BTN_CheckAll.Name = "BTN_CheckAll";
+            this.BTN_CheckAll.Size = new System.Drawing.Size(128, 40);
+            this.BTN_CheckAll.TabIndex = 2;
+            this.BTN_CheckAll.Text = "Выбрать все";
+            this.BTN_CheckAll.UseVisualStyleBackColor = true;
+            this.BTN_CheckAll.Click += new System.EventHandler(this.BTN_CheckAll_Click);
+            // 
+            // BTN_Create
+            // 
+            this.BTN_Create.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTN_Create.Location = new System.Drawing.Point(1380, 504);
+            this.BTN_Create.Name = "BTN_Create";
+            this.BTN_Create.Size = new System.Drawing.Size(86, 29);
+            this.BTN_Create.TabIndex = 3;
+            this.BTN_Create.Text = "Создать";
+            this.BTN_Create.UseVisualStyleBackColor = true;
+            this.BTN_Create.Click += new System.EventHandler(this.BTN_Create_Click);
+            // 
             // DeclarationPaymentOrdersForHostel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1478, 554);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.BTN_Create);
+            this.Controls.Add(this.BTN_CheckAll);
             this.Controls.Add(this.DG_View_PaymentActiveOrders);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DeclarationPaymentOrdersForHostel";
@@ -170,7 +184,7 @@ namespace Supply
 
         #endregion
         private System.Windows.Forms.DataGridView DG_View_PaymentActiveOrders;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button BTN_CheckAll;
         private System.Windows.Forms.DataGridViewCheckBoxColumn COL_Check;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Tenant;
@@ -180,5 +194,6 @@ namespace Supply
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Order;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_StartDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_EndOrder;
+        private System.Windows.Forms.Button BTN_Create;
     }
 }

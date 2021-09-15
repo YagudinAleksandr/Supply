@@ -2,6 +2,7 @@
 using Supply.Libs;
 using Supply.Models;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -94,6 +95,41 @@ namespace Supply
             };
 
             Invoke(action);
+            
+        }
+
+        private void BTN_CheckAll_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in DG_View_PaymentActiveOrders.Rows)
+            {
+                DataGridViewCheckBoxCell chk = (DataGridViewCheckBoxCell)row.Cells[0];
+
+                chk.Value = true;
+            }
+        }
+
+        private void BTN_Create_Click(object sender, EventArgs e)
+        {
+            List<int> tenants = new List<int>();
+            foreach(DataGridViewRow row in DG_View_PaymentActiveOrders.Rows)
+            {
+                if (row.Cells[0].Value != null) 
+                {
+                    int tenantID = 0;
+                    if (int.TryParse(row.Cells[1].Value.ToString(), out tenantID))
+                    {
+                        if(tenantID!=0)
+                        {
+                            tenants.Add(tenantID);
+                        }
+                    }
+                }
+            }
+            if(tenants.Count!=0)
+            {
+                DeclarationPaymentOrder declarationPaymentOrder = new DeclarationPaymentOrder(tenants);
+                declarationPaymentOrder.Show();
+            }
             
         }
     }

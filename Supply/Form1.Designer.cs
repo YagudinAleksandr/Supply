@@ -50,7 +50,7 @@ namespace Supply
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1109, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1109, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -175,7 +175,7 @@ namespace Supply
             this.BTN_PaymentOrders.Name = "BTN_PaymentOrders";
             this.BTN_PaymentOrders.Size = new System.Drawing.Size(243, 56);
             this.BTN_PaymentOrders.TabIndex = 14;
-            this.BTN_PaymentOrders.Text = "Платежные поручения по общежитию";
+            this.BTN_PaymentOrders.Text = "Формирование платежных поручений по общежитию";
             this.BTN_PaymentOrders.UseVisualStyleBackColor = true;
             this.BTN_PaymentOrders.Click += new System.EventHandler(this.BTN_PaymentOrders_Click);
             // 
