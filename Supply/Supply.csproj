@@ -34,7 +34,7 @@
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <AutorunEnabled>true</AutorunEnabled>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>18</ApplicationRevision>
+    <ApplicationRevision>19</ApplicationRevision>
     <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -354,6 +354,12 @@
     </Compile>
     <Compile Include="DeclarationsBenefits.Designer.cs">
       <DependentUpon>DeclarationsBenefits.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DeclarationSpecialPayments.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeclarationSpecialPayments.Designer.cs">
+      <DependentUpon>DeclarationSpecialPayments.cs</DependentUpon>
     </Compile>
     <Compile Include="DeclarationTenantsInHostels.cs">
       <SubType>Form</SubType>
@@ -718,6 +724,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DeclarationsBenefits.resx">
       <DependentUpon>DeclarationsBenefits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeclarationSpecialPayments.resx">
+      <DependentUpon>DeclarationSpecialPayments.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DeclarationTenantsInHostels.resx">
       <DependentUpon>DeclarationTenantsInHostels.cs</DependentUpon>

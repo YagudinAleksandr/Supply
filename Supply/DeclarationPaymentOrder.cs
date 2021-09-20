@@ -41,6 +41,17 @@ namespace Supply
 
         private void BTN_Create_Click(object sender, EventArgs e)
         {
+            DateTime date;
+            if(!DateTime.TryParse(TB_StartDate.Text,out date))
+            {
+                MessageBox.Show("Неверная дата начала платежного поручения!");
+                return;
+            }
+            if (!DateTime.TryParse(TB_EndDate.Text, out date))
+            {
+                MessageBox.Show("Неверная дата окончания платежного поручения!");
+                return;
+            }
             Thread thread = new Thread(CreatePayOrder);
             thread.Start();
             MessageBox.Show("Запущен фоновый процесс создания платежных поручений!");
@@ -124,7 +135,7 @@ namespace Supply
                                                 OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
 
                                                 decimal electricityPay = 0;
-                                                if (tenant.TenantTypeID != 2 || tenant.TenantTypeID != 3)
+                                                if (tenant.TenantTypeID != 2 && tenant.TenantTypeID != 3)
                                                 {
                                                     OrdersCreation.SpecialPaymentsElectricity(tenant.ID, out electricityPay);
                                                 }
@@ -267,7 +278,7 @@ namespace Supply
                                     OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
 
                                     decimal electricityPay = 0;
-                                    if (tenant.TenantTypeID != 2 || tenant.TenantTypeID != 3)
+                                    if (tenant.TenantTypeID != 2 && tenant.TenantTypeID != 3)
                                     {
                                         OrdersCreation.SpecialPaymentsElectricity(tenant.ID, out electricityPay);
                                     }
@@ -403,7 +414,7 @@ namespace Supply
                             OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
 
                             decimal electricityPay = 0;
-                            if (tenant.TenantTypeID != 2 || tenant.TenantTypeID != 3)
+                            if (tenant.TenantTypeID != 2 && tenant.TenantTypeID != 3)
                             {
                                 OrdersCreation.SpecialPaymentsElectricity(tenant.ID, out electricityPay);
                             }

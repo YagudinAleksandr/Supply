@@ -228,6 +228,11 @@ namespace Supply
             adminPaymentsDeclarations.ShowDialog();
             this.Show();
         }
+        private void SpecialPaymentDeclaration_Click(object sender, EventArgs e)
+        {
+            DeclarationSpecialPayments declarationSpecialPayments = new DeclarationSpecialPayments();
+            declarationSpecialPayments.Show();
+        }
         private void Form1_Shown(object sender, EventArgs e)
         {
             LB_UserName.Text = _user.Name;
@@ -275,6 +280,8 @@ namespace Supply
                 ToolStripMenuItem logDeclaration = new ToolStripMenuItem("Отчет ошибок");
                 logDeclaration.Click += CreateDeclarationLogs_Click;
                 declaration.DropDownItems.Add(logDeclaration);
+
+                GC.Collect();
             }
 
             if (_role.Name == "ADMINISTRATOR" || _role.Name == "MANAGER")
@@ -312,6 +319,10 @@ namespace Supply
                 ToolStripMenuItem paymentDeclarations = new ToolStripMenuItem("Отчеты по платежным поручениям");
                 paymentDeclarations.Click += PaymentsDeclarationOrders_Click;
                 declaration.DropDownItems.Add(paymentDeclarations);
+
+                ToolStripMenuItem specialPaymentDeclaration = new ToolStripMenuItem("Отчеты по специализированным оплатам!");
+                specialPaymentDeclaration.Click += SpecialPaymentDeclaration_Click;
+                declaration.DropDownItems.Add(specialPaymentDeclaration);
 
                 ToolStripMenuItem benefitsOrders = new ToolStripMenuItem("Отчеты по льготам");
                 benefitsOrders.Click += BenefitsOrders_Click;
@@ -628,6 +639,8 @@ namespace Supply
                     }
                     MessageBox.Show(ex.Message);
                 }
+
+                GC.Collect();
             };
 
             Invoke(action);

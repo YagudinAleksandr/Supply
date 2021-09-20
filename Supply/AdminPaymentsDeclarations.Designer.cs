@@ -205,6 +205,7 @@ namespace Supply
             this.BTN_CreateDeclaration.TabIndex = 5;
             this.BTN_CreateDeclaration.Text = "Отчет";
             this.BTN_CreateDeclaration.UseVisualStyleBackColor = true;
+            this.BTN_CreateDeclaration.Click += new System.EventHandler(this.BTN_CreateDeclaration_Click);
             // 
             // BTN_Save
             // 

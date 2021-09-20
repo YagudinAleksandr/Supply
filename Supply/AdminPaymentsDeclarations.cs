@@ -1,4 +1,5 @@
-﻿using Supply.Domain;
+﻿using Libraries.ExcelSystem;
+using Supply.Domain;
 using Supply.Libs;
 using Supply.Models;
 using System;
@@ -22,7 +23,6 @@ namespace Supply
         {
             InitializeComponent();
             _hostelID = 0;
-            BTN_CreateDeclaration.Enabled = false;
         }
 
 
@@ -136,6 +136,7 @@ namespace Supply
 
 
                   }
+                  GC.Collect();
               };
             Invoke(action);
         }
@@ -248,6 +249,117 @@ namespace Supply
                 }
             }
             
+        }
+
+        private void BTN_CreateDeclaration_Click(object sender, EventArgs e)
+        {
+            if (_hostelID == 0)
+            {
+                MessageBox.Show("Выбирите общежитие!");
+                return;
+            }
+
+            using(SupplyDbContext db = new SupplyDbContext())
+            {
+                try
+                {
+                    string error = string.Empty;
+                    using (ExcelHelper excel = new ExcelHelper())
+                    {
+                        if (excel.Open(filePath: AppSettings.GetTemplateSetting("outfileDir") + @"\", name: $"Отчеты по общежитиям (Платежные поручения){DateTime.Now.ToShortDateString()}.xlsx", out error))
+                        {
+                            excel.Set("A", 1, "Комната №", out error);
+                            excel.Set("B", 1, "ФИО", out error);
+                            excel.Set("C", 1, "Тип жильца", out error);
+                            excel.Set("D", 1, "Факультет", out error);
+                            excel.Set("E", 1, "Организация", out error);
+                            excel.Set("F", 1, "Задолженность", out error);
+                            excel.Set("G", 1, "Дата создания последнего платежного поручения", out error);
+
+                            int rowNumber = 2;
+
+                            foreach (Enterance enterance in db.Enterances.Where(hid => hid.HostelId == _hostelID).ToList())
+                            {
+                                foreach (Flat flat in db.Flats.Where(eid => eid.Enterance_ID == enterance.ID).ToList())
+                                {
+                                    foreach (Room room in db.Rooms.Where(fid => fid.FlatID == flat.ID).ToList())
+                                    {
+                                        foreach (Tenant tenant in db.Tenants.Where(rid => rid.RoomID == room.ID).Where(s => s.Status == true).Include(ident => ident.Identification).Include(tt=>tt.TenantType).ToList())
+                                        {
+                                            decimal debt = 0;
+                                            string tenantName = string.Empty;
+
+                                            
+
+                                            ChangePassport changePassport = db.ChangePassports.Where(x => x.TenantID == tenant.ID).Where(s => s.Status == true).FirstOrDefault();
+                                            if(changePassport!=null)
+                                            {
+                                                tenantName = changePassport.Surename + " " + changePassport.Name;
+
+                                                if(changePassport.Patronymic!=null)
+                                                {
+                                                    tenantName += " " + changePassport.Patronymic;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                tenantName = tenant.Identification.Surename + " " + tenant.Identification.Name;
+                                                if(tenant.Identification.Patronymic!=null)
+                                                {
+                                                    tenantName += " " + tenant.Identification.Patronymic;
+                                                }
+                                            }
+
+                                            string faculty = OrdersCreation.AdditionalInf(3, tenant.ID);
+
+                                            string organization = string.Empty;
+                                            if(OrdersCreation.AdditionalInf(10,tenant.ID)!=string.Empty)
+                                            {
+                                                organization = "Сторонняя";
+                                            }
+                                            else
+                                            {
+                                                organization = "НИМИ";
+                                            }
+                                            string dateOfLastPaymentOrder = string.Empty;
+                                            foreach (Accounting accounting in db.Accountings.Where(t => t.TenantID == tenant.ID).ToList())
+                                            {
+                                                debt += Convert.ToDecimal(accounting.Debt);
+                                                dateOfLastPaymentOrder = accounting.PeriodStart + "-" + accounting.PeriodEnd;
+                                            }
+
+                                            excel.Set("A", rowNumber, room.Name, out error);
+                                            excel.Set("B", rowNumber, tenantName, out error);
+                                            excel.Set("C", rowNumber, tenant.TenantType.Name, out error);
+                                            excel.Set("D", rowNumber, faculty, out error);
+                                            excel.Set("E", rowNumber, organization, out error);
+                                            excel.Set("F", rowNumber, debt.ToString(), out error);
+                                            excel.Set("G", rowNumber, dateOfLastPaymentOrder, out error);
+
+                                            rowNumber++;
+
+                                        }
+                                    }
+                                }
+                            }
+
+                            excel.Save();
+
+                            MessageBox.Show("Отчет сформирован!");
+                            GC.Collect();
+                        }
+                        else
+                        {
+                            throw new Exception(error);
+                        }
+                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                
+            }
         }
     }
 }
