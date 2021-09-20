@@ -1642,6 +1642,11 @@ namespace Supply.Libs
             {
                 daysInMonth = DateTime.DaysInMonth(dt2.Year, dt2.Month);
                 days = dt2.Day;
+                if (dt1.Day != 1)
+                {
+                    daysInMonth = DateTime.DaysInMonth(dt1.Year, dt2.Month);
+                    days = daysInMonth - dt1.Day;
+                }
             }
         }
         public static bool BenefitCheck(int orderID, decimal payForHouse, DateTime startDate, DateTime endDate, out decimal payment)
