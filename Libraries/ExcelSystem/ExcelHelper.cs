@@ -24,13 +24,27 @@ namespace Libraries.ExcelSystem
             try
             {
                 _workbook.Close();
+                _excel.Quit();
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(_excel);
             }
             catch
             {
                 return;
             }
         }
-
+        public void Close()
+        {
+            try
+            {
+                _workbook.Close();
+                _excel.Quit();
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(_excel);
+            }
+            catch
+            {
+                return;
+            }
+        }
         public bool Open(string filePath, string name, out string error)
         {
             try
