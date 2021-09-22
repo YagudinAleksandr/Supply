@@ -153,7 +153,7 @@ namespace Supply
 
                         if (OrdersCreation.ChangePassportCreate(changePassport.ID, out error))
                         {
-                            MessageBox.Show($"Приложение к договору № {order.OrderNumber} на переселение сформирован");
+                            MessageBox.Show($"Приложение к договору № {order.OrderNumber} на смену паспорта сформирован");
                         }
                         else
                         {

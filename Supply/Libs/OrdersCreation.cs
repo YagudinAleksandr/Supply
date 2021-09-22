@@ -433,7 +433,7 @@ namespace Supply.Libs
                 Hostel hostel;
                 License license;
                 Identification identification;
-
+                
                 try
                 {
                     changePassport = db.ChangePassports.Where(id => id.ID == changePassportID).Include(t => t.Tenant).FirstOrDefault();
@@ -444,7 +444,7 @@ namespace Supply.Libs
                     flat = db.Flats.Where(x => x.ID == room.FlatID).FirstOrDefault();
                     enterance = db.Enterances.Where(x => x.ID == flat.Enterance_ID).Include(f => f.Flats).FirstOrDefault();
                     hostel = db.Hostels.Where(x => x.ID == enterance.HostelId).Include(m => m.Manager).Include(h => h.Address).FirstOrDefault();
-                    license = db.Licenses.Where(x => x.ID == hostel.Manager.ID).First();
+                    license = db.Licenses.Where(x => x.ID == changePassport.LicenseID).First();
                     identification = db.Identifications.Where(x => x.ID == tenant.ID).First();
                 }
                 catch(Exception ex)
@@ -452,6 +452,8 @@ namespace Supply.Libs
                     error = ex.Message+"."+ex.InnerException;
                     return false;
                 }
+
+                
 
                 if (tenant == null)
                 {
@@ -1677,14 +1679,29 @@ namespace Supply.Libs
                     if (endBenefit < endDate && startBenefit < startDate) 
                     {
                         SpecialDateCheck(startDate, endBenefit, out days, out monthes, out daysInMonth);
-                        
 
-                        payment += (Convert.ToDecimal(benefit.Payment) / daysInMonth) * days + (Convert.ToDecimal(benefit.Payment) * monthes);
+                        if (days != 0)
+                        {
+                            payment += (Convert.ToDecimal(benefit.Payment) / daysInMonth) * days + (Convert.ToDecimal(benefit.Payment) * monthes);
+                        }
+                        else
+                        {
+                            payment += Convert.ToDecimal(benefit.Payment) * monthes;
+                        }
                         int tempDays = days;
+                        int tempDaysInMonth = daysInMonth;
 
-                        SpecialDateCheck(endBenefit, endDate, out days, out monthes, out daysInMonth);
+                        SpecialDateCheck(endBenefit.AddDays(1), endDate, out days, out monthes, out daysInMonth);
 
-                        payment = (tenant.Payment.House / daysInMonth) * (days - tempDays) + tenant.Payment.House * monthes + (tenant.Payment.Rent / daysInMonth) * (days - tempDays) + tenant.Payment.Rent * monthes + payment;
+                        if(tempDays!=0)
+                        {
+                            payment = (tenant.Payment.House / tempDaysInMonth) * (days) + tenant.Payment.House * monthes + (tenant.Payment.Rent / tempDaysInMonth) * (days) + (tenant.Payment.Rent * monthes + tenant.Payment.House) + payment;
+                        }
+                        else
+                        {
+                            payment = (tenant.Payment.Rent + tenant.Payment.House) * monthes + payment;
+                        }
+                        
                     }
 
                     if (startBenefit > startDate && endBenefit > endDate)

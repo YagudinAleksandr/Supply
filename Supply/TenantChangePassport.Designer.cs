@@ -57,32 +57,37 @@ namespace Supply
             this.TB_Issued = new System.Windows.Forms.RichTextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.TB_Address = new System.Windows.Forms.RichTextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.CB_Licenses = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 13);
+            this.label1.Location = new System.Drawing.Point(17, 16);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(155, 13);
+            this.label1.Size = new System.Drawing.Size(200, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "Смена паспорта для жильца:";
             // 
             // LB_TenantName
             // 
             this.LB_TenantName.AutoSize = true;
-            this.LB_TenantName.Location = new System.Drawing.Point(174, 13);
+            this.LB_TenantName.Location = new System.Drawing.Point(232, 16);
+            this.LB_TenantName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LB_TenantName.Name = "LB_TenantName";
-            this.LB_TenantName.Size = new System.Drawing.Size(35, 13);
+            this.LB_TenantName.Size = new System.Drawing.Size(46, 17);
             this.LB_TenantName.TabIndex = 1;
             this.LB_TenantName.Text = "label2";
             // 
             // BTN_Save
             // 
             this.BTN_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTN_Save.Location = new System.Drawing.Point(717, 302);
+            this.BTN_Save.Location = new System.Drawing.Point(956, 465);
+            this.BTN_Save.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.BTN_Save.Name = "BTN_Save";
-            this.BTN_Save.Size = new System.Drawing.Size(75, 23);
+            this.BTN_Save.Size = new System.Drawing.Size(100, 28);
             this.BTN_Save.TabIndex = 2;
             this.BTN_Save.Text = "Сохранить";
             this.BTN_Save.UseVisualStyleBackColor = true;
@@ -91,208 +96,252 @@ namespace Supply
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 43);
+            this.label2.Location = new System.Drawing.Point(16, 53);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 13);
+            this.label2.Size = new System.Drawing.Size(70, 17);
             this.label2.TabIndex = 3;
             this.label2.Text = "Фамилия";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(219, 43);
+            this.label3.Location = new System.Drawing.Point(292, 53);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(29, 13);
+            this.label3.Size = new System.Drawing.Size(35, 17);
             this.label3.TabIndex = 4;
             this.label3.Text = "Имя";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(399, 43);
+            this.label4.Location = new System.Drawing.Point(532, 53);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(54, 13);
+            this.label4.Size = new System.Drawing.Size(71, 17);
             this.label4.TabIndex = 5;
             this.label4.Text = "Отчество";
             // 
             // TB_Surename
             // 
-            this.TB_Surename.Location = new System.Drawing.Point(74, 40);
+            this.TB_Surename.Location = new System.Drawing.Point(99, 49);
+            this.TB_Surename.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TB_Surename.Name = "TB_Surename";
-            this.TB_Surename.Size = new System.Drawing.Size(139, 20);
+            this.TB_Surename.Size = new System.Drawing.Size(184, 22);
             this.TB_Surename.TabIndex = 6;
             // 
             // TB_Name
             // 
-            this.TB_Name.Location = new System.Drawing.Point(254, 40);
+            this.TB_Name.Location = new System.Drawing.Point(339, 49);
+            this.TB_Name.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TB_Name.Name = "TB_Name";
-            this.TB_Name.Size = new System.Drawing.Size(139, 20);
+            this.TB_Name.Size = new System.Drawing.Size(184, 22);
             this.TB_Name.TabIndex = 7;
             // 
             // TB_Patronimic
             // 
-            this.TB_Patronimic.Location = new System.Drawing.Point(459, 40);
+            this.TB_Patronimic.Location = new System.Drawing.Point(612, 49);
+            this.TB_Patronimic.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TB_Patronimic.Name = "TB_Patronimic";
-            this.TB_Patronimic.Size = new System.Drawing.Size(134, 20);
+            this.TB_Patronimic.Size = new System.Drawing.Size(177, 22);
             this.TB_Patronimic.TabIndex = 8;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(599, 43);
+            this.label5.Location = new System.Drawing.Point(799, 53);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(86, 13);
+            this.label5.Size = new System.Drawing.Size(111, 17);
             this.label5.TabIndex = 9;
             this.label5.Text = "Дата рождения";
             // 
             // TB_DateOfBirth
             // 
-            this.TB_DateOfBirth.Location = new System.Drawing.Point(691, 40);
+            this.TB_DateOfBirth.Location = new System.Drawing.Point(921, 49);
+            this.TB_DateOfBirth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TB_DateOfBirth.Mask = "00/00/0000";
             this.TB_DateOfBirth.Name = "TB_DateOfBirth";
-            this.TB_DateOfBirth.Size = new System.Drawing.Size(100, 20);
+            this.TB_DateOfBirth.Size = new System.Drawing.Size(132, 22);
             this.TB_DateOfBirth.TabIndex = 10;
             this.TB_DateOfBirth.ValidatingType = typeof(System.DateTime);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 84);
+            this.label6.Location = new System.Drawing.Point(16, 103);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(83, 13);
+            this.label6.Size = new System.Drawing.Size(107, 17);
             this.label6.TabIndex = 11;
             this.label6.Text = "Тип документа";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(229, 84);
+            this.label7.Location = new System.Drawing.Point(305, 103);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(38, 13);
+            this.label7.Size = new System.Drawing.Size(49, 17);
             this.label7.TabIndex = 12;
             this.label7.Text = "Серия";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(399, 84);
+            this.label8.Location = new System.Drawing.Point(532, 103);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(41, 13);
+            this.label8.Size = new System.Drawing.Size(51, 17);
             this.label8.TabIndex = 13;
             this.label8.Text = "Номер";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(585, 85);
+            this.label9.Location = new System.Drawing.Point(780, 105);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(107, 13);
+            this.label9.Size = new System.Drawing.Size(140, 17);
             this.label9.TabIndex = 14;
             this.label9.Text = "Код подразделения";
             // 
             // CB_DocType
             // 
             this.CB_DocType.FormattingEnabled = true;
-            this.CB_DocType.Location = new System.Drawing.Point(101, 81);
+            this.CB_DocType.Location = new System.Drawing.Point(135, 100);
+            this.CB_DocType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.CB_DocType.Name = "CB_DocType";
-            this.CB_DocType.Size = new System.Drawing.Size(121, 21);
+            this.CB_DocType.Size = new System.Drawing.Size(160, 24);
             this.CB_DocType.TabIndex = 15;
             this.CB_DocType.SelectedIndexChanged += new System.EventHandler(this.CB_DocType_SelectedIndexChanged);
             // 
             // TB_DocSeries
             // 
-            this.TB_DocSeries.Location = new System.Drawing.Point(273, 81);
+            this.TB_DocSeries.Location = new System.Drawing.Point(364, 100);
+            this.TB_DocSeries.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TB_DocSeries.Name = "TB_DocSeries";
-            this.TB_DocSeries.Size = new System.Drawing.Size(120, 20);
+            this.TB_DocSeries.Size = new System.Drawing.Size(159, 22);
             this.TB_DocSeries.TabIndex = 16;
             // 
             // TB_DocNumber
             // 
-            this.TB_DocNumber.Location = new System.Drawing.Point(459, 81);
+            this.TB_DocNumber.Location = new System.Drawing.Point(612, 100);
+            this.TB_DocNumber.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TB_DocNumber.Name = "TB_DocNumber";
-            this.TB_DocNumber.Size = new System.Drawing.Size(120, 20);
+            this.TB_DocNumber.Size = new System.Drawing.Size(159, 22);
             this.TB_DocNumber.TabIndex = 17;
             // 
             // TB_DocCode
             // 
-            this.TB_DocCode.Location = new System.Drawing.Point(707, 81);
+            this.TB_DocCode.Location = new System.Drawing.Point(943, 100);
+            this.TB_DocCode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TB_DocCode.Name = "TB_DocCode";
-            this.TB_DocCode.Size = new System.Drawing.Size(84, 20);
+            this.TB_DocCode.Size = new System.Drawing.Size(111, 22);
             this.TB_DocCode.TabIndex = 18;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(12, 123);
+            this.label10.Location = new System.Drawing.Point(16, 151);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(74, 13);
+            this.label10.Size = new System.Drawing.Size(94, 17);
             this.label10.TabIndex = 19;
             this.label10.Text = "Гражданство";
             // 
             // TB_Citizenship
             // 
-            this.TB_Citizenship.Location = new System.Drawing.Point(101, 120);
+            this.TB_Citizenship.Location = new System.Drawing.Point(135, 148);
+            this.TB_Citizenship.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TB_Citizenship.Name = "TB_Citizenship";
-            this.TB_Citizenship.Size = new System.Drawing.Size(121, 20);
+            this.TB_Citizenship.Size = new System.Drawing.Size(160, 22);
             this.TB_Citizenship.TabIndex = 20;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(229, 123);
+            this.label11.Location = new System.Drawing.Point(305, 151);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(73, 13);
+            this.label11.Size = new System.Drawing.Size(95, 17);
             this.label11.TabIndex = 21;
             this.label11.Text = "Дата выдачи";
             // 
             // TB_GivenDate
             // 
-            this.TB_GivenDate.Location = new System.Drawing.Point(308, 120);
+            this.TB_GivenDate.Location = new System.Drawing.Point(411, 148);
+            this.TB_GivenDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TB_GivenDate.Mask = "00/00/0000";
             this.TB_GivenDate.Name = "TB_GivenDate";
-            this.TB_GivenDate.Size = new System.Drawing.Size(100, 20);
+            this.TB_GivenDate.Size = new System.Drawing.Size(132, 22);
             this.TB_GivenDate.TabIndex = 22;
             this.TB_GivenDate.ValidatingType = typeof(System.DateTime);
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(12, 165);
+            this.label12.Location = new System.Drawing.Point(16, 203);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(63, 13);
+            this.label12.Size = new System.Drawing.Size(79, 17);
             this.label12.TabIndex = 23;
             this.label12.Text = "Кем выдан";
             // 
             // TB_Issued
             // 
-            this.TB_Issued.Location = new System.Drawing.Point(101, 165);
+            this.TB_Issued.Location = new System.Drawing.Point(135, 203);
+            this.TB_Issued.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TB_Issued.Name = "TB_Issued";
-            this.TB_Issued.Size = new System.Drawing.Size(690, 49);
+            this.TB_Issued.Size = new System.Drawing.Size(919, 59);
             this.TB_Issued.TabIndex = 24;
             this.TB_Issued.Text = "";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(13, 234);
+            this.label13.Location = new System.Drawing.Point(17, 288);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(38, 13);
+            this.label13.Size = new System.Drawing.Size(48, 17);
             this.label13.TabIndex = 25;
             this.label13.Text = "Адрес";
             // 
             // TB_Address
             // 
-            this.TB_Address.Location = new System.Drawing.Point(101, 231);
+            this.TB_Address.Location = new System.Drawing.Point(135, 284);
+            this.TB_Address.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TB_Address.Name = "TB_Address";
-            this.TB_Address.Size = new System.Drawing.Size(690, 49);
+            this.TB_Address.Size = new System.Drawing.Size(919, 59);
             this.TB_Address.TabIndex = 26;
             this.TB_Address.Text = "";
             // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(17, 374);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(186, 17);
+            this.label14.TabIndex = 27;
+            this.label14.Text = "Ответственный за договор";
+            // 
+            // CB_Licenses
+            // 
+            this.CB_Licenses.FormattingEnabled = true;
+            this.CB_Licenses.Location = new System.Drawing.Point(209, 371);
+            this.CB_Licenses.Name = "CB_Licenses";
+            this.CB_Licenses.Size = new System.Drawing.Size(711, 24);
+            this.CB_Licenses.TabIndex = 28;
+            this.CB_Licenses.SelectionChangeCommitted += new System.EventHandler(this.CB_Licenses_SelectionChangeCommitted);
+            // 
             // TenantChangePassport
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(804, 337);
+            this.ClientSize = new System.Drawing.Size(1072, 508);
+            this.Controls.Add(this.CB_Licenses);
+            this.Controls.Add(this.label14);
             this.Controls.Add(this.TB_Address);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.TB_Issued);
@@ -321,6 +370,7 @@ namespace Supply
             this.Controls.Add(this.LB_TenantName);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "TenantChangePassport";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Смена паспорта";
@@ -359,5 +409,7 @@ namespace Supply
         private System.Windows.Forms.RichTextBox TB_Issued;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.RichTextBox TB_Address;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ComboBox CB_Licenses;
     }
 }

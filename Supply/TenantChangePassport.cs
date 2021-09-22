@@ -1,4 +1,5 @@
 ﻿using Supply.Domain;
+using Supply.Libs;
 using Supply.Models;
 using System;
 using System.Collections.Generic;
@@ -18,11 +19,12 @@ namespace Supply
     {
         private Tenant _tenant;
         private int _documentTypeID;
+        private int _licenseID;
         public TenantChangePassport(Tenant tenant)
         {
             InitializeComponent();
             _tenant = tenant;
-            _documentTypeID = 0;
+            _documentTypeID = _licenseID = 0;
         }
 
         private void TenantChangePassport_Load(object sender, EventArgs e)
@@ -34,6 +36,12 @@ namespace Supply
         private void BTN_Save_Click(object sender, EventArgs e)
         {
             ChangePassport changePassport = new ChangePassport();
+
+            if (_licenseID == 0)
+            {
+                MessageBox.Show("Выбирите ответственного за договор!");
+                return;
+            }
 
             changePassport.CreatedAt = DateTime.Now.ToString();
             changePassport.UpdatedAt = DateTime.Now.ToString();
@@ -52,6 +60,7 @@ namespace Supply
             changePassport.TenantID = _tenant.ID;
             changePassport.Code = TB_DocCode.Text;
             changePassport.DocumentTypeID = _documentTypeID;
+            changePassport.LicenseID = _licenseID;
             using(SupplyDbContext db = new SupplyDbContext())
             {
                 
@@ -71,6 +80,13 @@ namespace Supply
 
                     db.ChangePassports.Add(changePassport);
                     db.SaveChanges();
+
+                    string error = string.Empty;
+
+                    if (!OrdersCreation.ChangePassportCreate(changePassport.ID, out error))
+                    {
+                        MessageBox.Show(error);
+                    }
 
                     MessageBox.Show("Паспортные данные изменены!");
                     this.Close();
@@ -127,6 +143,19 @@ namespace Supply
                               TB_Patronimic.Text = changePassport.Patronymic;
                               CB_DocType.SelectedValue = changePassport.DocumentTypeID;
                               _documentTypeID = changePassport.DocumentTypeID;
+
+                              var licenses = db.Licenses.Where(s => s.Status == true).Include(m => m.Manager).ToList();
+
+                              for (int i = 0; i < licenses.Count; i++)
+                              {
+                                  licenses[i].Name = licenses[i].Manager.Surename + " " + licenses[i].Manager.Name + " " + licenses[i].Manager.Patronymic + "(" + licenses[i].Name + ")";
+                              }
+
+                              CB_Licenses.DataSource = licenses;
+                              CB_Licenses.DisplayMember = "Name";
+                              CB_Licenses.ValueMember = "ID";
+
+                              CB_Licenses.SelectedValue = _licenseID = (int)changePassport.LicenseID;
                           }
                           else
                           {
@@ -148,6 +177,17 @@ namespace Supply
                               TB_Patronimic.Text = tenant.Identification.Patronymic;
                               CB_DocType.SelectedValue = tenant.Identification.DocumentTypeID;
                               _documentTypeID = tenant.Identification.DocumentTypeID;
+
+                              var licenses = db.Licenses.Where(s => s.Status == true).Include(m => m.Manager).ToList();
+
+                              for (int i = 0; i < licenses.Count; i++) 
+                              {
+                                  licenses[i].Name = licenses[i].Manager.Surename + " " + licenses[i].Manager.Name + " " + licenses[i].Manager.Patronymic + "(" + licenses[i].Name + ")";
+                              }
+
+                              CB_Licenses.DataSource = licenses;
+                              CB_Licenses.DisplayMember = "Name";
+                              CB_Licenses.ValueMember = "ID";
                           }
                       }
                       else
@@ -175,6 +215,18 @@ namespace Supply
             try
             {
                 _documentTypeID = (int)CB_DocType.SelectedValue;
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        private void CB_Licenses_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            try
+            {
+                _licenseID = (int)CB_Licenses.SelectedValue;
             }
             catch
             {

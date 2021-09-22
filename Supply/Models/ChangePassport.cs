@@ -33,6 +33,9 @@ namespace Supply.Models
         public string StartDate { get; set; }
         [Required]
         public bool Status { get; set; }
+        [ForeignKey("License")]
+        public int? LicenseID { get; set; }
+        public License License { get; set; }
         [Required]
         public string CreatedAt { get; set; }
         [Required]
