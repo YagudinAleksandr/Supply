@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -74,7 +75,7 @@ namespace Supply
                 string error = string.Empty;
                 using(ExcelHelper excel = new ExcelHelper())
                 {
-                    if (excel.Open(filePath: AppSettings.GetTemplateSetting("outfileDir") + @"\", name: $"Отчеты по начислениям с {startDate.ToShortDateString()} по {endDate.ToShortDateString()}.xlsx", out error))
+                    if (excel.Open(filePath: AppSettings.GetTemplateSetting("outfileDir") + @"\", name: $"Отчеты по начислениям общежития {hostel.Name} с {startDate.ToShortDateString()} по {endDate.ToShortDateString()}.xlsx", out error))
                     {
                         if (!excel.Merge("A1", "J1", 1, 1, $"Список проживающих в общежитии № {hostel.Name}", out error))
                         {
@@ -142,13 +143,97 @@ namespace Supply
                             return;
                         }
 
-                        //TODO
+                        int rowNumber = 5;
+                        int counter = 1;
 
-                        excel.Save();
+                        try
+                        {
+                            foreach (Enterance enterance in enterances)
+                            {
+                                foreach (Flat flat in db.Flats.Where(eid => eid.Enterance_ID == enterance.ID).ToList())
+                                {
+                                    foreach (Room room in db.Rooms.Where(fid => fid.FlatID == flat.ID).ToList())
+                                    {
+                                        foreach (Tenant tenant in db.Tenants.Where(r => r.RoomID == room.ID).Include(ident => ident.Identification).Include(t => t.TenantType).Include(o => o.Order).ToList())
+                                        {
+                                            excel.Set("A", rowNumber, counter.ToString(), out error);
 
-                        excel.Close();
+                                            string name = string.Empty;
 
-                        MessageBox.Show("Файл создан!");
+                                            ChangePassport changePassport = db.ChangePassports.Where(tid => tid.TenantID == tenant.ID).Where(s => s.Status).FirstOrDefault();
+
+                                            if (changePassport != null)
+                                            {
+                                                name = changePassport.Surename + " " + changePassport.Name;
+                                                if (changePassport.Patronymic != null)
+                                                {
+                                                    name += " " + changePassport.Patronymic;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                name = tenant.Identification.Surename + " " + tenant.Identification.Name;
+                                                if (tenant.Identification.Patronymic != null)
+                                                {
+                                                    name += " " + tenant.Identification.Patronymic;
+                                                }
+                                            }
+
+                                            excel.Set("B", rowNumber, name, out error);
+                                            excel.Set("C", rowNumber, tenant.TenantType.Name, out error);
+                                            excel.Set("D", rowNumber, tenant.Order.OrderNumber, out error);
+                                            excel.Set("E", rowNumber, tenant.Order.StartDate, out error);
+                                            excel.Set("F", rowNumber, tenant.Order.EndDate, out error);
+
+                                            counter++;
+                                            rowNumber++;
+                                        }
+                                    }
+                                }
+                            }
+
+                            rowNumber += 2;
+
+                            excel.Set("B", rowNumber, "СОГЛАСОВАНО:", out error);
+                            rowNumber += 2;
+
+                            excel.Set("B", rowNumber, "Зам.директора по УиИИ", out error);
+                            excel.Set("E", rowNumber, "Р.А.Олейник", out error);
+                            rowNumber++;
+
+                            excel.Set("B", rowNumber, "ВРИО Гл.бухгалетра", out error);
+                            excel.Set("E", rowNumber, "З.Н.Архипова", out error);
+                            rowNumber++;
+
+                            excel.Set("B", rowNumber, "Руководитель ХТО", out error);
+                            excel.Set("E", rowNumber, "О.А.Болычева", out error);
+                            rowNumber++;
+
+                            excel.Set("B", rowNumber, "Ведущий бухгалтер", out error);
+                            excel.Set("E", rowNumber, "Т.Г.Лукина", out error);
+
+
+                            excel.Save();
+
+                            
+
+                            MessageBox.Show("Файл создан!");
+                        }
+                        catch(Exception ex)
+                        {
+                            Log logInfo = new Log();
+                            logInfo.ID = Guid.NewGuid();
+                            logInfo.Type = "ERROR";
+                            logInfo.Caption = $"Class: DeclarationMonthPayment. Method: BTN_Create_Click. {ex.Message}. {ex.InnerException}";
+                            logInfo.CreatedAt = DateTime.Now.ToString();
+                            db.Logs.Add(logInfo);
+                            db.SaveChanges();
+                        }
+                        finally
+                        {
+                            excel.Close();
+                        }
+                        
                     }
                     else
                     {
