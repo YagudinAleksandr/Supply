@@ -246,6 +246,11 @@ namespace Supply
                                             {
                                                 OrdersCreation.SpecialDateCheck(startDate, terminationStart, out days, out month, out daysInMonth);
 
+                                                if (DateTime.Parse(tenant.Order.StartDate) > startDate)
+                                                {
+                                                    OrdersCreation.SpecialDateCheck(DateTime.Parse(tenant.Order.StartDate), endDate, out days, out month, out daysInMonth);
+                                                }
+
                                                 if (tenant.TenantTypeID != 2 && tenant.TenantTypeID != 3)
                                                 {
                                                     if (days != 0)
@@ -278,6 +283,11 @@ namespace Supply
                                                 }
                                                 else
                                                 {
+                                                    if (DateTime.Parse(tenant.Order.StartDate) > startDate)
+                                                    {
+                                                        OrdersCreation.SpecialDateCheck(DateTime.Parse(tenant.Order.StartDate), endDate, out days, out month, out daysInMonth);
+                                                    }
+
                                                     if (days != 0)
                                                     {
                                                         service = (tenant.Payment.Service / daysInMonth) * days + (tenant.Payment.Service * month);
@@ -291,6 +301,13 @@ namespace Supply
                                                         house = tenant.Payment.House * month;
                                                     }
                                                 }
+
+                                                if (DateTime.Parse(tenant.Order.EndDate) < endDate)
+                                                {
+                                                    OrdersCreation.SpecialDateCheck(endDate, DateTime.Parse(tenant.Order.EndDate), out days, out month, out daysInMonth);
+
+                                                    
+                                                }
                                             }
                                             else
                                             {
@@ -298,6 +315,11 @@ namespace Supply
 
                                                 if (tenant.TenantTypeID != 2 && tenant.TenantTypeID != 3)
                                                 {
+                                                    if(DateTime.Parse(tenant.Order.StartDate)>startDate)
+                                                    {
+                                                        OrdersCreation.SpecialDateCheck(DateTime.Parse(tenant.Order.StartDate), endDate, out days, out month, out daysInMonth);
+                                                    }
+
                                                     if (days != 0)
                                                     {
                                                         service = (tenant.Payment.Service / daysInMonth) * days + (tenant.Payment.Service * month);
@@ -325,6 +347,11 @@ namespace Supply
                                                 }
                                                 else
                                                 {
+                                                    if (DateTime.Parse(tenant.Order.StartDate) > startDate)
+                                                    {
+                                                        OrdersCreation.SpecialDateCheck(DateTime.Parse(tenant.Order.StartDate), endDate, out days, out month, out daysInMonth);
+                                                    }
+
                                                     if (days != 0)
                                                     {
                                                         service = (tenant.Payment.Service / daysInMonth) * days + (tenant.Payment.Service * month);
@@ -499,11 +526,11 @@ namespace Supply
                         int tempDays = days;
                         int tempDaysInMonth = daysInMonth;
 
-                        OrdersCreation.SpecialDateCheck(endBenefit.AddDays(1), endDate, out days, out monthes, out daysInMonth);
+                        OrdersCreation.SpecialDateCheck(endBenefit, endDate, out days, out monthes, out daysInMonth);
 
                         if (tempDays != 0)
                         {
-                            payment =  tenant.Payment.House * monthes + (tenant.Payment.Rent / tempDaysInMonth) * (days) + (tenant.Payment.Rent * monthes) + payment;
+                            payment = (tenant.Payment.Rent / tempDaysInMonth) * (days) + (tenant.Payment.Rent * monthes) + payment;
                         }
                         else
                         {
@@ -577,6 +604,33 @@ namespace Supply
                         else
                         {
                             payment += Convert.ToDecimal(benefit.Payment) * monthes;
+                        }
+                    }
+
+                    if (startBenefit == startDate && endBenefit < endDate)
+                    {
+                        OrdersCreation.SpecialDateCheck(startDate, endBenefit, out days, out monthes, out daysInMonth);
+
+                        if (days != 0)
+                        {
+                            payment += Convert.ToDecimal(benefit.Payment) / daysInMonth * days;
+                            payment += Convert.ToDecimal(benefit.Payment) * monthes;
+                        }
+                        else
+                        {
+                            payment += Convert.ToDecimal(benefit.Payment) * monthes;
+                        }
+
+                        OrdersCreation.SpecialDateCheck(endBenefit, endDate, out days, out monthes, out daysInMonth);
+
+                        if (days != 0)
+                        {
+                            payment += Convert.ToDecimal(tenant.Payment.Rent) / daysInMonth * days;
+                            payment += Convert.ToDecimal(tenant.Payment.Rent) * monthes;
+                        }
+                        else
+                        {
+                            payment += Convert.ToDecimal(tenant.Payment.Rent) * monthes;
                         }
                     }
 

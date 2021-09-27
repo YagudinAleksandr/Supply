@@ -42,6 +42,7 @@ namespace Supply.Domain
                         db.AdditionalInformationTypes.Add(new AdditionalInformationType() { ID = 7, Name = "Основа обучения" });
                         db.AdditionalInformationTypes.Add(new AdditionalInformationType() { ID = 8, Name = "Период заселения" });
                         db.AdditionalInformationTypes.Add(new AdditionalInformationType() { ID = 9, Name = "Доп.жилец" });
+                        db.AdditionalInformationTypes.Add(new AdditionalInformationType() { ID = 10, Name = "Организация" });
                         db.SaveChanges();
                     }
 
