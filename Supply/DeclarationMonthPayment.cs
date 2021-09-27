@@ -353,6 +353,11 @@ namespace Supply
                                                 electricity = tempElectricity;
                                             }
 
+                                            if (OrdersCreation.AdditionalInf(10, tenant.ID) != string.Empty)
+                                            {
+                                                electricity = 0;
+                                            }
+
                                             excel.Set("G", rowNumber, Math.Round(rent, 2).ToString(), out error);
                                             excel.Set("H", rowNumber, Math.Round(service, 2).ToString(), out error);
                                             excel.Set("I", rowNumber, Math.Round(house, 2).ToString(), out error);

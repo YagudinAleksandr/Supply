@@ -262,9 +262,6 @@ namespace Supply
                 ToolStripMenuItem hostels = new ToolStripMenuItem("Общежития");
                 hostels.Click += Hostels_Click;
 
-                ToolStripMenuItem tenant = new ToolStripMenuItem("Жильцы");
-                tenant.Click += Tenants_Click;
-
                 ToolStripMenuItem roomType = new ToolStripMenuItem("Типы комнат");
                 roomType.Click += RoomType_Click;
 
@@ -278,7 +275,6 @@ namespace Supply
 
                 settingItem.DropDownItems.Add(hostels);
                 settingItem.DropDownItems.Add(roomType);
-                settingItem.DropDownItems.Add(tenant);
                 settingItem.DropDownItems.Add(users);
                 settingItem.DropDownItems.Add(news);
 
@@ -376,11 +372,15 @@ namespace Supply
             orderLiveInHostels.Click += CreateHostelDeclaration_Click;
             declaration.DropDownItems.Add(orderLiveInHostels);
 
+            ToolStripMenuItem tenant = new ToolStripMenuItem("Жильцы");
+            tenant.Click += Tenants_Click;
 
             ToolStripMenuItem settingsWindow = new ToolStripMenuItem("Настройки");
             settingsWindow.Click += AppSettings_Click;
 
+            settingItem.DropDownItems.Add(tenant);
             settingItem.DropDownItems.Add(settingsWindow);
+            
 
             ToolStripMenuItem changeUser = new ToolStripMenuItem("Сменить пользователя");
             changeUser.Click += ChangeUser_Click;

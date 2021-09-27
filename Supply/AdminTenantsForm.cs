@@ -55,7 +55,15 @@ namespace Supply
                             int rowNumber = DG_TenantsView.Rows.Add();
 
                             DG_TenantsView.Rows[rowNumber].Cells[COL_ID.Name].Value = tenant.ID;
-                            DG_TenantsView.Rows[rowNumber].Cells[COL_Status.Name].Value = tenant.Status;
+                            if (tenant.Status == true)
+                            {
+                                DG_TenantsView.Rows[rowNumber].Cells[COL_Status.Name].Value = "Активен";
+                            }
+                            else
+                            {
+                                DG_TenantsView.Rows[rowNumber].Cells[COL_Status.Name].Value = "Не активен";
+                            }
+                            
                             DG_TenantsView.Rows[rowNumber].Cells[COL_CreatedAt.Name].Value = tenant.CreatedAt;
                             DG_TenantsView.Rows[rowNumber].Cells[COL_UpdatedAt.Name].Value = tenant.UpdatedAt;
                             Order order = db.Orders.Where(x => x.ID == tenant.ID).FirstOrDefault();
