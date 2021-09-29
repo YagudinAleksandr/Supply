@@ -17,66 +17,78 @@ namespace Supply
         private int _benefitTypeID;
         private int _orderID;
         private int _hostelId;
+        private Benefit _benefit;
         public TenantBenefitAdd(int tenantID)
         {
             InitializeComponent();
             _tenantID = tenantID;
             _licenseID = _benefitTypeID = _orderID = _hostelId = 0;
+            _benefit = null;
+        }
+
+        public TenantBenefitAdd(Benefit benefit)
+        {
+            InitializeComponent();
+            _benefit = benefit;
         }
 
         private void TenantBenefitAdd_Load(object sender, EventArgs e)
         {
             using (SupplyDbContext db = new SupplyDbContext())
             {
-                try
+                if (_benefit == null) 
                 {
-                    Tenant tenant = db.Tenants
-                        .Where(id => id.ID == _tenantID)
-                        .Include(ident => ident.Identification)
-                        .Include(r=>r.Room)
-                        .Include(order => order.Order)
-                        .FirstOrDefault();
-
-                    if (tenant == null)
+                    try
                     {
-                        MessageBox.Show("Жилец не найден!");
-                        this.Close();
+                        Tenant tenant = db.Tenants
+                            .Where(id => id.ID == _tenantID)
+                            .Include(ident => ident.Identification)
+                            .Include(r => r.Room)
+                            .Include(order => order.Order)
+                            .FirstOrDefault();
+
+                        if (tenant == null)
+                        {
+                            MessageBox.Show("Жилец не найден!");
+                            this.Close();
+                        }
+
+                        Flat flat = db.Flats
+                            .Where(x => x.ID == tenant.Room.FlatID)
+                            .Include(ent => ent.Enterance)
+                            .FirstOrDefault();
+
+                        Hostel hostel = db.Hostels
+                            .Where(x => x.ID == flat.Enterance.HostelId)
+                            .FirstOrDefault();
+
+                        _hostelId = hostel.ID;
+
+                        LB_TenantInf.Text = tenant.Identification.Surename + " " + tenant.Identification.Name;
+                        if (tenant.Identification.Patronymic != null)
+                        {
+                            LB_TenantInf.Text += " " + tenant.Identification.Patronymic;
+                        }
+
+                        if (tenant.Order.OrderNumber != null)
+                        {
+                            LB_OrderNumb.Text = tenant.Order.OrderNumber;
+                            _orderID = tenant.Order.ID;
+                        }
+
                     }
-
-                    Flat flat = db.Flats
-                        .Where(x => x.ID == tenant.Room.FlatID)
-                        .Include(ent => ent.Enterance)
-                        .FirstOrDefault();
-
-                    Hostel hostel = db.Hostels
-                        .Where(x => x.ID == flat.Enterance.HostelId)
-                        .FirstOrDefault();
-
-                    _hostelId = hostel.ID;
-
-                    LB_TenantInf.Text = tenant.Identification.Surename + " " + tenant.Identification.Name;
-                    if (tenant.Identification.Patronymic != null)
+                    catch (Exception ex)
                     {
-                        LB_TenantInf.Text += " " + tenant.Identification.Patronymic;
+                        Log log = new Log();
+                        log.ID = Guid.NewGuid();
+                        log.Type = "ERROR";
+                        log.Caption = "TenantBenefitAdd.cs. Method: TenantBenefitAdd_load." + ex.Message + "." + ex.InnerException;
+                        log.CreatedAt = DateTime.Now.ToString();
+                        db.Logs.Add(log);
+                        db.SaveChanges();
                     }
-
-                    if (tenant.Order.OrderNumber != null)
-                    {
-                        LB_OrderNumb.Text = tenant.Order.OrderNumber;
-                        _orderID = tenant.Order.ID;
-                    }
-
                 }
-                catch(Exception ex)
-                {
-                    Log log = new Log();
-                    log.ID = Guid.NewGuid();
-                    log.Type = "ERROR";
-                    log.Caption = "TenantBenefitAdd.cs. Method: TenantBenefitAdd_load." + ex.Message + "." + ex.InnerException;
-                    log.CreatedAt = DateTime.Now.ToString();
-                    db.Logs.Add(log);
-                    db.SaveChanges();
-                }
+                
 
                 try
                 {
@@ -105,6 +117,47 @@ namespace Supply
                     log.CreatedAt = DateTime.Now.ToString();
                     db.Logs.Add(log);
                     db.SaveChanges();
+                }
+
+                if (_benefit != null) 
+                {
+                    CB_BenefitsTypes.SelectedValue = _benefitTypeID = _benefit.BenefitTypeID;
+                    CB_ManagersLicenses.SelectedValue = _licenseID = _benefit.LicenseID;
+                    _orderID = _benefit.OrderID;
+
+                    Order order = db.Orders.Where(id => id.ID == _benefit.OrderID).FirstOrDefault();
+                    Tenant tenant = db.Tenants.Where(id => id.ID == order.ID).Include(ident => ident.Identification).FirstOrDefault();
+
+                    LB_OrderNumb.Text = order.OrderNumber;
+
+                    ChangePassport changePassport = db.ChangePassports.Where(tid => tid.TenantID == tenant.ID).Where(s => s.Status == true).FirstOrDefault();
+
+                    if (changePassport == null)
+                    {
+                        LB_TenantInf.Text = tenant.Identification.Surename + " " + tenant.Identification.Name;
+                        if (tenant.Identification.Patronymic != null)
+                        {
+                            LB_TenantInf.Text += " " + tenant.Identification.Patronymic;
+                        }
+                    }
+                    else
+                    {
+                        LB_TenantInf.Text = changePassport.Surename + " " + changePassport.Name;
+                        if (changePassport.Patronymic != null)
+                        {
+                            LB_TenantInf.Text += " " + changePassport.Patronymic;
+                        }
+                    }
+
+                    TB_Decree.Text = _benefit.BasedOn;
+                    TB_DecreeName.Text = _benefit.DecreeNumber;
+                    TB_DecreeDate.Text = _benefit.DecreeDate;
+                    TB_EndDate.Text = _benefit.EndDate;
+                    TB_StartDate.Text = _benefit.StartDate;
+                    TB_Payment.Text = _benefit.Payment.ToString();
+                    TB_House.Text = _benefit.House.ToString();
+                    TB_Service.Text = _benefit.Service.ToString();
+                    TB_Electricity.Text = _benefit.Electricity.ToString();
                 }
                 
             }
@@ -139,53 +192,112 @@ namespace Supply
 
         private void BTN_Save_Click(object sender, EventArgs e)
         {
-            Benefit benefit = new Benefit();
-            benefit.BenefitTypeID = _benefitTypeID;
-            benefit.CreatedAt = DateTime.Now.ToString();
-            benefit.UpdatedAt = DateTime.Now.ToString();
-            benefit.Status = true;
-            benefit.OrderID = _orderID;
-            benefit.LicenseID = _licenseID;
-            benefit.Payment = double.Parse(TB_Payment.Text);
-            benefit.EndDate = TB_EndDate.Text;
-            benefit.StartDate = TB_StartDate.Text;
-            benefit.DecreeNumber = TB_DecreeName.Text;
-            benefit.DecreeDate = TB_DecreeDate.Text;
-            benefit.BasedOn = TB_Decree.Text;
-
-            using(SupplyDbContext db = new SupplyDbContext())
+            if (_benefit == null) 
             {
-                try
-                {
-                    db.Benefits.Add(benefit);
-                    db.SaveChanges();
-                    MessageBox.Show("Льгота добавлена успешно!");
+                Benefit benefit = new Benefit();
+                benefit.BenefitTypeID = _benefitTypeID;
+                benefit.CreatedAt = DateTime.Now.ToString();
+                benefit.UpdatedAt = DateTime.Now.ToString();
+                benefit.Status = true;
+                benefit.OrderID = _orderID;
+                benefit.LicenseID = _licenseID;
+                benefit.Payment = double.Parse(TB_Payment.Text);
+                benefit.House = double.Parse(TB_House.Text);
+                benefit.Electricity = double.Parse(TB_Electricity.Text);
+                benefit.Service = double.Parse(TB_Service.Text);
+                benefit.EndDate = TB_EndDate.Text;
+                benefit.StartDate = TB_StartDate.Text;
+                benefit.DecreeNumber = TB_DecreeName.Text;
+                benefit.DecreeDate = TB_DecreeDate.Text;
+                benefit.BasedOn = TB_Decree.Text;
 
-                    Button saveButton = (Button)sender;
-                    if ((string)saveButton.Tag == "SaveAndCreate")
+                using (SupplyDbContext db = new SupplyDbContext())
+                {
+                    try
                     {
-                        Thread thread = new Thread(CreateBenefitOrder);
-                        thread.Start();
+                        db.Benefits.Add(benefit);
+                        db.SaveChanges();
+                        MessageBox.Show("Льгота добавлена успешно!");
+
+                        Button saveButton = (Button)sender;
+                        if ((string)saveButton.Tag == "SaveAndCreate")
+                        {
+                            Thread thread = new Thread(CreateBenefitOrder);
+                            thread.Start();
+                            this.Close();
+                        }
+                        else
+                        {
+                            this.Close();
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Log log = new Log();
+                        log.ID = Guid.NewGuid();
+                        log.Type = "ERROR";
+                        log.Caption = "TenantBenefitAdd.cs. Method: BTN_Save_Click." + ex.Message + "." + ex.InnerException;
+                        log.CreatedAt = DateTime.Now.ToString();
+                        db.Logs.Add(log);
+                        db.SaveChanges();
+
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
+            else
+            {
+                
+                _benefit.BenefitTypeID = _benefitTypeID;
+                _benefit.UpdatedAt = DateTime.Now.ToString();
+                _benefit.OrderID = _orderID;
+                _benefit.LicenseID = _licenseID;
+                _benefit.Payment = double.Parse(TB_Payment.Text);
+                _benefit.House = double.Parse(TB_House.Text);
+                _benefit.Electricity = double.Parse(TB_Electricity.Text);
+                _benefit.Service = double.Parse(TB_Service.Text);
+                _benefit.EndDate = TB_EndDate.Text;
+                _benefit.StartDate = TB_StartDate.Text;
+                _benefit.DecreeNumber = TB_DecreeName.Text;
+                _benefit.DecreeDate = TB_DecreeDate.Text;
+                _benefit.BasedOn = TB_Decree.Text;
+
+                using (SupplyDbContext db = new SupplyDbContext())
+                {
+                    try
+                    {
+                        db.Entry(_benefit).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                        MessageBox.Show("Льгота изменена успешно!");
+
+                        Button saveButton = (Button)sender;
+                        if ((string)saveButton.Tag == "SaveAndCreate")
+                        {
+                            Thread thread = new Thread(CreateBenefitOrder);
+                            thread.Start();
+                            this.Close();
+                        }
+                        else
+                        {
+                            this.Close();
+                        }
                         this.Close();
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        this.Close();
-                    }
-                    
-                }
-                catch(Exception ex)
-                {
-                    Log log = new Log();
-                    log.ID = Guid.NewGuid();
-                    log.Type = "ERROR";
-                    log.Caption = "TenantBenefitAdd.cs. Method: BTN_Save_Click." + ex.Message + "." + ex.InnerException;
-                    log.CreatedAt = DateTime.Now.ToString();
-                    db.Logs.Add(log);
-                    db.SaveChanges();
+                        Log log = new Log();
+                        log.ID = Guid.NewGuid();
+                        log.Type = "ERROR";
+                        log.Caption = "TenantBenefitAdd.cs. Method: BTN_Save_Click." + ex.Message + "." + ex.InnerException;
+                        log.CreatedAt = DateTime.Now.ToString();
+                        db.Logs.Add(log);
+                        db.SaveChanges();
 
-                    MessageBox.Show(ex.Message + "." + ex.InnerException);
+                        MessageBox.Show(ex.Message);
+                    }
                 }
+                
             }
         }
 

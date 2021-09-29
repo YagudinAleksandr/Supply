@@ -32,7 +32,7 @@ namespace Supply
             DG_View_Benefits.Columns.Add(dataGridViewButtonColumn1);
 
             DataGridViewButtonColumn dataGridViewButtonColumn2 = new DataGridViewButtonColumn();
-            dataGridViewButtonColumn2.HeaderText = "Отключить";
+            dataGridViewButtonColumn2.HeaderText = "Изменить";
             dataGridViewButtonColumn2.Name = "COL_Settings";
             dataGridViewButtonColumn2.Text = "Изменить";
             dataGridViewButtonColumn2.UseColumnTextForButtonValue = true;
@@ -114,14 +114,12 @@ namespace Supply
                 {
                     Benefit benefit = db.Benefits.Where(x => x.ID == id).First();
 
-                    benefit.Status = false;
-                    benefit.UpdatedAt = DateTime.Now.ToString();
+                    
                     try
                     {
-                        db.Entry(benefit).State = System.Data.Entity.EntityState.Modified;
-                        db.SaveChanges();
 
-                        MessageBox.Show("Льгота прекратила действие");
+                        TenantBenefitAdd tenantBenefitAdd = new TenantBenefitAdd(benefit);
+                        tenantBenefitAdd.ShowDialog();
 
                         Thread thread = new Thread(UpdateInfo);
                         thread.Start();

@@ -52,6 +52,12 @@ namespace Supply
             this.TB_Payment = new System.Windows.Forms.MaskedTextBox();
             this.BTN_Save = new System.Windows.Forms.Button();
             this.BTN_SaveAndCreate = new System.Windows.Forms.Button();
+            this.TB_House = new System.Windows.Forms.MaskedTextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.TB_Service = new System.Windows.Forms.MaskedTextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.TB_Electricity = new System.Windows.Forms.MaskedTextBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -215,11 +221,11 @@ namespace Supply
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(302, 197);
+            this.label10.Location = new System.Drawing.Point(375, 197);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(200, 13);
+            this.label10.Size = new System.Drawing.Size(126, 13);
             this.label10.TabIndex = 18;
-            this.label10.Text = "Оплата за жилое помещение в месяц";
+            this.label10.Text = "Оплата за койко-место";
             // 
             // TB_Payment
             // 
@@ -230,7 +236,7 @@ namespace Supply
             // 
             // BTN_Save
             // 
-            this.BTN_Save.Location = new System.Drawing.Point(351, 267);
+            this.BTN_Save.Location = new System.Drawing.Point(351, 323);
             this.BTN_Save.Name = "BTN_Save";
             this.BTN_Save.Size = new System.Drawing.Size(75, 23);
             this.BTN_Save.TabIndex = 20;
@@ -241,7 +247,7 @@ namespace Supply
             // 
             // BTN_SaveAndCreate
             // 
-            this.BTN_SaveAndCreate.Location = new System.Drawing.Point(432, 267);
+            this.BTN_SaveAndCreate.Location = new System.Drawing.Point(432, 323);
             this.BTN_SaveAndCreate.Name = "BTN_SaveAndCreate";
             this.BTN_SaveAndCreate.Size = new System.Drawing.Size(175, 23);
             this.BTN_SaveAndCreate.TabIndex = 21;
@@ -250,11 +256,65 @@ namespace Supply
             this.BTN_SaveAndCreate.UseVisualStyleBackColor = true;
             this.BTN_SaveAndCreate.Click += new System.EventHandler(this.BTN_Save_Click);
             // 
+            // TB_House
+            // 
+            this.TB_House.Location = new System.Drawing.Point(190, 232);
+            this.TB_House.Name = "TB_House";
+            this.TB_House.Size = new System.Drawing.Size(100, 20);
+            this.TB_House.TabIndex = 23;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(12, 236);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(172, 13);
+            this.label11.TabIndex = 22;
+            this.label11.Text = "Содержание жилого помещения";
+            // 
+            // TB_Service
+            // 
+            this.TB_Service.Location = new System.Drawing.Point(425, 233);
+            this.TB_Service.Name = "TB_Service";
+            this.TB_Service.Size = new System.Drawing.Size(100, 20);
+            this.TB_Service.TabIndex = 25;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(301, 235);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(118, 13);
+            this.label12.TabIndex = 24;
+            this.label12.Text = "Оплата за ком.услуги";
+            // 
+            // TB_Electricity
+            // 
+            this.TB_Electricity.Location = new System.Drawing.Point(138, 270);
+            this.TB_Electricity.Name = "TB_Electricity";
+            this.TB_Electricity.Size = new System.Drawing.Size(100, 20);
+            this.TB_Electricity.TabIndex = 27;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(12, 273);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(120, 13);
+            this.label13.TabIndex = 26;
+            this.label13.Text = "Оплата за эл.энергию";
+            // 
             // TenantBenefitAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(624, 302);
+            this.ClientSize = new System.Drawing.Size(624, 358);
+            this.Controls.Add(this.TB_Electricity);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.TB_Service);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.TB_House);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.BTN_SaveAndCreate);
             this.Controls.Add(this.BTN_Save);
             this.Controls.Add(this.TB_Payment);
@@ -311,5 +371,11 @@ namespace Supply
         private System.Windows.Forms.MaskedTextBox TB_Payment;
         private System.Windows.Forms.Button BTN_Save;
         private System.Windows.Forms.Button BTN_SaveAndCreate;
+        private System.Windows.Forms.MaskedTextBox TB_House;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.MaskedTextBox TB_Service;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.MaskedTextBox TB_Electricity;
+        private System.Windows.Forms.Label label13;
     }
 }

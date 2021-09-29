@@ -9,6 +9,9 @@ namespace Supply.Models
         public string EndDate { get; set; }
         public string BasedOn { get; set; }
         public double Payment { get; set; }
+        public double House { get; set; }
+        public double Service { get; set; }
+        public double Electricity { get; set; }
         public string DecreeNumber { get; set; }
         public string DecreeDate { get; set; }
         public bool Status { get; set; }

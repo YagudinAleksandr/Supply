@@ -34,7 +34,7 @@
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <AutorunEnabled>true</AutorunEnabled>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>27</ApplicationRevision>
+    <ApplicationRevision>28</ApplicationRevision>
     <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -475,6 +475,14 @@
     <Compile Include="Migrations\202109211827013_UpdateChangePassport.designer.cs">
       <DependentUpon>202109211827013_UpdateChangePassport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109281546532_addChangesToBenefit.cs" />
+    <Compile Include="Migrations\202109281546532_addChangesToBenefit.designer.cs">
+      <DependentUpon>202109281546532_addChangesToBenefit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109281640233_updateBenefitPaymentModel.cs" />
+    <Compile Include="Migrations\202109281640233_updateBenefitPaymentModel.designer.cs">
+      <DependentUpon>202109281640233_updateBenefitPaymentModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accounting.cs" />
     <Compile Include="Models\AccountingElectricity.cs" />
@@ -809,6 +817,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109211827013_UpdateChangePassport.resx">
       <DependentUpon>202109211827013_UpdateChangePassport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109281546532_addChangesToBenefit.resx">
+      <DependentUpon>202109281546532_addChangesToBenefit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109281640233_updateBenefitPaymentModel.resx">
+      <DependentUpon>202109281640233_updateBenefitPaymentModel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderAddForm.resx">
       <DependentUpon>OrderAddForm.cs</DependentUpon>

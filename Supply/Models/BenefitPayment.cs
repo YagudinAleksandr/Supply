@@ -16,6 +16,12 @@ namespace Supply.Models
         [Required]
         public decimal Price { get; set; }
         [Required]
+        public decimal House { get; set; }
+        [Required]
+        public decimal Service { get; set; }
+        [Required]
+        public decimal Electricity { get; set; }
+        [Required]
         public bool Status { get; set; }
         [Required]
         public string CreatedAt { get; set; }

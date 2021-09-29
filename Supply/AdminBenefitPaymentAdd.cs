@@ -53,6 +53,9 @@ namespace Supply
                     }
 
                     TB_Price.Text = benefitPayment.Price.ToString();
+                    TB_Electricity.Text = benefitPayment.Electricity.ToString();
+                    TB_House.Text = benefitPayment.House.ToString();
+                    TB_Service.Text = benefitPayment.Service.ToString();
                     CB_BenefitType.SelectedValue = _benefitTypeID = benefitPayment.BenefitTypeID;
                     CB_Hostels.SelectedValue = _hostelID = benefitPayment.HostelID;
                     ChB_Status.Checked = benefitPayment.Status;
@@ -74,10 +77,32 @@ namespace Supply
                 MessageBox.Show("Выбирите тип льготы!");
                 return;
             }
+
             decimal price = 0;
+            decimal house = 0;
+            decimal service = 0;
+            decimal electricity = 0;
+
             if(!decimal.TryParse(TB_Price.Text,out price))
             {
-                MessageBox.Show("В поле цена должно быть число!");
+                MessageBox.Show("В поле койко-место должно быть число!");
+                return;
+            }
+
+            if (!decimal.TryParse(TB_House.Text, out house))
+            {
+                MessageBox.Show("В поле содержания жилого помещения должно быть число!");
+                return;
+            }
+
+            if (!decimal.TryParse(TB_Service.Text, out service))
+            {
+                MessageBox.Show("В поле ком.услуги должно быть число!");
+                return;
+            }
+            if (!decimal.TryParse(TB_Electricity.Text, out electricity))
+            {
+                MessageBox.Show("В поле эл.энергия должно быть число!");
                 return;
             }
 
@@ -97,6 +122,9 @@ namespace Supply
                     benefitPayment.Status = false;
                 }
                 benefitPayment.Price = price;
+                benefitPayment.House = house;
+                benefitPayment.Service = service;
+                benefitPayment.Electricity = electricity;
 
                 using (SupplyDbContext db = new SupplyDbContext())
                 {
@@ -137,6 +165,10 @@ namespace Supply
                     }
 
                     benefitPayment.Price = price;
+                    benefitPayment.House = house;
+                    benefitPayment.Service = service;
+                    benefitPayment.Electricity = electricity;
+
                     benefitPayment.UpdatedAt = DateTime.Now.ToString();
                     benefitPayment.HostelID = _hostelID;
                     if(ChB_Status.Checked)
