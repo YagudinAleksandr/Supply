@@ -153,6 +153,16 @@ namespace Supply
                                         foreach (Tenant tenant in db.Tenants.Where(r => r.RoomID == room.ID).Include(ident => ident.Identification).Include(t => t.TenantType).Include(p=>p.Payment).Include(o => o.Order).ToList())
                                         {
 
+                                            if (tenant.Identification == null) 
+                                            {
+                                                continue;
+                                            }
+
+                                            if (tenant.Order == null)
+                                            {
+                                                continue;
+                                            }
+
                                             //Region of check tenant for create declaration
                                             DateTime endOrder=DateTime.Now;
                                             DateTime terminationStart=DateTime.Now;
