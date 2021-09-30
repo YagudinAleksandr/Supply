@@ -83,18 +83,12 @@ namespace Supply
                     if (changePassport != null)
                     {
                         LB_Tenant.Text = changePassport.Surename + " " + changePassport.Name[0] + ".";
-                        if (changePassport.Patronymic != null)
-                        {
-                            LB_Tenant.Text += " " + changePassport.Patronymic[0] + ".";
-                        }
+                        
                     }
                     else
                     {
                         LB_Tenant.Text = tenant.Identification.Surename + " " + tenant.Identification.Name[0] + ".";
-                        if (tenant.Identification.Patronymic != null)
-                        {
-                            LB_Tenant.Text += " " + tenant.Identification.Patronymic[0] + ".";
-                        }
+                        
                     }
 
                     CB_Room_First.SelectedValue = _roomIDFirst = tenant.Room.ID;
