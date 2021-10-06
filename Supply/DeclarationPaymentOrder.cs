@@ -236,19 +236,17 @@ namespace Supply
                                                         {
                                                             OrdersCreation.SpecialDateCheck(orderStartDate, orderEndDate, out days, out monthes, out daysInMonth);
 
-                                                            rent = Convert.ToDecimal(tenant.Payment.Rent);
-                                                            house = Convert.ToDecimal(tenant.Payment.House);
-                                                            service = Convert.ToDecimal(tenant.Payment.Service);
-
-                                                            foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(pid => pid.ElectricityPaymentID == tenant.Room.ElectricityPaymentID).ToList())
-                                                            {
-                                                                electricity += electricityElement.Payment;
-                                                            }
+                                                            OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
+                                                            OrdersCreation.SpecialPaymentsElectricity(tenant.ID, out electricity);
 
                                                             OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
 
-                                                            OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
-                                                            OrdersCreation.SpecialPaymentsElectricity(tenant.ID, out electricity);
+                                                            
+                                                        }
+
+                                                        if (OrdersCreation.AdditionalInf(10, tenant.ID) != string.Empty)
+                                                        {
+                                                            electricity = 0;
                                                         }
                                                     }
                                                     else
@@ -257,9 +255,9 @@ namespace Supply
                                                         service = Convert.ToDecimal(tenant.Payment.Service);
                                                         house = Convert.ToDecimal(tenant.Payment.House);
 
-                                                        rent *= (orderEndDate - orderStartDate).Days;
-                                                        service *= (orderEndDate - orderStartDate).Days;
-                                                        house *= (orderEndDate - orderStartDate).Days;
+                                                        rent *= (orderEndDate - orderStartDate).Days+1;
+                                                        service *= (orderEndDate - orderStartDate).Days+1;
+                                                        house *= (orderEndDate - orderStartDate).Days+1;
                                                     }
                                                 }
                                                 else
@@ -267,9 +265,7 @@ namespace Supply
 
                                                     OrdersCreation.SpecialDateCheck(orderStartDate, orderEndDate, out days, out monthes, out daysInMonth);
 
-                                                    rent = Convert.ToDecimal(tenant.Payment.Rent);
-                                                    house = Convert.ToDecimal(tenant.Payment.House);
-                                                    service = Convert.ToDecimal(tenant.Payment.Service);
+                                                    OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
 
                                                     foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(pid => pid.ElectricityPaymentID == tenant.Room.ElectricityPaymentID).ToList())
                                                     {
@@ -278,7 +274,7 @@ namespace Supply
 
                                                     OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
 
-                                                    OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
+                                                   
                                                 }
 
 
@@ -461,19 +457,15 @@ namespace Supply
                                             {
                                                 OrdersCreation.SpecialDateCheck(orderStartDate, orderEndDate, out days, out monthes, out daysInMonth);
 
-                                                rent = Convert.ToDecimal(tenant.Payment.Rent);
-                                                house = Convert.ToDecimal(tenant.Payment.House);
-                                                service = Convert.ToDecimal(tenant.Payment.Service);
-
-                                                foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(pid => pid.ElectricityPaymentID == tenant.Room.ElectricityPaymentID).ToList())
-                                                {
-                                                    electricity += electricityElement.Payment;
-                                                }
-
-                                                OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
-
                                                 OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
                                                 OrdersCreation.SpecialPaymentsElectricity(tenant.ID, out electricity);
+
+                                                OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
+                                            }
+
+                                            if (OrdersCreation.AdditionalInf(10, tenant.ID) != string.Empty)
+                                            {
+                                                electricity = 0;
                                             }
                                         }
                                         else
@@ -482,9 +474,9 @@ namespace Supply
                                             service = Convert.ToDecimal(tenant.Payment.Service);
                                             house = Convert.ToDecimal(tenant.Payment.House);
 
-                                            rent *= (orderEndDate - orderStartDate).Days;
-                                            service *= (orderEndDate - orderStartDate).Days;
-                                            house *= (orderEndDate - orderStartDate).Days;
+                                            rent *= (orderEndDate - orderStartDate).Days+1;
+                                            service *= (orderEndDate - orderStartDate).Days+1;
+                                            house *= (orderEndDate - orderStartDate).Days+1;
                                         }
                                     }
                                     else
@@ -492,18 +484,9 @@ namespace Supply
 
                                         OrdersCreation.SpecialDateCheck(orderStartDate, orderEndDate, out days, out monthes, out daysInMonth);
 
-                                        rent = Convert.ToDecimal(tenant.Payment.Rent);
-                                        house = Convert.ToDecimal(tenant.Payment.House);
-                                        service = Convert.ToDecimal(tenant.Payment.Service);
-
-                                        foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(pid => pid.ElectricityPaymentID == tenant.Room.ElectricityPaymentID).ToList())
-                                        {
-                                            electricity += electricityElement.Payment;
-                                        }
+                                        OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
 
                                         OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
-
-                                        OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
                                     }
 
 
@@ -678,19 +661,12 @@ namespace Supply
                                     {
                                         OrdersCreation.SpecialDateCheck(orderStartDate, orderEndDate, out days, out monthes, out daysInMonth);
 
-                                        rent = Convert.ToDecimal(tenant.Payment.Rent);
-                                        house = Convert.ToDecimal(tenant.Payment.House);
-                                        service = Convert.ToDecimal(tenant.Payment.Service);
-
-                                        foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(pid => pid.ElectricityPaymentID == tenant.Room.ElectricityPaymentID).ToList())
-                                        {
-                                            electricity += electricityElement.Payment;
-                                        }
+                                        OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
+                                        OrdersCreation.SpecialPaymentsElectricity(tenant.ID, out electricity);
 
                                         OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
 
-                                        OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
-                                        OrdersCreation.SpecialPaymentsElectricity(tenant.ID, out electricity);
+                                        
                                     }
                                 }
                                 else
@@ -699,9 +675,13 @@ namespace Supply
                                     service = Convert.ToDecimal(tenant.Payment.Service);
                                     house = Convert.ToDecimal(tenant.Payment.House);
 
-                                    rent *= (orderEndDate - orderStartDate).Days;
-                                    service *= (orderEndDate - orderStartDate).Days;
-                                    house *= (orderEndDate - orderStartDate).Days;
+                                    rent *= (orderEndDate - orderStartDate).Days + 1;
+                                    service *= (orderEndDate - orderStartDate).Days + 1;
+                                    house *= (orderEndDate - orderStartDate).Days + 1;
+                                }
+                                if (OrdersCreation.AdditionalInf(10, tenant.ID) != string.Empty)
+                                {
+                                    electricity = 0;
                                 }
                             }
                             else
