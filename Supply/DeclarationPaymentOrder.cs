@@ -266,12 +266,6 @@ namespace Supply
                                                     OrdersCreation.SpecialDateCheck(orderStartDate, orderEndDate, out days, out monthes, out daysInMonth);
 
                                                     OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
-
-                                                    foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(pid => pid.ElectricityPaymentID == tenant.Room.ElectricityPaymentID).ToList())
-                                                    {
-                                                        electricity += electricityElement.Payment;
-                                                    }
-
                                                     OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
 
                                                    
@@ -689,14 +683,6 @@ namespace Supply
 
                                 OrdersCreation.SpecialDateCheck(orderStartDate, orderEndDate, out days, out monthes, out daysInMonth);
 
-                                rent = Convert.ToDecimal(tenant.Payment.Rent);
-                                house = Convert.ToDecimal(tenant.Payment.House);
-                                service = Convert.ToDecimal(tenant.Payment.Service);
-
-                                foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(pid => pid.ElectricityPaymentID == tenant.Room.ElectricityPaymentID).ToList())
-                                {
-                                    electricity += electricityElement.Payment;
-                                }
 
                                 OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
 
