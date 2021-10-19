@@ -684,9 +684,10 @@ namespace Supply
                                 OrdersCreation.SpecialDateCheck(orderStartDate, orderEndDate, out days, out monthes, out daysInMonth);
 
 
-                                OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
-
                                 OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
+
+
+                                OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
                             }
 
 

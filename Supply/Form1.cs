@@ -1348,9 +1348,12 @@ namespace Supply
 
                             int rowCounter = 2;
                             object startCell, endCell;
+                            List<RoomModel> roomModels = new List<RoomModel>();
 
                             foreach (Room room in rooms)
                             {
+                                roomModels.Add(new RoomModel { ID = room.ID, Name = int.Parse(room.Name), Places = room.Places });
+                                /*
                                 //Column Room name
                                 startCell = $"A{rowCounter}";
                                 endCell = $"A{rowCounter + room.Places - 1}";
@@ -1400,8 +1403,64 @@ namespace Supply
                                 rowCounter += room.Places;
 
                                 startCell = endCell = string.Empty;
+                                */
                             }
 
+                            var rm = from roomModel in roomModels
+                                     orderby roomModel.Name
+                                     select roomModel;
+
+                            foreach(var r in rm)
+                            {
+                                startCell = $"A{rowCounter}";
+                                endCell = $"A{rowCounter + r.Places - 1}";
+                                if (!excel.Merge(startCell, endCell, rowCounter, 1, r.Name.ToString(), out error))
+                                {
+                                    Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                    thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                                }
+
+                                //Column room places
+                                startCell = $"B{rowCounter}";
+                                endCell = $"B{rowCounter + r.Places - 1}";
+                                if (!excel.Merge(startCell, endCell, rowCounter, 2, r.Places.ToString(), out error))
+                                {
+                                    Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                    thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                                }
+
+                                var tenants = db.Tenants
+                                                .Where(x => x.RoomID == r.ID)
+                                                .Where(s => s.Status == true)
+                                                .Include(i => i.Identification)
+                                                .Include(o => o.Order)
+                                                .ToList();
+
+                                int tenantPlaces = rowCounter;
+
+                                foreach (Tenant tenant in tenants)
+                                {
+                                    string tenantName = tenant.Identification.Surename + " " + tenant.Identification.Name;
+                                    if (tenant.Identification.Patronymic != null)
+                                    {
+                                        tenantName += " " + tenant.Identification.Patronymic;
+                                    }
+                                    excel.Set("C", tenantPlaces, tenantName, out error);
+                                    excel.Set("D", tenantPlaces, tenant.Order.OrderNumber, out error);
+                                    excel.Set("E", tenantPlaces, tenant.Order.StartDate, out error);
+                                    excel.Set("F", tenantPlaces, tenant.Identification.DateOfBirth, out error);
+                                    excel.Set("G", tenantPlaces, OrdersCreation.AdditionalInf(3, tenant.ID) + "/" + OrdersCreation.AdditionalInf(4, tenant.ID), out error);
+                                    excel.Set("H", tenantPlaces, tenant.Identification.Address, out error);
+                                    excel.Set("I", tenantPlaces, OrdersCreation.AdditionalInf(1, tenant.ID), out error);
+
+                                    tenantPlaces++;
+                                }
+
+
+                                rowCounter += r.Places;
+
+                                startCell = endCell = string.Empty;
+                            }
 
                             rooms.Clear();
 
@@ -1451,5 +1510,12 @@ namespace Supply
         #endregion
 
         
+    }
+
+    public class RoomModel
+    {
+        public int ID { get; set; }
+        public int Name { get; set; }
+        public int Places { get; set; }
     }
 }

@@ -1705,7 +1705,7 @@ namespace Supply.Libs
                 if (dt1.Day != 1)
                 {
                     daysInMonth = DateTime.DaysInMonth(dt1.Year, dt2.Month);
-                    days = daysInMonth - dt1.Day;
+                    days = daysInMonth - dt1.Day + 1;
                 }
             }
         }
