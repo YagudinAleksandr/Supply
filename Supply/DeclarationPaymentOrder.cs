@@ -580,7 +580,7 @@ namespace Supply
 
                                         if (startBenefit <= orderStartDate && endBenefit < orderEndDate)
                                         {
-                                            OrdersCreation.SpecialDateCheck(endBenefit, orderEndDate, out days, out monthes, out daysInMonth);
+                                            OrdersCreation.SpecialDateCheck(endBenefit.AddDays(1), orderEndDate, out days, out monthes, out daysInMonth);
 
                                             tempRent = Convert.ToDecimal(tenant.Payment.Rent);
                                             tempHouse = Convert.ToDecimal(tenant.Payment.House);

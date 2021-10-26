@@ -900,7 +900,7 @@ namespace Supply.Libs
 
                                     if (startBenefit <= orderStartDate && endBenefit < orderEndDate)
                                     {
-                                        SpecialDateCheck(endBenefit, orderEndDate, out days, out monthes, out daysInMonth);
+                                        SpecialDateCheck(endBenefit.AddDays(1), orderEndDate, out days, out monthes, out daysInMonth);
 
                                         tempRent = Convert.ToDecimal(tenant.Payment.Rent);
                                         tempHouse = Convert.ToDecimal(tenant.Payment.House);
@@ -1705,7 +1705,7 @@ namespace Supply.Libs
                 if (dt1.Day != 1)
                 {
                     daysInMonth = DateTime.DaysInMonth(dt1.Year, dt2.Month);
-                    days = daysInMonth - dt1.Day + 1;
+                    days = daysInMonth - dt1.Day;
                 }
             }
         }
@@ -1796,10 +1796,10 @@ namespace Supply.Libs
         {
             if (days != 0)
             {
-                rent = Convert.ToDecimal(rent) / daysInMonth * days + Convert.ToDecimal(rent) * monthes;
-                house = Convert.ToDecimal(house) / daysInMonth * days + Convert.ToDecimal(house) * monthes;
-                service = Convert.ToDecimal(service) / daysInMonth * days + Convert.ToDecimal(service) * monthes;
-                electricity = Convert.ToDecimal(electricity) / daysInMonth * days + Convert.ToDecimal(electricity) * monthes;
+                rent = Convert.ToDecimal(rent) / daysInMonth * (days) + Convert.ToDecimal(rent) * monthes;
+                house = Convert.ToDecimal(house) / daysInMonth * (days) + Convert.ToDecimal(house) * monthes;
+                service = Convert.ToDecimal(service) / daysInMonth * (days) + Convert.ToDecimal(service) * monthes;
+                electricity = Convert.ToDecimal(electricity) / daysInMonth * (days) + Convert.ToDecimal(electricity) * monthes;
             }
             else
             {
