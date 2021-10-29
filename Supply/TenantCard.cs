@@ -125,6 +125,9 @@ namespace Supply
 
                     Thread thread = new Thread(new ParameterizedThreadStart(LoadBenefitsCard));
                     thread.Start(order.ID);
+
+                    thread = new Thread(new ParameterizedThreadStart(LoadSpecialPayments));
+                    thread.Start(tenant.ID);
                 }
                 else
                 {
@@ -162,6 +165,33 @@ namespace Supply
                           DG_View_Benefits.Rows[rowNumber].Cells[COL_Order.Name].Value = benefit.BasedOn + " №" + benefit.DecreeNumber + " от " + benefit.DecreeDate;
                           DG_View_Benefits.Rows[rowNumber].Cells[COL_StartAt.Name].Value = benefit.StartDate;
                           DG_View_Benefits.Rows[rowNumber].Cells[COL_EndAt.Name].Value = benefit.EndDate;
+                      }
+                  }
+              };
+
+            Invoke(action);
+        }
+
+        private void LoadSpecialPayments(object tenantID)
+        {
+            Action action = () =>
+              {
+                  DG_View_SpecialPayments.Rows.Clear();
+
+                  int id = (int)tenantID;
+
+                  using(SupplyDbContext db = new SupplyDbContext())
+                  {
+                      foreach (SpecialPayment specialPayment in db.SpecialPayments.Where(x => x.TenantID == id).Include(el => el.ElectricityPayment).ToList())
+                      {
+                          int rowNumber = DG_View_SpecialPayments.Rows.Add();
+
+                          DG_View_SpecialPayments.Rows[rowNumber].Cells[COL_IDSP.Name].Value = specialPayment.ID;
+                          DG_View_SpecialPayments.Rows[rowNumber].Cells[COL_Places.Name].Value = specialPayment.Places;
+                          DG_View_SpecialPayments.Rows[rowNumber].Cells[COL_StartDate.Name].Value = specialPayment.StartDate;
+                          DG_View_SpecialPayments.Rows[rowNumber].Cells[COL_EndDate.Name].Value = specialPayment.EndDate;
+                          DG_View_SpecialPayments.Rows[rowNumber].Cells[COL_El.Name].Value = specialPayment.ElectricityPayment.Name;
+                          DG_View_SpecialPayments.Rows[rowNumber].Cells[COL_ElPlaces.Name].Value = specialPayment.ElectricityPaymentPlaces;
                       }
                   }
               };

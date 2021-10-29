@@ -217,6 +217,8 @@ namespace Supply
 
                                 accounting.Debt = debt.ToString();
                                 accounting.Coast = payment.ToString();
+                                accounting.LasPayDay = DateTime.Now.ToString();
+                                accounting.LastPayEnterCoast = payment;
 
                                 try
                                 {
@@ -275,6 +277,8 @@ namespace Supply
                             excel.Set("E", 1, "Организация", out error);
                             excel.Set("F", 1, "Задолженность", out error);
                             excel.Set("G", 1, "Дата создания последнего платежного поручения", out error);
+                            excel.Set("H", 1, "Последняя внесенная сумма", out error);
+                            excel.Set("I", 1, "Дата последнего внесения", out error);
 
                             int rowNumber = 2;
 
@@ -322,10 +326,22 @@ namespace Supply
                                                 organization = "НИМИ";
                                             }
                                             string dateOfLastPaymentOrder = string.Empty;
-                                            foreach (Accounting accounting in db.Accountings.Where(t => t.TenantID == tenant.ID).ToList())
+                                            string dateOfLastPay = string.Empty;
+                                            decimal lastPaySum = 0;
+                                            foreach (Accounting accounting in db.Accountings.Where(t => t.TenantID == tenant.ID).OrderBy(p=>p.ID).ToList())
                                             {
                                                 debt += Convert.ToDecimal(accounting.Debt);
                                                 dateOfLastPaymentOrder = accounting.PeriodStart + "-" + accounting.PeriodEnd;
+
+                                                if (accounting.LasPayDay != null)
+                                                {
+                                                    dateOfLastPay = accounting.LasPayDay;
+                                                }
+
+                                                if (accounting.LastPayEnterCoast != 0)
+                                                {
+                                                    lastPaySum = accounting.LastPayEnterCoast;
+                                                }
                                             }
 
                                             excel.Set("A", rowNumber, room.Name, out error);
@@ -335,6 +351,8 @@ namespace Supply
                                             excel.Set("E", rowNumber, organization, out error);
                                             excel.Set("F", rowNumber, debt.ToString(), out error);
                                             excel.Set("G", rowNumber, dateOfLastPaymentOrder, out error);
+                                            excel.Set("H", rowNumber, Math.Round(lastPaySum, 2).ToString(), out error);
+                                            excel.Set("I", rowNumber, dateOfLastPay, out error);
 
                                             rowNumber++;
 

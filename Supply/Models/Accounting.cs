@@ -20,5 +20,7 @@ namespace Supply.Models
         public string PeriodStart { get; set; }
         [Required]
         public string PeriodEnd { get; set; }
+        public decimal LastPayEnterCoast { get; set; }
+        public string LasPayDay { get; set; }
     }
 }

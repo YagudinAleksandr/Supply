@@ -51,7 +51,7 @@ namespace Supply
 
                         var accountings = db.Accountings
                         .Where(tid => tid.TenantID == tenant.ID)
-                        .Where(d => d.Debt != "0,00")
+                        //.Where(d => d.Debt != "0,00")
                         .ToList();
 
                         if (changePassport != null)
@@ -106,7 +106,7 @@ namespace Supply
                 {
                     decimal coast = 0;
 
-                    if (row.Cells[0].Value != null && row.Cells[4].Value!=null && decimal.TryParse(row.Cells[4].Value.ToString(), out coast))
+                    if (row.Cells[0].Value != null && row.Cells[5].Value!=null && decimal.TryParse(row.Cells[5].Value.ToString(), out coast))
                     {
                         int accountingId = int.Parse(row.Cells[0].Value.ToString());
 
@@ -120,7 +120,9 @@ namespace Supply
 
                         accounting.Debt = debt.ToString();
                         accounting.Coast = coast.ToString();
-                        
+                        accounting.LastPayEnterCoast = coast;
+                        accounting.LasPayDay = DateTime.Now.ToString();
+
                         try
                         {
                             db.Entry(accounting).State = System.Data.Entity.EntityState.Modified;

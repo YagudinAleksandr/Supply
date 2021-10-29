@@ -911,7 +911,7 @@ namespace Supply.Libs
                                             tempElectricity += electricityElement.Payment;
                                         }
 
-                                        CalculationServiceCoast(days, monthes, daysInMonth, ref tempRent, ref tempHouse, ref tempService, ref electricity);
+                                        CalculationServiceCoast(days, monthes, daysInMonth, ref tempRent, ref tempHouse, ref tempService, ref tempElectricity);
 
                                         rent += tempRent;
                                         service += tempService;
@@ -932,7 +932,7 @@ namespace Supply.Libs
                                             tempElectricity += electricityElement.Payment;
                                         }
 
-                                        CalculationServiceCoast(days, monthes, daysInMonth, ref tempRent, ref tempHouse, ref tempService, ref electricity);
+                                        CalculationServiceCoast(days, monthes, daysInMonth, ref tempRent, ref tempHouse, ref tempService, ref tempElectricity);
 
                                         rent += tempRent;
                                         service += tempService;
@@ -953,7 +953,7 @@ namespace Supply.Libs
                                             tempElectricity += electricityElement.Payment;
                                         }
 
-                                        CalculationServiceCoast(days, monthes, daysInMonth, ref tempRent, ref tempHouse, ref tempService, ref electricity);
+                                        CalculationServiceCoast(days, monthes, daysInMonth, ref tempRent, ref tempHouse, ref tempService, ref tempElectricity);
 
                                         rent += tempRent;
                                         service += tempService;
@@ -962,7 +962,7 @@ namespace Supply.Libs
 
                                         SpecialDateCheck(endBenefit, orderEndDate, out days, out monthes, out daysInMonth);
 
-                                        CalculationServiceCoast(days, monthes, daysInMonth, ref tempRent, ref tempHouse, ref tempService, ref electricity);
+                                        CalculationServiceCoast(days, monthes, daysInMonth, ref tempRent, ref tempHouse, ref tempService, ref tempElectricity);
 
                                         rent += tempRent;
                                         service += tempService;
@@ -1748,7 +1748,7 @@ namespace Supply.Libs
 
                     Tenant tenant = db.Tenants.Where(id => id.ID == orderID).Include(p => p.Payment).Include(r => r.Room).FirstOrDefault();
 
-                    if (startBenefit <= startPaymentDate && endBenefit < endPaymentDate)
+                    if (startBenefit <= startPaymentDate && endBenefit < endPaymentDate && endBenefit.Month == endPaymentDate.Month) 
                     {
                         SpecialDateCheck(startPaymentDate, endBenefit, out days, out monthes, out daysInMonth);
 

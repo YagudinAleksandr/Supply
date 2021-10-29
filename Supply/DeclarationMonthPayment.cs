@@ -3,6 +3,7 @@ using Supply.Domain;
 using Supply.Libs;
 using Supply.Models;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -144,6 +145,8 @@ namespace Supply
                         
                         try
                         {
+                            List<TenantView> tenantViews = new List<TenantView>();
+
                             foreach (Enterance enterance in enterances)
                             {
                                 foreach (Flat flat in db.Flats.Where(eid => eid.Enterance_ID == enterance.ID).ToList())
@@ -237,174 +240,210 @@ namespace Supply
                                                 }
                                             }
 
-                                            excel.Set("B", rowNumber, name, out error);
-                                            excel.Set("C", rowNumber, tenant.TenantType.Name, out error);
-                                            excel.Set("D", rowNumber, tenant.Order.OrderNumber, out error);
-                                            excel.Set("E", rowNumber, tenant.Order.StartDate, out error);
-                                            excel.Set("F", rowNumber, tenant.Order.EndDate, out error);
-
-                                            int days = 0;
-                                            int month = 0;
-                                            int daysInMonth = 0;
-
-                                            decimal electricity = 0;
-                                            decimal house = 0;
-                                            decimal rent = 0;
-                                            decimal service = 0;
-
-                                            if (termination != null && terminationStart < endDate) 
+                                            tenantViews.Add(new TenantView
                                             {
-                                                OrdersCreation.SpecialDateCheck(startDate, terminationStart, out days, out month, out daysInMonth);
+                                                ID = tenant.ID,
+                                                Name = name,
+                                                Order = tenant.Order,
+                                                Room = tenant.Room,
+                                                Type = tenant.TenantType,
+                                                Payment = tenant.Payment,
+                                                startOrder = startDate,
+                                                endOrder = endDate,
+                                                Termination = termination
+                                            });
 
-                                                if (DateTime.Parse(tenant.Order.StartDate) > startDate)
-                                                {
-                                                    OrdersCreation.SpecialDateCheck(DateTime.Parse(tenant.Order.StartDate), endDate, out days, out month, out daysInMonth);
-                                                }
-
-                                                if (tenant.TenantTypeID != 2 && tenant.TenantTypeID != 3)
-                                                {
-                                                    if (days != 0)
-                                                    {
-                                                        SpecialPayment specialPayment = db.SpecialPayments.Where(t => t.TenantID == tenant.ID).FirstOrDefault();
-                                                        service = (tenant.Payment.Service / daysInMonth) * days + (tenant.Payment.Service * month);
-                                                        rent = (tenant.Payment.Rent / daysInMonth) * days + (tenant.Payment.Rent * month);
-                                                        house = (tenant.Payment.House / daysInMonth) * days + (tenant.Payment.House * month);
-                                                        foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(p => p.ElectricityPaymentID == room.ElectricityPaymentID).ToList())
-                                                        {
-                                                            electricity += electricityElement.Payment;
-                                                        }
-
-                                                        electricity = (electricity / daysInMonth) * days + (electricity * month);
-
-                                                        
-                                                    }
-                                                    else
-                                                    {
-                                                        service = tenant.Payment.Service * month;
-                                                        rent = tenant.Payment.Rent * month;
-                                                        house = tenant.Payment.House * month;
-                                                        foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(p => p.ElectricityPaymentID == room.ElectricityPaymentID).ToList())
-                                                        {
-                                                            electricity += electricityElement.Payment;
-                                                        }
-
-                                                        electricity = electricity * month;
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    if (DateTime.Parse(tenant.Order.StartDate) > startDate)
-                                                    {
-                                                        OrdersCreation.SpecialDateCheck(DateTime.Parse(tenant.Order.StartDate), endDate, out days, out month, out daysInMonth);
-                                                    }
-
-                                                    if (days != 0)
-                                                    {
-                                                        service = (tenant.Payment.Service / daysInMonth) * days + (tenant.Payment.Service * month);
-                                                        rent = (tenant.Payment.Rent / daysInMonth) * days + (tenant.Payment.Rent * month);
-                                                        house = (tenant.Payment.House / daysInMonth) * days + (tenant.Payment.House * month);
-                                                    }
-                                                    else
-                                                    {
-                                                        service = tenant.Payment.Service * month;
-                                                        rent = tenant.Payment.Rent * month;
-                                                        house = tenant.Payment.House * month;
-                                                    }
-                                                }
-
-                                                if (DateTime.Parse(tenant.Order.EndDate) < endDate)
-                                                {
-                                                    OrdersCreation.SpecialDateCheck(endDate, DateTime.Parse(tenant.Order.EndDate), out days, out month, out daysInMonth);
-
-                                                    
-                                                }
-                                            }
-                                            else
-                                            {
-                                                OrdersCreation.SpecialDateCheck(startDate, endDate, out days, out month, out daysInMonth);
-
-                                                if (tenant.TenantTypeID != 2 && tenant.TenantTypeID != 3)
-                                                {
-                                                    if(DateTime.Parse(tenant.Order.StartDate)>startDate)
-                                                    {
-                                                        OrdersCreation.SpecialDateCheck(DateTime.Parse(tenant.Order.StartDate), endDate, out days, out month, out daysInMonth);
-                                                    }
-
-                                                    if (days != 0)
-                                                    {
-                                                        service = (tenant.Payment.Service / daysInMonth) * days + (tenant.Payment.Service * month);
-                                                        rent = (tenant.Payment.Rent / daysInMonth) * days + (tenant.Payment.Rent * month);
-                                                        house = (tenant.Payment.House / daysInMonth) * days + (tenant.Payment.House * month);
-                                                        foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(p => p.ElectricityPaymentID == room.ElectricityPaymentID).ToList())
-                                                        {
-                                                            electricity += electricityElement.Payment;
-                                                        }
-
-                                                        electricity = (electricity / daysInMonth) * days + (electricity * month);
-                                                    }
-                                                    else
-                                                    {
-                                                        service = tenant.Payment.Service * month;
-                                                        rent = tenant.Payment.Rent * month;
-                                                        house = tenant.Payment.House * month;
-                                                        foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(p => p.ElectricityPaymentID == room.ElectricityPaymentID).ToList())
-                                                        {
-                                                            electricity += electricityElement.Payment;
-                                                        }
-
-                                                        electricity = electricity * month;
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    if (DateTime.Parse(tenant.Order.StartDate) > startDate)
-                                                    {
-                                                        OrdersCreation.SpecialDateCheck(DateTime.Parse(tenant.Order.StartDate), endDate, out days, out month, out daysInMonth);
-                                                    }
-
-                                                    if (days != 0)
-                                                    {
-                                                        service = (tenant.Payment.Service / daysInMonth) * days + (tenant.Payment.Service * month);
-                                                        rent = (tenant.Payment.Rent / daysInMonth) * days + (tenant.Payment.Rent * month);
-                                                        house = (tenant.Payment.House / daysInMonth) * days + (tenant.Payment.House * month);
-                                                    }
-                                                    else
-                                                    {
-                                                        service = tenant.Payment.Service * month;
-                                                        rent = tenant.Payment.Rent * month;
-                                                        house = tenant.Payment.House * month;
-                                                    }
-                                                }
-                                            }
-
-                                            decimal tempRent = rent;
-                                            decimal tempHouse = house;
-                                            decimal tempSevice = service;
-                                            decimal tempElectricity = electricity;
-
-                                            if (!SpecialPayment(tenant.ID, startDate, endDate, out rent, out house, out service, out electricity)) 
-                                            {
-                                                rent = tempRent;
-                                                house = tempHouse;
-                                                service = tempSevice;
-                                                electricity = tempElectricity;
-                                            }
-
-                                            if (OrdersCreation.AdditionalInf(10, tenant.ID) != string.Empty)
-                                            {
-                                                electricity = 0;
-                                            }
-
-                                            excel.Set("G", rowNumber, Math.Round(rent, 2).ToString(), out error);
-                                            excel.Set("H", rowNumber, Math.Round(service, 2).ToString(), out error);
-                                            excel.Set("I", rowNumber, Math.Round(house, 2).ToString(), out error);
-                                            excel.Set("J", rowNumber, Math.Round(electricity, 2).ToString(), out error);
-
-                                            counter++;
-                                            rowNumber++;
                                         }
                                     }
                                 }
+                            }
+
+                            var tvs = from tenanView in tenantViews
+                                      orderby tenanView.Name
+                                      select tenanView;
+
+                            foreach(var tv in tvs)
+                            {
+                                excel.Set("A", rowNumber, counter.ToString(), out error);
+                                excel.Set("B", rowNumber, tv.Name, out error);
+                                excel.Set("C", rowNumber, tv.Type.Name, out error);
+                                excel.Set("D", rowNumber, tv.Order.OrderNumber, out error);
+                                excel.Set("E", rowNumber, tv.Order.StartDate, out error);
+                                excel.Set("F", rowNumber, tv.Order.EndDate, out error);
+
+                                DateTime startBenefit = DateTime.Now;
+                                DateTime endBenefit = DateTime.Now;
+
+                                decimal rent = 0;
+                                decimal house = 0;
+                                decimal service = 0;
+                                decimal electricity = 0;
+
+                                int days = 0;
+                                int monthes = 0;
+                                int daysInMonth = 0;
+
+                                DateTime startTenantOrderInner = DateTime.Parse(tv.Order.StartDate);
+                                DateTime endTenantOrderInner = DateTime.Parse(tv.Order.EndDate);
+
+                                if (startTenantOrderInner.Month == tv.startOrder.Month)
+                                {
+                                    tv.startOrder = DateTime.Parse(tv.Order.StartDate);
+                                }
+
+                                if (endTenantOrderInner.Month == tv.endOrder.Month)
+                                {
+                                    tv.endOrder = DateTime.Parse(tv.Order.EndDate);
+                                }
+
+                                if (tv.Termination != null)
+                                {
+                                    DateTime dateOfTermination = DateTime.Now;
+
+                                    if (DateTime.TryParse(tv.Termination.Date, out dateOfTermination))
+                                    {
+                                        if (tv.endOrder > dateOfTermination && tv.endOrder.Month == dateOfTermination.Month)
+                                        {
+                                            tv.endOrder = dateOfTermination;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show($"Дата расторжения договра не может быть преобразована в тип даты у жильца {tv.Name}! Данный жилец не будет внесен в отчет!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+                                }
+
+                                if (tv.Type.ID != 2 && tv.Type.ID != 3)
+                                {
+                                    if (OrdersCreation.AdditionalInf(5, tv.ID) != "Заочная")
+                                    {
+                                        if (OrdersCreation.BenefitCheck(tv.Order.ID, tv.startOrder, tv.endOrder, out rent, out house, out service, out electricity, out startBenefit, out endBenefit))
+                                        {
+                                            decimal tempRent = 0;
+                                            decimal tempHouse = 0;
+                                            decimal tempService = 0;
+                                            decimal tempElectricity = 0;
+
+                                            if (startBenefit <= tv.startOrder && endBenefit < tv.endOrder)
+                                            {
+                                                OrdersCreation.SpecialDateCheck(endBenefit, tv.endOrder, out days, out monthes, out daysInMonth);
+
+                                                tempRent = Convert.ToDecimal(tv.Payment.Rent);
+                                                tempHouse = Convert.ToDecimal(tv.Payment.House);
+                                                tempService = Convert.ToDecimal(tv.Payment.Service);
+
+                                                foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(pid => pid.ElectricityPaymentID == tv.Room.ElectricityPaymentID).ToList())
+                                                {
+                                                    tempElectricity += electricityElement.Payment;
+                                                }
+
+                                                OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref tempRent, ref tempHouse, ref tempService, ref tempElectricity);
+
+                                                rent += tempRent;
+                                                service += tempService;
+                                                house += tempHouse;
+                                                electricity += tempElectricity;
+                                            }
+
+                                            if (tv.startOrder < startBenefit && endBenefit > tv.endOrder)
+                                            {
+                                                OrdersCreation.SpecialDateCheck(tv.startOrder, startBenefit, out days, out monthes, out daysInMonth);
+
+                                                tempRent = Convert.ToDecimal(tv.Payment.Rent);
+                                                tempHouse = Convert.ToDecimal(tv.Payment.House);
+                                                tempService = Convert.ToDecimal(tv.Payment.Service);
+
+                                                foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(pid => pid.ElectricityPaymentID == tv.Room.ElectricityPaymentID).ToList())
+                                                {
+                                                    tempElectricity += electricityElement.Payment;
+                                                }
+
+                                                OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref tempRent, ref tempHouse, ref tempService, ref tempElectricity);
+
+                                                rent += tempRent;
+                                                service += tempService;
+                                                house += tempHouse;
+                                                electricity += tempElectricity;
+                                            }
+
+                                            if (startBenefit > tv.startOrder && endBenefit < tv.endOrder)
+                                            {
+                                                OrdersCreation.SpecialDateCheck(tv.startOrder, startBenefit, out days, out monthes, out daysInMonth);
+
+                                                tempRent = Convert.ToDecimal(tv.Payment.Rent);
+                                                tempHouse = Convert.ToDecimal(tv.Payment.House);
+                                                tempService = Convert.ToDecimal(tv.Payment.Service);
+
+                                                foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(pid => pid.ElectricityPaymentID == tv.Room.ElectricityPaymentID).ToList())
+                                                {
+                                                    tempElectricity += electricityElement.Payment;
+                                                }
+
+                                                OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref tempRent, ref tempHouse, ref tempService, ref tempElectricity);
+
+                                                rent += tempRent;
+                                                service += tempService;
+                                                house += tempHouse;
+                                                electricity += tempElectricity;
+
+                                                OrdersCreation.SpecialDateCheck(endBenefit, tv.endOrder, out days, out monthes, out daysInMonth);
+
+                                                OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref tempRent, ref tempHouse, ref tempService, ref tempElectricity);
+
+                                                rent += tempRent;
+                                                service += tempService;
+                                                house += tempHouse;
+                                                electricity += tempElectricity;
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            OrdersCreation.SpecialDateCheck(tv.startOrder, tv.endOrder, out days, out monthes, out daysInMonth);
+
+                                            OrdersCreation.SpecialPayments(tv.ID, out rent, out house, out service);
+                                            OrdersCreation.SpecialPaymentsElectricity(tv.ID, out electricity);
+
+                                            OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
+
+
+
+                                            if (OrdersCreation.AdditionalInf(10, tv.ID) != string.Empty)
+                                            {
+                                                electricity = 0;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        rent = Convert.ToDecimal(tv.Payment.Rent);
+                                        service = Convert.ToDecimal(tv.Payment.Service);
+                                        house = Convert.ToDecimal(tv.Payment.House);
+
+                                        rent *= (tv.endOrder - tv.startOrder).Days + 1;
+                                        service *= (tv.endOrder - tv.startOrder).Days + 1;
+                                        house *= (tv.endOrder - tv.startOrder).Days + 1;
+                                    }
+
+                                }
+                                else
+                                {
+
+                                    OrdersCreation.SpecialDateCheck(tv.startOrder, tv.endOrder, out days, out monthes, out daysInMonth);
+
+                                    OrdersCreation.SpecialPayments(tv.ID, out rent, out house, out service);
+
+                                    OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
+
+                                }
+
+                                excel.Set("G", rowNumber, Math.Round(rent, 2).ToString(), out error);
+                                excel.Set("H", rowNumber, Math.Round(service, 2).ToString(), out error);
+                                excel.Set("I", rowNumber, Math.Round(house, 2).ToString(), out error);
+                                excel.Set("J", rowNumber, Math.Round(electricity, 2).ToString(), out error);
+
+                                counter++;
+                                rowNumber++;
                             }
 
                             rowNumber += 2;
@@ -469,419 +508,19 @@ namespace Supply
             }
             GC.Collect();
         }
-        private bool SpecialPayment(int tenantID, DateTime startDate, DateTime endDate,out decimal rent,out decimal house, out decimal service, out decimal electricity)
-        {
-            rent = 0;
-            house = 0;
-            electricity = 0;
-            service = 0;
-
-            using(SupplyDbContext db = new SupplyDbContext())
-            {
-                var specialPayments = db.SpecialPayments.Where(x => x.TenantID == tenantID).ToList();
-                var benefits = db.Benefits.Where(tid => tid.OrderID == tenantID).ToList();
-
-                SpecialPayment specialPayment = null;
-                Benefit benefit = null;
-
-                if (specialPayments.Count() != 0)
-                {
-                    foreach(SpecialPayment tSpecialPayment in specialPayments)
-                    {
-                        specialPayment = tSpecialPayment;
-                    }
-                }
-
-                if (benefits.Count() != 0)
-                {
-                    foreach(Benefit tBenefit in benefits)
-                    {
-                        benefit = tBenefit;
-                    }
-                }
-
-                int days = 0;
-                int monthes = 0;
-                int daysInMonth = 0;
-
-                if (benefit != null)
-                {
-
-                    Tenant tenant = db.Tenants.Where(x => x.ID == tenantID).Include(p => p.Payment).Include(r=>r.Room).FirstOrDefault();
-
-                    decimal paymentHouse, paymentRent;
-
-                    decimal payment = 0;
-                    decimal _tempPaymentHouse = 0;
-                    decimal _tempPaymentService = 0;
-                    decimal _tempPaymentElectricity = 0;
-
-
-
-                    paymentHouse = tenant.Payment.House;
-                    paymentRent = tenant.Payment.Rent;
-
-                    DateTime startBenefit, endBenefit;
-
-                    DateTime.TryParse(benefit.StartDate, out startBenefit);
-                    DateTime.TryParse(benefit.EndDate, out endBenefit);
-
-                    if (endBenefit < endDate && startBenefit < startDate)
-                    {
-                        OrdersCreation.SpecialDateCheck(startDate, endBenefit, out days, out monthes, out daysInMonth);
-
-                        if (days != 0)
-                        {
-                            payment += (Convert.ToDecimal(benefit.Payment) / daysInMonth) * days + (Convert.ToDecimal(benefit.Payment) * monthes);
-                            _tempPaymentHouse += (Convert.ToDecimal(benefit.House) / daysInMonth) * days + (Convert.ToDecimal(benefit.House) * monthes);
-                            _tempPaymentService += (Convert.ToDecimal(benefit.Service) / daysInMonth) * days + (Convert.ToDecimal(benefit.Service) * monthes);
-                            _tempPaymentElectricity += (Convert.ToDecimal(benefit.Electricity) / daysInMonth) * days + (Convert.ToDecimal(benefit.Electricity) * monthes);
-                        }
-                        else
-                        {
-                            payment += Convert.ToDecimal(benefit.Payment) * monthes;
-                            _tempPaymentHouse += Convert.ToDecimal(benefit.House) * monthes;
-                            _tempPaymentService += Convert.ToDecimal(benefit.Service) * monthes;
-                            _tempPaymentElectricity += Convert.ToDecimal(benefit.Electricity) * monthes;
-                        }
-                        int tempDays = days;
-                        int tempDaysInMonth = daysInMonth;
-
-                        OrdersCreation.SpecialDateCheck(endBenefit, endDate, out days, out monthes, out daysInMonth);
-
-                        if (tempDays != 0)
-                        {
-                            payment = (tenant.Payment.Rent / tempDaysInMonth) * (days) + (tenant.Payment.Rent * monthes) + payment;
-                            _tempPaymentHouse = (tenant.Payment.House / daysInMonth) * days + (tenant.Payment.House * monthes) + _tempPaymentHouse;
-                            _tempPaymentService = (tenant.Payment.Service / daysInMonth) * days + (tenant.Payment.Service * monthes) + _tempPaymentService;
-
-                            decimal _tempElectricity = 0;
-
-                            foreach(ElectricityElement electricityElement in db.ElectricityElements.Where(eid=>eid.ElectricityPaymentID==tenant.Room.ElectricityPaymentID).ToList())
-                            {
-                                _tempElectricity += electricityElement.Payment;
-                            }
-                            _tempPaymentElectricity = (_tempElectricity / daysInMonth) * days + (_tempElectricity * monthes) + _tempPaymentElectricity;
-
-                        }
-                        else
-                        {
-                            payment = (tenant.Payment.Rent) * monthes + payment;
-                            _tempPaymentHouse = tenant.Payment.House * monthes + _tempPaymentHouse;
-                            _tempPaymentService = tenant.Payment.Service * monthes + _tempPaymentService;
-
-                            decimal _tempElectricity = 0;
-
-                            foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(eid => eid.ElectricityPaymentID == tenant.Room.ElectricityPaymentID).ToList())
-                            {
-                                _tempElectricity += electricityElement.Payment;
-                            }
-                            _tempPaymentElectricity = _tempElectricity * monthes + _tempPaymentElectricity;
-                        }
-
-                    }
-
-                    if (startBenefit > startDate && endBenefit > endDate)
-                    {
-                        OrdersCreation.SpecialDateCheck(startDate, startBenefit, out days, out monthes, out daysInMonth);
-
-                        if (days != 0)
-                        {
-                            payment += (tenant.Payment.Rent / daysInMonth) * days + tenant.Payment.Rent * monthes;
-                            _tempPaymentHouse += (tenant.Payment.House / daysInMonth) * days + tenant.Payment.House * monthes;
-                            _tempPaymentService += (tenant.Payment.Service / daysInMonth) * days + tenant.Payment.Service * monthes;
-
-                            decimal _tempElectricity = 0;
-
-                            foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(eid => eid.ElectricityPaymentID == tenant.Room.ElectricityPaymentID).ToList())
-                            {
-                                _tempElectricity += electricityElement.Payment;
-                            }
-
-                            _tempPaymentElectricity += (_tempElectricity / daysInMonth) * days + _tempElectricity * monthes;
-                        }
-                        else
-                        {
-                            payment += tenant.Payment.Rent * monthes;
-                            _tempPaymentHouse += tenant.Payment.House * monthes;
-                            _tempPaymentService += tenant.Payment.Service * monthes;
-
-                            decimal _tempElectricity = 0;
-
-                            foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(eid => eid.ElectricityPaymentID == tenant.Room.ElectricityPaymentID).ToList())
-                            {
-                                _tempElectricity += electricityElement.Payment;
-                            }
-
-                            _tempPaymentElectricity += _tempElectricity * monthes;
-                        }
-
-                        OrdersCreation.SpecialDateCheck(startBenefit, endDate, out days, out monthes, out daysInMonth);
-
-                        if (days != 0)
-                        {
-                            payment += Convert.ToDecimal(benefit.Payment) / daysInMonth * days + Convert.ToDecimal(benefit.Payment) * monthes;
-                            _tempPaymentHouse += Convert.ToDecimal(benefit.House) / daysInMonth * days + Convert.ToDecimal(benefit.House) * monthes;
-                            _tempPaymentService += Convert.ToDecimal(benefit.Service) / daysInMonth * days + Convert.ToDecimal(benefit.Service) * monthes;
-                            _tempPaymentElectricity += Convert.ToDecimal(benefit.Electricity / daysInMonth) * days + Convert.ToDecimal(benefit.Electricity) * monthes;
-                        }
-                        else
-                        {
-                            payment += Convert.ToDecimal(benefit.Payment) + monthes;
-                            _tempPaymentHouse += Convert.ToDecimal(benefit.House) * monthes;
-                            _tempPaymentService += Convert.ToDecimal(benefit.Service) * monthes;
-                            _tempPaymentElectricity += Convert.ToDecimal(benefit.Electricity) * monthes;
-                        }
-                    }
-
-                    if ((endBenefit == endDate && startDate == startBenefit) || (startBenefit > startDate && endBenefit < endDate))
-                    {
-                        OrdersCreation.SpecialDateCheck(startDate, endDate, out days, out monthes, out daysInMonth);
-                        if (days != 0)
-                        {
-                            payment += ((tenant.Payment.Rent / daysInMonth) * days + tenant.Payment.Rent * monthes);
-                            _tempPaymentHouse += (tenant.Payment.House / daysInMonth) * days + tenant.Payment.House * monthes;
-                            _tempPaymentService += (tenant.Payment.Service / daysInMonth) * days + tenant.Payment.Service * monthes;
-
-                            decimal _tempElectricity = 0;
-
-                            foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(eid => eid.ElectricityPaymentID == tenant.Room.ElectricityPaymentID).ToList())
-                            {
-                                _tempElectricity += electricityElement.Payment;
-                            }
-
-                            _tempPaymentElectricity += (_tempElectricity / daysInMonth) * days + _tempElectricity * monthes;
-                        }
-                        else
-                        {
-                            payment += tenant.Payment.Rent * monthes;
-                            _tempPaymentHouse += tenant.Payment.House * monthes;
-                            _tempPaymentService += tenant.Payment.Service * monthes;
-
-                            decimal _tempElectricity = 0;
-
-                            foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(eid => eid.ElectricityPaymentID == tenant.Room.ElectricityPaymentID).ToList())
-                            {
-                                _tempElectricity += electricityElement.Payment;
-                            }
-
-                            _tempPaymentElectricity += _tempElectricity * monthes;
-                        }
-
-
-                        OrdersCreation.SpecialDateCheck(startBenefit, endBenefit, out days, out monthes, out daysInMonth);
-                        if (days != 0)
-                        {
-                            payment = payment - ((tenant.Payment.Rent / daysInMonth) * days);
-                            _tempPaymentHouse = _tempPaymentHouse - (tenant.Payment.House / daysInMonth) * days;
-                            _tempPaymentService = _tempPaymentService - (tenant.Payment.Service / daysInMonth) * days;
-                            decimal _tempElectricity = 0;
-
-                            foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(eid => eid.ElectricityPaymentID == tenant.Room.ElectricityPaymentID).ToList())
-                            {
-                                _tempElectricity += electricityElement.Payment;
-                            }
-
-                            _tempPaymentElectricity += (_tempElectricity / daysInMonth) * days;
-
-                            payment += (Convert.ToDecimal(benefit.Payment) / daysInMonth) * days + Convert.ToDecimal(benefit.Payment) * monthes;
-                            _tempPaymentHouse += (Convert.ToDecimal(benefit.House / daysInMonth) * days) + Convert.ToDecimal(benefit.House) * monthes;
-                            _tempPaymentService += (Convert.ToDecimal(benefit.Service / daysInMonth) * days) + Convert.ToDecimal(benefit.Service) * monthes;
-                            _tempPaymentElectricity += (Convert.ToDecimal(benefit.Electricity / daysInMonth) * days) + Convert.ToDecimal(benefit.Electricity) * monthes;
-                        }
-                        else
-                        {
-                            payment = payment - (tenant.Payment.Rent * monthes);
-                            _tempPaymentHouse = _tempPaymentHouse - tenant.Payment.House * monthes;
-                            _tempPaymentService = _tempPaymentService - tenant.Payment.Service * monthes;
-                            decimal _tempElectricity = 0;
-
-                            foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(eid => eid.ElectricityPaymentID == tenant.Room.ElectricityPaymentID).ToList())
-                            {
-                                _tempElectricity += electricityElement.Payment;
-                            }
-
-                            _tempPaymentElectricity += _tempElectricity * monthes;
-
-                            _tempPaymentHouse += Convert.ToDecimal(benefit.House) * monthes;
-                            _tempPaymentService += Convert.ToDecimal(benefit.Service) * monthes;
-                            _tempPaymentElectricity += Convert.ToDecimal(benefit.Electricity) * monthes;
-                            payment += Convert.ToDecimal(benefit.Payment) * monthes;
-                        }
-
-                    }
-
-                    if (startDate > startBenefit && endBenefit > endDate)
-                    {
-                        OrdersCreation.SpecialDateCheck(startDate, endDate, out days, out monthes, out daysInMonth);
-                        if (days != 0)
-                        {
-                            payment += Convert.ToDecimal(benefit.Payment) / daysInMonth * days;
-                            payment += Convert.ToDecimal(benefit.Payment) * monthes;
-
-                            _tempPaymentElectricity += Convert.ToDecimal(benefit.Electricity) / daysInMonth * days;
-                            _tempPaymentElectricity += Convert.ToDecimal(benefit.Electricity) * monthes;
-
-                            _tempPaymentHouse += Convert.ToDecimal(benefit.House) / daysInMonth * days;
-                            _tempPaymentHouse += Convert.ToDecimal(benefit.House) * monthes;
-
-                            _tempPaymentService += Convert.ToDecimal(benefit.Service) / daysInMonth * days;
-                            _tempPaymentService += Convert.ToDecimal(benefit.Service) * monthes;
-                        }
-                        else
-                        {
-                            payment += Convert.ToDecimal(benefit.Payment) * monthes;
-                            _tempPaymentElectricity += Convert.ToDecimal(benefit.Electricity) * monthes;
-                            _tempPaymentHouse += Convert.ToDecimal(benefit.House) * monthes;
-                            _tempPaymentService += Convert.ToDecimal(benefit.Service) * monthes;
-                        }
-                    }
-
-                    if (startBenefit == startDate && endBenefit < endDate)
-                    {
-                        OrdersCreation.SpecialDateCheck(startDate, endBenefit, out days, out monthes, out daysInMonth);
-
-                        if (days != 0)
-                        {
-                            payment += Convert.ToDecimal(benefit.Payment) / daysInMonth * days;
-                            payment += Convert.ToDecimal(benefit.Payment) * monthes;
-
-                            _tempPaymentElectricity += Convert.ToDecimal(benefit.Electricity) / daysInMonth * days;
-                            _tempPaymentElectricity += Convert.ToDecimal(benefit.Electricity) * monthes;
-
-                            _tempPaymentHouse += Convert.ToDecimal(benefit.House) / daysInMonth * days;
-                            _tempPaymentHouse += Convert.ToDecimal(benefit.House) * monthes;
-
-                            _tempPaymentService += Convert.ToDecimal(benefit.Service) / daysInMonth * days;
-                            _tempPaymentService += Convert.ToDecimal(benefit.Service) * monthes;
-                        }
-                        else
-                        {
-                            payment += Convert.ToDecimal(benefit.Payment) * monthes;
-                            _tempPaymentElectricity += Convert.ToDecimal(benefit.Electricity) * monthes;
-                            _tempPaymentHouse += Convert.ToDecimal(benefit.House) * monthes;
-                            _tempPaymentService += Convert.ToDecimal(benefit.Service) * monthes;
-                        }
-
-                        OrdersCreation.SpecialDateCheck(endBenefit, endDate, out days, out monthes, out daysInMonth);
-
-                        if (days != 0)
-                        {
-                            payment += Convert.ToDecimal(tenant.Payment.Rent) / daysInMonth * days;
-                            payment += Convert.ToDecimal(tenant.Payment.Rent) * monthes;
-
-                            _tempPaymentHouse += Convert.ToDecimal(tenant.Payment.House) / daysInMonth * days;
-                            _tempPaymentHouse += Convert.ToDecimal(tenant.Payment.House) * monthes;
-
-                            _tempPaymentService += Convert.ToDecimal(tenant.Payment.Service) / daysInMonth * days;
-                            _tempPaymentService += Convert.ToDecimal(tenant.Payment.Service) * monthes;
-
-                            decimal _tempElectricity = 0;
-
-                            foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(eid => eid.ElectricityPaymentID == tenant.Room.ElectricityPaymentID).ToList())
-                            {
-                                _tempElectricity += electricityElement.Payment;
-                            }
-
-                            _tempPaymentElectricity += (_tempElectricity / daysInMonth) * days + _tempElectricity * monthes;
-                        }
-                        else
-                        {
-                            payment += Convert.ToDecimal(tenant.Payment.Rent) * monthes;
-                            _tempPaymentHouse += Convert.ToDecimal(tenant.Payment.House) * monthes;
-                            _tempPaymentService += Convert.ToDecimal(tenant.Payment.Service) * monthes;
-
-                            decimal _tempElectricity = 0;
-
-                            foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(eid => eid.ElectricityPaymentID == tenant.Room.ElectricityPaymentID).ToList())
-                            {
-                                _tempElectricity += electricityElement.Payment;
-                            }
-
-                            _tempPaymentElectricity +=  _tempElectricity * monthes;
-                        }
-                    }
-
-                    rent = payment;
-                    house = _tempPaymentHouse;
-                    service = _tempPaymentService;
-                    electricity = +_tempPaymentElectricity;
-
-                    days = 0;
-                    daysInMonth = 0;
-                    monthes = 0;
-
-                    
-
-                    return true;
-                }
-
-                if(specialPayment !=null)
-                {
-
-                    Tenant tenant = db.Tenants.Where(x => x.ID == tenantID).Include(p=>p.Payment).Include(r => r.Room).FirstOrDefault();
-
-                    DateTime startSpecialPaymentDate = DateTime.Parse(specialPayment.StartDate);
-                    DateTime endSpecialPayment = DateTime.Parse(specialPayment.EndDate);
-
-                    if (startSpecialPaymentDate <= startDate && endDate <= endSpecialPayment)
-                    {
-                        rent += tenant.Payment.Rent * specialPayment.Places;
-                        house += tenant.Payment.House * specialPayment.Places;
-                        service += tenant.Payment.Service * specialPayment.Places;
-
-                        if(tenant.TenantTypeID != 3 && tenant.TenantTypeID != 2)
-                        {
-                            foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(pid => pid.ElectricityPaymentID == specialPayment.ElectricityPaymentID).ToList())
-                            {
-                                electricity += electricityElement.Payment * (decimal)specialPayment.ElectricityPaymentPlaces;
-                            }
-                        }
-
-                    }
-                    else
-                    {
-
-                        OrdersCreation.SpecialDateCheck(startDate, endDate, out days, out monthes, out daysInMonth);
-
-                        if (days != 0)
-                        {
-                            service = (tenant.Payment.Service / daysInMonth) * days + (tenant.Payment.Service * monthes);
-                            house = (tenant.Payment.House / daysInMonth) * days + (tenant.Payment.House * monthes);
-                            if(tenant.TenantTypeID != 3 && tenant.TenantTypeID != 2)
-                            {
-                                foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(p => p.ElectricityPaymentID == tenant.Room.ElectricityPaymentID).ToList())
-                                {
-                                    electricity += electricityElement.Payment;
-                                }
-
-                                electricity = (electricity / daysInMonth) * days + (electricity * monthes);
-                            }
-                            
-                        }
-                        else
-                        {
-                            service = tenant.Payment.Service * monthes;
-                            house = tenant.Payment.House * monthes;
-                            if(tenant.TenantTypeID != 3 && tenant.TenantTypeID != 2)
-                            {
-                                foreach (ElectricityElement electricityElement in db.ElectricityElements.Where(p => p.ElectricityPaymentID == tenant.Room.ElectricityPaymentID).ToList())
-                                {
-                                    electricity += electricityElement.Payment;
-                                }
-
-                                electricity = electricity * monthes;
-                            }
-                            
-                        }
-                    }
-
-                    return true;
-                }
-                
-            }
-
-            return false;
-        }
+        
+    }
+
+    public class TenantView
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public Termination Termination { get; set; }
+        public TenantType Type { get; set; }
+        public Room Room { get; set; }
+        public Order Order { get; set; }
+        public Payment Payment { get; set; }
+        public DateTime startOrder { get; set; }
+        public DateTime endOrder { get; set; }
     }
 }
