@@ -286,12 +286,12 @@ namespace Supply
                                 DateTime startTenantOrderInner = DateTime.Parse(tv.Order.StartDate);
                                 DateTime endTenantOrderInner = DateTime.Parse(tv.Order.EndDate);
 
-                                if (startTenantOrderInner.Month == tv.startOrder.Month)
+                                if (startTenantOrderInner.Month == tv.startOrder.Month && startTenantOrderInner.Year == tv.startOrder.Year)
                                 {
                                     tv.startOrder = DateTime.Parse(tv.Order.StartDate);
                                 }
 
-                                if (endTenantOrderInner.Month == tv.endOrder.Month)
+                                if (endTenantOrderInner.Month == tv.endOrder.Month && endTenantOrderInner.Year == tv.endOrder.Year)
                                 {
                                     tv.endOrder = DateTime.Parse(tv.Order.EndDate);
                                 }
