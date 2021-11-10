@@ -1014,6 +1014,9 @@ namespace Supply.Libs
                                 electricity += electricityElement.Payment;
                             }
 
+                            if (days != 0)
+                                days += 1;
+
                             CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
 
                             

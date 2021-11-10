@@ -591,7 +591,7 @@ namespace Supply
                                                 tempElectricity += electricityElement.Payment;
                                             }
 
-                                            OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref tempRent, ref tempHouse, ref tempService, ref electricity);
+                                            OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref tempRent, ref tempHouse, ref tempService, ref tempElectricity);
 
                                             rent += tempRent;
                                             service += tempService;
@@ -612,7 +612,7 @@ namespace Supply
                                                 tempElectricity += electricityElement.Payment;
                                             }
 
-                                            OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref tempRent, ref tempHouse, ref tempService, ref electricity);
+                                            OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref tempRent, ref tempHouse, ref tempService, ref tempElectricity);
 
                                             rent += tempRent;
                                             service += tempService;
@@ -633,7 +633,7 @@ namespace Supply
                                                 tempElectricity += electricityElement.Payment;
                                             }
 
-                                            OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref tempRent, ref tempHouse, ref tempService, ref electricity);
+                                            OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref tempRent, ref tempHouse, ref tempService, ref tempElectricity);
 
                                             rent += tempRent;
                                             service += tempService;
@@ -642,7 +642,7 @@ namespace Supply
 
                                             OrdersCreation.SpecialDateCheck(endBenefit, orderEndDate, out days, out monthes, out daysInMonth);
 
-                                            OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref tempRent, ref tempHouse, ref tempService, ref electricity);
+                                            OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref tempRent, ref tempHouse, ref tempService, ref tempElectricity);
 
                                             rent += tempRent;
                                             service += tempService;
@@ -683,6 +683,8 @@ namespace Supply
 
                                 OrdersCreation.SpecialDateCheck(orderStartDate, orderEndDate, out days, out monthes, out daysInMonth);
 
+                                if (days != 0)
+                                    days += 1;
 
                                 OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
 
