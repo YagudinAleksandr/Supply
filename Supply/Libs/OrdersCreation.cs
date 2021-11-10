@@ -1748,13 +1748,14 @@ namespace Supply.Libs
 
                     Tenant tenant = db.Tenants.Where(id => id.ID == orderID).Include(p => p.Payment).Include(r => r.Room).FirstOrDefault();
 
-                    if (startBenefit <= startPaymentDate && endBenefit < endPaymentDate && endBenefit.Month == endPaymentDate.Month) 
+                    if (startBenefit <= startPaymentDate && endBenefit < endPaymentDate) 
                     {
                         SpecialDateCheck(startPaymentDate, endBenefit, out days, out monthes, out daysInMonth);
 
                         CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
 
                         return true;
+                         //&& endBenefit.Month == endPaymentDate.Month
                     }
                     else if (startPaymentDate < startBenefit && endBenefit > endPaymentDate)
                     {

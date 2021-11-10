@@ -365,6 +365,43 @@ namespace Supply
                 ToolStripMenuItem monthDeclarationPayment = new ToolStripMenuItem("Отчет по начислениям");
                 monthDeclarationPayment.Click += MonthDeclarationPayment_Click;
                 declaration.DropDownItems.Add(monthDeclarationPayment);
+
+                ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem("Отчет по СПО");
+                toolStripMenuItem.Click += (senderLoc, ev) =>
+                  {
+                      Thread thread = new Thread(CreateSPODeclaration);
+                      thread.Start();
+                      MessageBox.Show("Файл создается в фоновом режиме!");
+                  };
+                declaration.DropDownItems.Add(toolStripMenuItem);
+
+                ToolStripMenuItem toolStripMenuItem1 = new ToolStripMenuItem("Отчет бакалавриат");
+                toolStripMenuItem1.Click += (senderLoc, ev) =>
+                  {
+                      Thread thread = new Thread(CreateBachelorDeclaration);
+                      thread.Start();
+                      MessageBox.Show("Файл создается в фоновом режиме!");
+                      
+                  };
+                declaration.DropDownItems.Add(toolStripMenuItem1);
+
+                ToolStripMenuItem toolStripMenuItem2 = new ToolStripMenuItem("Отчет магистратура");
+                toolStripMenuItem2.Click += (senderLoc, ev) =>
+                  {
+                      Thread thread = new Thread(CreateBachelorMag);
+                      thread.Start();
+                      MessageBox.Show("Файл создается в фоновом режиме!");
+                  };
+                declaration.DropDownItems.Add(toolStripMenuItem2);
+
+                ToolStripMenuItem toolStripMenuItem3 = new ToolStripMenuItem("Отчет по аспирантуре");
+                toolStripMenuItem3.Click += (senderLoc, ev) =>
+                  {
+                      Thread thread = new Thread(CreateBachelorAsp);
+                      thread.Start();
+                      MessageBox.Show("Файл создается в фоновом режиме!");
+                  };
+                declaration.DropDownItems.Add(toolStripMenuItem3);
             }
 
 
@@ -1488,6 +1525,838 @@ namespace Supply
                     }
                 }
                 
+
+            }
+
+            GC.Collect();
+        }
+
+        private void CreateSPODeclaration()
+        {
+            string error = string.Empty;
+
+            using (ExcelHelper excel = new ExcelHelper())
+            {
+                using (SupplyDbContext db = new SupplyDbContext())
+                {
+                    Hostel hostel = db.Hostels.Where(x => x.ID == _hostelID).FirstOrDefault();
+
+                    if (excel.Open(filePath: AppSettings.GetTemplateSetting("outfileDir") + @"\", name: $"Список общежития {hostel.Name} СПО({DateTime.Now.ToShortDateString()}).xlsx", out error))
+                    {
+                        try
+                        {
+                            int counter = 0;
+                            if (hostel == null)
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class:Form1. Method: CreateHostelDeclaration_Click. Not found the hostel with ID:{_hostelID}");
+
+                                MessageBox.Show("Не найдено общежития!");
+                                return;
+                            }
+
+                            if (!excel.Set("A", 1, "Комната", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("B", 1, "Кол-во мест", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("C", 1, "ФИО", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("D", 1, "Договор", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("E", 1, "Дата начала", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("F", 1, "Дата рождения", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("G", 1, "Факультет/Группа", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("H", 1, "Адрес", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("I", 1, "Телефон", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+
+                            var enterances = db.Enterances.Where(x => x.HostelId == hostel.ID).ToList();
+
+                            if (enterances.Count == 0)
+                            {
+                                MessageBox.Show("Не найдено подъездов!");
+                                return;
+                            }
+
+                            List<Flat> flats = new List<Flat>();
+
+                            foreach (Enterance enterance in enterances)
+                            {
+                                flats.AddRange(db.Flats.Where(x => x.Enterance_ID == enterance.ID).OrderBy(n => n.Name).ToList());
+                            }
+
+                            List<Room> rooms = new List<Room>();
+                            foreach (Flat flat in flats)
+                            {
+                                rooms.AddRange(db.Rooms.Where(x => x.FlatID == flat.ID).OrderBy(p => p.Name).ToList());
+                            }
+
+
+                            flats.Clear();
+
+
+                            int rowCounter = 2;
+                            object startCell, endCell;
+                            List<RoomModel> roomModels = new List<RoomModel>();
+
+                            foreach (Room room in rooms)
+                            {
+                                roomModels.Add(new RoomModel { ID = room.ID, Name = int.Parse(room.Name), Places = room.Places });
+                                
+                            }
+
+                            var rm = from roomModel in roomModels
+                                     orderby roomModel.Name
+                                     select roomModel;
+
+                            foreach (var r in rm)
+                            {
+                                startCell = $"A{rowCounter}";
+                                endCell = $"A{rowCounter + r.Places - 1}";
+                                if (!excel.Merge(startCell, endCell, rowCounter, 1, r.Name.ToString(), out error))
+                                {
+                                    Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                    thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                                }
+
+                                //Column room places
+                                startCell = $"B{rowCounter}";
+                                endCell = $"B{rowCounter + r.Places - 1}";
+                                if (!excel.Merge(startCell, endCell, rowCounter, 2, r.Places.ToString(), out error))
+                                {
+                                    Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                    thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                                }
+
+                                var tenants = db.Tenants
+                                                .Where(x => x.RoomID == r.ID)
+                                                .Where(s => s.Status == true)
+                                                .Include(i => i.Identification)
+                                                .Include(o => o.Order)
+                                                .ToList();
+
+                                int tenantPlaces = rowCounter;
+
+                                
+
+                                foreach (Tenant tenant in tenants)
+                                {
+                                    if (OrdersCreation.AdditionalInf(10, tenant.ID) == string.Empty && OrdersCreation.AdditionalInf(6, tenant.ID) == "СПО")
+                                    {
+                                        string tenantName = tenant.Identification.Surename + " " + tenant.Identification.Name;
+                                        if (tenant.Identification.Patronymic != null)
+                                        {
+                                            tenantName += " " + tenant.Identification.Patronymic;
+                                        }
+                                        excel.Set("C", tenantPlaces, tenantName, out error);
+                                        excel.Set("D", tenantPlaces, tenant.Order.OrderNumber, out error);
+                                        excel.Set("E", tenantPlaces, tenant.Order.StartDate, out error);
+                                        excel.Set("F", tenantPlaces, tenant.Identification.DateOfBirth, out error);
+                                        excel.Set("G", tenantPlaces, OrdersCreation.AdditionalInf(3, tenant.ID) + "/" + OrdersCreation.AdditionalInf(4, tenant.ID), out error);
+                                        excel.Set("H", tenantPlaces, tenant.Identification.Address, out error);
+                                        excel.Set("I", tenantPlaces, OrdersCreation.AdditionalInf(1, tenant.ID), out error);
+
+                                        counter++;
+                                    }
+                                    
+
+                                    tenantPlaces++;
+                                }
+
+
+                                rowCounter += r.Places;
+
+                                startCell = endCell = string.Empty;
+                            }
+
+                            excel.Set("A", rowCounter, "Всего студентов СПО НИМИ", out error);
+                            excel.Set("B", rowCounter, counter.ToString(), out error);
+
+                            rooms.Clear();
+
+                            excel.Save();
+
+                            MessageBox.Show("Файл сформирован успешно!");
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                            thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {ex.Message}. {ex.InnerException}");
+
+                            MessageBox.Show(ex.Message);
+                        }
+                    }
+                    else
+                    {
+                        Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                        thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+
+                        MessageBox.Show(error);
+                        excel.Close();
+                        return;
+                    }
+                }
+
+
+            }
+
+            GC.Collect();
+        }
+
+        private void CreateBachelorDeclaration()
+        {
+            string error = string.Empty;
+
+            using (ExcelHelper excel = new ExcelHelper())
+            {
+                using (SupplyDbContext db = new SupplyDbContext())
+                {
+                    Hostel hostel = db.Hostels.Where(x => x.ID == _hostelID).FirstOrDefault();
+
+                    if (excel.Open(filePath: AppSettings.GetTemplateSetting("outfileDir") + @"\", name: $"Список общежития {hostel.Name} бакалавриат({DateTime.Now.ToShortDateString()}).xlsx", out error))
+                    {
+                        try
+                        {
+                            int counter = 0;
+                            if (hostel == null)
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class:Form1. Method: CreateHostelDeclaration_Click. Not found the hostel with ID:{_hostelID}");
+
+                                MessageBox.Show("Не найдено общежития!");
+                                return;
+                            }
+
+                            if (!excel.Set("A", 1, "Комната", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("B", 1, "Кол-во мест", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("C", 1, "ФИО", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("D", 1, "Договор", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("E", 1, "Дата начала", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("F", 1, "Дата рождения", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("G", 1, "Факультет/Группа", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("H", 1, "Адрес", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("I", 1, "Телефон", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+
+                            var enterances = db.Enterances.Where(x => x.HostelId == hostel.ID).ToList();
+
+                            if (enterances.Count == 0)
+                            {
+                                MessageBox.Show("Не найдено подъездов!");
+                                return;
+                            }
+
+                            List<Flat> flats = new List<Flat>();
+
+                            foreach (Enterance enterance in enterances)
+                            {
+                                flats.AddRange(db.Flats.Where(x => x.Enterance_ID == enterance.ID).OrderBy(n => n.Name).ToList());
+                            }
+
+                            List<Room> rooms = new List<Room>();
+                            foreach (Flat flat in flats)
+                            {
+                                rooms.AddRange(db.Rooms.Where(x => x.FlatID == flat.ID).OrderBy(p => p.Name).ToList());
+                            }
+
+
+                            flats.Clear();
+
+
+                            int rowCounter = 2;
+                            object startCell, endCell;
+                            List<RoomModel> roomModels = new List<RoomModel>();
+
+                            foreach (Room room in rooms)
+                            {
+                                roomModels.Add(new RoomModel { ID = room.ID, Name = int.Parse(room.Name), Places = room.Places });
+
+                            }
+
+                            var rm = from roomModel in roomModels
+                                     orderby roomModel.Name
+                                     select roomModel;
+
+                            foreach (var r in rm)
+                            {
+                                startCell = $"A{rowCounter}";
+                                endCell = $"A{rowCounter + r.Places - 1}";
+                                if (!excel.Merge(startCell, endCell, rowCounter, 1, r.Name.ToString(), out error))
+                                {
+                                    Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                    thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                                }
+
+                                //Column room places
+                                startCell = $"B{rowCounter}";
+                                endCell = $"B{rowCounter + r.Places - 1}";
+                                if (!excel.Merge(startCell, endCell, rowCounter, 2, r.Places.ToString(), out error))
+                                {
+                                    Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                    thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                                }
+
+                                var tenants = db.Tenants
+                                                .Where(x => x.RoomID == r.ID)
+                                                .Where(s => s.Status == true)
+                                                .Include(i => i.Identification)
+                                                .Include(o => o.Order)
+                                                .ToList();
+
+                                int tenantPlaces = rowCounter;
+
+
+
+                                foreach (Tenant tenant in tenants)
+                                {
+                                    if (OrdersCreation.AdditionalInf(10, tenant.ID) == string.Empty)
+                                    {
+                                        if(OrdersCreation.AdditionalInf(6, tenant.ID) == "бакалавр" || OrdersCreation.AdditionalInf(6, tenant.ID) == "бакалавриат"|| OrdersCreation.AdditionalInf(6, tenant.ID) == "Бакалавр"|| OrdersCreation.AdditionalInf(6, tenant.ID) == "Бакалавриат")
+                                        {
+                                            {
+                                                string tenantName = tenant.Identification.Surename + " " + tenant.Identification.Name;
+                                                if (tenant.Identification.Patronymic != null)
+                                                {
+                                                    tenantName += " " + tenant.Identification.Patronymic;
+                                                }
+                                                excel.Set("C", tenantPlaces, tenantName, out error);
+                                                excel.Set("D", tenantPlaces, tenant.Order.OrderNumber, out error);
+                                                excel.Set("E", tenantPlaces, tenant.Order.StartDate, out error);
+                                                excel.Set("F", tenantPlaces, tenant.Identification.DateOfBirth, out error);
+                                                excel.Set("G", tenantPlaces, OrdersCreation.AdditionalInf(3, tenant.ID) + "/" + OrdersCreation.AdditionalInf(4, tenant.ID), out error);
+                                                excel.Set("H", tenantPlaces, tenant.Identification.Address, out error);
+                                                excel.Set("I", tenantPlaces, OrdersCreation.AdditionalInf(1, tenant.ID), out error);
+
+                                                counter++;
+                                            }
+                                        }
+                                    }
+
+
+                                    tenantPlaces++;
+                                }
+
+
+                                rowCounter += r.Places;
+
+                                startCell = endCell = string.Empty;
+                            }
+
+                            excel.Set("A", rowCounter, "Всего студентов бакалавриата НИМИ", out error);
+                            excel.Set("B", rowCounter, counter.ToString(), out error);
+
+                            rooms.Clear();
+
+                            excel.Save();
+
+                            MessageBox.Show("Файл сформирован успешно!");
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                            thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {ex.Message}. {ex.InnerException}");
+
+                            MessageBox.Show(ex.Message);
+                        }
+                    }
+                    else
+                    {
+                        Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                        thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+
+                        MessageBox.Show(error);
+                        excel.Close();
+                        return;
+                    }
+                }
+
+
+            }
+
+            GC.Collect();
+        }
+        private void CreateBachelorMag()
+        {
+            string error = string.Empty;
+
+            using (ExcelHelper excel = new ExcelHelper())
+            {
+                using (SupplyDbContext db = new SupplyDbContext())
+                {
+                    Hostel hostel = db.Hostels.Where(x => x.ID == _hostelID).FirstOrDefault();
+
+                    if (excel.Open(filePath: AppSettings.GetTemplateSetting("outfileDir") + @"\", name: $"Список общежития {hostel.Name} магистратура({DateTime.Now.ToShortDateString()}).xlsx", out error))
+                    {
+                        try
+                        {
+                            int counter = 0;
+                            if (hostel == null)
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class:Form1. Method: CreateHostelDeclaration_Click. Not found the hostel with ID:{_hostelID}");
+
+                                MessageBox.Show("Не найдено общежития!");
+                                return;
+                            }
+
+                            if (!excel.Set("A", 1, "Комната", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("B", 1, "Кол-во мест", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("C", 1, "ФИО", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("D", 1, "Договор", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("E", 1, "Дата начала", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("F", 1, "Дата рождения", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("G", 1, "Факультет/Группа", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("H", 1, "Адрес", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("I", 1, "Телефон", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+
+                            var enterances = db.Enterances.Where(x => x.HostelId == hostel.ID).ToList();
+
+                            if (enterances.Count == 0)
+                            {
+                                MessageBox.Show("Не найдено подъездов!");
+                                return;
+                            }
+
+                            List<Flat> flats = new List<Flat>();
+
+                            foreach (Enterance enterance in enterances)
+                            {
+                                flats.AddRange(db.Flats.Where(x => x.Enterance_ID == enterance.ID).OrderBy(n => n.Name).ToList());
+                            }
+
+                            List<Room> rooms = new List<Room>();
+                            foreach (Flat flat in flats)
+                            {
+                                rooms.AddRange(db.Rooms.Where(x => x.FlatID == flat.ID).OrderBy(p => p.Name).ToList());
+                            }
+
+
+                            flats.Clear();
+
+
+                            int rowCounter = 2;
+                            object startCell, endCell;
+                            List<RoomModel> roomModels = new List<RoomModel>();
+
+                            foreach (Room room in rooms)
+                            {
+                                roomModels.Add(new RoomModel { ID = room.ID, Name = int.Parse(room.Name), Places = room.Places });
+
+                            }
+
+                            var rm = from roomModel in roomModels
+                                     orderby roomModel.Name
+                                     select roomModel;
+
+                            foreach (var r in rm)
+                            {
+                                startCell = $"A{rowCounter}";
+                                endCell = $"A{rowCounter + r.Places - 1}";
+                                if (!excel.Merge(startCell, endCell, rowCounter, 1, r.Name.ToString(), out error))
+                                {
+                                    Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                    thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                                }
+
+                                //Column room places
+                                startCell = $"B{rowCounter}";
+                                endCell = $"B{rowCounter + r.Places - 1}";
+                                if (!excel.Merge(startCell, endCell, rowCounter, 2, r.Places.ToString(), out error))
+                                {
+                                    Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                    thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                                }
+
+                                var tenants = db.Tenants
+                                                .Where(x => x.RoomID == r.ID)
+                                                .Where(s => s.Status == true)
+                                                .Include(i => i.Identification)
+                                                .Include(o => o.Order)
+                                                .ToList();
+
+                                int tenantPlaces = rowCounter;
+
+
+
+                                foreach (Tenant tenant in tenants)
+                                {
+                                    if (OrdersCreation.AdditionalInf(10, tenant.ID) == string.Empty)
+                                    {
+                                        if (OrdersCreation.AdditionalInf(6, tenant.ID) == "магистратура" || OrdersCreation.AdditionalInf(6, tenant.ID) == "Магистратура" 
+                                            || OrdersCreation.AdditionalInf(6, tenant.ID) == "Магистрант" || OrdersCreation.AdditionalInf(6, tenant.ID) == "магистрант" 
+                                            || OrdersCreation.AdditionalInf(6, tenant.ID) == "Магистр" || OrdersCreation.AdditionalInf(6, tenant.ID) == "магистр")
+                                        {
+                                            {
+                                                string tenantName = tenant.Identification.Surename + " " + tenant.Identification.Name;
+                                                if (tenant.Identification.Patronymic != null)
+                                                {
+                                                    tenantName += " " + tenant.Identification.Patronymic;
+                                                }
+                                                excel.Set("C", tenantPlaces, tenantName, out error);
+                                                excel.Set("D", tenantPlaces, tenant.Order.OrderNumber, out error);
+                                                excel.Set("E", tenantPlaces, tenant.Order.StartDate, out error);
+                                                excel.Set("F", tenantPlaces, tenant.Identification.DateOfBirth, out error);
+                                                excel.Set("G", tenantPlaces, OrdersCreation.AdditionalInf(3, tenant.ID) + "/" + OrdersCreation.AdditionalInf(4, tenant.ID), out error);
+                                                excel.Set("H", tenantPlaces, tenant.Identification.Address, out error);
+                                                excel.Set("I", tenantPlaces, OrdersCreation.AdditionalInf(1, tenant.ID), out error);
+
+                                                counter++;
+                                            }
+                                        }
+                                    }
+
+
+                                    tenantPlaces++;
+                                }
+
+
+                                rowCounter += r.Places;
+
+                                startCell = endCell = string.Empty;
+                            }
+
+                            excel.Set("A", rowCounter, "Всего студентов магистратуры НИМИ", out error);
+                            excel.Set("B", rowCounter, counter.ToString(), out error);
+
+                            rooms.Clear();
+
+                            excel.Save();
+
+                            MessageBox.Show("Файл сформирован успешно!");
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                            thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {ex.Message}. {ex.InnerException}");
+
+                            MessageBox.Show(ex.Message);
+                        }
+                    }
+                    else
+                    {
+                        Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                        thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+
+                        MessageBox.Show(error);
+                        excel.Close();
+                        return;
+                    }
+                }
+
+
+            }
+
+            GC.Collect();
+        }
+        private void CreateBachelorAsp()
+        {
+            string error = string.Empty;
+
+            using (ExcelHelper excel = new ExcelHelper())
+            {
+                using (SupplyDbContext db = new SupplyDbContext())
+                {
+                    Hostel hostel = db.Hostels.Where(x => x.ID == _hostelID).FirstOrDefault();
+
+                    if (excel.Open(filePath: AppSettings.GetTemplateSetting("outfileDir") + @"\", name: $"Список общежития {hostel.Name} аспирантура({DateTime.Now.ToShortDateString()}).xlsx", out error))
+                    {
+                        try
+                        {
+                            int counter = 0;
+                            if (hostel == null)
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class:Form1. Method: CreateHostelDeclaration_Click. Not found the hostel with ID:{_hostelID}");
+
+                                MessageBox.Show("Не найдено общежития!");
+                                return;
+                            }
+
+                            if (!excel.Set("A", 1, "Комната", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("B", 1, "Кол-во мест", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("C", 1, "ФИО", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("D", 1, "Договор", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("E", 1, "Дата начала", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("F", 1, "Дата рождения", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("G", 1, "Факультет/Группа", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("H", 1, "Адрес", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("I", 1, "Телефон", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+
+                            var enterances = db.Enterances.Where(x => x.HostelId == hostel.ID).ToList();
+
+                            if (enterances.Count == 0)
+                            {
+                                MessageBox.Show("Не найдено подъездов!");
+                                return;
+                            }
+
+                            List<Flat> flats = new List<Flat>();
+
+                            foreach (Enterance enterance in enterances)
+                            {
+                                flats.AddRange(db.Flats.Where(x => x.Enterance_ID == enterance.ID).OrderBy(n => n.Name).ToList());
+                            }
+
+                            List<Room> rooms = new List<Room>();
+                            foreach (Flat flat in flats)
+                            {
+                                rooms.AddRange(db.Rooms.Where(x => x.FlatID == flat.ID).OrderBy(p => p.Name).ToList());
+                            }
+
+
+                            flats.Clear();
+
+
+                            int rowCounter = 2;
+                            object startCell, endCell;
+                            List<RoomModel> roomModels = new List<RoomModel>();
+
+                            foreach (Room room in rooms)
+                            {
+                                roomModels.Add(new RoomModel { ID = room.ID, Name = int.Parse(room.Name), Places = room.Places });
+
+                            }
+
+                            var rm = from roomModel in roomModels
+                                     orderby roomModel.Name
+                                     select roomModel;
+
+                            foreach (var r in rm)
+                            {
+                                startCell = $"A{rowCounter}";
+                                endCell = $"A{rowCounter + r.Places - 1}";
+                                if (!excel.Merge(startCell, endCell, rowCounter, 1, r.Name.ToString(), out error))
+                                {
+                                    Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                    thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                                }
+
+                                //Column room places
+                                startCell = $"B{rowCounter}";
+                                endCell = $"B{rowCounter + r.Places - 1}";
+                                if (!excel.Merge(startCell, endCell, rowCounter, 2, r.Places.ToString(), out error))
+                                {
+                                    Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                    thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                                }
+
+                                var tenants = db.Tenants
+                                                .Where(x => x.RoomID == r.ID)
+                                                .Where(s => s.Status == true)
+                                                .Include(i => i.Identification)
+                                                .Include(o => o.Order)
+                                                .ToList();
+
+                                int tenantPlaces = rowCounter;
+
+
+
+                                foreach (Tenant tenant in tenants)
+                                {
+                                    if (OrdersCreation.AdditionalInf(10, tenant.ID) == string.Empty)
+                                    {
+                                        if (OrdersCreation.AdditionalInf(6, tenant.ID) == "аспирантура" || OrdersCreation.AdditionalInf(6, tenant.ID) == "Аспирантура"
+                                            || OrdersCreation.AdditionalInf(6, tenant.ID) == "Аспирант" || OrdersCreation.AdditionalInf(6, tenant.ID) == "аспирант")
+                                        {
+                                            {
+                                                string tenantName = tenant.Identification.Surename + " " + tenant.Identification.Name;
+                                                if (tenant.Identification.Patronymic != null)
+                                                {
+                                                    tenantName += " " + tenant.Identification.Patronymic;
+                                                }
+                                                excel.Set("C", tenantPlaces, tenantName, out error);
+                                                excel.Set("D", tenantPlaces, tenant.Order.OrderNumber, out error);
+                                                excel.Set("E", tenantPlaces, tenant.Order.StartDate, out error);
+                                                excel.Set("F", tenantPlaces, tenant.Identification.DateOfBirth, out error);
+                                                excel.Set("G", tenantPlaces, OrdersCreation.AdditionalInf(3, tenant.ID) + "/" + OrdersCreation.AdditionalInf(4, tenant.ID), out error);
+                                                excel.Set("H", tenantPlaces, tenant.Identification.Address, out error);
+                                                excel.Set("I", tenantPlaces, OrdersCreation.AdditionalInf(1, tenant.ID), out error);
+
+                                                counter++;
+                                            }
+                                        }
+                                    }
+
+
+                                    tenantPlaces++;
+                                }
+
+
+                                rowCounter += r.Places;
+
+                                startCell = endCell = string.Empty;
+                            }
+
+                            excel.Set("A", rowCounter, "Всего студентов магистратуры НИМИ", out error);
+                            excel.Set("B", rowCounter, counter.ToString(), out error);
+
+                            rooms.Clear();
+
+                            excel.Save();
+
+                            MessageBox.Show("Файл сформирован успешно!");
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                            thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {ex.Message}. {ex.InnerException}");
+
+                            MessageBox.Show(ex.Message);
+                        }
+                    }
+                    else
+                    {
+                        Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                        thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+
+                        MessageBox.Show(error);
+                        excel.Close();
+                        return;
+                    }
+                }
+
 
             }
 
