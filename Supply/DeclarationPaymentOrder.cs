@@ -658,6 +658,9 @@ namespace Supply
                                         OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
                                         OrdersCreation.SpecialPaymentsElectricity(tenant.ID, out electricity);
 
+                                        if (days != 0)
+                                            days += 1;
+
                                         OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
 
                                         

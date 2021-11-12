@@ -202,7 +202,7 @@ namespace Supply.Libs
 
                             replacements.Add("rate", (tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House).ToString());
                             replacements.Add("rateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House)));
-                            totalDate = Math.Abs((orderEndDate - orderStartDate).Days);
+                            totalDate = Math.Abs((orderEndDate - orderStartDate).Days) + 1;
                             replacements.Add("allTimeRate", ((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House) * totalDate).ToString());
                             replacements.Add("allTimeRateWord", NumbersToString.NumbersToString.Str((int)(tenant.Payment.Rent + tenant.Payment.Service + tenant.Payment.House) * totalDate));
                             break;
@@ -978,6 +978,11 @@ namespace Supply.Libs
                                     SpecialPayments(tenant.ID, out rent, out house, out service);
                                     SpecialPaymentsElectricity(tenant.ID, out electricity);
 
+                                    if(days!=0)
+                                    {
+                                        days += 1;
+                                    }
+
                                     CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
                                     
                                    
@@ -1707,7 +1712,7 @@ namespace Supply.Libs
                 days = dt2.Day;
                 if (dt1.Day != 1)
                 {
-                    daysInMonth = DateTime.DaysInMonth(dt1.Year, dt2.Month);
+                    daysInMonth = DateTime.DaysInMonth(dt1.Year, dt1.Month);
                     days = daysInMonth - dt1.Day;
                 }
             }
@@ -1758,7 +1763,6 @@ namespace Supply.Libs
                         CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
 
                         return true;
-                         //&& endBenefit.Month == endPaymentDate.Month
                     }
                     else if (startPaymentDate < startBenefit && endBenefit > endPaymentDate)
                     {
