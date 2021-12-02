@@ -978,10 +978,16 @@ namespace Supply.Libs
                                     SpecialPayments(tenant.ID, out rent, out house, out service);
                                     SpecialPaymentsElectricity(tenant.ID, out electricity);
 
-                                    if(days!=0)
+                                    Termination termination = db.Terminations.Where(o => o.OrderID == order.ID).FirstOrDefault();
+
+                                    if (termination == null) 
                                     {
-                                        days += 1;
+                                        if (days != 0)
+                                        {
+                                            days += 1;
+                                        }
                                     }
+                                    
 
                                     CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
                                     
@@ -1019,8 +1025,13 @@ namespace Supply.Libs
                                 electricity += electricityElement.Payment;
                             }
 
-                            if (days != 0)
-                                days += 1;
+                            Termination termination = db.Terminations.Where(x => x.OrderID == tenant.ID).FirstOrDefault();
+                            if (termination == null)
+                            {
+                                if (days != 0)
+                                    days += 1;
+                            }
+                            
 
                             CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
 
@@ -1766,7 +1777,7 @@ namespace Supply.Libs
                     }
                     else if (startPaymentDate < startBenefit && endBenefit > endPaymentDate)
                     {
-                        SpecialDateCheck(startBenefitDate, endPaymentDate, out days, out daysInMonth, out daysInMonth);
+                        SpecialDateCheck(startBenefitDate, endPaymentDate, out days, out monthes, out daysInMonth);
 
                         CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
 

@@ -603,6 +603,11 @@ namespace Supply
                                         {
                                             OrdersCreation.SpecialDateCheck(orderStartDate, startBenefit, out days, out monthes, out daysInMonth);
 
+                                            if(days!=0)
+                                            {
+                                                days -= 1;
+                                            }
+
                                             tempRent = Convert.ToDecimal(tenant.Payment.Rent);
                                             tempHouse = Convert.ToDecimal(tenant.Payment.House);
                                             tempService = Convert.ToDecimal(tenant.Payment.Service);
@@ -658,8 +663,13 @@ namespace Supply
                                         OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
                                         OrdersCreation.SpecialPaymentsElectricity(tenant.ID, out electricity);
 
-                                        if (days != 0)
-                                            days += 1;
+                                        Termination termination = db.Terminations.Where(x => x.OrderID == tenant.ID).FirstOrDefault();
+                                        if(termination==null)
+                                        {
+                                            if (days != 0)
+                                                days += 1;
+                                        }
+                                        
 
                                         OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
 
@@ -686,8 +696,13 @@ namespace Supply
 
                                 OrdersCreation.SpecialDateCheck(orderStartDate, orderEndDate, out days, out monthes, out daysInMonth);
 
-                                if (days != 0)
-                                    days += 1;
+                                Termination termination = db.Terminations.Where(t => t.OrderID == tenant.ID).FirstOrDefault();
+                                if(termination==null)
+                                {
+                                    if (days != 0)
+                                        days += 1;
+                                }
+                                
 
                                 OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);
 

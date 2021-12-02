@@ -46,32 +46,46 @@ namespace Supply.Domain
 
                 foreach(ChangeRoom changeRoom in changeRooms)
                 {
-                    if (Convert.ToDateTime(changeRoom.StartDate) <= Convert.ToDateTime(DateTime.Now.ToShortDateString()))
+                    try
                     {
-                        Tenant tenant = db.Tenants.Where(id => id.ID == changeRoom.Order.ID).FirstOrDefault();
-                        tenant.RoomID = (int)changeRoom.RoomID;
-                        tenant.UpdatedAt = DateTime.Now.ToString();
-
-                        try
+                        if (Convert.ToDateTime(changeRoom.StartDate) <= Convert.ToDateTime(DateTime.Now.ToShortDateString()))
                         {
-                            db.Entry(tenant).State = System.Data.Entity.EntityState.Modified;
-                            db.SaveChanges();
+                            Tenant tenant = db.Tenants.Where(id => id.ID == changeRoom.Order.ID).FirstOrDefault();
+                            tenant.RoomID = (int)changeRoom.RoomID;
+                            tenant.UpdatedAt = DateTime.Now.ToString();
 
-                            changeRoom.Status = false;
-                            db.Entry(changeRoom).State = System.Data.Entity.EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                        catch (Exception ex)
-                        {
-                            Log log = new Log();
-                            log.ID = Guid.NewGuid();
-                            log.Type = "ERROR";
-                            log.CreatedAt = DateTime.Now.ToString();
-                            log.Caption = $"Class: AsyncProcesses. Method: UpdateChangeRoom." + ex.Message + "." + ex.InnerException;
+                            try
+                            {
+                                db.Entry(tenant).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
 
-                            db.Logs.Add(log);
-                            db.SaveChanges();
+                                changeRoom.Status = false;
+                                db.Entry(changeRoom).State = System.Data.Entity.EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            catch (Exception ex)
+                            {
+                                Log log = new Log();
+                                log.ID = Guid.NewGuid();
+                                log.Type = "ERROR";
+                                log.CreatedAt = DateTime.Now.ToString();
+                                log.Caption = $"Class: AsyncProcesses. Method: UpdateChangeRoom." + ex.Message + "." + ex.InnerException;
+
+                                db.Logs.Add(log);
+                                db.SaveChanges();
+                            }
                         }
+                    }
+                    catch(Exception ex)
+                    {
+                        Log log = new Log();
+                        log.ID = Guid.NewGuid();
+                        log.Type = "ERROR";
+                        log.CreatedAt = DateTime.Now.ToString();
+                        log.Caption = $"Class: AsyncProcesses. Method: UpdateChangeRoom." + ex.Message + "." + ex.InnerException;
+
+                        db.Logs.Add(log);
+                        db.SaveChanges();
                     }
                 }
             }

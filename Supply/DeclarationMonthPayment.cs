@@ -398,6 +398,9 @@ namespace Supply
 
                                                 OrdersCreation.SpecialDateCheck(tv.startOrder, startBenefit, out days, out monthes, out daysInMonth);
 
+                                                if (days != 0)
+                                                    days -= 1;
+
                                                 tempRent = Convert.ToDecimal(tv.Payment.Rent);
                                                 tempHouse = Convert.ToDecimal(tv.Payment.House);
                                                 tempService = Convert.ToDecimal(tv.Payment.Service);
@@ -423,6 +426,9 @@ namespace Supply
                                                 electricity = tElectricity;
 
                                                 OrdersCreation.SpecialDateCheck(tv.startOrder, startBenefit, out days, out monthes, out daysInMonth);
+
+                                                if (days != 0)
+                                                    days -= 1;
 
                                                 tempRent = Convert.ToDecimal(tv.Payment.Rent);
                                                 tempHouse = Convert.ToDecimal(tv.Payment.House);
