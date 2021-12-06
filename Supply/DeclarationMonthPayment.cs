@@ -456,7 +456,7 @@ namespace Supply
                                                 electricity += tempElectricity;
                                             }
 
-                                            if (startBenefit < tv.startOrder && endBenefit > tv.endOrder)
+                                            if ((startBenefit < tv.startOrder && endBenefit > tv.endOrder) || (startBenefit==tv.startOrder && endBenefit>tv.endOrder))
                                             {
                                                 rent = tRent;
                                                 house = tHouse;
@@ -464,6 +464,7 @@ namespace Supply
                                                 electricity = tElectricity;
                                             }
 
+                                            
                                         }
                                         else
                                         {

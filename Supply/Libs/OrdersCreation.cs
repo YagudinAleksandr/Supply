@@ -1767,7 +1767,7 @@ namespace Supply.Libs
 
                     Tenant tenant = db.Tenants.Where(id => id.ID == orderID).Include(p => p.Payment).Include(r => r.Room).FirstOrDefault();
 
-                    if (startBenefit <= startPaymentDate && endBenefit < endPaymentDate) 
+                    if (startBenefit <= startPaymentDate && endBenefit < endPaymentDate)
                     {
                         SpecialDateCheck(startPaymentDate, endBenefit, out days, out monthes, out daysInMonth);
 
@@ -1791,7 +1791,15 @@ namespace Supply.Libs
 
                         return true;
                     }
-                    else if(startPaymentDate > startBenefit && endBenefit > endPaymentDate)
+                    else if (startPaymentDate > startBenefit && endBenefit > endPaymentDate)
+                    {
+                        SpecialDateCheck(startPaymentDate, endPaymentDate, out days, out monthes, out daysInMonth);
+
+                        CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
+
+                        return true;
+                    }
+                    else if (startPaymentDate == startBenefit && endBenefit > endPaymentDate)
                     {
                         SpecialDateCheck(startPaymentDate, endPaymentDate, out days, out monthes, out daysInMonth);
 
