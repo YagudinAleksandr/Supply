@@ -306,7 +306,7 @@ namespace Supply
 
                                 if (startTenantOrderInner.Month == tv.startOrder.Month && startTenantOrderInner.Year == tv.startOrder.Year)
                                 {
-                                    tv.startOrder = DateTime.Parse(tv.Order.StartDate);
+                                    tv.startOrder = DateTime.Parse(tv.Order.StartDate).AddDays(-1);
                                 }
 
                                 if (endTenantOrderInner.Month == tv.endOrder.Month && endTenantOrderInner.Year == tv.endOrder.Year)
@@ -322,7 +322,7 @@ namespace Supply
                                     {
                                         if (tv.endOrder > dateOfTermination && tv.endOrder.Month == dateOfTermination.Month)
                                         {
-                                            tv.endOrder = dateOfTermination.AddDays(-1);
+                                            tv.endOrder = dateOfTermination;
                                         }
                                     }
                                     else
@@ -363,8 +363,6 @@ namespace Supply
 
                                     OrdersCreation.SpecialPayments(tv.ID, out rent, out house, out service);
 
-                                    if (days != 0)
-                                        days += 1;
 
                                     OrdersCreation.CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
 
