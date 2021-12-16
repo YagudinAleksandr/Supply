@@ -357,11 +357,11 @@ namespace Supply
                 declarationForeignCitizenship.Click += CreateDeclarationForeignCitizenship_Click;
                 declaration.DropDownItems.Add(declarationForeignCitizenship);
 
-                /*
+                
                 ToolStripMenuItem declarationElectricityPayment = new ToolStripMenuItem("Отчеты по договорам об оплате за эл.энергию");
                 declarationElectricityPayment.Click += DeclarationElectricityOrders_Click;
                 declaration.DropDownItems.Add(declarationElectricityPayment);
-                */
+                
                 ToolStripMenuItem monthDeclarationPayment = new ToolStripMenuItem("Отчет по начислениям");
                 monthDeclarationPayment.Click += MonthDeclarationPayment_Click;
                 declaration.DropDownItems.Add(monthDeclarationPayment);

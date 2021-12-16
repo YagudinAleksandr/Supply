@@ -712,18 +712,47 @@ namespace Supply.Libs
                         decimal totalPayment = 0;
                         decimal totalPaymentInMonth = 0;
 
+                        int days = 0;
+                        int monthes = 0;
+                        int daysInMonth = 0;
+
+                        SpecialDateCheck(orderStartDate, orderEndDate, out days, out monthes, out daysInMonth);
+
                         foreach(ElectricityElement electricityElement in electricitiesElements)
                         {
-                            int totalDate = 0;
-                            totalDate = Math.Abs((orderEndDate.Month - orderStartDate.Month) + 12 * (orderEndDate.Year - orderStartDate.Year));
-                            totalDate += 1;
                             electricitiesElementsString.Add(electricityElement.Name);
                             electricitiesElementsString.Add("1");
-                            electricitiesElementsString.Add(totalDate.ToString());
+
+                            decimal temp = 0;
+
+                            if (days != 0)
+                            {
+                                days += 1;
+
+                                electricitiesElementsString.Add($"{monthes} мес. {days} дней");
+                                
+                                temp = (electricityElement.Payment / daysInMonth) * days;
+
+                                temp = Math.Round(temp, 2);
+                            }
+                            else
+                            {
+                                electricitiesElementsString.Add($"{monthes}");
+                            }
+
+                            if (monthes == 0)
+                            {
+                                totalPayment += temp;
+                            }
+                            else
+                            {
+                                temp += electricityElement.Payment * monthes;
+                                totalPayment += temp;
+                            }
                             totalPaymentInMonth += electricityElement.Payment;
                             electricitiesElementsString.Add(electricityElement.Payment.ToString());
-                            totalPayment += (electricityElement.Payment * totalDate);
-                            electricitiesElementsString.Add((electricityElement.Payment * totalDate).ToString());
+                            electricitiesElementsString.Add(temp.ToString());
+                            
                         }
 
                         electricitiesElementsString.Add("Итого сумма платежа с НДС (18%), руб/чел");
