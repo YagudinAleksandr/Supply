@@ -1803,7 +1803,7 @@ namespace Supply.Libs
 
                             CalculationServiceCoast(days, monthes, daysInMonth, ref tempBenefitRent, ref tempBenefitHouse, ref tempBenefitService, ref tempBenefitElectricity);
 
-                            tempPaymentStart = endBenefit.AddDays(1);
+                            tempPaymentStart = endBenefit;
                         }
                         else if (startPaymentDate < startBenefit && endBenefit > endPaymentDate)
                         {
@@ -1814,7 +1814,7 @@ namespace Supply.Libs
 
                             CalculationServiceCoast(days, monthes, daysInMonth, ref tempBenefitRent, ref tempBenefitHouse, ref tempBenefitService, ref tempBenefitElectricity);
 
-                            tempPaymentEnd = startBenefit.AddDays(-1);
+                            tempPaymentEnd = startBenefit;
                         }
                         else if (startPaymentDate < startBenefit && endBenefit < endPaymentDate)
                         {
@@ -1852,8 +1852,7 @@ namespace Supply.Libs
                             }
 
                             SpecialDateCheck(startPaymentDate, tempPaymentStart, out days, out monthes, out daysInMonth);
-                            if (days != 0)
-                                days -= 1;
+
                             CalculationServiceCoast(days, monthes, daysInMonth, ref tRent, ref tHouse, ref tService, ref tElectricity);
 
                             SpecialDateCheck(tempPaymentEnd, endPaymentDate, out days, out monthes, out daysInMonth);
@@ -1861,10 +1860,7 @@ namespace Supply.Libs
                             CalculationServiceCoast(days, monthes, daysInMonth, ref ttRent, ref ttHouse, ref ttService, ref ttElectricity);
 
                             SpecialDateCheck(tempPaymentStart, tempPaymentEnd, out days, out monthes, out daysInMonth);
-                            if (days != 0)
-                                days += 1;
-                            if (monthes != 0)
-                                monthes -= 1;
+
                             CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
 
                             house += tHouse + ttHouse;
