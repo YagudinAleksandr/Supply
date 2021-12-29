@@ -1855,7 +1855,11 @@ namespace Supply.Libs
                             tempPaymentStart = endBenefit.AddDays(-1);
                         }
                         else
-                            continue;
+                        {
+                            SpecialDateCheck(startPaymentDate, endPaymentDate, out days, out monthes, out daysInMonth);
+
+                            CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
+                        }    
 
                         if (tempPaymentStart != DateTime.MinValue && tempPaymentEnd != DateTime.MinValue)
                         {
