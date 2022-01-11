@@ -150,7 +150,7 @@ namespace Supply
                                                 if (tenant.TenantTypeID != 2 && tenant.TenantTypeID != 3)
                                                 {
 
-                                                    if (OrdersCreation.AdditionalInf(5, tenant.ID) != "Заочная")
+                                                    if (OrdersCreation.AdditionalInf(5, tenant.ID) != "Заочная" || OrdersCreation.AdditionalInf(5, tenant.ID) != "заочная" || OrdersCreation.AdditionalInf(5, tenant.ID) != "заочно" || OrdersCreation.AdditionalInf(5, tenant.ID) != "Заочно")
                                                     {
                                                         if (OrdersCreation.BenefitCheck(tenant.ID, orderStartDate, orderEndDate, out rent, out house, out service, out electricity, out startBenefit, out endBenefit))
                                                         {
@@ -569,7 +569,7 @@ namespace Supply
                             if (tenant.TenantTypeID != 2 && tenant.TenantTypeID != 3)
                             {
 
-                                if (OrdersCreation.AdditionalInf(5, tenant.ID) != "Заочная")
+                                if (OrdersCreation.AdditionalInf(5, tenant.ID) != "Заочная" || OrdersCreation.AdditionalInf(5, tenant.ID) != "заочная" || OrdersCreation.AdditionalInf(5, tenant.ID) != "заочно" || OrdersCreation.AdditionalInf(5, tenant.ID) != "Заочно")
                                 {
                                     OrdersCreation.BenefitCheck(tenant.ID, orderStartDate, orderEndDate, ref rent, out house, out service, out electricity);
 
