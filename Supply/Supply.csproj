@@ -16,7 +16,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <PublishUrl>ftp://141.8.193.236/domains/f0564038.xsph.ru/public_html/</PublishUrl>
+    <PublishUrl>ftp://f0564038.xsph.ru/domains/f0564038.xsph.ru/public_html/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -34,7 +34,7 @@
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <AutorunEnabled>true</AutorunEnabled>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>60</ApplicationRevision>
+    <ApplicationRevision>61</ApplicationRevision>
     <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
