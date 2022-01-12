@@ -936,7 +936,7 @@ namespace Supply.Libs
                         {
                             typeOfPayment = "электроэнергию";
 
-                            if (AdditionalInf(5, tenant.ID) != "Заочная" || AdditionalInf(5, tenant.ID) != "заочная" || AdditionalInf(5, tenant.ID) != "заочно" || AdditionalInf(5, tenant.ID) != "Заочно")
+                            if (AdditionalInf(5, tenant.ID) != "Заочная" && AdditionalInf(5, tenant.ID) != "заочная" && AdditionalInf(5, tenant.ID) != "заочно" && AdditionalInf(5, tenant.ID) != "Заочно")
                             {
                                 OrdersCreation.BenefitCheck(order.ID, orderStartDate, orderEndDate, ref rent, out house, out service, out electricity);
 
