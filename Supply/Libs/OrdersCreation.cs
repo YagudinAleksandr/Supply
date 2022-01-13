@@ -720,6 +720,11 @@ namespace Supply.Libs
 
                         SpecialDateCheck(orderStartDate, orderEndDate, out days, out monthes, out daysInMonth);
 
+                        if(days!=0)
+                        {
+                            days += 1;
+                        }
+
                         foreach(ElectricityElement electricityElement in electricitiesElements)
                         {
                             electricitiesElementsString.Add(electricityElement.Name);
@@ -729,8 +734,6 @@ namespace Supply.Libs
 
                             if (days != 0)
                             {
-                                days += 1;
-
                                 electricitiesElementsString.Add($"{monthes} мес. {days} дней");
                                 
                                 temp = (electricityElement.Payment / daysInMonth) * days;
