@@ -39,6 +39,7 @@ namespace Supply
             this.COL_Series = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_DocNumb = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Order = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.COL_EducationForm = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Faculty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_Institute = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COL_CreatedAt = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -63,16 +64,16 @@ namespace Supply
             this.COL_Series,
             this.COL_DocNumb,
             this.COL_Order,
+            this.COL_EducationForm,
             this.COL_Faculty,
             this.COL_Institute,
             this.COL_CreatedAt,
             this.COL_UpdatedAt,
             this.COL_Status});
-            this.DG_TenantsView.Location = new System.Drawing.Point(17, 16);
-            this.DG_TenantsView.Margin = new System.Windows.Forms.Padding(4);
+            this.DG_TenantsView.Location = new System.Drawing.Point(13, 13);
             this.DG_TenantsView.Name = "DG_TenantsView";
             this.DG_TenantsView.RowHeadersWidth = 51;
-            this.DG_TenantsView.Size = new System.Drawing.Size(1033, 523);
+            this.DG_TenantsView.Size = new System.Drawing.Size(775, 425);
             this.DG_TenantsView.TabIndex = 0;
             this.DG_TenantsView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DG_TenantsView_CellClick);
             // 
@@ -137,6 +138,12 @@ namespace Supply
             this.COL_Order.ReadOnly = true;
             this.COL_Order.Width = 125;
             // 
+            // COL_EducationForm
+            // 
+            this.COL_EducationForm.HeaderText = "Форма обучения";
+            this.COL_EducationForm.Name = "COL_EducationForm";
+            this.COL_EducationForm.ReadOnly = true;
+            // 
             // COL_Faculty
             // 
             this.COL_Faculty.HeaderText = "Факультет";
@@ -179,12 +186,11 @@ namespace Supply
             // 
             // AdminTenantsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.DG_TenantsView);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AdminTenantsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Жильцы";
@@ -206,6 +212,7 @@ namespace Supply
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Series;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_DocNumb;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Order;
+        private System.Windows.Forms.DataGridViewTextBoxColumn COL_EducationForm;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Faculty;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_Institute;
         private System.Windows.Forms.DataGridViewTextBoxColumn COL_CreatedAt;

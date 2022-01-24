@@ -95,6 +95,7 @@ namespace Supply
                                 DG_TenantsView.Rows[rowNumber].Cells[COL_DocNumb.Name].Value = "-";
                             }
                             DG_TenantsView.Rows[rowNumber].Cells[COL_Faculty.Name].Value = OrdersCreation.AdditionalInf(3, tenant.ID);
+                            DG_TenantsView.Rows[rowNumber].Cells[COL_EducationForm.Name].Value = OrdersCreation.AdditionalInf(5, tenant.ID);
                             if(OrdersCreation.AdditionalInf(10, tenant.ID)==string.Empty)
                             {
                                 DG_TenantsView.Rows[rowNumber].Cells[COL_Institute.Name].Value = "НИМИ";
@@ -117,7 +118,7 @@ namespace Supply
 
         private void DG_TenantsView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 14)
+            if (e.ColumnIndex == 15)
             {
                 int tenantIndex = int.Parse(DG_TenantsView.Rows[e.RowIndex].Cells[0].Value.ToString());
                 DialogResult result = MessageBox.Show("Удалить жильца?", "Удалить жильца", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -138,7 +139,7 @@ namespace Supply
                 }
             }
 
-            if (e.ColumnIndex == 13)
+            if (e.ColumnIndex == 14)
             {
                 int tenantIndex = int.Parse(DG_TenantsView.Rows[e.RowIndex].Cells[0].Value.ToString());
 
