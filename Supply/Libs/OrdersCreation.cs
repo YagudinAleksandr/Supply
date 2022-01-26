@@ -1840,7 +1840,7 @@ namespace Supply.Libs
 
                             CalculationServiceCoast(days, monthes, daysInMonth, ref tempBenefitRent, ref tempBenefitHouse, ref tempBenefitService, ref tempBenefitElectricity);
 
-                            tempPaymentStart = endBenefit;
+                            tempPaymentStart = endBenefit.AddDays(1);
                         }
                         else if (startPaymentDate < startBenefit && endBenefit > endPaymentDate)
                         {
