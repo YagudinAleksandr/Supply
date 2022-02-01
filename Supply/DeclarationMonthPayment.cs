@@ -306,7 +306,7 @@ namespace Supply
 
                                 if (startTenantOrderInner.Month == tv.startOrder.Month && startTenantOrderInner.Year == tv.startOrder.Year)
                                 {
-                                    tv.startOrder = DateTime.Parse(tv.Order.StartDate).AddDays(-1);
+                                    tv.startOrder = DateTime.Parse(tv.Order.StartDate);
                                 }
 
                                 if (endTenantOrderInner.Month == tv.endOrder.Month && endTenantOrderInner.Year == tv.endOrder.Year)
@@ -320,9 +320,19 @@ namespace Supply
 
                                     if (DateTime.TryParse(tv.Termination.Date, out dateOfTermination))
                                     {
-                                        if (tv.endOrder > dateOfTermination && tv.endOrder.Month == dateOfTermination.Month)
+                                        if (tv.startOrder != dateOfTermination.AddDays(-1) && tv.startOrder < dateOfTermination.AddDays(-1))
                                         {
-                                            tv.endOrder = dateOfTermination;
+                                            if (tv.endOrder > dateOfTermination && tv.endOrder.Month == dateOfTermination.Month)
+                                            {
+                                                tv.endOrder = dateOfTermination.AddDays(-1);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (tv.endOrder > dateOfTermination && tv.endOrder.Month == dateOfTermination.Month)
+                                            {
+                                                tv.endOrder = dateOfTermination;
+                                            }
                                         }
                                     }
                                     else
