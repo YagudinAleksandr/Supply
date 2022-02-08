@@ -320,6 +320,11 @@ namespace Supply
 
                                     if (DateTime.TryParse(tv.Termination.Date, out dateOfTermination))
                                     {
+                                        if (tv.endOrder > dateOfTermination && tv.endOrder.Month == dateOfTermination.Month)
+                                        {
+                                            tv.endOrder = dateOfTermination;
+                                        }
+                                        /*
                                         if (tv.startOrder != dateOfTermination.AddDays(-1) && tv.startOrder < dateOfTermination.AddDays(-1))
                                         {
                                             if (tv.endOrder > dateOfTermination && tv.endOrder.Month == dateOfTermination.Month)
@@ -333,7 +338,7 @@ namespace Supply
                                             {
                                                 tv.endOrder = dateOfTermination;
                                             }
-                                        }
+                                        }*/
                                     }
                                     else
                                     {
@@ -343,7 +348,10 @@ namespace Supply
 
                                 if (tv.Type.ID != 2 && tv.Type.ID != 3)
                                 {
-                                    if (OrdersCreation.AdditionalInf(5, tv.ID) != "Заочная")
+                                    if (OrdersCreation.AdditionalInf(5, tv.ID) != "Заочная" && 
+                                        OrdersCreation.AdditionalInf(5, tv.ID) != "заочная" && 
+                                        OrdersCreation.AdditionalInf(5, tv.ID) != "заочно" && 
+                                        OrdersCreation.AdditionalInf(5, tv.ID) != "Заочно")
                                     {
                                         OrdersCreation.BenefitCheck(tv.Order.ID, tv.startOrder, tv.endOrder, ref rent, out house, out service, out electricity);
 

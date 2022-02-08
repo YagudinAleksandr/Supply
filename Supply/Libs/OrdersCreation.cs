@@ -1862,11 +1862,23 @@ namespace Supply.Libs
                             tempPaymentEnd = startBenefit.AddDays(1);
                             tempPaymentStart = endBenefit.AddDays(-1);
                         }
+                        else if (startBenefit == startPaymentDate && endPaymentDate < endBenefit)
+                        {
+                            SpecialDateCheck(startPaymentDate, endPaymentDate, out days, out monthes, out daysInMonth);
+
+                            CalculationServiceCoast(days, monthes, daysInMonth, ref tempBenefitRent, ref tempBenefitHouse, ref tempBenefitService, ref tempBenefitElectricity);
+
+                            rent = tempBenefitRent;
+                            house = tempBenefitHouse;
+                            electricity = tempBenefitElectricity;
+                            service = tempBenefitService;
+                        }
                         else
                         {
                             SpecialDateCheck(startPaymentDate, endPaymentDate, out days, out monthes, out daysInMonth);
 
                             CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
+                            
                         }    
 
                         if (tempPaymentStart != DateTime.MinValue && tempPaymentEnd != DateTime.MinValue)
@@ -1932,6 +1944,7 @@ namespace Supply.Libs
                             service += tempBenefitService;
                             rent += tempBenefitRent;
                         }
+                        
                     }
                 }
             }
