@@ -976,13 +976,13 @@ namespace Supply.Libs
                                 electricity += electricityElement.Payment;
                             }
 
-                            
+                            /*
                             if (termination == null)
                             {
                                 if (days != 0)
                                     days += 1;
                             }
-                            
+                            */
 
                             CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
                             
@@ -1834,7 +1834,7 @@ namespace Supply.Libs
 
                             return;
                         }
-                        else if (startBenefit <= startPaymentDate && endBenefit < endPaymentDate && endBenefit > startPaymentDate)
+                        else if (startBenefit <= startPaymentDate && endBenefit < endPaymentDate && endBenefit > startPaymentDate )
                         {
                             SpecialDateCheck(startPaymentDate, endBenefit, out days, out monthes, out daysInMonth);
 
@@ -1851,7 +1851,7 @@ namespace Supply.Libs
 
                             CalculationServiceCoast(days, monthes, daysInMonth, ref tempBenefitRent, ref tempBenefitHouse, ref tempBenefitService, ref tempBenefitElectricity);
 
-                            tempPaymentEnd = startBenefit;
+                            tempPaymentEnd = startBenefit.AddDays(-1);
                         }
                         else if (startPaymentDate < startBenefit && endBenefit < endPaymentDate)
                         {
@@ -1878,7 +1878,7 @@ namespace Supply.Libs
                             SpecialDateCheck(startPaymentDate, endPaymentDate, out days, out monthes, out daysInMonth);
 
                             CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
-                            
+                            return;
                         }    
 
                         if (tempPaymentStart != DateTime.MinValue && tempPaymentEnd != DateTime.MinValue)
