@@ -601,12 +601,6 @@ namespace Supply
 
                                 OrdersCreation.SpecialDateCheck(orderStartDate, orderEndDate, out days, out monthes, out daysInMonth);
 
-                                Termination termination = db.Terminations.Where(t => t.OrderID == tenant.ID).FirstOrDefault();
-                                if(termination==null)
-                                {
-                                    if (days != 0)
-                                        days += 1;
-                                }
                                 
 
                                 OrdersCreation.SpecialPayments(tenant.ID, out rent, out house, out service);

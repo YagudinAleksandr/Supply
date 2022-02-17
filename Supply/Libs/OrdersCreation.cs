@@ -976,13 +976,6 @@ namespace Supply.Libs
                                 electricity += electricityElement.Payment;
                             }
 
-                            /*
-                            if (termination == null)
-                            {
-                                if (days != 0)
-                                    days += 1;
-                            }
-                            */
 
                             CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
                             
@@ -1819,7 +1812,8 @@ namespace Supply.Libs
                         DateTime startBenefit = DateTime.Parse(benefit.StartDate);
                         DateTime endBenefit = DateTime.Parse(benefit.EndDate);
 
-
+                        if (endBenefit > startPaymentDate || endPaymentDate < startBenefit)
+                            continue;
 
                         if (startPaymentDate > startBenefit && endBenefit >= endPaymentDate)
                         {
