@@ -34,7 +34,7 @@
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <AutorunEnabled>true</AutorunEnabled>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>71</ApplicationRevision>
+    <ApplicationRevision>73</ApplicationRevision>
     <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -487,6 +487,10 @@
     <Compile Include="Migrations\202110291625447_UpdateAccounting2.designer.cs">
       <DependentUpon>202110291625447_UpdateAccounting2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202231113216_TenantDocumentMigration.cs" />
+    <Compile Include="Migrations\202202231113216_TenantDocumentMigration.designer.cs">
+      <DependentUpon>202202231113216_TenantDocumentMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accounting.cs" />
     <Compile Include="Models\AccountingElectricity.cs" />
@@ -520,6 +524,7 @@
     <Compile Include="Models\RoomType.cs" />
     <Compile Include="Models\SpecialPayment.cs" />
     <Compile Include="Models\Tenant.cs" />
+    <Compile Include="Models\TenantDocument.cs" />
     <Compile Include="Models\TenantType.cs" />
     <Compile Include="Models\Termination.cs" />
     <Compile Include="Models\User.cs" />
@@ -590,6 +595,12 @@
     </Compile>
     <Compile Include="TenantContinueOrder.Designer.cs">
       <DependentUpon>TenantContinueOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TenantDocument.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TenantDocument.Designer.cs">
+      <DependentUpon>TenantDocument.cs</DependentUpon>
     </Compile>
     <Compile Include="TenantElectricityAccount.cs">
       <SubType>Form</SubType>
@@ -831,6 +842,9 @@
     <EmbeddedResource Include="Migrations\202110291625447_UpdateAccounting2.resx">
       <DependentUpon>202110291625447_UpdateAccounting2.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202231113216_TenantDocumentMigration.resx">
+      <DependentUpon>202202231113216_TenantDocumentMigration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OrderAddForm.resx">
       <DependentUpon>OrderAddForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -872,6 +886,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TenantContinueOrder.resx">
       <DependentUpon>TenantContinueOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TenantDocument.resx">
+      <DependentUpon>TenantDocument.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TenantElectricityAccount.resx">
       <DependentUpon>TenantElectricityAccount.cs</DependentUpon>

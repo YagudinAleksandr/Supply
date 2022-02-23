@@ -743,6 +743,7 @@ namespace Supply
                     contextMenu.MenuItems.Add("Создать льготу", AddBenefitHandler);
                     contextMenu.MenuItems.Add("Продление договора", ContinueOrder);
                     contextMenu.MenuItems.Add("Расторжение договора", DestroyOrder);
+                    contextMenu.MenuItems.Add("Дополнительные документы", TenantAdditionalDocument);
                     contextMenu.MenuItems.Add("Удалить", DisabledTenant);
                     break;
             }
@@ -775,6 +776,42 @@ namespace Supply
                         {
                             TenantContinueOrder tenantContinueOrder = new TenantContinueOrder(tenantID);
                             tenantContinueOrder.Show();
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                return;
+            }
+        }
+        private void TenantAdditionalDocument(object sender, EventArgs e)
+        {
+            try
+            {
+                if (TV_HostelInformation.SelectedNode.Tag != null)
+                {
+                    int tenantID = 0;
+                    if (int.TryParse(TV_HostelInformation.SelectedNode.Tag.ToString(), out tenantID))
+                    {
+                        if (tenantID == 0)
+                        {
+                            using (SupplyDbContext db = new SupplyDbContext())
+                            {
+                                Log logInfo = new Log();
+                                logInfo.ID = Guid.NewGuid();
+                                logInfo.Type = "WARNING";
+                                logInfo.Caption = $"Class: Form1.cs. Method:TenantDocument. Selected node tag equil 0 when update tenant";
+                                logInfo.CreatedAt = DateTime.Now.ToString();
+                                db.Logs.Add(logInfo);
+                                db.SaveChanges();
+                            }
+                            MessageBox.Show("ID жильца равен 0");
+                        }
+                        else
+                        {
+                            TenantDocument tenantDocument = new TenantDocument(tenantID);
+                            tenantDocument.Show();
                         }
                     }
                 }
