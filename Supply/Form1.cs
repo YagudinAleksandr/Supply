@@ -238,6 +238,13 @@ namespace Supply
             DeclarationMonthPayment declarationMonthPayment = new DeclarationMonthPayment();
             declarationMonthPayment.Show();
         }
+
+        private void DeclarationTenantsDocuments_Click(object sender, EventArgs e)
+        {
+            DeclarationTenantsDocuments declarationTenantsDocuments = new DeclarationTenantsDocuments();
+            declarationTenantsDocuments.Show();
+        }
+
         private void Form1_Shown(object sender, EventArgs e)
         {
             LB_UserName.Text = _user.Name;
@@ -320,6 +327,7 @@ namespace Supply
                 ToolStripMenuItem paymentDeclarations = new ToolStripMenuItem("Отчеты по платежным поручениям");
                 paymentDeclarations.Click += PaymentsDeclarationOrders_Click;
                 declaration.DropDownItems.Add(paymentDeclarations);
+
 
                 ToolStripMenuItem specialPaymentDeclaration = new ToolStripMenuItem("Отчеты по специализированным оплатам!");
                 specialPaymentDeclaration.Click += SpecialPaymentDeclaration_Click;
@@ -408,6 +416,10 @@ namespace Supply
             ToolStripMenuItem orderLiveInHostels = new ToolStripMenuItem("Проживающие в общежитии по комнатам");
             orderLiveInHostels.Click += CreateHostelDeclaration_Click;
             declaration.DropDownItems.Add(orderLiveInHostels);
+
+            ToolStripMenuItem declarationTenantsDocuments = new ToolStripMenuItem("Отчет по документам жильцов");
+            declarationTenantsDocuments.Click += DeclarationTenantsDocuments_Click;
+            declaration.DropDownItems.Add(declarationTenantsDocuments);
 
             ToolStripMenuItem tenant = new ToolStripMenuItem("Жильцы");
             tenant.Click += Tenants_Click;

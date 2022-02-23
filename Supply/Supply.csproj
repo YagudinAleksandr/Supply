@@ -367,6 +367,12 @@
     <Compile Include="DeclarationSpecialPayments.Designer.cs">
       <DependentUpon>DeclarationSpecialPayments.cs</DependentUpon>
     </Compile>
+    <Compile Include="DeclarationTenantsDocuments.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeclarationTenantsDocuments.Designer.cs">
+      <DependentUpon>DeclarationTenantsDocuments.cs</DependentUpon>
+    </Compile>
     <Compile Include="DeclarationTenantsInHostels.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -763,6 +769,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DeclarationSpecialPayments.resx">
       <DependentUpon>DeclarationSpecialPayments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeclarationTenantsDocuments.resx">
+      <DependentUpon>DeclarationTenantsDocuments.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DeclarationTenantsInHostels.resx">
       <DependentUpon>DeclarationTenantsInHostels.cs</DependentUpon>
