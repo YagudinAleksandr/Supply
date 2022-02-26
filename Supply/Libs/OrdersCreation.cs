@@ -927,7 +927,7 @@ namespace Supply.Libs
 
                             if (DateTime.TryParse(termination.Date, out dateOfTermination))
                             {
-                                if (orderEndDate > dateOfTermination && orderEndDate.Month == dateOfTermination.Month)
+                                if ((orderEndDate > dateOfTermination && orderEndDate.Month == dateOfTermination.Month) || (orderEndDate == dateOfTermination && orderEndDate.Month == dateOfTermination.Month))
                                 {
                                     orderEndDate = dateOfTermination.AddDays(-1);
                                 }
@@ -1664,6 +1664,11 @@ namespace Supply.Libs
                 {
                     daysInMonth = DateTime.DaysInMonth(dt1.Year, dt1.Month);
                     days = daysInMonth - dt1.Day;
+                }
+
+                if (dt1.Month == dt2.Month && dt1.Year == dt2.Year)
+                {
+                    days = (dt2 - dt1).Days;
                 }
             }
         }

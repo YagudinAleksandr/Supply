@@ -266,8 +266,8 @@ namespace Supply
                                                 Room = tenant.Room,
                                                 Type = tenant.TenantType,
                                                 Payment = tenant.Payment,
-                                                startOrder = startDate,
-                                                endOrder = endDate,
+                                                StartOrder = startDate,
+                                                EndOrder = endDate,
                                                 Termination = termination
                                             });
 
@@ -304,14 +304,14 @@ namespace Supply
                                 DateTime startTenantOrderInner = DateTime.Parse(tv.Order.StartDate);
                                 DateTime endTenantOrderInner = DateTime.Parse(tv.Order.EndDate);
 
-                                if (startTenantOrderInner.Month == tv.startOrder.Month && startTenantOrderInner.Year == tv.startOrder.Year)
+                                if (startTenantOrderInner.Month == tv.StartOrder.Month && startTenantOrderInner.Year == tv.StartOrder.Year)
                                 {
-                                    tv.startOrder = DateTime.Parse(tv.Order.StartDate);
+                                    tv.StartOrder = DateTime.Parse(tv.Order.StartDate);
                                 }
 
-                                if (endTenantOrderInner.Month == tv.endOrder.Month && endTenantOrderInner.Year == tv.endOrder.Year)
+                                if (endTenantOrderInner.Month == tv.EndOrder.Month && endTenantOrderInner.Year == tv.EndOrder.Year)
                                 {
-                                    tv.endOrder = DateTime.Parse(tv.Order.EndDate);
+                                    tv.EndOrder = DateTime.Parse(tv.Order.EndDate);
                                 }
 
                                 if (tv.Termination != null)
@@ -320,9 +320,9 @@ namespace Supply
 
                                     if (DateTime.TryParse(tv.Termination.Date, out dateOfTermination))
                                     {
-                                        if (tv.endOrder > dateOfTermination && tv.endOrder.Month == dateOfTermination.Month)
+                                        if (tv.EndOrder > dateOfTermination && tv.EndOrder.Month == dateOfTermination.Month)
                                         {
-                                            tv.endOrder = dateOfTermination;
+                                            tv.EndOrder = dateOfTermination;
                                         }
                                         /*
                                         if (tv.startOrder != dateOfTermination.AddDays(-1) && tv.startOrder < dateOfTermination.AddDays(-1))
@@ -353,7 +353,7 @@ namespace Supply
                                         OrdersCreation.AdditionalInf(5, tv.ID) != "заочно" && 
                                         OrdersCreation.AdditionalInf(5, tv.ID) != "Заочно")
                                     {
-                                        OrdersCreation.BenefitCheck(tv.Order.ID, tv.startOrder, tv.endOrder, ref rent, out house, out service, out electricity);
+                                        OrdersCreation.BenefitCheck(tv.Order.ID, tv.StartOrder, tv.EndOrder, ref rent, out house, out service, out electricity);
 
 
                                         if (OrdersCreation.AdditionalInf(10, tv.ID) != string.Empty)
@@ -368,16 +368,16 @@ namespace Supply
                                         service = Convert.ToDecimal(tv.Payment.Service);
                                         house = Convert.ToDecimal(tv.Payment.House);
 
-                                        rent *= (tv.endOrder - tv.startOrder).Days + 1;
-                                        service *= (tv.endOrder - tv.startOrder).Days + 1;
-                                        house *= (tv.endOrder - tv.startOrder).Days + 1;
+                                        rent *= (tv.EndOrder - tv.StartOrder).Days + 1;
+                                        service *= (tv.EndOrder - tv.StartOrder).Days + 1;
+                                        house *= (tv.EndOrder - tv.StartOrder).Days + 1;
                                     }
 
                                 }
                                 else
                                 {
 
-                                    OrdersCreation.SpecialDateCheck(tv.startOrder, tv.endOrder, out days, out monthes, out daysInMonth);
+                                    OrdersCreation.SpecialDateCheck(tv.StartOrder, tv.EndOrder, out days, out monthes, out daysInMonth);
 
                                     OrdersCreation.SpecialPayments(tv.ID, out rent, out house, out service);
 
@@ -469,7 +469,7 @@ namespace Supply
         public Room Room { get; set; }
         public Order Order { get; set; }
         public Payment Payment { get; set; }
-        public DateTime startOrder { get; set; }
-        public DateTime endOrder { get; set; }
+        public DateTime StartOrder { get; set; }
+        public DateTime EndOrder { get; set; }
     }
 }

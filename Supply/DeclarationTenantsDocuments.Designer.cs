@@ -33,6 +33,7 @@ namespace Supply
             this.label1 = new System.Windows.Forms.Label();
             this.cbHostels = new System.Windows.Forms.ComboBox();
             this.BTN_Create = new System.Windows.Forms.Button();
+            this.pbProgress = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // label1
@@ -62,11 +63,19 @@ namespace Supply
             this.BTN_Create.UseVisualStyleBackColor = true;
             this.BTN_Create.Click += new System.EventHandler(this.BTN_Create_Click);
             // 
+            // pbProgress
+            // 
+            this.pbProgress.Location = new System.Drawing.Point(12, 37);
+            this.pbProgress.Name = "pbProgress";
+            this.pbProgress.Size = new System.Drawing.Size(189, 23);
+            this.pbProgress.TabIndex = 3;
+            // 
             // DeclarationTenantsDocuments
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(213, 113);
+            this.Controls.Add(this.pbProgress);
             this.Controls.Add(this.BTN_Create);
             this.Controls.Add(this.cbHostels);
             this.Controls.Add(this.label1);
@@ -85,5 +94,6 @@ namespace Supply
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbHostels;
         private System.Windows.Forms.Button BTN_Create;
+        private System.Windows.Forms.ProgressBar pbProgress;
     }
 }

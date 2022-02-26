@@ -50,7 +50,7 @@ namespace Supply
             this.cbDocuments.FormattingEnabled = true;
             this.cbDocuments.Items.AddRange(new object[] {
             "Мед.обследование",
-            "Пропуск",
+            "Воинский учет",
             "Эл.пропуск"});
             this.cbDocuments.Location = new System.Drawing.Point(13, 13);
             this.cbDocuments.Name = "cbDocuments";

@@ -566,6 +566,22 @@ namespace Supply
                             int monthes = 0;
                             int daysInMonth = 0;
 
+                            Termination termination = db.Terminations.Where(o => o.OrderID == tenant.ID).FirstOrDefault();
+
+                            if (termination != null)
+                            {
+                                DateTime dateOfTermination = DateTime.Now;
+
+                                if (DateTime.TryParse(termination.Date, out dateOfTermination))
+                                {
+                                    if ((orderEndDate > dateOfTermination && orderEndDate.Month == dateOfTermination.Month) || (orderEndDate == dateOfTermination && orderEndDate.Month == dateOfTermination.Month))
+                                    {
+                                        orderEndDate = dateOfTermination.AddDays(-1);
+                                    }
+                                }
+
+                            }
+
                             if (tenant.TenantTypeID != 2 && tenant.TenantTypeID != 3)
                             {
 
