@@ -360,11 +360,6 @@ namespace Supply
                 ToolStripMenuItem declarationHostelsTenants = new ToolStripMenuItem("Отчет по проживающим");
                 declarationHostelsTenants.Click += CreateTenantsInHostel_Click;
                 declaration.DropDownItems.Add(declarationHostelsTenants);
-
-                ToolStripMenuItem declarationForeignCitizenship = new ToolStripMenuItem("Отчет по иностранным студентам");
-                declarationForeignCitizenship.Click += CreateDeclarationForeignCitizenship_Click;
-                declaration.DropDownItems.Add(declarationForeignCitizenship);
-
                 
                 ToolStripMenuItem declarationElectricityPayment = new ToolStripMenuItem("Отчеты по договорам об оплате за эл.энергию");
                 declarationElectricityPayment.Click += DeclarationElectricityOrders_Click;
@@ -420,6 +415,10 @@ namespace Supply
             ToolStripMenuItem declarationTenantsDocuments = new ToolStripMenuItem("Отчет по документам жильцов");
             declarationTenantsDocuments.Click += DeclarationTenantsDocuments_Click;
             declaration.DropDownItems.Add(declarationTenantsDocuments);
+
+            ToolStripMenuItem declarationForeignCitizenship = new ToolStripMenuItem("Отчет по иностранным студентам");
+            declarationForeignCitizenship.Click += CreateDeclarationForeignCitizenship_Click;
+            declaration.DropDownItems.Add(declarationForeignCitizenship);
 
             ToolStripMenuItem tenant = new ToolStripMenuItem("Жильцы");
             tenant.Click += Tenants_Click;
