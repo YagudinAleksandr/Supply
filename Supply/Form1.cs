@@ -1648,6 +1648,7 @@ namespace Supply
                                 Thread thread = new Thread(new ParameterizedThreadStart(Log));
                                 thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
                             }
+                            
 
                             var enterances = db.Enterances.Where(x => x.HostelId == hostel.ID).ToList();
 
@@ -1688,6 +1689,15 @@ namespace Supply
                                      orderby roomModel.Name
                                      select roomModel;
 
+                            int fullTimeMain = 0;
+                            int semiTimeMain = 0;
+
+                            int fullTimeContract = 0;
+                            int semiTimeContarct = 0;
+
+                            int fullTimeNotContarct = 0;
+                            int semiTimeNotContarct = 0;
+
                             foreach (var r in rm)
                             {
                                 startCell = $"A{rowCounter}";
@@ -1716,8 +1726,6 @@ namespace Supply
 
                                 int tenantPlaces = rowCounter;
 
-                                
-
                                 foreach (Tenant tenant in tenants)
                                 {
                                     if (OrdersCreation.AdditionalInf(10, tenant.ID) == string.Empty && OrdersCreation.AdditionalInf(6, tenant.ID) == "СПО")
@@ -1735,6 +1743,34 @@ namespace Supply
                                         excel.Set("H", tenantPlaces, tenant.Identification.Address, out error);
                                         excel.Set("I", tenantPlaces, OrdersCreation.AdditionalInf(1, tenant.ID), out error);
 
+                                        if (OrdersCreation.AdditionalInf(5, tenant.ID) != string.Empty && (OrdersCreation.AdditionalInf(5, tenant.ID) == "Заочная" || OrdersCreation.AdditionalInf(5, tenant.ID) == "заочная"))
+                                        {
+                                            semiTimeMain++;
+
+                                            if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Бюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "бюджет")
+                                            {
+                                                semiTimeNotContarct++;
+                                            }
+                                            if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Внебюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "внебюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "контракт" || OrdersCreation.AdditionalInf(7, tenant.ID) == "Rjynhfrn")
+                                            {
+                                                semiTimeContarct++;
+                                            }
+                                        }
+
+                                        if (OrdersCreation.AdditionalInf(5, tenant.ID) != string.Empty && (OrdersCreation.AdditionalInf(5, tenant.ID) == "Очная" || OrdersCreation.AdditionalInf(5, tenant.ID) == "очная"))
+                                        {
+                                            fullTimeMain++;
+
+                                            if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Бюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "бюджет")
+                                            {
+                                                fullTimeNotContarct++;
+                                            }
+                                            if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Внебюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "внебюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "контракт" || OrdersCreation.AdditionalInf(7, tenant.ID) == "Rjynhfrn")
+                                            {
+                                                fullTimeContract++;
+                                            }
+                                        }
+
                                         counter++;
                                     }
                                     
@@ -1750,6 +1786,29 @@ namespace Supply
 
                             excel.Set("A", rowCounter, "Всего студентов СПО НИМИ", out error);
                             excel.Set("B", rowCounter, counter.ToString(), out error);
+
+                            rowCounter++;
+
+                            excel.Set("A", rowCounter, "Форма обучения очная", out error);
+                            excel.Set("B", rowCounter, fullTimeMain.ToString(), out error);
+                            rowCounter++;
+
+                            excel.Set("A", rowCounter, "из них бюджет:", out error);
+                            excel.Set("B", rowCounter, fullTimeNotContarct.ToString(), out error);
+                            rowCounter++;
+                            excel.Set("A", rowCounter, "из них внебюджет:", out error);
+                            excel.Set("B", rowCounter, fullTimeContract.ToString(), out error);
+
+                            rowCounter++;
+                            excel.Set("A", rowCounter, "Форма обучения заочная", out error);
+                            excel.Set("B", rowCounter, semiTimeMain.ToString(), out error);
+                            rowCounter++;
+
+                            excel.Set("A", rowCounter, "из них бюджет:", out error);
+                            excel.Set("B", rowCounter, semiTimeNotContarct.ToString(), out error);
+                            rowCounter++;
+                            excel.Set("A", rowCounter, "из них внебюджет:", out error);
+                            excel.Set("B", rowCounter, semiTimeContarct.ToString(), out error);
 
                             rooms.Clear();
 
@@ -1892,6 +1951,15 @@ namespace Supply
                                      orderby roomModel.Name
                                      select roomModel;
 
+                            int fullTimeMain = 0;
+                            int semiTimeMain = 0;
+
+                            int fullTimeContract = 0;
+                            int semiTimeContarct = 0;
+
+                            int fullTimeNotContarct = 0;
+                            int semiTimeNotContarct = 0;
+
                             foreach (var r in rm)
                             {
                                 startCell = $"A{rowCounter}";
@@ -1942,6 +2010,34 @@ namespace Supply
                                                 excel.Set("H", tenantPlaces, tenant.Identification.Address, out error);
                                                 excel.Set("I", tenantPlaces, OrdersCreation.AdditionalInf(1, tenant.ID), out error);
 
+                                                if (OrdersCreation.AdditionalInf(5, tenant.ID) != string.Empty && (OrdersCreation.AdditionalInf(5, tenant.ID) == "Заочная" || OrdersCreation.AdditionalInf(5, tenant.ID) == "заочная"))
+                                                {
+                                                    semiTimeMain++;
+
+                                                    if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Бюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "бюджет")
+                                                    {
+                                                        semiTimeNotContarct++;
+                                                    }
+                                                    if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Внебюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "внебюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "контракт" || OrdersCreation.AdditionalInf(7, tenant.ID) == "Rjynhfrn")
+                                                    {
+                                                        semiTimeContarct++;
+                                                    }
+                                                }
+
+                                                if (OrdersCreation.AdditionalInf(5, tenant.ID) != string.Empty && (OrdersCreation.AdditionalInf(5, tenant.ID) == "Очная" || OrdersCreation.AdditionalInf(5, tenant.ID) == "очная"))
+                                                {
+                                                    fullTimeMain++;
+
+                                                    if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Бюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "бюджет")
+                                                    {
+                                                        fullTimeNotContarct++;
+                                                    }
+                                                    if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Внебюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "внебюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "контракт" || OrdersCreation.AdditionalInf(7, tenant.ID) == "Rjynhfrn")
+                                                    {
+                                                        fullTimeContract++;
+                                                    }
+                                                }
+
                                                 counter++;
                                             }
                                         }
@@ -1959,6 +2055,29 @@ namespace Supply
 
                             excel.Set("A", rowCounter, "Всего студентов бакалавриата НИМИ", out error);
                             excel.Set("B", rowCounter, counter.ToString(), out error);
+
+                            rowCounter++;
+
+                            excel.Set("A", rowCounter, "Форма обучения очная", out error);
+                            excel.Set("B", rowCounter, fullTimeMain.ToString(), out error);
+                            rowCounter++;
+
+                            excel.Set("A", rowCounter, "из них бюджет:", out error);
+                            excel.Set("B", rowCounter, fullTimeNotContarct.ToString(), out error);
+                            rowCounter++;
+                            excel.Set("A", rowCounter, "из них внебюджет:", out error);
+                            excel.Set("B", rowCounter, fullTimeContract.ToString(), out error);
+
+                            rowCounter++;
+                            excel.Set("A", rowCounter, "Форма обучения заочная", out error);
+                            excel.Set("B", rowCounter, semiTimeMain.ToString(), out error);
+                            rowCounter++;
+
+                            excel.Set("A", rowCounter, "из них бюджет:", out error);
+                            excel.Set("B", rowCounter, semiTimeNotContarct.ToString(), out error);
+                            rowCounter++;
+                            excel.Set("A", rowCounter, "из них внебюджет:", out error);
+                            excel.Set("B", rowCounter, semiTimeContarct.ToString(), out error);
 
                             rooms.Clear();
 
@@ -2100,6 +2219,15 @@ namespace Supply
                                      orderby roomModel.Name
                                      select roomModel;
 
+                            int fullTimeMain = 0;
+                            int semiTimeMain = 0;
+
+                            int fullTimeContract = 0;
+                            int semiTimeContarct = 0;
+
+                            int fullTimeNotContarct = 0;
+                            int semiTimeNotContarct = 0;
+
                             foreach (var r in rm)
                             {
                                 startCell = $"A{rowCounter}";
@@ -2152,6 +2280,34 @@ namespace Supply
                                                 excel.Set("H", tenantPlaces, tenant.Identification.Address, out error);
                                                 excel.Set("I", tenantPlaces, OrdersCreation.AdditionalInf(1, tenant.ID), out error);
 
+                                                if (OrdersCreation.AdditionalInf(5, tenant.ID) != string.Empty && (OrdersCreation.AdditionalInf(5, tenant.ID) == "Заочная" || OrdersCreation.AdditionalInf(5, tenant.ID) == "заочная"))
+                                                {
+                                                    semiTimeMain++;
+
+                                                    if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Бюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "бюджет")
+                                                    {
+                                                        semiTimeNotContarct++;
+                                                    }
+                                                    if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Внебюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "внебюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "контракт" || OrdersCreation.AdditionalInf(7, tenant.ID) == "Rjynhfrn")
+                                                    {
+                                                        semiTimeContarct++;
+                                                    }
+                                                }
+
+                                                if (OrdersCreation.AdditionalInf(5, tenant.ID) != string.Empty && (OrdersCreation.AdditionalInf(5, tenant.ID) == "Очная" || OrdersCreation.AdditionalInf(5, tenant.ID) == "очная"))
+                                                {
+                                                    fullTimeMain++;
+
+                                                    if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Бюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "бюджет")
+                                                    {
+                                                        fullTimeNotContarct++;
+                                                    }
+                                                    if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Внебюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "внебюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "контракт" || OrdersCreation.AdditionalInf(7, tenant.ID) == "Rjynhfrn")
+                                                    {
+                                                        fullTimeContract++;
+                                                    }
+                                                }
+
                                                 counter++;
                                             }
                                         }
@@ -2169,6 +2325,25 @@ namespace Supply
 
                             excel.Set("A", rowCounter, "Всего студентов магистратуры НИМИ", out error);
                             excel.Set("B", rowCounter, counter.ToString(), out error);
+
+                            rowCounter++;
+
+                            excel.Set("A", rowCounter, "из них бюджет:", out error);
+                            excel.Set("B", rowCounter, fullTimeNotContarct.ToString(), out error);
+                            rowCounter++;
+                            excel.Set("A", rowCounter, "из них внебюджет:", out error);
+                            excel.Set("B", rowCounter, fullTimeContract.ToString(), out error);
+
+                            rowCounter++;
+                            excel.Set("A", rowCounter, "Форма обучения заочная", out error);
+                            excel.Set("B", rowCounter, semiTimeMain.ToString(), out error);
+                            rowCounter++;
+
+                            excel.Set("A", rowCounter, "из них бюджет:", out error);
+                            excel.Set("B", rowCounter, semiTimeNotContarct.ToString(), out error);
+                            rowCounter++;
+                            excel.Set("A", rowCounter, "из них внебюджет:", out error);
+                            excel.Set("B", rowCounter, semiTimeContarct.ToString(), out error);
 
                             rooms.Clear();
 
@@ -2310,6 +2485,15 @@ namespace Supply
                                      orderby roomModel.Name
                                      select roomModel;
 
+                            int fullTimeMain = 0;
+                            int semiTimeMain = 0;
+
+                            int fullTimeContract = 0;
+                            int semiTimeContarct = 0;
+
+                            int fullTimeNotContarct = 0;
+                            int semiTimeNotContarct = 0;
+
                             foreach (var r in rm)
                             {
                                 startCell = $"A{rowCounter}";
@@ -2361,6 +2545,34 @@ namespace Supply
                                                 excel.Set("H", tenantPlaces, tenant.Identification.Address, out error);
                                                 excel.Set("I", tenantPlaces, OrdersCreation.AdditionalInf(1, tenant.ID), out error);
 
+                                                if (OrdersCreation.AdditionalInf(5, tenant.ID) != string.Empty && (OrdersCreation.AdditionalInf(5, tenant.ID) == "Заочная" || OrdersCreation.AdditionalInf(5, tenant.ID) == "заочная"))
+                                                {
+                                                    semiTimeMain++;
+
+                                                    if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Бюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "бюджет")
+                                                    {
+                                                        semiTimeNotContarct++;
+                                                    }
+                                                    if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Внебюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "внебюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "контракт" || OrdersCreation.AdditionalInf(7, tenant.ID) == "Rjynhfrn")
+                                                    {
+                                                        semiTimeContarct++;
+                                                    }
+                                                }
+
+                                                if (OrdersCreation.AdditionalInf(5, tenant.ID) != string.Empty && (OrdersCreation.AdditionalInf(5, tenant.ID) == "Очная" || OrdersCreation.AdditionalInf(5, tenant.ID) == "очная"))
+                                                {
+                                                    fullTimeMain++;
+
+                                                    if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Бюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "бюджет")
+                                                    {
+                                                        fullTimeNotContarct++;
+                                                    }
+                                                    if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Внебюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "внебюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "контракт" || OrdersCreation.AdditionalInf(7, tenant.ID) == "Rjynhfrn")
+                                                    {
+                                                        fullTimeContract++;
+                                                    }
+                                                }
+
                                                 counter++;
                                             }
                                         }
@@ -2378,6 +2590,25 @@ namespace Supply
 
                             excel.Set("A", rowCounter, "Всего студентов магистратуры НИМИ", out error);
                             excel.Set("B", rowCounter, counter.ToString(), out error);
+
+                            rowCounter++;
+
+                            excel.Set("A", rowCounter, "из них бюджет:", out error);
+                            excel.Set("B", rowCounter, fullTimeNotContarct.ToString(), out error);
+                            rowCounter++;
+                            excel.Set("A", rowCounter, "из них внебюджет:", out error);
+                            excel.Set("B", rowCounter, fullTimeContract.ToString(), out error);
+
+                            rowCounter++;
+                            excel.Set("A", rowCounter, "Форма обучения заочная", out error);
+                            excel.Set("B", rowCounter, semiTimeMain.ToString(), out error);
+                            rowCounter++;
+
+                            excel.Set("A", rowCounter, "из них бюджет:", out error);
+                            excel.Set("B", rowCounter, semiTimeNotContarct.ToString(), out error);
+                            rowCounter++;
+                            excel.Set("A", rowCounter, "из них внебюджет:", out error);
+                            excel.Set("B", rowCounter, semiTimeContarct.ToString(), out error);
 
                             rooms.Clear();
 

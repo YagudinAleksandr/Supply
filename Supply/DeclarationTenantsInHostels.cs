@@ -3,14 +3,9 @@ using Supply.Domain;
 using Supply.Libs;
 using Supply.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Supply
@@ -140,11 +135,11 @@ namespace Supply
                                                             tenantNOF++;
                                                         }
 
-                                                        if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Бюджет" || OrdersCreation.AdditionalInf(5, tenant.ID) == "бюджет")
+                                                        if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Бюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "бюджет")
                                                         {
                                                             budjet++;
                                                         }
-                                                        if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Внебюджет" || OrdersCreation.AdditionalInf(5, tenant.ID) == "внебюджет")
+                                                        if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Внебюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "внебюджет")
                                                         {
                                                             notBudjet++;
                                                         }
