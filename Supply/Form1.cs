@@ -1405,6 +1405,21 @@ namespace Supply
                                 Thread thread = new Thread(new ParameterizedThreadStart(Log));
                                 thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
                             }
+                            if (!excel.Set("J", 1, "Форма обучения", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("K", 1, "Основа обучения", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("L", 1, "Гражданство", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
 
                             var enterances = db.Enterances.Where(x => x.HostelId == hostel.ID).ToList();
 
@@ -1537,6 +1552,9 @@ namespace Supply
                                     excel.Set("G", tenantPlaces, OrdersCreation.AdditionalInf(3, tenant.ID) + "/" + OrdersCreation.AdditionalInf(4, tenant.ID), out error);
                                     excel.Set("H", tenantPlaces, tenant.Identification.Address, out error);
                                     excel.Set("I", tenantPlaces, OrdersCreation.AdditionalInf(1, tenant.ID), out error);
+                                    excel.Set("J", tenantPlaces, OrdersCreation.AdditionalInf(5, tenant.ID), out error);
+                                    excel.Set("K", tenantPlaces, OrdersCreation.AdditionalInf(7, tenant.ID), out error);
+                                    excel.Set("L", tenantPlaces, tenant.Identification.Cityzenship, out error);
 
                                     tenantPlaces++;
                                 }
@@ -2018,7 +2036,7 @@ namespace Supply
                                                     {
                                                         semiTimeNotContarct++;
                                                     }
-                                                    if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Внебюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "внебюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "контракт" || OrdersCreation.AdditionalInf(7, tenant.ID) == "Rjynhfrn")
+                                                    if (OrdersCreation.AdditionalInf(7, tenant.ID) == "Внебюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "внебюджет" || OrdersCreation.AdditionalInf(7, tenant.ID) == "контракт" || OrdersCreation.AdditionalInf(7, tenant.ID) == "Контракт")
                                                     {
                                                         semiTimeContarct++;
                                                     }
