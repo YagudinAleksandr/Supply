@@ -1817,7 +1817,7 @@ namespace Supply.Libs
                         DateTime startBenefit = DateTime.Parse(benefit.StartDate);
                         DateTime endBenefit = DateTime.Parse(benefit.EndDate);
 
-                        if (endBenefit > startPaymentDate || endPaymentDate < startBenefit)
+                        if (endBenefit < startPaymentDate || endPaymentDate < startBenefit)
                             continue;
 
                         if (startPaymentDate > startBenefit && endBenefit >= endPaymentDate)
