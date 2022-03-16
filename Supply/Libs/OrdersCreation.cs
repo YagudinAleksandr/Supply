@@ -435,6 +435,7 @@ namespace Supply.Libs
                 Hostel hostel;
                 License license;
                 Identification identification;
+                Manager manager;
                 
                 try
                 {
@@ -448,6 +449,7 @@ namespace Supply.Libs
                     hostel = db.Hostels.Where(x => x.ID == enterance.HostelId).Include(m => m.Manager).Include(h => h.Address).FirstOrDefault();
                     license = db.Licenses.Where(x => x.ID == changePassport.LicenseID).First();
                     identification = db.Identifications.Where(x => x.ID == tenant.ID).First();
+                    manager = db.Managers.Where(id => id.ID == license.ManagerId).FirstOrDefault();
                 }
                 catch(Exception ex)
                 {
@@ -529,11 +531,11 @@ namespace Supply.Libs
                     replacements.Add("hostelName", hostel.Name);
                     replacements.Add("hostelAddress", hostel.Address.ZipCode + ", " + hostel.Address.Country + ", " + hostel.Address.Region + ", "
                         + hostel.Address.City + ", " + hostel.Address.Street + ", " + hostel.Address.House);
-                    replacements.Add("MainManager", order.License.Manager.Surename + " " + order.License.Manager.Name[0] + "." + order.License.Manager.Patronymic[0] + ".");
-                    replacements.Add("Manager", order.License.Manager.Surename + " " + order.License.Manager.Name + " " + order.License.Manager.Patronymic);
-                    replacements.Add("LicenseType", order.License.Type);
-                    replacements.Add("LicenseNumber", order.License.Name);
-                    replacements.Add("LicenseStart", order.License.StartDate);
+                    replacements.Add("MainManager", manager.Surename + " " + manager.Name[0] + "." + manager.Patronymic[0] + ".");
+                    replacements.Add("Manager", manager.Surename + " " + manager.Name + " " + manager.Patronymic);
+                    replacements.Add("LicenseType", license.Type);
+                    replacements.Add("LicenseNumber", license.Name);
+                    replacements.Add("LicenseStart", license.StartDate);
 
 
                     //Начинаем замену в шаблоне и сохраняем документ
@@ -1836,6 +1838,9 @@ namespace Supply.Libs
                         else if (startBenefit <= startPaymentDate && endBenefit < endPaymentDate && endBenefit > startPaymentDate )
                         {
                             SpecialDateCheck(startPaymentDate, endBenefit, out days, out monthes, out daysInMonth);
+
+                            if (startPaymentDate.Day == 1)
+                                days += 1;
 
                             CalculationServiceCoast(days, monthes, daysInMonth, ref tempBenefitRent, ref tempBenefitHouse, ref tempBenefitService, ref tempBenefitElectricity);
 

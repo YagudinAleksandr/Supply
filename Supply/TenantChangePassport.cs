@@ -2,15 +2,11 @@
 using Supply.Libs;
 using Supply.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
-using System.Drawing;
+using System.Data.Entity.Validation;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Supply
@@ -58,16 +54,20 @@ namespace Supply
             changePassport.Number = TB_DocNumber.Text;
             changePassport.Status = true;
             changePassport.TenantID = _tenant.ID;
-            changePassport.Code = TB_DocCode.Text;
+            if (TB_DocCode.Text == string.Empty)
+                changePassport.Code = "-";
+            else
+                changePassport.Code = TB_DocCode.Text;
             changePassport.DocumentTypeID = _documentTypeID;
             changePassport.LicenseID = _licenseID;
+
             using(SupplyDbContext db = new SupplyDbContext())
             {
                 
                 try
                 {
                     var changepassports = db.ChangePassports.Where(tid => tid.TenantID == _tenant.ID).Where(s => s.Status == true).ToList();
-                    if(changepassports!=null)
+                    if(changepassports.Count > 0)
                     {
                         foreach(ChangePassport cp in changepassports)
                         {
@@ -77,7 +77,6 @@ namespace Supply
                             db.SaveChanges();
                         }
                     }
-
                     db.ChangePassports.Add(changePassport);
                     db.SaveChanges();
 
@@ -91,7 +90,32 @@ namespace Supply
                     MessageBox.Show("Паспортные данные изменены!");
                     this.Close();
                 }
-                catch(Exception ex)
+                catch (DbEntityValidationException ex)
+                {
+                    string err = "";
+                    foreach (DbEntityValidationResult validErr in ex.EntityValidationErrors)
+                    {
+                        err += validErr.Entry.Entity.ToString() + ":";
+                        int i = 0;
+                        foreach (DbValidationError error in validErr.ValidationErrors)
+                        {
+                            i++;
+                            err += $"{i}.{error.ErrorMessage};";
+                        }
+                    }
+
+                    Log log = new Log();
+                    log.ID = Guid.NewGuid();
+                    log.Type = "ERROR";
+                    log.CreatedAt = DateTime.Now.ToString();
+                    log.Caption = $"Class: TenantChangePassport. Method:BTN_Save_Click. {err}";
+
+                    db.Logs.Add(log);
+                    db.SaveChanges();
+
+                    MessageBox.Show(err);
+                }
+                catch (Exception ex)
                 {
                     Log log = new Log();
                     log.ID = Guid.NewGuid();

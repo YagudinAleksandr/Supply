@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -914,13 +915,42 @@ namespace Supply
                     {
                         if (tenantID != 0)
                         {
-                            using(SupplyDbContext db = new SupplyDbContext())
+                            using (SupplyDbContext db = new SupplyDbContext())
                             {
-                                Tenant tenant = db.Tenants.Where(id => id.ID == tenantID).FirstOrDefault();
-                                TenantChangePassport tenantChangePassport = new TenantChangePassport(tenant);
-                                tenantChangePassport.ShowDialog();
-                                CreateTreeOnTreeView(_hostelID);
+                                try
+                                {
+                                    Tenant tenant = db.Tenants.Where(id => id.ID == tenantID).FirstOrDefault();
+                                    TenantChangePassport tenantChangePassport = new TenantChangePassport(tenant);
+                                    tenantChangePassport.ShowDialog();
+                                    CreateTreeOnTreeView(_hostelID);
+                                }
+                                catch (DbEntityValidationException ex)
+                                {
+                                    string err = "";
+                                    foreach (DbEntityValidationResult validErr in ex.EntityValidationErrors)
+                                    {
+                                        err += validErr.Entry.Entity.ToString() + ":";
+                                        int i = 0;
+                                        foreach (DbValidationError error in validErr.ValidationErrors)
+                                        {
+                                            i++;
+                                            err += $"{i}.{error.ErrorMessage};";
+                                        }
+                                    }
+
+                                    Log log = new Log();
+                                    log.ID = Guid.NewGuid();
+                                    log.Type = "ERROR";
+                                    log.CreatedAt = DateTime.Now.ToString();
+                                    log.Caption = $"Class: TenantChangePassport. Method:BTN_Save_Click. {err}";
+
+                                    db.Logs.Add(log);
+                                    db.SaveChanges();
+
+                                    MessageBox.Show(err);
+                                }
                             }
+                            
                         }
                     }
                 }
