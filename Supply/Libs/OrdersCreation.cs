@@ -1941,6 +1941,7 @@ namespace Supply.Libs
                         else if (tempPaymentEnd != DateTime.MinValue && tempPaymentStart == DateTime.MinValue)
                         {
                             SpecialDateCheck(startPaymentDate, tempPaymentEnd, out days, out monthes, out daysInMonth);
+                                days++;
                             CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
 
                             electricity += tempBenefitElectricity;

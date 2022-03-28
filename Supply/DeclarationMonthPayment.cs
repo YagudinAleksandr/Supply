@@ -306,7 +306,7 @@ namespace Supply
 
                                 if (startTenantOrderInner.Month == tv.StartOrder.Month && startTenantOrderInner.Year == tv.StartOrder.Year)
                                 {
-                                    tv.StartOrder = DateTime.Parse(tv.Order.StartDate);
+                                    tv.StartOrder = DateTime.Parse(tv.Order.StartDate).AddDays(-1);
                                 }
 
                                 if (endTenantOrderInner.Month == tv.EndOrder.Month && endTenantOrderInner.Year == tv.EndOrder.Year)
