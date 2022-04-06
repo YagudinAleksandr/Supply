@@ -367,10 +367,19 @@ namespace Supply
                                         rent = Convert.ToDecimal(tv.Payment.Rent);
                                         service = Convert.ToDecimal(tv.Payment.Service);
                                         house = Convert.ToDecimal(tv.Payment.House);
-
-                                        rent *= (tv.EndOrder - tv.StartOrder).Days + 1;
-                                        service *= (tv.EndOrder - tv.StartOrder).Days + 1;
-                                        house *= (tv.EndOrder - tv.StartOrder).Days + 1;
+                                        if (tv.StartOrder.Day == 1)
+                                        {
+                                            rent *= (tv.EndOrder - tv.StartOrder).Days + 1;
+                                            service *= (tv.EndOrder - tv.StartOrder).Days + 1;
+                                            house *= (tv.EndOrder - tv.StartOrder).Days + 1;
+                                        }
+                                        else
+                                        {
+                                            rent *= (tv.EndOrder - tv.StartOrder).Days;
+                                            service *= (tv.EndOrder - tv.StartOrder).Days;
+                                            house *= (tv.EndOrder - tv.StartOrder).Days;
+                                        }
+                                        
                                     }
 
                                 }

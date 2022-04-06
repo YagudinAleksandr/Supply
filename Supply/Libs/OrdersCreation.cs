@@ -1838,11 +1838,12 @@ namespace Supply.Libs
                         else if (startBenefit <= startPaymentDate && endBenefit < endPaymentDate && endBenefit > startPaymentDate )
                         {
                             SpecialDateCheck(startPaymentDate, endBenefit, out days, out monthes, out daysInMonth);
-
+                            /*
                             if (startPaymentDate.Day == 1)
-                                days += 1;
+                                days += 1;*/
 
                             CalculationServiceCoast(days, monthes, daysInMonth, ref tempBenefitRent, ref tempBenefitHouse, ref tempBenefitService, ref tempBenefitElectricity);
+
 
                             tempPaymentStart = endBenefit.AddDays(1);
                         }
