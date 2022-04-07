@@ -406,6 +406,14 @@ namespace Supply
                       MessageBox.Show("Файл создается в фоновом режиме!");
                   };
                 declaration.DropDownItems.Add(toolStripMenuItem3);
+
+                ToolStripMenuItem declarationOfForeignStudent = new ToolStripMenuItem("Отчет по студентам сторонней организации");
+                declarationOfForeignStudent.Click += (senderLoc, ev) =>
+                 {
+                     DeclarationOfForeignStudent foreignStudent = new DeclarationOfForeignStudent();
+                     foreignStudent.Show();
+                 };
+                declaration.DropDownItems.Add(declarationOfForeignStudent);
             }
 
 

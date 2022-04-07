@@ -34,7 +34,7 @@
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <AutorunEnabled>true</AutorunEnabled>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>84</ApplicationRevision>
+    <ApplicationRevision>85</ApplicationRevision>
     <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -342,6 +342,12 @@
     </Compile>
     <Compile Include="DeclarationMonthPayment.Designer.cs">
       <DependentUpon>DeclarationMonthPayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DeclarationOfForeignStudent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeclarationOfForeignStudent.Designer.cs">
+      <DependentUpon>DeclarationOfForeignStudent.cs</DependentUpon>
     </Compile>
     <Compile Include="DeclarationPaymentOrder.cs">
       <SubType>Form</SubType>
@@ -757,6 +763,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DeclarationMonthPayment.resx">
       <DependentUpon>DeclarationMonthPayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeclarationOfForeignStudent.resx">
+      <DependentUpon>DeclarationOfForeignStudent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DeclarationPaymentOrder.resx">
       <DependentUpon>DeclarationPaymentOrder.cs</DependentUpon>
