@@ -931,7 +931,7 @@ namespace Supply.Libs
                             {
                                 if ((orderEndDate > dateOfTermination && orderEndDate.Month == dateOfTermination.Month) || (orderEndDate == dateOfTermination && orderEndDate.Month == dateOfTermination.Month))
                                 {
-                                    orderEndDate = dateOfTermination.AddDays(-1);
+                                    orderEndDate = dateOfTermination;
                                 }
                             }
                             
@@ -1800,8 +1800,7 @@ namespace Supply.Libs
                 {
                     SpecialDateCheck(startPaymentDate, endPaymentDate, out days, out monthes, out daysInMonth);
 
-                    if (days != 0)
-                        days += 1;
+                    
 
                     CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
 

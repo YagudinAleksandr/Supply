@@ -576,7 +576,7 @@ namespace Supply
                                 {
                                     if ((orderEndDate > dateOfTermination && orderEndDate.Month == dateOfTermination.Month) || (orderEndDate == dateOfTermination && orderEndDate.Month == dateOfTermination.Month))
                                     {
-                                        orderEndDate = dateOfTermination.AddDays(-1);
+                                        orderEndDate = dateOfTermination;
                                     }
                                 }
 
