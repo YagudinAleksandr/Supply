@@ -1800,7 +1800,10 @@ namespace Supply.Libs
                 {
                     SpecialDateCheck(startPaymentDate, endPaymentDate, out days, out monthes, out daysInMonth);
 
-                    
+                    if(startPaymentDate.Day!=1)
+                    {
+                        days++;
+                    }
 
                     CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
 
