@@ -1822,7 +1822,18 @@ namespace Supply.Libs
                         DateTime endBenefit = DateTime.Parse(benefit.EndDate);
 
                         if (endBenefit < startPaymentDate || endPaymentDate < startBenefit)
+                        {
+                            SpecialDateCheck(startPaymentDate, endPaymentDate, out days, out monthes, out daysInMonth);
+
+                            if (startPaymentDate.Day != 1)
+                            {
+                                days++;
+                            }
+
+                            CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
+
                             continue;
+                        }
 
                         if (startPaymentDate > startBenefit && endBenefit >= endPaymentDate)
                         {
