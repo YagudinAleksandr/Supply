@@ -168,6 +168,19 @@ namespace Supply
                         db.ContinueOrders.Add(_continueOrder);
                         db.SaveChanges();
 
+
+                        _order.EndDate = _continueOrder.EndDate;
+                        _order.UpdatedAt = DateTime.Now.ToString();
+
+                        db.Entry(_order).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                        string error;
+                        OrdersCreation.CreateContinueOrder(_continueOrder.ID, out error);
+
+                        if (!string.IsNullOrEmpty(error))
+                            throw new Exception($"Данные сохранены, но возникла ошибка при формировании дополнительного соглашения {error}");
+
                         MessageBox.Show("Приложение к договору на продление проживания добавлено успешно!");
 
                         this.Close();
@@ -193,6 +206,12 @@ namespace Supply
                     try
                     {
                         db.Entry(_continueOrder).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                        _order.EndDate = _continueOrder.EndDate;
+                        _order.UpdatedAt = DateTime.Now.ToString();
+
+                        db.Entry(_order).State = EntityState.Modified;
                         db.SaveChanges();
 #if DEBUG
                         string errorMessage = string.Empty;

@@ -1,4 +1,5 @@
 ﻿using Supply.Domain;
+using Supply.Libs;
 using Supply.Models;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,33 @@ namespace Supply
         {
             if(e.ColumnIndex==7)
             {
-                
+                try
+                {
+                    int terminationID = 0;
+                    if (int.TryParse(DG_View_Terminations.Rows[e.RowIndex].Cells[0].Value.ToString(), out terminationID))
+                    {
+                        string error;
+                        OrdersCreation.CreateTerminationOrder(terminationID, out error);
+
+                        if (!string.IsNullOrEmpty(error))
+                            throw new Exception(error);
+                    }
+                    
+                }
+                catch(Exception ex)
+                {
+                    using (SupplyDbContext db = new SupplyDbContext())
+                    {
+                        Log logInfo = new Log();
+                        logInfo.ID = Guid.NewGuid();
+                        logInfo.Type = "ERROR";
+                        logInfo.Caption = $"Class: DeclarationTerminations. Method: DG_View_Terminations_CellMouseClick. {ex.Message}.{ex.InnerException}";
+                        logInfo.CreatedAt = DateTime.Now.ToString();
+                        db.Logs.Add(logInfo);
+                        db.SaveChanges();
+                    }
+                    MessageBox.Show(ex.Message);
+                }
             }
             if(e.ColumnIndex==8)
             {

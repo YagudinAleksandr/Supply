@@ -409,8 +409,8 @@ namespace Supply
                             excel.Set("B", rowNumber, "СОГЛАСОВАНО:", out error);
                             rowNumber += 2;
 
-                            excel.Set("B", rowNumber, "Зам.директора по УиИИ", out error);
-                            excel.Set("E", rowNumber, "Р.А.Олейник", out error);
+                            excel.Set("B", rowNumber, "Зам.директора по АХРиИО", out error);
+                            excel.Set("E", rowNumber, "О.А.Болычева", out error);
                             rowNumber++;
 
                             excel.Set("B", rowNumber, "ВРИО Гл.бухгалетра", out error);

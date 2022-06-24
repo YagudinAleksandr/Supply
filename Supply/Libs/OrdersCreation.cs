@@ -1309,7 +1309,7 @@ namespace Supply.Libs
 
                     DateTime createdFile;
 
-                    if (!DateTime.TryParse(continueOrder.StartDate, out createdFile))
+                    if (!DateTime.TryParse(continueOrder.CreatedAt, out createdFile))
                     {
                         throw new Exception("Невозможно перевести значение в формат даты!");
                     }
@@ -1344,7 +1344,7 @@ namespace Supply.Libs
                         }
                         else
                         {
-                            replacements.Add("DocCode", "");
+                            replacements.Add("DocCode", "-");
                         }
 
                         replacements.Add("Citizenship", changePassport.Citizenship);
@@ -1390,6 +1390,7 @@ namespace Supply.Libs
                         + hostel.Address.City + ", " + hostel.Address.Street + ", " + hostel.Address.House);
 
                     replacements.Add("orderContinueEnd", continueOrder.EndDate);
+                    replacements.Add("orderContinueStart", continueOrder.StartDate);
 
                     replacements.Add("MainManager", manager.Surename + " " + manager.Name[0] + "." + manager.Patronymic[0] + ".");
                     replacements.Add("Manager", manager.Surename + " " + manager.Name + " " + manager.Patronymic);

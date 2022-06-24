@@ -1,15 +1,11 @@
 ﻿using Supply.Domain;
+using Supply.Libs;
 using Supply.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Supply
@@ -27,7 +23,36 @@ namespace Supply
 
             if (e.ColumnIndex == 5)
             {
+                if (int.TryParse(DG_View_ContinueOrders.Rows[e.RowIndex].Cells[0].Value.ToString(), out continueOrderId))
+                {
+                    using (SupplyDbContext db = new SupplyDbContext())
+                    {
+                        ContinueOrder continueOrder = db.ContinueOrders.Where(x => x.ID == continueOrderId).FirstOrDefault();
 
+                        if (continueOrder == null)
+                        {
+                            MessageBox.Show("Приложение не найдено!");
+                            return;
+                        }
+
+                        try
+                        {
+                            string error;
+                            OrdersCreation.CreateContinueOrder(continueOrderId, out error);
+                            if (!string.IsNullOrEmpty(error))
+                                throw new Exception(error);
+
+                            MessageBox.Show("Приложение сформировано успешно!");
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Thread logThread = new Thread(new ParameterizedThreadStart(LogCreation));
+
+                            logThread.Start($"DG_View_ContinueOrders_CellMouseClick. {ex.Message}. {ex.InnerException}");
+                        }
+                    }
+                }
             }
 
             if (e.ColumnIndex == 6)
@@ -71,6 +96,13 @@ namespace Supply
                             try
                             {
                                 db.ContinueOrders.Remove(continueOrder);
+                                db.SaveChanges();
+
+                                Order order = db.Orders.Where(x => x.ID == continueOrder.OrderID).FirstOrDefault();
+                                order.EndDate = continueOrder.StartDate;
+                                order.UpdatedAt = DateTime.Now.ToString();
+
+                                db.Entry(order).State = EntityState.Modified;
                                 db.SaveChanges();
 
                                 MessageBox.Show("Приложение удалено успешно!");
