@@ -945,6 +945,20 @@ namespace Supply.Libs
                             {
                                 OrdersCreation.BenefitCheck(order.ID, orderStartDate, orderEndDate, ref rent, out house, out service, out electricity);
 
+                                var elecricityOrders = db.ElecricityOrders.Where(x => x.TenantID == tenant.ID).ToList();
+
+                                decimal tempElectrcity = electricity;
+
+                                foreach (ElecricityOrder el in elecricityOrders)
+                                {
+                                    DateTime startElectricityOrder = DateTime.Parse(el.StartDate);
+                                    DateTime endElectricityOrder = DateTime.Parse(el.EndDate);
+
+                                    if (endElectricityOrder < orderStartDate)
+                                        electricity = 0;
+                                    else
+                                        electricity = tempElectrcity;
+                                }
 
                                 if (OrdersCreation.AdditionalInf(10, order.ID) != string.Empty)
                                 {
@@ -1130,7 +1144,7 @@ namespace Supply.Libs
                         replacements.Add("Surename", changePassport.Surename);
                         replacements.Add("Name", changePassport.Name);
                         replacements.Add("ns", changePassport.Name[0].ToString());
-                        if (changePassport.Patronymic!=null)
+                        if (!string.IsNullOrEmpty(changePassport.Patronymic) && !changePassport.Patronymic.Contains(" "))
                         {
                             replacements.Add("Patronymic", changePassport.Patronymic);
                             replacements.Add("ps", changePassport.Patronymic[0].ToString());
@@ -1161,7 +1175,7 @@ namespace Supply.Libs
                         replacements.Add("Surename", tenant.Identification.Surename);
                         replacements.Add("Name", tenant.Identification.Name);
                         replacements.Add("ns", tenant.Identification.Name[0].ToString());
-                        if (tenant.Identification.Patronymic != null)
+                        if (!string.IsNullOrEmpty(tenant.Identification.Patronymic) && !changePassport.Patronymic.Contains(" "))
                         {
                             replacements.Add("Patronymic", tenant.Identification.Patronymic);
                             replacements.Add("ps", tenant.Identification.Patronymic[0].ToString());
@@ -1801,6 +1815,8 @@ namespace Supply.Libs
                 {
                     SpecialDateCheck(startPaymentDate, endPaymentDate, out days, out monthes, out daysInMonth);
 
+                    if (days != 0 && endPaymentDate.Day!=1)
+                        days++;
                     if(startPaymentDate.Day!=1)
                     {
                         days++;

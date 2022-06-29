@@ -590,6 +590,20 @@ namespace Supply
                                     OrdersCreation.BenefitCheck(tenant.ID, orderStartDate, orderEndDate, ref rent, out house, out service, out electricity);
 
 
+                                    var elecricityOrders = db.ElecricityOrders.Where(x => x.TenantID == tenant.ID).ToList();
+                                    decimal tempElectrcity = electricity;
+
+                                    foreach (ElecricityOrder elecricityOrder in elecricityOrders)
+                                    {
+                                        DateTime startElectricityOrder = DateTime.Parse(elecricityOrder.StartDate);
+                                        DateTime endElectricityOrder = DateTime.Parse(elecricityOrder.EndDate);
+
+                                        if (endElectricityOrder < orderStartDate)
+                                            electricity = 0;
+                                        else
+                                            electricity = tempElectrcity;
+                                    }
+
                                     if (OrdersCreation.AdditionalInf(10, tenant.ID) != string.Empty)
                                     {
                                         electricity = 0;

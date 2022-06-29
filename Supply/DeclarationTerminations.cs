@@ -31,11 +31,21 @@ namespace Supply
                     int terminationID = 0;
                     if (int.TryParse(DG_View_Terminations.Rows[e.RowIndex].Cells[0].Value.ToString(), out terminationID))
                     {
-                        string error;
-                        OrdersCreation.CreateTerminationOrder(terminationID, out error);
+                        using(SupplyDbContext db = new SupplyDbContext())
+                        {
+                            Termination termination = db.Terminations.Where(x => x.ID == terminationID).FirstOrDefault();
+                            if (termination == null)
+                                throw new Exception("Ратсрожение не найдено!");
 
-                        if (!string.IsNullOrEmpty(error))
-                            throw new Exception(error);
+                            string error;
+                            OrdersCreation.CreateTerminationOrder(termination.OrderID, out error);
+
+                            if (!string.IsNullOrEmpty(error))
+                                throw new Exception(error);
+                            else
+                                MessageBox.Show("Приложение создано успешно!");
+                        }
+                        
                     }
                     
                 }
