@@ -1335,7 +1335,7 @@ namespace Supply.Libs
                         replacements.Add("Surename", changePassport.Surename);
                         replacements.Add("Name", changePassport.Name);
                         replacements.Add("ns", changePassport.Name[0].ToString());
-                        if (changePassport.Patronymic != null)
+                        if (!string.IsNullOrEmpty(changePassport.Patronymic))
                         {
                             replacements.Add("Patronymic", changePassport.Patronymic);
                             replacements.Add("ps", changePassport.Patronymic[0].ToString());
@@ -1368,7 +1368,7 @@ namespace Supply.Libs
                         replacements.Add("Surename", tenant.Identification.Surename);
                         replacements.Add("Name", tenant.Identification.Name);
                         replacements.Add("ns", tenant.Identification.Name[0].ToString());
-                        if (tenant.Identification.Patronymic != null)
+                        if (!string.IsNullOrEmpty(tenant.Identification.Patronymic))
                         {
                             replacements.Add("Patronymic", tenant.Identification.Patronymic);
                             replacements.Add("ps", tenant.Identification.Patronymic[0].ToString());
@@ -1421,6 +1421,11 @@ namespace Supply.Libs
                     else
                     {
                         throw new Exception(error);
+                    }
+
+                    if (!wordDocument.CloseWordTemplate(out error))
+                    {
+                        return false;
                     }
 
                     return true;
