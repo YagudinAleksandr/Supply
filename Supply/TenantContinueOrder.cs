@@ -101,7 +101,7 @@ namespace Supply
                     LB_OrderEndDate.Text = _order.EndDate;
                     LB_OrderNumber.Text = _order.OrderNumber;
                     LB_Tenant.Text = tenant.Identification.Surename + " " + tenant.Identification.Name[0] + ".";
-                    if (tenant.Identification.Patronymic != null)
+                    if (!string.IsNullOrEmpty(tenant.Identification.Patronymic))
                     {
                         LB_Tenant.Text += tenant.Identification.Patronymic[0] + ".";
                     }
