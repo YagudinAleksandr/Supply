@@ -947,18 +947,7 @@ namespace Supply.Libs
 
                                 var elecricityOrders = db.ElecricityOrders.Where(x => x.TenantID == tenant.ID).ToList();
 
-                                decimal tempElectrcity = electricity;
-
-                                foreach (ElecricityOrder el in elecricityOrders)
-                                {
-                                    DateTime startElectricityOrder = DateTime.Parse(el.StartDate);
-                                    DateTime endElectricityOrder = DateTime.Parse(el.EndDate);
-
-                                    if (endElectricityOrder < orderStartDate)
-                                        electricity = 0;
-                                    else
-                                        electricity = tempElectrcity;
-                                }
+                                
 
                                 if (OrdersCreation.AdditionalInf(10, order.ID) != string.Empty)
                                 {

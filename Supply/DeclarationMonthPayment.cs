@@ -399,21 +399,7 @@ namespace Supply
                                 excel.Set("H", rowNumber, Math.Round(service, 2).ToString(), out error);
                                 excel.Set("I", rowNumber, Math.Round(house, 2).ToString(), out error);
 
-                                var elecricityOrders = db.ElecricityOrders.Where(x => x.TenantID == tv.ID).ToList();
-
-                                if (elecricityOrders.Count == 0)
-                                    excel.Set("J", rowNumber, Math.Round(electricity, 2).ToString(), out error);
-
-                                foreach (ElecricityOrder elecricityOrder in elecricityOrders)
-                                {
-                                    DateTime startElectricityOrder = DateTime.Parse(elecricityOrder.StartDate);
-                                    DateTime endElectricityOrder = DateTime.Parse(elecricityOrder.EndDate);
-
-                                    if (endElectricityOrder < startDate)
-                                        excel.Set("J", rowNumber, "", out error);
-                                    else
-                                        excel.Set("J", rowNumber, Math.Round(electricity, 2).ToString(), out error);
-                                }
+                                excel.Set("J", rowNumber, Math.Round(electricity, 2).ToString(), out error);
 
                                 counter++;
                                 rowNumber++;
