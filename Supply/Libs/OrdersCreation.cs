@@ -1811,10 +1811,7 @@ namespace Supply.Libs
 
                     if (days != 0 && endPaymentDate.Day!=1)
                         days++;
-                    if(startPaymentDate.Day!=1)
-                    {
-                        days++;
-                    }
+                    
 
                     CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
 
