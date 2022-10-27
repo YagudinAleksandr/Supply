@@ -65,7 +65,9 @@ namespace Supply
 
             using(SupplyDbContext db = new SupplyDbContext())
             {
-                Hostel hostel = db.Hostels.Where(id => id.ID == _hostelID).FirstOrDefault();
+                Hostel hostel = db.Hostels.Where(id => id.ID == _hostelID).Include(m => m.Manager).FirstOrDefault();
+
+                string manager = hostel.Manager.Surename + " " + hostel.Manager.Name[0] + "." + hostel.Manager.Patronymic[0] + ".";
 
                 var enterances = db.Enterances.Where(hid => hid.HostelId == hostel.ID).ToList();
 
@@ -280,6 +282,8 @@ namespace Supply
                                       orderby tenanView.Name
                                       select tenanView;
 
+                            decimal sumRent = 0, sumHouse = 0, sumService = 0, sumElectricity = 0;
+
                             foreach(var tv in tvs)
                             {
                                 excel.Set("A", rowNumber, counter.ToString(), out error);
@@ -401,9 +405,20 @@ namespace Supply
 
                                 excel.Set("J", rowNumber, Math.Round(electricity, 2).ToString(), out error);
 
+                                sumElectricity += Math.Round(electricity, 2);
+                                sumHouse += Math.Round(house, 2);
+                                sumRent += Math.Round(rent, 2);
+                                sumService += Math.Round(service, 2);
+
                                 counter++;
                                 rowNumber++;
                             }
+
+                            excel.Set("F", rowNumber, "ИТОГ", out error);
+                            excel.Set("G", rowNumber, Math.Round(sumRent, 2).ToString(), out error);
+                            excel.Set("H", rowNumber, Math.Round(sumService, 2).ToString(), out error);
+                            excel.Set("I", rowNumber, Math.Round(sumHouse, 2).ToString(), out error);
+                            excel.Set("J", rowNumber, Math.Round(sumElectricity, 2).ToString(), out error);
 
                             rowNumber += 2;
 
@@ -414,16 +429,14 @@ namespace Supply
                             excel.Set("E", rowNumber, "О.А.Болычева", out error);
                             rowNumber++;
 
-                            excel.Set("B", rowNumber, "ВРИО Гл.бухгалетра", out error);
-                            excel.Set("E", rowNumber, "З.Н.Архипова", out error);
+                            excel.Set("B", rowNumber, $"Зав.общежития №{hostel.Name}", out error);
+                            excel.Set("E", rowNumber, $"{manager}", out error);
                             rowNumber++;
 
-                            excel.Set("B", rowNumber, "Руководитель ХТО", out error);
-                            excel.Set("E", rowNumber, "О.А.Болычева", out error);
-                            rowNumber++;
+                            
 
                             excel.Set("B", rowNumber, "Ведущий бухгалтер", out error);
-                            excel.Set("E", rowNumber, "Т.Г.Лукина", out error);
+                            excel.Set("E", rowNumber, "", out error);
 
 
                             excel.Save();
