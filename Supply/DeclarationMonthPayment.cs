@@ -67,7 +67,7 @@ namespace Supply
             {
                 Hostel hostel = db.Hostels.Where(id => id.ID == _hostelID).Include(m => m.Manager).FirstOrDefault();
 
-                string manager = hostel.Manager.Surename + " " + hostel.Manager.Name[0] + "." + hostel.Manager.Patronymic[0] + ".";
+                string manager = hostel.Manager.Name[0] + "." + hostel.Manager.Patronymic[0] + ". " + hostel.Manager.Surename;
 
                 var enterances = db.Enterances.Where(hid => hid.HostelId == hostel.ID).ToList();
 
