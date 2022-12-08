@@ -1795,8 +1795,7 @@ namespace Supply.Libs
 
                 List<Benefit> benefits = db.Benefits.Where(x => x.OrderID == orderID).ToList();
 
-                SpecialPayments(orderID, out rent, out house, out service);
-                SpecialPaymentsElectricity(orderID, out electricity);
+                
 
                 int days = 0;
                 int daysInMonth = 0;
@@ -1814,6 +1813,9 @@ namespace Supply.Libs
                     
 
                     CalculationServiceCoast(days, monthes, daysInMonth, ref rent, ref house, ref service, ref electricity);
+
+                    SpecialPayments(orderID, out rent, out house, out service);
+                    SpecialPaymentsElectricity(orderID, out electricity);
 
                     return;
                 }
@@ -1971,7 +1973,9 @@ namespace Supply.Libs
                             service += tempBenefitService;
                             rent += tempBenefitRent;
                         }
-                        
+
+                        SpecialPayments(orderID, out rent, out house, out service);
+                        SpecialPaymentsElectricity(orderID, out electricity);
                     }
                 }
             }

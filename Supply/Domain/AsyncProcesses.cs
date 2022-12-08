@@ -211,6 +211,38 @@ namespace Supply.Domain
                 }
             }
         }
-        
+        public static void UpdateSpecialPayments()
+        {
+            using (SupplyDbContext db = new SupplyDbContext())
+            {
+                var specialPayments = db.SpecialPayments.Where(s => s.Status == true).ToList();
+
+                foreach (SpecialPayment specialPayment in specialPayments)
+                {
+                    if (Convert.ToDateTime(specialPayment.EndDate) <= Convert.ToDateTime(DateTime.Now.ToShortDateString()))
+                    {
+
+                        specialPayment.Status = false;
+
+                        try
+                        {
+                            db.Entry(specialPayment).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                        catch (Exception ex)
+                        {
+                            Log log = new Log();
+                            log.ID = Guid.NewGuid();
+                            log.Type = "ERROR";
+                            log.CreatedAt = DateTime.Now.ToString();
+                            log.Caption = $"Class: AsyncProcesses. Method: UpdateSpecialPayments." + ex.Message + "." + ex.InnerException;
+
+                            db.Logs.Add(log);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+            }
+        }
     }
 }

@@ -482,6 +482,7 @@ namespace Supply
                 AsyncProcesses.UpdateBenefits();
                 AsyncProcesses.UpdateOrders();
                 AsyncProcesses.UpdateTerminations();
+                AsyncProcesses.UpdateSpecialPayments();
                 Thread.Sleep(TimeSpan.FromMinutes(120));
             }
         }
