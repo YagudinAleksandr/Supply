@@ -1414,51 +1414,72 @@ namespace Supply
                                 Thread thread = new Thread(new ParameterizedThreadStart(Log));
                                 thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
                             }
-                            if (!excel.Set("D", 1, "Договор", out error))
+                            if (!excel.Set("D", 1, "Дата рождения", out error))
                             {
                                 Thread thread = new Thread(new ParameterizedThreadStart(Log));
                                 thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
                             }
-                            if (!excel.Set("E", 1, "Дата начала", out error))
+                            if (!excel.Set("E", 1, "Гражданство", out error))
                             {
                                 Thread thread = new Thread(new ParameterizedThreadStart(Log));
                                 thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
                             }
-                            if (!excel.Set("F", 1, "Дата рождения", out error))
+                            if (!excel.Set("F", 1, "Док.удостовер.личность", out error))
                             {
                                 Thread thread = new Thread(new ParameterizedThreadStart(Log));
                                 thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
                             }
-                            if (!excel.Set("G", 1, "Факультет/Группа", out error))
+                            if (!excel.Set("G", 1, "Серия и №", out error))
                             {
                                 Thread thread = new Thread(new ParameterizedThreadStart(Log));
                                 thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
                             }
-                            if (!excel.Set("H", 1, "Адрес", out error))
+                            if (!excel.Set("H", 1, "Кем и когда выдан", out error))
                             {
                                 Thread thread = new Thread(new ParameterizedThreadStart(Log));
                                 thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
                             }
-                            if (!excel.Set("I", 1, "Телефон", out error))
+                            if (!excel.Set("I", 1, "Код подразделения", out error))
                             {
                                 Thread thread = new Thread(new ParameterizedThreadStart(Log));
                                 thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
                             }
-                            if (!excel.Set("J", 1, "Форма обучения", out error))
+                            if (!excel.Set("J", 1, "Адрес", out error))
                             {
                                 Thread thread = new Thread(new ParameterizedThreadStart(Log));
                                 thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
                             }
-                            if (!excel.Set("K", 1, "Основа обучения", out error))
+                            if (!excel.Set("K", 1, "Договор", out error))
                             {
                                 Thread thread = new Thread(new ParameterizedThreadStart(Log));
                                 thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
                             }
-                            if (!excel.Set("L", 1, "Гражданство", out error))
+                            if (!excel.Set("L", 1, "Дата начала", out error))
                             {
                                 Thread thread = new Thread(new ParameterizedThreadStart(Log));
                                 thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
                             }
+                            if (!excel.Set("M", 1, "Факультет/Группа", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("N", 1, "Телефон", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("O", 1, "Форма обучения", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            if (!excel.Set("P", 1, "Основа обучения", out error))
+                            {
+                                Thread thread = new Thread(new ParameterizedThreadStart(Log));
+                                thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
+                            }
+                            
 
                             var enterances = db.Enterances.Where(x => x.HostelId == hostel.ID).ToList();
 
@@ -1492,57 +1513,7 @@ namespace Supply
                             foreach (Room room in rooms)
                             {
                                 roomModels.Add(new RoomModel { ID = room.ID, Name = int.Parse(room.Name), Places = room.Places });
-                                /*
-                                //Column Room name
-                                startCell = $"A{rowCounter}";
-                                endCell = $"A{rowCounter + room.Places - 1}";
-                                if (!excel.Merge(startCell, endCell, rowCounter, 1, room.Name, out error))
-                                {
-                                    Thread thread = new Thread(new ParameterizedThreadStart(Log));
-                                    thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
-                                }
-
-                                //Column room places
-                                startCell = $"B{rowCounter}";
-                                endCell = $"B{rowCounter + room.Places - 1}";
-                                if (!excel.Merge(startCell, endCell, rowCounter, 2, room.Places.ToString(), out error))
-                                {
-                                    Thread thread = new Thread(new ParameterizedThreadStart(Log));
-                                    thread.Start($"Class: Form1. Method: CreateDeclarationForHostel. {error}");
-                                }
-
-                                var tenants = db.Tenants
-                                                .Where(x => x.RoomID == room.ID)
-                                                .Where(s => s.Status == true)
-                                                .Include(i => i.Identification)
-                                                .Include(o => o.Order)
-                                                .ToList();
-
-                                int tenantPlaces = rowCounter;
-
-                                foreach (Tenant tenant in tenants)
-                                {
-                                    string tenantName = tenant.Identification.Surename + " " + tenant.Identification.Name;
-                                    if (tenant.Identification.Patronymic != null)
-                                    {
-                                        tenantName += " " + tenant.Identification.Patronymic;
-                                    }
-                                    excel.Set("C", tenantPlaces, tenantName, out error);
-                                    excel.Set("D", tenantPlaces, tenant.Order.OrderNumber, out error);
-                                    excel.Set("E", tenantPlaces, tenant.Order.StartDate, out error);
-                                    excel.Set("F", tenantPlaces, tenant.Identification.DateOfBirth, out error);
-                                    excel.Set("G", tenantPlaces, OrdersCreation.AdditionalInf(3, tenant.ID)+"/"+ OrdersCreation.AdditionalInf(4, tenant.ID), out error);
-                                    excel.Set("H", tenantPlaces, tenant.Identification.Address, out error);
-                                    excel.Set("I", tenantPlaces, OrdersCreation.AdditionalInf(1, tenant.ID), out error);
-
-                                    tenantPlaces++;
-                                }
-
-
-                                rowCounter += room.Places;
-
-                                startCell = endCell = string.Empty;
-                                */
+                                
                             }
 
                             var rm = from roomModel in roomModels
@@ -1585,15 +1556,19 @@ namespace Supply
                                         tenantName += " " + tenant.Identification.Patronymic;
                                     }
                                     excel.Set("C", tenantPlaces, tenantName, out error);
-                                    excel.Set("D", tenantPlaces, tenant.Order.OrderNumber, out error);
-                                    excel.Set("E", tenantPlaces, tenant.Order.StartDate, out error);
-                                    excel.Set("F", tenantPlaces, tenant.Identification.DateOfBirth, out error);
-                                    excel.Set("G", tenantPlaces, OrdersCreation.AdditionalInf(3, tenant.ID) + "/" + OrdersCreation.AdditionalInf(4, tenant.ID), out error);
-                                    excel.Set("H", tenantPlaces, tenant.Identification.Address, out error);
-                                    excel.Set("I", tenantPlaces, OrdersCreation.AdditionalInf(1, tenant.ID), out error);
-                                    excel.Set("J", tenantPlaces, OrdersCreation.AdditionalInf(5, tenant.ID), out error);
-                                    excel.Set("K", tenantPlaces, OrdersCreation.AdditionalInf(7, tenant.ID), out error);
-                                    excel.Set("L", tenantPlaces, tenant.Identification.Cityzenship, out error);
+                                    excel.Set("K", tenantPlaces, tenant.Order.OrderNumber, out error);
+                                    excel.Set("L", tenantPlaces, tenant.Order.StartDate, out error);
+                                    excel.Set("D", tenantPlaces, tenant.Identification.DateOfBirth, out error);
+                                    excel.Set("M", tenantPlaces, OrdersCreation.AdditionalInf(3, tenant.ID) + "/" + OrdersCreation.AdditionalInf(4, tenant.ID), out error);
+                                    excel.Set("J", tenantPlaces, tenant.Identification.Address, out error);
+                                    excel.Set("N", tenantPlaces, OrdersCreation.AdditionalInf(1, tenant.ID), out error);
+                                    excel.Set("O", tenantPlaces, OrdersCreation.AdditionalInf(5, tenant.ID), out error);
+                                    excel.Set("P", tenantPlaces, OrdersCreation.AdditionalInf(7, tenant.ID), out error);
+                                    excel.Set("E", tenantPlaces, tenant.Identification.Cityzenship, out error);
+                                    excel.Set("F", tenantPlaces, "Паспорт", out error);
+                                    excel.Set("G", tenantPlaces, $"Серия: {tenant.Identification.DocumentSeries} №{tenant.Identification.DocumentNumber}", out error);
+                                    excel.Set("H", tenantPlaces, $"{tenant.Identification.Issued} {tenant.Identification.GivenDate}", out error);
+                                    excel.Set("I", tenantPlaces, $"{tenant.Identification.Code}", out error);
 
                                     tenantPlaces++;
                                 }
